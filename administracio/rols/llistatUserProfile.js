@@ -1,9 +1,16 @@
 window.onload = main;
 
+/////
+/////
+/////
+// Local
+let url = 'http://localhost:5001/'
+// Servidor
+//let url = 'http://10.2.218.254:5001/'
 // Acces a les dades
-async function getData(endPoint) {
+async function getData(url, endPoint) {
   try {
-    const response = await fetch('http://localhost:5001/'+ endPoint );  // Reemplaza 'data.json' con la ruta de tu archivo
+    const response = await fetch(url + endPoint );  // Reemplaza 'data.json' con la ruta de tu archivo
 
     if (!response.ok) {
       throw new Error('Error al obtener el archivo JSON');
@@ -17,9 +24,9 @@ async function getData(endPoint) {
 }
 
 // Esborrar per ID
-async function deleteData(endPoint, id) {
+async function deleteData(url, endPoint, id) {
   try {
-    const response = await fetch('http://localhost:5001/'+ endPoint + '/' + id, {
+    const response = await fetch(url + endPoint + '/' + id, {
       method: 'DELETE'  // Configuramos el método HTTP como DELETE
     });
 
@@ -34,6 +41,11 @@ async function deleteData(endPoint, id) {
     console.error('Error:', error);  // Manejo de errores
   }
 }
+
+//////
+//////
+//////
+
 
 
 async function main() {
