@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Llistar clients</title>
+    <script src="listar.js" defer></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<style>
+    .error {
+        border:solid 2px #FF0000; 
+    }
+</style>
+<body>
+    <div class="container">
+        <a href="index.html">Tornar</a>
+
+        <h1>Llistat de clients</h1>
+
+        <button class=" btn btn-primary my-3" id="altaCliente">Nou client</button>
+
+        <table id="clientesTable" class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Modificar</th>
+                    <th scope="col">Esborrar</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Domicili</th>
+                    <th scope="col">DNI/NIF</th>
+                    <th scope="col">Teléfon</th>
+                    <th scope="col">Correu</th>
+                    <th scope="col">País</th>
+                    <th scope="col">Província</th>
+                    <th scope="col">Ciutat</th>
+                    <th scope="col">Codi postal</th>
+                </tr>
+            </thead>
+            <tbody id="files">
+                <!--los clientes se van agregando aqui-->
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

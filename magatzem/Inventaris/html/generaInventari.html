@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="../js/scriptGeneraInventari.js" defer></script>
+    <title>Alta d'Inventari</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <h1>Alta d'Inventari</h1>
+        </div>
+        <div class="row">
+            <form id="formInventari">
+                <div class="form-group">
+                    <label for="id">ID</label>
+                    <input type="number" id="id" class="form-control" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="id_inventory">ID de l'Inventari</label>
+                    <input type="number" id="id_inventory" class="form-control" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="quantity_real">Quantitat Real</label>
+                    <input type="number" id="quantity_real" class="form-control" min="0" value="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="inventory_reason">Raó de l'Inventari:</label> <!--Pense, que deuria de ser un select ja de primeres, no li vec molt de senti el canviar-ho en llistaInventari-->
+                    <input type="number" id="inventory_reason" class="form-control" min="0" value="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="operator_id">ID del Operador:</label>
+                    <input type="number" id="operator_id" class="form-control" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="created_by">Creat per:</label>
+                    <input type="text" id="created_by" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="date_inventory">Data de l'Inventari:</label>
+                    <input type="text" id="date_inventory" class="form-control" required readonly>
+                    <!--Lo de readonly es per a que l'usuari no puga modificar la data (no volem xanxullos)-->
+                </div>
+                <div class="form-group">
+                    <label for="estat">Estat:</label>
+                    <select id="estat" class="form-control" required>
+                        <option value="Pendent">Pendent</option>
+                        <option value="Fent-se">Fent-se</option>
+                        <option value="Fet">Fet</option>
+                        <option value="Eliminat">Eliminat</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar</button><!--Grava/Guarda al LocalStorage el contingut que  hi ha en el formulari-->
+                <button type="button" id="botoLlista" class="btn btn-secondary">Llista</button><!--Redirigeix a l'usuari a llistaInventari.html-->
+            </form>
+        </div>
+    </div>
+</body>
+</html>

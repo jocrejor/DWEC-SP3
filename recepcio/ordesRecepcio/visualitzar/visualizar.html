@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Llistat Ordens de Recepció</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script type="text/javascript" src="visualizar.js"></script>
+    <style>
+        .error {
+            border: solid 2px #FF0000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Detalls de la Ordre</h1>
+
+        <table class="table" id="ordenTable">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Proveïdor</th>
+                    <th scope="col">Data de Recepció Estimada</th>
+                </tr>
+            </thead>
+            <tbody id="ordenBody">
+                
+            </tbody>
+        </table>
+        <br><br><br><br><br>
+
+        <h2>Productes de la Ordre</h2>
+
+        <table class="table" id="ordenTable">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Producte</th>
+                    <th scope="col">Quantitat Demanada</th>
+                </tr>
+            </thead>
+            <tbody id="productosBody">
+                
+            </tbody>
+        </table>
+        <button class=" btn btn-primary my-3"  id="btnRegresar">Tornar</button>
+    </div>
+</body>
+
+</html>
+
+
+
+
+
+
+
