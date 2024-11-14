@@ -16,6 +16,8 @@ async function getData(endPoint) {
   }
 }
 
+
+
 // Esborrar per ID
 async function deleteData(endPoint, id) {
   try {
