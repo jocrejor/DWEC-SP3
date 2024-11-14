@@ -1,51 +1,15 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUD de Estados, Provincias y Ciudades</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <script defer src="script.js"></script>
+    <title>Listado Estado/Provincias/Ciudades</title>
+    <script src="script.js"></script>
 </head>
 <body>
-    <div class="container mt-5">
-        <h2>Gestión de direcciones</h2>
-
-        <!-- Estado -->
-        <div>
-            <h3>Estados</h3>
-            <button type="button" id="addEstadoBtn" class="btn btn-secondary mt-2">Agregar Estado</button>
-            <button type="button" id="listEstadoBtn" class="btn btn-info mt-2" onclick="window.location.href='listado-estados.html'">Listar Estados</button>
-            
-            <div id="estadoInputContainer" style="display:none;">
-                <input type="text" id="estadoInput" class="form-control mt-2" placeholder="Escribe el nombre del Estado">
-                <button type="button" id="saveEstadoBtn" class="btn btn-primary mt-2">Guardar Estado</button>
-            </div>
-        </div>
-
-        <!-- Provincia -->
-        <div>
-            <h3>Provincias</h3>
-            <button type="button" id="addProvinciaBtn" class="btn btn-secondary mt-2">Agregar Provincia</button>
-            <button type="button" id="listProvinciaBtn" class="btn btn-info mt-2" onclick="window.location.href='listado-provincias.html'">Listar Provincias</button>
-
-            <div id="provinciaInputContainer" style="display:none;">
-                <input type="text" id="provinciaInput" class="form-control mt-2" placeholder="Escribe el nombre de la Provincia">
-                <button type="button" id="saveProvinciaBtn" class="btn btn-primary mt-2">Guardar Provincia</button>
-            </div>
-        </div>
-
-        <!-- Ciudad -->
-        <div>
-            <h3>Ciudades</h3>
-            <button type="button" id="addCityBtn" class="btn btn-secondary mt-2">Agregar Ciudad</button>
-            <button type="button" id="listCityBtn" class="btn btn-info mt-2" onclick="window.location.href='listado-ciudades.html'">Listar Ciudades</button>
-
-            <div id="cityInputContainer" style="display:none;">
-                <input type="text" id="cityInput" class="form-control mt-2" placeholder="Escribe el nombre de la Ciudad">
-                <button type="button" id="saveCityBtn" class="btn btn-primary mt-2">Guardar Ciudad</button>
-            </div>
-        </div>
-    </div>
+    <h1 style="text-align: center;">Elegeix un camp per a llistar</h1>
+    <button type="button" id="listEstadoBtn" class="btn btn-info mt-2" onclick="window.location.href='llista-estats.html'">Listar Estados</button>
+    <button type="button" id="listProvinciaBtn" class="btn btn-info mt-2" onclick="window.location.href='llista-provincies.html'">Listar Provincias</button>        
+    <button type="button" id="listCityBtn" class="btn btn-info mt-2" onclick="window.location.href='llista-ciutats.html'">Listar Ciudades</button>
 </body>
 </html>
