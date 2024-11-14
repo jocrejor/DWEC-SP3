@@ -119,7 +119,7 @@ function crearFormulario () {
                 td1.appendChild(td1_content);
                 input.setAttribute("id", "email");
                 input.setAttribute("name", "email");
-                input.setAttribute("maxlength", "20");
+                input.setAttribute("maxlength", "40");
                 input.setAttribute("required", "required"); 
             break;
             case 6:
