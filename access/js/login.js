@@ -12,16 +12,41 @@ function validar (){
 
 function validarEmail() {
     
-    return true;
-
+    const element = document.getElementById("email");
+      
+        if (!element.checkValidity()) {
+                if (element.validity.valueMissing){
+                    error(element,"Deus d'introduïr el correu electronic.");
+                }
+                if (element.validity.patternMismatch){
+                    error(element, "El email no és vàlid, exemple nom@domini.com");
+                }
+                return false;
+          return true;
+        }      
+    return false;
 }
-
 
 function validarContrasenya() {
-    
-    return true;
 
+    const element = document.getElementById("contrasenya");
+      
+        if (!element.checkValidity()) {
+                if (element.validity.valueMissing){
+                    error(element,"Deus d'introduïr la contrasenya ");
+                }
+                if (element.validity.patternMismatch){
+                    error(element, "La contrasenya no és vàlid, ha de contindre almenys 6 dígits ");
+                }
+                return false;
+          return true;
+        }      
+    return false;
 }
+
+// validar que existeixca el email i la contrasenya siga igual a la guardada
+
+
 
 function validar(e) {
     esborrarError();
