@@ -4,30 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="llistatPost.js" defer></script>
-    <title>Llistat Posts</title>
+    <script src="js/index.js" defer></script>
+    <title>Llistat Comentaris</title>
 </head>
 <body>
     <div class="container">
-        <h1>Llistat Posts</h1>
+        <h1>Llistat Comentaris</h1>
         
-        <button class="btn btn-primary my-3" id="mainBlog">Main Blog</button></br>
-        <button class=" btn btn-primary my-3" id="nouPost">Nou Post</button></br>
+        <button class="btn btn-primary my-3" id="mainBlog">Main Blog</button><br>
+        <button class="btn btn-primary my-3" id="nouComentari">Nou Comentari</button>
         <table class="table">
             <thead class="thead-light">
                 <tr>
                     <th scope="col">Esborrar</th>
                     <th scope="col">Modificar</th>
-                    <th scope="col">Titol</th>
-                    <th scope="col">Categoria</th>
+                    <th scope="col">Titol Post</th>
+                    <th scope="col">Comentari</th>
                 </tr>
             </thead>
             <tbody id="files">
-                <tr>
-                    <td><button class="btn btn-primary btn-lg">Esborrar</button></td>
-                    <td><button class="btn btn-primary btn-lg">Modificar</button></td>
-                    <td></td>
-                </tr>
+                <!-- Aquí se llenarán los comentarios -->
             </tbody>
         </table>
     </div>

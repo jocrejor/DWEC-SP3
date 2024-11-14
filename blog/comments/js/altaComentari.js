@@ -101,10 +101,10 @@ function enviarFormulari() {
 
     // Redirigir a la página llistatComentaris.html
     setTimeout(function () {
-        window.location.href = "llistatComentaris.html"; // Cambia la ruta si es necesario
+        window.location.href = "index.html"; // Cambia la ruta si es necesario
     }, 0);
 }
 
 function tornarArrere() {
-    window.location.href = "./../blog.html";
+    window.location.href = "index.html";
 }

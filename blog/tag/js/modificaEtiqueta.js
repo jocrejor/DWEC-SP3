@@ -66,5 +66,5 @@ function enviarFormulari() {
     localStorage.removeItem("modEtiqueta");
 
     // Redirigir de nuevo al listado
-    window.location.href = "llistatEtiquetes.html";
+    window.location.href = "index.html";
 }

@@ -12,7 +12,7 @@ function nouComentari() {
 
 // Nueva función para redirigir a mainBlog.html
 function irAMainBlog() {
-    window.location.assign("../blog.html");
+    window.location.assign("../index.html");
 }
 
 // Obtindre les dades

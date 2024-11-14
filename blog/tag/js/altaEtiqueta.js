@@ -93,5 +93,5 @@ function enviarFormulari() {
   }, 0);
 
   // Redirigir a llistatetiquetes.html
-  window.location.href = "llistatEtiquetes.html";
+  window.location.href = "index.html";
 }

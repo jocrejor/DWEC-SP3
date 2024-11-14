@@ -156,9 +156,9 @@ function cargarEtiquetas() {
     }, 0);
 
     // Redirigir a llistaposts.html
-    window.location.href = "llistatPost.html";
+    window.location.href = "index.html";
 }
 
 function tornarArrere() {
-    window.location.href = "llistatPost.html";
+    window.location.href = "index.html";
 }

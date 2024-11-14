@@ -92,5 +92,5 @@ function enviarFormulari() {
     localStorage.removeItem("modComentari"); 
 
     // Redirigir de nuevo al listado
-    window.location.href = "llistatComentaris.html";
+    window.location.href = "index.html";
 }
