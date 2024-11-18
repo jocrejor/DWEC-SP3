@@ -23,7 +23,7 @@ function obtindreordres() {
         // Boto de borrar
         let tdEsborrar = document.createElement("td");
         let btnEsborrar = document.createElement("button");
-        btnEsborrar.className = "btn btn-primary";
+        btnEsborrar.className = "btn btn-danger";
         let textBtnEsborrar = document.createTextNode("Esborrar");
          btnEsborrar.appendChild(textBtnEsborrar);
          btnEsborrar.addEventListener("click", function () { esborrar(ordre.id); });
@@ -33,7 +33,7 @@ function obtindreordres() {
         // Boto de modificar  
         let tdModificar = document.createElement("td");
         let btnModificar = document.createElement("button");
-        btnModificar.className = "btn btn-primary";
+        btnModificar.className = "btn btn-warning";
         let textmodifica = document.createTextNode("Modificar");
         btnModificar.appendChild(textmodifica);
         btnModificar.addEventListener("click", function () { modificar(ordre.id); });
@@ -46,10 +46,10 @@ function obtindreordres() {
             row.appendChild(CrearCelda(orderShipping.client_id));
             row.appendChild(CrearCelda(orderShipping.carrier_id));
             row.appendChild(CrearCelda(orderShipping.shipping_date));
+            row.appendChild(CrearCelda(ordre.product));
+            row.appendChild(CrearCelda(ordre.quantity));
             row.appendChild(CrearCelda(orderShipping.ordershipping_status));
         }
-        row.appendChild(CrearCelda(ordre.product));
-        row.appendChild(CrearCelda(ordre.quantity));
 
         tabla.appendChild(row);
     });
