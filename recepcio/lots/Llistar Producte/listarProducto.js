@@ -5,7 +5,7 @@ let arrayProducte = JSON.parse(localStorage.getItem('product')) || [ ];
 window.onload = function() {
     crearFormulari();
     mostrarProducte();
-    document.getElementById("visualitza").addEventListener("click", visualitza);  
+    /*document.getElementById("visualitza").addEventListener("click", visualitza);  */
 };
 
 // Crear formulari
@@ -35,7 +35,7 @@ function crearFormulari(){
     head.appendChild(fila);
 
     const encabezados = [
-        "Visualitza", 
+        /*"Visualitza", */
         "ID", 
         "Sku", 
         "Nom", 
@@ -65,51 +65,92 @@ function mostrarProducte() {
 
     // Genera una fila per a cada producte
     arrayProducte.forEach(product => {
+        //Si es lotorserial "Non" no ix a la taula
+        if (product.lotorserial === 'Non'){
+            return;
+        }
+
         let row = document.createElement("tr");
         tabla.appendChild(row);
 
-        // Creem les cel·les
-        let celda1 = document.createElement ("td");
-        let celda2 = document.createElement ("td");
-        let celda3 = document.createElement ("td");
-        let celda4 = document.createElement ("td");
-        let celda5 = document.createElement ("td");
+    // Creem les cel·les
+    /*let celda1 = document.createElement ("td");*/
+    let celda2 = document.createElement ("td");
+    let celda3 = document.createElement ("td");
+    let celda4 = document.createElement ("td");
+    let celda5 = document.createElement ("td");
 
-        row.appendChild (celda1);
-        row.appendChild (celda2);
-        row.appendChild (celda3);
-        row.appendChild (celda4);
-        row.appendChild (celda5);
+   /* row.appendChild (celda1);*/
+    row.appendChild (celda2);
+    row.appendChild (celda3);
+    row.appendChild (celda4);
+    row.appendChild (celda5);
 
-        // Crear el botó de la taula
-        let boton = document.createElement ("button");
-        boton.setAttribute ("id", "visualitza");
-        boton.setAttribute ("class", "btn btn-primary btn-lg");
-        let contenido = document.createTextNode ("Visualitza");
-        boton.addEventListener("click", () => {visualitzaProducte (product.id)})
-        boton.appendChild(contenido);
+    // Crear el botó de visualitza
+   /* let boton = document.createElement ("button");
+    boton.setAttribute ("id", "visualitza");
+    boton.setAttribute ("class", "btn btn-primary btn-lg");
+    let contenido = document.createTextNode ("Visualitza");
+    boton.addEventListener("click", () => {visualitzaProducte (product.id)})
+    boton.appendChild(contenido);
 
-        // Assignem la cel·la 1 al botó
-        celda1.appendChild(boton);
+    // Assignem la cel·la 1 al botó
+    celda1.appendChild(boton);*/
+
+    // Crear el botó de la serie/lot
+    let boto = document.createElement("button");
+    boto.setAttribute("id", "serie");
+    boto.setAttribute("class", "btn btn-primary btn-lg");
+
+    // Verifiquem el valor de 'lotorserial' per vore que s'escriu en el botó
+    if (product.lotorserial === "Lot") {
+        let botonTexto = "Lot"; 
+        let contenido2 = document.createTextNode(botonTexto);
+        
+        // Associa l'event al botó
+        boto.addEventListener("click", () => {
+            visualitzaProducte(product.lotorserial);
+        });
+        
+        // Afegim el text al botó
+        boto.appendChild(contenido2);
+        
+        // Assignem la cel.la 5 al botó
+        celda5.appendChild(boto);
+    } else if (product.lotorserial === "Serial") {
+        let botonTexto = "Serie"; 
+        let contenido2 = document.createTextNode(botonTexto);
+        
+        // Associa l'event al botó
+        boto.addEventListener("click", () => {
+            visualitzaProducte(product.lotorserial);
+        });
+        
+        // Afegim el text al botó
+        boto.appendChild(contenido2);
+        
+        // Assignem la cel.la 5 al botó
+        celda5.appendChild(boto);
+    } 
+        // Si 'lotorserial' es 'Non', mostrem el botó.
+
 
         // Creem els nodes de text per a les dades del producte
         let id = document.createTextNode(product.id);
         let sku = document.createTextNode(product.sku);  
         let name = document.createTextNode(product.name);
-        let lotorserial = document.createTextNode(product.lotorserial);
 
         // Afegim les dades a les cel·les corresponents
         celda2.appendChild(id);
         celda3.appendChild(sku);
         celda4.appendChild(name);
-        celda5.appendChild(lotorserial);
     });  
 }
 
 
 // Funció per visualitzar un producte en concret
-function visualitzaProducte (id){
-    window.location.href = "listarLote.html?id=" + id;
+function visualitzaProducte(id, name) {
+    window.location.href = "../Llistar lot/listarLote.html?id=" + id;
 }
 
 
