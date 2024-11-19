@@ -1,3 +1,5 @@
+const API = "http://localhost:3000/";
+
 let orderRception;
 let orderLineReception;
 let arrTemp = [];
@@ -32,28 +34,36 @@ function main() {
 }
 
 function cargarProductos() {
-  const products = JSON.parse(localStorage.getItem("Product")) || [];
+  const ENDPOINT = "Product";
   const productSelect = document.getElementById("product");
 
-  products.forEach((product) => {
-    const option = document.createElement("option");
-    option.value = product.name;
-    option.text = product.name;
-    option.setAttribute("id", product.id);
-    productSelect.appendChild(option);
-  });
+  fetch(API + ENDPOINT)
+    .then((res) => res.json())
+    .then((data) => {
+      data.forEach((product) => {
+        const option = document.createElement("option");
+        option.value = product.name;
+        option.text = product.name;
+        option.setAttribute("id", product.id);
+        productSelect.appendChild(option);
+      });
+    });
 }
 
 function cargarProveidor() {
-  const suppliers = JSON.parse(localStorage.getItem("Supplier")) || [];
   const supplierSelect = document.getElementById("supplier");
+  const ENDPOINT = "Supplier";
 
-  suppliers.forEach((supplier) => {
-    const option = document.createElement("option");
-    option.value = supplier.id;
-    option.text = supplier.name;
-    supplierSelect.appendChild(option);
-  });
+  fetch(API + ENDPOINT)
+    .then((res) => res.json())
+    .then((data) => {
+      data.forEach((supplier) => {
+        const option = document.createElement("option");
+        option.value = supplier.id;
+        option.text = supplier.name;
+        supplierSelect.appendChild(option);
+      });
+    });
 }
 
 function llistarOrden() {
@@ -61,10 +71,10 @@ function llistarOrden() {
 }
 
 function afegirProducte() {
-  var producto = document.getElementById("product").value;
-  var cantidadPedida = document.getElementById("quantity_ordered").value;
+  const producto = document.getElementById("product").value;
+  const cantidadPedida = document.getElementById("quantity_ordered").value;
 
-  let idObj = ++productID;
+  let idObj = Number(productID);
 
   let productoObj = {
     id: idObj,
