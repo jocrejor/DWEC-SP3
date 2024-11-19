@@ -12,7 +12,7 @@ function altaCliente(){
 
 //carga y retorna el objeto clientes
 function cargarClientes(){
-    const clientes = JSON.parse(localStorage.getItem('client')) || [];    //coge los clientes almacenados en el local storage y los devuelve
+    const clientes = JSON.parse(localStorage.getItem('Client')) || [];    //coge los clientes almacenados en el local storage y los devuelve
     return clientes;
 }
 
@@ -28,7 +28,7 @@ function eliminarCliente(indice){
 
 //guarda los clientes en el local storage
 function guardarClientes(clientes){
-    localStorage.setItem('client', JSON.stringify(clientes));     //guarda en un objeto el cliente
+    localStorage.setItem('Client', JSON.stringify(clientes));     //guarda en un objeto el cliente
 }
 
 //función para modificar un cliente en específico

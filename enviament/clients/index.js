@@ -8,7 +8,7 @@ function listarClient(){
 }
 
 function carregar () {
-    localStorage.setItem("client", JSON.stringify(Client));
+    localStorage.setItem("Client", JSON.stringify(Client));
     localStorage.setItem("state", JSON.stringify(State));
     localStorage.setItem("province", JSON.stringify(Province));
     localStorage.setItem("city", JSON.stringify(City));
