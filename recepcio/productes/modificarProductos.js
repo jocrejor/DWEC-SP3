@@ -117,9 +117,6 @@ function enviarFormulario() {
         localStorage.setItem("products", JSON.stringify(arrProductos));
     }
 
-    
     localStorage.removeItem("modProducto");
-    
-    
     window.location.assign("listaProductos.html");
 }

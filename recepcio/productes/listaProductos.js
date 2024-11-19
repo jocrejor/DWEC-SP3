@@ -1,17 +1,13 @@
 window.onload = main;
 
-
 function main() {
-
-document.getElementById("nuevoProducto").addEventListener("click",nuevoProducto);
-
-obtenerProductos();
-    }
+    document.getElementById("nuevoProducto").addEventListener("click",nuevoProducto);
+    obtenerProductos();
+}
 
 function nuevoProducto(){
     window.location.assign("altaProductos.html");
 }
-
 
 function obtenerProductos() {
     let arrProductos = JSON.parse(localStorage.getItem("Product")) || [];

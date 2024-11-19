@@ -8,11 +8,6 @@ function iniciar() {
 
 function validarSKU() {
     let sku = document.getElementById("sku");
-    /*if (!/^[A-Z0-9]{8,12}$/.test(sku.value)) {
-        error(sku, "El SKU debe tener entre 8 y 12 caracteres");
-        return false;
-    }
-    return true;*/
     if (!sku.checkValidity()) {
         if (sku.validity.valueMissing) {
             error2(sku, "Ha d'introduir el nom del SKU.");
@@ -30,28 +25,52 @@ function validarSKU() {
 
 function validarName() {
     let name = document.getElementById("name");
-    if (!/^[A-Za-z\s]{2,50}$/.test(name.value)) {
-        error(name, "El nombre debe tener entre 2 y 30 caracteres");
+    if (!name.checkValidity()) {
+        if (name.validity.valueMissing) {
+            error2(name, "Ha d'introduir el nom del SKU.");
+        }
+        else if (name.validity.patternMismatch) {
+            error2(name, "El SKU té que ser en majúscules i tindre entre 6 i 12 caràcters");
+        }
+        name.classList.add("error");
         return false;
     }
+    name.classList.remove("error");
+    name.classList.add("valid");
     return true;
 }
 
 function validarVol() {
     let volume = document.getElementById("volume");
-    if (!/^\d+(\.\d{1,2})?$/.test(volume.value)) {
-        error(volume, "Volumen no válido");
+    if (!volume.checkValidity()) {
+        if (volume.validity.valueMissing) {
+            error2(volume, "Ha d'introduir el nom del SKU.");
+        }
+        else if (volume.validity.patternMismatch) {
+            error2(volume, "El SKU té que ser en majúscules i tindre entre 6 i 12 caràcters");
+        }
+        volume.classList.add("error");
         return false;
     }
+    volume.classList.remove("error");
+    volume.classList.add("valid");
     return true;
 }
 
 function validarWeight() {
     let weight = document.getElementById("weight");
-    if (!/^\d+(\.\d{1,2})?$/.test(weight.value)) {
-        error(weight, "Peso no válido");
+    if (!weight.checkValidity()) {
+        if (weight.validity.valueMissing) {
+            error2(weight, "Ha d'introduir el nom del SKU.");
+        }
+        else if (weight.validity.patternMismatch) {
+            error2(weight, "El SKU té que ser en majúscules i tindre entre 6 i 12 caràcters");
+        }
+        weight.classList.add("error");
         return false;
     }
+    weight.classList.remove("error");
+    weight.classList.add("valid");
     return true;
 }
 
@@ -113,7 +132,6 @@ function enviarFormulario() {
     let arrProductos = JSON.parse(localStorage.getItem("products")) || [];
     arrProductos.push(product);
     localStorage.setItem("products", JSON.stringify(arrProductos));
-
     
     setTimeout(function (){
         document.getElementById("name").value = "";
