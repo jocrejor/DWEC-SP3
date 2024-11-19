@@ -95,7 +95,7 @@ function enviarFormulari() {
 
     localStorage.setItem("Posts", JSON.stringify(posts));
     localStorage.removeItem("modPost");
-    window.location.href = "llistatPost.html";
+    window.location.href = "index.html";
 }
 
 

@@ -16,11 +16,11 @@ function iniciar() {
 }
 
 function login() {
-    window.location.href = 'access/login.html';
+    window.location.href = './access/login.html';
 }
 
 function gestioUsuaris() {
-    window.location.href = 'users/gestioUsuaris.html';
+    window.location.href = './users/gestioUsuaris.html';
 }
 
 function verifyUser() {
@@ -231,9 +231,9 @@ function mostrarComentariosPorPost(postID, comentariosDiv) {
 
 //Canvis Hilariano per a que funcione lo de JaviManu
 function crearPost() {
-    window.location.href = "posts/index.html";
+    window.location.href = "./posts/index.html";
 }
 
 function crearEtiqueta() {
-    window.location.href = "tag/index.html";
+    window.location.href = "./tag/index.html";
 }

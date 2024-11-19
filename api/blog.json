@@ -1,32 +1,102 @@
 {
-    "User":{
-        "id": "1",
-        "name": "user1",
-        "email": "user1@example.com",
-        "password": "password1",
-        "user_profile": "admin"
-    },
-    "Post":{
-        "id": 1,
-        "title": "title1",
-        "photo": "photo1.png",
-        "cretion_date": "2024-04-23",
-        "creator_id": 1,
-        "description": "descriptionPost1",
-        "name": "user1"
-    },
-    "Comment":{
-        "id": 1,
-        "description": "descriptionComment1",
-        "post_id": 1
-    },
-    "Tag":{
-        "id": 1,
-        "name": "tag1"
-    },
-    "Post_Tag":{
-        "id": 1,
-        "post_id": 1,
-        "tag_id": 1
-    }
+    "Users": [
+        {
+            "id": "1",
+            "name": "user1",
+            "email": "user1@example.com",
+            "password": "password1",
+            "user_profile": "admin"
+        },
+        {
+            "id": "2",
+            "name": "user2",
+            "email": "user2@example.com",
+            "password": "password2",
+            "user_profile": "editor"
+        },
+        {
+            "id": "3",
+            "name": "user3",
+            "email": "user3@example.com",
+            "password": "password3",
+            "user_profile": "viewer"
+        }
+    ],
+    "Posts": [
+        {
+            "id": "1",
+            "title": "title1",
+            "photo": "photo1.png",
+            "creation_date": "2024-04-23",
+            "creator_id": "1",
+            "description": "descriptionPost1",
+            "name": "user1"
+        },
+        {
+            "id": "2",
+            "title": "title2",
+            "photo": "photo2.png",
+            "creation_date": "2024-05-10",
+            "creator_id": "2",
+            "description": "descriptionPost2",
+            "name": "user2"
+        },
+        {
+            "id": "3",
+            "title": "title3",
+            "photo": "photo3.png",
+            "creation_date": "2024-06-15",
+            "creator_id": "3",
+            "description": "descriptionPost3",
+            "name": "user3"
+        }
+    ],
+    "Comments": [
+        {
+            "id": "1",
+            "description": "descriptionComment1",
+            "post_id": "1"
+        },
+        {
+            "id": "2",
+            "description": "descriptionComment2",
+            "post_id": "2"
+        },
+        {
+            "id": "3",
+            "description": "descriptionComment3",
+            "post_id": "3"
+        }
+    ],
+    "Tags": [
+        {
+            "id": "1",
+            "name": "tag1"
+        },
+        {
+            "id": "2",
+            "name": "tag2"
+        },
+        {
+            "id": "3",
+            "name": "tag3"
+        }
+    ],
+    "Post_Tags": [
+        {
+            "id": "1",
+            "post_id": "1",
+            "tag_id": "1"
+        },
+        {
+            "id": "2",
+            "post_id": "2",
+            "tag_id": "2"
+        },
+        {
+            "id": "3",
+            "post_id": "3",
+            "tag_id": "3"
+        }
+    ]
 }

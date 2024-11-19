@@ -7,7 +7,7 @@ function main() {
 }
 
 function mainBlog() {
-  window.location.assign("../../index.html");
+  window.location.assign("../index.html");
 }
 
 
