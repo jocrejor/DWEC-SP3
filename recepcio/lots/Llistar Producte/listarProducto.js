@@ -102,7 +102,7 @@ function mostrarProducte() {
     boto.setAttribute("id", "serie");
     boto.setAttribute("class", "btn btn-primary btn-lg");
 
-    // Verifiquem el valor de 'lotorserial' per vore que s'escriu en el botó
+    // Verifiquem el valor de 'lotorserial' per vore que s'escriu al botó
     if (product.lotorserial === "Lot") {
         let botonTexto = "Lot"; 
         let contenido2 = document.createTextNode(botonTexto);
@@ -132,7 +132,7 @@ function mostrarProducte() {
         // Assignem la cel.la 5 al botó
         celda5.appendChild(boto);
     } 
-        // Si 'lotorserial' es 'Non', mostrem el botó.
+        // Si 'lotorserial' es 'Non', no mostrem el botó.
 
 
         // Creem els nodes de text per a les dades del producte
