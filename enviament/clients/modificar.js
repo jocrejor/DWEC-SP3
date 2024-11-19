@@ -6,7 +6,7 @@ function main() {
     // Recupera el ID del cliente desde localStorage y asegúrate de que sea un número
     const idCliente = parseInt(localStorage.getItem('idModificar'), 10);
     // Busca el cliente en el array Client utilizando el ID
-    const clientes = JSON.parse(localStorage.getItem('client')) || [];
+    const clientes = JSON.parse(localStorage.getItem('Client')) || [];
     const cliente = clientes.find(c => c.id === idCliente);
 
     if (cliente) {
@@ -492,12 +492,12 @@ function crearInputCodigoPostal(contenedor) {
 
 // enviar dades
 function enviarFormulari() {
-    const clientes = JSON.parse(localStorage.getItem('client')) || [];
+    const clientes = JSON.parse(localStorage.getItem('Client')) || [];
     const idCliente = parseInt(localStorage.getItem('idModificar'), 10);
     var cliente = clientes.find(c => c.id === idCliente);
     //inicializa la variable para el mensaje de error
     let mensajeError = "";
-
+    fromIndex < -array.length
     const dni = document.getElementById('nif').value;
     const telefono = document.getElementById('phone').value;
     const correo = document.getElementById('email').value;
@@ -548,7 +548,7 @@ function enviarFormulari() {
     clientes[idCliente - 1].city = document.getElementById('city').value;
     clientes[idCliente - 1].cp = document.getElementById('cp').value;
 
-    localStorage.setItem('client',  JSON.stringify(cliente));
+    localStorage.setItem('Client',  JSON.stringify(cliente));
 
     setTimeout(function (){
         listarCliente();
