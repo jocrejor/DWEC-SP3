@@ -8,7 +8,7 @@ function main() {
 
   listTipus();
 
-  // recuperar les dades del locastorage
+  // recuperar les dades del localStorage
   const modUser = JSON.parse(localStorage.getItem("modUser"));
 
   document.getElementById("nom").setAttribute("value", modUser.name);
@@ -93,26 +93,13 @@ function validarPw() {
   return false;
 }
 
-function validarRol() {
-  const rol = document.getElementById("rol");
-
-  if (!rol.checkValidity()) {
-    if (rol.validity.valueMissing) error(rol, "Tria un' opció!");
-
-    return false;
-  }
-
-  return true;
-}
-
 function validar(e) {
   esborrarError();
   e.preventDefault();
   if (
     validarNom() &&
     validarEmail() &&
-    validarPw() &&
-    validarRol()
+    validarPw()
     // validarImatge()
   ) {
     enviarFormulari();
@@ -146,7 +133,7 @@ function enviarFormulari() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("pw").value;
   const select = document.getElementById("rol");
-  const rol = select.options[select.selectedIndex].id;
+  const rol = select.options[select.selectedIndex] ? select.options[select.selectedIndex].id : "0";
 
   modUser.name = nom;
   modUser.email = email;
@@ -157,8 +144,8 @@ function enviarFormulari() {
   data.users[index] = modUser;
 
   localStorage.setItem("data", JSON.stringify(data));
-  // esborrar el localstorage
-  localStorage.removeItem("modAuto");
+  // esborrar el localStorage
+  localStorage.removeItem("modUser");
 
   // tornar al llistat
   window.location.assign("llistatUsuaris.html");

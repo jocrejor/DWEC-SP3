@@ -7,7 +7,7 @@ function iniciar() {
 }
 
 function home() {
-  location.assign("../index.html");
+  location.assign(".../index.html");
 }
 
 class User {
@@ -80,7 +80,7 @@ function validarRepEmail() {
 
   if (!repEmail.value == email.value) {
     if (repEmail.validity.valueMissing) error(repEmail, "Ompli el camp!");
-    else error(repEmail, "El correo no és lo mateix que el primer");
+    else error(repEmail, "El correu no és el mateix que el primer");
   } else {
     return true;
   }
@@ -114,43 +114,13 @@ function validarRepPw() {
 
   if (!repPw.value == pw.value) {
     if (repPw.validity.valueMissing) error(repPw, "Ompli el camp!");
-    else error(repPw, "El correo no és lo mateix que el primer");
+    else error(repPw, "La contrasenya no és la mateixa que la primera");
   } else {
     return true;
   }
 
   return false;
 }
-
-function validarRol() {
-  const rol = document.getElementById("rol");
-
-  if (!rol.checkValidity()) {
-    if (rol.validity.valueMissing) error(rol, "Tria un' opció!");
-
-    return false;
-  }
-
-  return true;
-}
-
-// function validarImatge() {
-//   const imatgeInput = document.getElementById("imatge");
-//   const imatge = imatgeInput.files[0];
-//   const validTypes = ["image/jpeg", "image/png"];
-
-//   if (!imatge) {
-//     error(imatgeInput, "Per favor, tria un'imatge");
-//     return false;
-//   }
-
-//   if (!validTypes.includes(imatge.type)) {
-//     error(imatgeInput, "Per favor, tria un'imatge amb un format  .jpeg o .png");
-//     return false;
-//   }
-
-//   return true;
-// }
 
 function validar(e) {
   esborrarError();
@@ -160,8 +130,7 @@ function validar(e) {
     validarEmail() &&
     validarRepEmail() &&
     validarPw() &&
-    validarRepPw() &&
-    validarRol()
+    validarRepPw()
     // validarImatge()
   ) {
     enviarFormulari();
@@ -197,7 +166,7 @@ function enviarFormulari() {
   const email = document.getElementById("email").value;
   const pw = document.getElementById("pw").value;
   const select = document.getElementById("rol");
-  const rol = select.options[select.selectedIndex].id;
+  const rol = select.options[select.selectedIndex] ? select.options[select.selectedIndex].id : "0";
   const imatge = "img/face.png";
 
   const newUser = new User(lastId + 1, nom, email, pw, rol, imatge);
