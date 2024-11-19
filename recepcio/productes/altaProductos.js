@@ -8,10 +8,23 @@ function iniciar() {
 
 function validarSKU() {
     let sku = document.getElementById("sku");
-    if (!/^[A-Z0-9]{8,12}$/.test(sku.value)) {
+    /*if (!/^[A-Z0-9]{8,12}$/.test(sku.value)) {
         error(sku, "El SKU debe tener entre 8 y 12 caracteres");
         return false;
     }
+    return true;*/
+    if (!sku.checkValidity()) {
+        if (sku.validity.valueMissing) {
+            error2(sku, "Ha d'introduir el nom del SKU.");
+        }
+        else if (sku.validity.patternMismatch) {
+            error2(sku, "El SKU té que ser en majúscules i tindre entre 6 i 12 caràcters");
+        }
+        sku.classList.add("error");
+        return false;
+    }
+    sku.classList.remove("error");
+    sku.classList.add("valid");
     return true;
 }
 
@@ -65,7 +78,7 @@ function validar(e) {
     }
 }
 
-function error(element, mensaje) {
+function error2(element, mensaje) {
     const textError = document.createTextNode(mensaje);
     const elementError = document.getElementById("mensajeError");
     elementError.appendChild(textError);

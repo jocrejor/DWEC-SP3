@@ -98,4 +98,3 @@ function modificar(id, name, description, volume, weight, lotoreserial, sku, ima
     localStorage.setItem("modProducto", JSON.stringify(product));
     window.location.assign("modificarProductos.html");
 }
-
