@@ -69,30 +69,7 @@ function validarAdress() {
     }
     return true; 
 }
-function validarId() {
-    var idValidar = document.getElementById("id_pasillo");
-    if (!idValidar.checkValidity()) {
-        if (idValidar.validity.valueMissing) {
-            error(idValidar, "Deus d'introduïr dos números.");
-        }
-        if (idValidar.validity.patternMismatch) {
-            error(idValidar, "El ID ha de tenir exactament 2 números.");
-        }
-        return false;
-    }
-    return true;
-}
 
-function validarNom() {
-    var element = document.getElementById("name_");
-    if (!element.checkValidity()) {
-        if (element.validity.valueMissing) {
-            error(element, "Deus d'introduïr un nom.");
-        }
-        return false;
-    }
-    return true;
-}
 
 function error(element, missatge) {
     const textError = document.createTextNode(missatge);
@@ -119,8 +96,6 @@ function gravarMagatzem() {
         name: document.getElementById("name").value,
         tipus: document.getElementById("tipus").value,
         adress: document.getElementById("adress").value,
-        id_pasillo: document.getElementById("id_pasillo").value,
-        name_: document.getElementById("name_").value,
     };
 
     magatzems.push(nouMagatzem); 

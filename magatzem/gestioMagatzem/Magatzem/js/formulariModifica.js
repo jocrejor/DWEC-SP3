@@ -8,8 +8,6 @@ function main() {
         document.getElementById("name").value = modifica.name || "";
         document.getElementById("tipus").value = modifica.tipus || "";
         document.getElementById("adress").value = modifica.adress || "";
-        document.getElementById("id_pasillo").value = modifica.id_pasillo || "";
-        document.getElementById("name_").value = modifica.name_ || "";
     } else {
         alert("No s'ha trobat el registre a modificar.");
         window.location.assign("formulariLlista.html");
@@ -70,30 +68,6 @@ function validarAdress() {
     }
     return true;
 
-}
-function validarId() {
-    var idValidar = document.getElementById("id_pasillo");
-    if (!idValidar.checkValidity()) {
-        if (idValidar.validity.valueMissing) {
-            error(idValidar, "Deus d'introduïr dos números.");
-        }
-        if (idValidar.validity.patternMismatch) {
-            error(idValidar, "El ID ha de tenir exactament 2 números.");
-        }
-        return false;
-    }
-    return true;
-}
-
-function validarNom() {
-    var element = document.getElementById("name_");
-    if (!element.checkValidity()) {
-        if (element.validity.valueMissing) {
-            error(element, "Deus d'introduïr un nom.");
-        }
-        return false;
-    }
-    return true;
 }
 
 function btnGuardar(e) {
