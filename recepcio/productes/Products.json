@@ -1,0 +1,65 @@
+
+{
+    "Product":[
+        
+         {
+            "id": 1,
+            "sku": "SKU12345",
+            "name": "Producto uno",
+            "description": "Este es el primer producto",
+            "volume": 10.50,
+            "weight": 2.75,
+            "lotorserial": "Non",
+            "image_url": "https://www.ejemplo.com/images/producto1.jpg"
+        
+    },
+    
+         {
+            "id": 2,
+            "sku": "SKU67890",
+            "name": "Producto dos",
+            "description": "Este es el segundo producto",
+            "volume": 20.00,
+            "weight": 3.50,
+            "lotorserial": "Lot",
+            "image_url": "https://www.ejemplo.com/images/producto2.jpg"
+        
+    },
+    
+         {
+            "id": 3,
+            "sku": "SKU54321",
+            "name": "Producto tres",
+            "description": "Este es el tercer producto",
+            "volume": 15.75,
+            "weight": 4.10,
+            "lotorserial": "Serial",
+            "image_url": "https://www.ejemplo.com/images/producto3.jpg"
+        
+    },
+    
+         {
+            "id": 4,
+            "sku": "SKU98765",
+            "name": "Producto cuatro",
+            "description": "Este es el cuarto producto",
+            "volume": 5.20,
+            "weight": 1.85,
+            "lotorserial": "Non",
+            "image_url": "https://www.ejemplo.com/images/producto4.jpg"
+        
+    },
+    
+         {
+            "id": 5,
+            "sku": "SKU11111",
+            "name": "Producto cinco",
+            "description": "Este es el quinto producto",
+            "volume": 12.30,
+            "weight": 2.95,
+            "lotorserial": "Serial",
+            "image_url": "https://www.ejemplo.com/images/producto5.jpg"
+        
+        }
+    ]
+}

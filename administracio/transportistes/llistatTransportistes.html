@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Llistat de transportistes</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script type="text/javascript" src="./llistatTransportistes.js"></script>
+    <style>
+        .error {
+            border: solid 2px #FF0000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Llistat de transportistes</h1>
+        <button class="btn btn-primary my-3" id="nouTransportista">Nou Transportista</button><br>
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Esborrar</th>
+                    <th scope="col">Modificar</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">NIF</th>
+                    <th scope="col">Telèfon</th>
+                    <th scope="col">Correu electrònic</th>
+                    <th scope="col">Estat</th>
+                    <th scope="col">Província</th>
+                    <th scope="col">Ciutat</th>
+                </tr>
+            </thead>
+            <tbody id="files">
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

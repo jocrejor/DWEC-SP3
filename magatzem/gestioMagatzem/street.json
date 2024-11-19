@@ -1,0 +1,9 @@
+{ "street":[
+    {"id":"01","name":"Informática"},
+    {"id":"02","name":"Tecnologia"},
+    {"id":"03","name":"Zona de càrrega i descàrrega"},
+    {"id":"04","name":"Zona d'emmagatzematge"},
+    {"id":"05","name": "Zona de recepción de mercancías "},
+    {"id": "06","name": "Zona de preparació de comandes"}
+]
+}

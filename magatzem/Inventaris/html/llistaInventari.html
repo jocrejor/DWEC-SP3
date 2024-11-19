@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Llista d'Inventari</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="../js/scriptLlistaInventari.js" defer></script>
+</head>
+
+<body>
+    <div class="container"> <!--Container perque en Javi estem donant això -->
+        <h1>Llista d'Inventari</h1>
+        <table class="table table-striped"> <!--He mirat taules per bootstrap i bue ni es posa, guai-->
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="selectAll" /></th> <!-- Checkbox per a  seleccionar-ho tot -->
+                    <th>ID</th>
+                    <th>ID de l'Inventari</th>
+                    <th>Quantitat Real</th>
+                    <th>Raó de l'Inventari</th>
+                    <th>ID del Operador</th>
+                    <th>Creat per</th>
+                    <th>Data de l'Inventari</th>
+                    <th>Estat</th>
+                </tr>
+            </thead>
+            <tbody id="taulaInventari"> <!--Faig tbody perq en un foro de stackOverFlow ho fa un guiri i li va de locos-->
+                <!-- Les dades de l'inventari es carregarán açí des-de scriptLlistaInventari.js que s'agregarán des-de LocalStorage -->
+            </tbody>
+        </table>
+        <button type="submit" id="tornar" class="btn btn-primary">Tornar</button>
+        <button type="button" id="finalitzar" class="btn btn-primary">Finalitzar</button> <!--Aquest botó es per, quan s'ha seleccionat les files corresponents, poder finalitzar la tasca i eliminar la fila-->
+        <button type="button" id="guardar" class="btn btn-primary">Guardar</button> <!--Aquest botó es per, guardar tota l'informació que s'ha canviat finalment-->
+    </div>
+</body>
+</html>
+
+
+
+
+
