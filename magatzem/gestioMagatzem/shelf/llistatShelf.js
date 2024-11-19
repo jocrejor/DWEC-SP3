@@ -33,6 +33,9 @@ function obtindreShelf () {
             <td><button type="button" class="btn btn-primary btn-lg" onclick="modificar('${shelf.id}', '${shelf.nom}')">Modificar</button></td>
             <td>${shelf.id}</td>
             <td>${shelf.nom}</td>
+            <td>${shelf.id_carrer}</td>
+            <td>${shelf.adreça}</td>
+            <td>${shelf.tipus}</td>
         `;
         tbody.appendChild(row);
     });
@@ -52,8 +55,8 @@ function esborrar (id) {
     row.parentNode.removeChild(row);
 }
 
-function modificar (id, nom) {
-    const modShelf = { id: id, nom: nom };
+function modificar (id, nom,id_carrer,adreça,tipus) {
+    const modShelf = { id: id, nom: nom, id_carrer:id_carrer, adreça:adreça, tipus:tipus };
     //guardar valors al local storage 
     localStorage.setItem("modShelf", JSON.stringify(modShelf));
     

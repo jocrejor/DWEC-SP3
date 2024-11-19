@@ -28,11 +28,40 @@ function validarNom () {
     return true;
 }
 
+function validarCarrer() {
+    const id = document.getElementById("id_carrer");
+
+    if (id.value.trim() === "" || isNaN(id.value) || id.value < 1 || id.value > 99) {
+        error(id, "L'ID del carrer ha de ser un número entre 1 i 99.");
+        return false;
+    }
+    return true;
+
+}
+
+function validarAdreça() {
+    const nom = document.getElementById("adreça");
+    if (nom.value.trim() === "" || !nom.checkValidity()) {
+        error(nom, "La adreça ha de tindre entre 2 i 30 caràcters.");
+        return false;
+    }
+    return true;
+}
+
+function validarTIpus() {
+    const nom = document.getElementById("adreça");
+    if (nom.value.trim() === "" || !nom.checkValidity()) {
+        error(nom, "La adreça ha de tindre entre 2 i 30 caràcters.");
+        return false;
+    }
+    return true;
+}
+
 function validar (e) {
     esborrarError();
     e.preventDefault();
 
-    if (validarNom() && validarID()) {
+    if (validarNom() && validarID() && validarCarrer() && validarAdreça() && validarTIpus())  {
         enviarFormulari();
         return true;
     }
@@ -62,8 +91,11 @@ function esborrarError () {
 function enviarFormulari () {
     const nom = document.getElementById("nom").value;
     const id = document.getElementById("id").value;
+    const id_carrer = document.getElementById("id_carrer").value;
+    const adreça = document.getElementById("adreça").value;
+    const tipus = document.getElementById("tipus").value;
 
-    const novaEstanteria = { id: id, nom: nom };
+    const novaEstanteria = { id: id, nom: nom ,id_carrer: id_carrer, adreça: adreça, tipus: tipus};
 
     let arrShelfs = JSON.parse(localStorage.getItem("shelfs")) || [];
     arrShelfs.push(novaEstanteria);
@@ -74,6 +106,9 @@ function enviarFormulari () {
     setTimeout(function () {
         document.getElementById("nom").value = "";
         document.getElementById("id").value = "";
+        document.getElementById("id_carrer").value = "";
+        document.getElementById("adreça").value = "";
+        document.getElementById("tipus").value = "";
     }, 1000);
 
     alert("Estanteria gravada correctament.");

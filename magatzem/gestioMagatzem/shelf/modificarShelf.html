@@ -31,6 +31,27 @@
                     <input type="text" class="form-control" id="nom" pattern="^[A-Za-z0-9 ]{2,30}" required><br>
                 </div>
             </div>
+            
+            <div class="form-group row">
+                <label for="id" class="col-sm-2 col-form-label">ID Carrer</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" id="id_carrer" min="1" max="99" required><br>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="nom" class="col-sm-2 col-form-label">Adreça</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="adreça" pattern="^[A-Za-z0-9\s.,-]{2,100}" required><br>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="nom" class="col-sm-2 col-form-label">Tipus</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="tipus" pattern="^[A-Za-z0-9]{2,30}" required><br>
+                </div>
+            </div>
 
             <h5 id="missatgeError" class="text-danger"></h5>
             <button type="submit" id="btnGravar" class="btn btn-primary">Modificar</button>
