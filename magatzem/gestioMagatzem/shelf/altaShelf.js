@@ -48,7 +48,7 @@ function validarAdreça() {
     return true;
 }
 
-function validarTIpus() {
+function validarTipus() {
     const nom = document.getElementById("adreça");
     if (nom.value.trim() === "" || !nom.checkValidity()) {
         error(nom, "La adreça ha de tindre entre 2 i 30 caràcters.");
