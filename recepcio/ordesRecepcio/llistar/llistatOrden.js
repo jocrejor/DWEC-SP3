@@ -1,5 +1,8 @@
 window.onload = main;
 
+const API = "http://localhost:3000/";
+const ENDPOINT = "OrderReception";
+
 function main() {
   document.getElementById("nuevaOrden").addEventListener("click", nuevaOrden);
   obtindreOrdens();
@@ -10,62 +13,60 @@ function nuevaOrden() {
 }
 
 function obtindreOrdens() {
-  fetch("http://localhost:3000/OrderReception")
+  fetch(API + ENDPOINT)
     .then((response) => response.json())
     .then((data) => {
-      data.forEach((order) => {
-        var linea = document.createElement("tr");
-        linea.setAttribute("id", order.id);
-
-        var esborrarTD = document.createElement("td");
-        var buttonEsborrar = document.createElement("button");
-        buttonEsborrar.textContent = "Esborrar";
-        buttonEsborrar.className = "btn btn-primary btn-lg";
-        esborrarTD.appendChild(buttonEsborrar);
-        buttonEsborrar.addEventListener("click", () => esborrarOrdre(order.id));
-
-        var modificarTD = document.createElement("td");
-        var buttonModificar = document.createElement("button");
-        buttonModificar.textContent = "Modificar";
-        buttonModificar.className = "btn btn-primary btn-lg";
-        buttonModificar.addEventListener("click", () =>
-          modificarOrdre(order.id)
-        );
-        modificarTD.appendChild(buttonModificar);
-
-        var visualizarTD = document.createElement("td");
-        var buttonVisualizar = document.createElement("button");
-        buttonVisualizar.textContent = "Visualitzar";
-        buttonVisualizar.className = "btn btn-primary btn-lg";
-        visualizarTD.appendChild(buttonVisualizar);
-        buttonVisualizar.addEventListener("click", () =>
-          visualizarOrdre(order.id)
-        );
-
-        var id = document.createElement("td");
-        var textId = document.createTextNode(order.id);
-        id.appendChild(textId);
-
-        var proveidor = document.createElement("td");
-        var textProveidor = document.createTextNode(order.supplier_id);
-        proveidor.appendChild(textProveidor);
-
-        var dataEstimada = document.createElement("td");
-        var textDataEstimada = document.createTextNode(
-          order.estimated_reception_date
-        );
-        dataEstimada.appendChild(textDataEstimada);
-
-        linea.appendChild(esborrarTD);
-        linea.appendChild(modificarTD);
-        linea.appendChild(visualizarTD);
-        linea.appendChild(id);
-        linea.appendChild(proveidor);
-        linea.appendChild(dataEstimada);
-
-        files.appendChild(linea);
-      });
+      data.forEach((order) => crearLinea(order));
     });
+}
+
+function crearLinea(order) {
+  const linea = document.createElement("tr");
+  linea.setAttribute("id", order.id);
+
+  const esborrarTD = document.createElement("td");
+  const buttonEsborrar = document.createElement("button");
+  buttonEsborrar.textContent = "Esborrar";
+  buttonEsborrar.className = "btn btn-primary btn-lg";
+  esborrarTD.appendChild(buttonEsborrar);
+  buttonEsborrar.addEventListener("click", () => esborrarOrdre(order.id));
+
+  const modificarTD = document.createElement("td");
+  const buttonModificar = document.createElement("button");
+  buttonModificar.textContent = "Modificar";
+  buttonModificar.className = "btn btn-primary btn-lg";
+  buttonModificar.addEventListener("click", () => modificarOrdre(order.id));
+  modificarTD.appendChild(buttonModificar);
+
+  const visualizarTD = document.createElement("td");
+  const buttonVisualizar = document.createElement("button");
+  buttonVisualizar.textContent = "Visualitzar";
+  buttonVisualizar.className = "btn btn-primary btn-lg";
+  visualizarTD.appendChild(buttonVisualizar);
+  buttonVisualizar.addEventListener("click", () => visualizarOrdre(order.id));
+
+  const id = document.createElement("td");
+  const textId = document.createTextNode(order.id);
+  id.appendChild(textId);
+
+  const proveidor = document.createElement("td");
+  const textProveidor = document.createTextNode(order.supplier_id);
+  proveidor.appendChild(textProveidor);
+
+  const dataEstimada = document.createElement("td");
+  const textDataEstimada = document.createTextNode(
+    order.estimated_reception_date
+  );
+  dataEstimada.appendChild(textDataEstimada);
+
+  linea.appendChild(esborrarTD);
+  linea.appendChild(modificarTD);
+  linea.appendChild(visualizarTD);
+  linea.appendChild(id);
+  linea.appendChild(proveidor);
+  linea.appendChild(dataEstimada);
+
+  files.appendChild(linea);
 }
 
 function esborrarOrdre(id) {
@@ -101,22 +102,34 @@ function esborrarOrdre(id) {
 }
 
 function modificarOrdre(id) {
-  const orderRception = JSON.parse(localStorage.getItem("orderRception")) || [];
-  const orderReceptionSelected = orderRception.find((order) => order.id === id);
+  fetch(API + ENDPOINT)
+    .then((res) => res.json())
+    .then((data) => {
+      const orderReceptionSelected = data.find((order) => order.id === id);
 
-  // Guardar el objeto seleccionado en el localStorage
-  if (orderReceptionSelected) {
-    localStorage.setItem("modOrden", JSON.stringify(orderReceptionSelected));
-    window.location.assign("../modificar/modificar.html");
-  }
+      // Guardar el objeto seleccionado en el localStorage
+      if (orderReceptionSelected) {
+        localStorage.setItem(
+          "modOrden",
+          JSON.stringify(orderReceptionSelected)
+        );
+        window.location.assign("../modificar/modificar.html");
+      }
+    });
 }
 
 function visualizarOrdre(id) {
-  const arrOrden = JSON.parse(localStorage.getItem("orderRception")) || [];
-  const ordenSeleccionada = arrOrden.find((order) => order.id === id);
+  fetch(API + ENDPOINT)
+    .then((res) => res.json())
+    .then((data) => {
+      const ordenSeleccionada = data.find((order) => order.id === id);
 
-  if (ordenSeleccionada) {
-    localStorage.setItem("ordenVisualizar", JSON.stringify(ordenSeleccionada));
-    window.location.assign("../visualitzar/visualizar.html");
-  }
+      if (ordenSeleccionada) {
+        localStorage.setItem(
+          "ordenVisualizar",
+          JSON.stringify(ordenSeleccionada)
+        );
+        window.location.assign("../visualitzar/visualizar.html");
+      }
+    });
 }
