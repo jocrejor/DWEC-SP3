@@ -1,9 +1,54 @@
 window.onload = iniciar;
 
+async function postData(endPoint, data = {}) {
+    try {
+      const response = await fetch('http://localhost:5002/'+ endPoint, {
+        method: 'POST',  // Método HTTP
+        headers: {
+          'Content-Type': 'application/json'  // Tipo de contenido
+        },
+        body: JSON.stringify(data)  // Datos JSON a enviar
+      });
+  
+      if (!response.ok) {
+        throw new Error('Error en la solicitud POST');
+      }
+  
+      const result = await response.json();  // Espera la conversión de la respuesta a JSON
+      console.log(result);  // Trabaja con la respuesta
+  
+    } catch (error) {
+      console.error('Error:', error);  // Manejo de errores
+    }
+  }
+  
+  // Acces a les dades
+  async function getNewId(endPoint) {
+    try {
+      const response = await fetch('http://localhost:5002/'+ endPoint );  // Reemplaza 'data.json' con la ruta de tu archivo
+  
+      if (!response.ok) {
+        throw new Error('Error al obtener el archivo JSON');
+      }
+  
+      const data =  await response.json();
+      const maxId = data.reduce((max, ele) => 
+        (ele.id > max.id ? ele: max), data[0]);
+      const newId= ++ maxId.id;
+      return newId + '' ;
+  
+    } catch (error) {
+      console.error('Error:', error);  // Manejo de errores
+    }
+  }
+
+  
+
 function iniciar() {
     document.getElementById("signup").addEventListener("click", validar);
     document.getElementById("tornar-arrere").addEventListener("click", tornarArrere);
 }
+
 
 function validarName() {
     var element = document.getElementById("name");
@@ -62,16 +107,17 @@ function validarRepeatPassword() {
 }
 
 function validar(e) {
-    e.preventDefault();
+    
     borrarError();
 
     if (validarName() && validarEmail() && validarPassword() && validarRepeatPassword() && confirm("Confirma si vols enviar el formulari")) {
         enviarFormulari();
-        window.location.href = 'login.html';
+        console.log("hola");
+      //  window.location.href = '../access/login.html';
         return true;
-    }
-
-    else {
+    } else {
+        console.log("Adios");
+        e.preventDefault();
         return false;
     }
 }
@@ -84,7 +130,7 @@ function error(element) {
 
 function error2(element, missatge) {
     document.getElementById("missatgeError").innerHTML = missatge;
-    element.classList.add("error");
+    element.className = "error";
     element.focus();
 }
 
@@ -109,9 +155,14 @@ function enviarFormulari() {
         role: "Publicador"
     };
 
+
     var storedUsers = localStorage.getItem("users");
     var users = storedUsers ? JSON.parse(storedUsers) : [];
 
+    /*let users = JSON.parse(localStorage.getItem("users")) || [];*/
+
+    console.log(storedUsers);
+    console.log(users);
     // Asignar rol de "Administrador" si es el primer usuario
     if (users.length === 0) {
         user.role = "Administrador";
@@ -122,7 +173,7 @@ function enviarFormulari() {
     } else {
         users = [];
     }
-
+    
     if (users.length > 0) {
         var maxId = 0;
         for (var i = 0; i < users.length; i++) {
@@ -136,9 +187,10 @@ function enviarFormulari() {
     }
 
     users.push(user);
+    console.log(user);
     localStorage.setItem("users", JSON.stringify(users));
 }
 
 function tornarArrere() {
-    window.location.href = "login.html";
+    window.location.href = "../access/login.html";
 }
