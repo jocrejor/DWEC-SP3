@@ -125,13 +125,13 @@ function validar(e) {
 function error(element) {
     document.getElementById("missatgeError").innerHTML = element.validationMessage;
     element.classList.add("error");
-    element.focus();
+    //element.focus();
 }
 
 function error2(element, missatge) {
     document.getElementById("missatgeError").innerHTML = missatge;
     element.className = "error";
-    element.focus();
+    //element.focus();
 }
 
 function borrarError() {
@@ -142,6 +142,8 @@ function borrarError() {
     document.getElementById("missatgeError").replaceChildren();
 }
 
+
+/*
 function enviarFormulari() {
     var name        = document.getElementById("name").value;
     var email       = document.getElementById("email").value;
@@ -159,7 +161,7 @@ function enviarFormulari() {
     var storedUsers = localStorage.getItem("users");
     var users = storedUsers ? JSON.parse(storedUsers) : [];
 
-    /*let users = JSON.parse(localStorage.getItem("users")) || [];*/
+    /*let users = JSON.parse(localStorage.getItem("users")) || [];
 
     console.log(storedUsers);
     console.log(users);
@@ -190,6 +192,33 @@ function enviarFormulari() {
     console.log(user);
     localStorage.setItem("users", JSON.stringify(users));
 }
+*/
+
+async function enviarFormulari () {
+    let name        = document.getElementById("name").value;
+    let email       = document.getElementById("email").value;
+    let password    = document.getElementById("password").value;
+
+    try{
+        let newId   = await getNewId('User') || "0";
+        console.log(newId);
+        let user = {
+            id: newId,
+            name: name,
+            email: email,
+            password: password,
+            user_profile: newId == 0 ? "Administrador" : "Publicador"
+        };
+        console.log(user);
+        await postData('User', user);
+        //window.location.href = '../access/login.html';
+    } catch (error) {
+        console.error('Error al registrar usuario: ', error);
+    }
+
+
+}
+
 
 function tornarArrere() {
     window.location.href = "../access/login.html";
