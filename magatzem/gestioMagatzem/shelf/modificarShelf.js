@@ -9,10 +9,10 @@ function iniciar() {
 
     if (estanteria) {
         document.getElementById("id").value = estanteria.id;
-        document.getElementById("nom").value = estanteria.nom || ""; 
-        document.getElementById("adreça").value = estanteria.adreça || ""; 
-        document.getElementById("tipus").value = estanteria.tipus || ""; 
-        document.getElementById("id_carrer").value = estanteria.id_carrer || ""; 
+        document.getElementById("nom").value = estanteria.nom || "";
+        document.getElementById("adreça").value = estanteria.adreça || "";
+        document.getElementById("tipus").value = estanteria.tipus || "";
+        document.getElementById("id_carrer").value = estanteria.id_carrer;
     }
 }
 
@@ -51,7 +51,7 @@ function validar(e) {
     esborrarError();
     e.preventDefault();
 
-    if (validarNom() && validarAdreça() && validarTipus()) { 
+    if (validarNom() && validarAdreça() && validarTipus()) {
         enviarFormulari();
         return true;
     } else {
@@ -82,19 +82,19 @@ function esborrarError() {
 function enviarFormulari() {
     const id = document.getElementById("id").value;
     const nom = document.getElementById("nom").value;
-    const id_carrer = document.getElementById("id_carrer").value; 
+    const id_carrer = document.getElementById("id_carrer").value;
     const adreça = document.getElementById("adreça").value;
     const tipus = document.getElementById("tipus").value;
 
     let arrShelfs = JSON.parse(localStorage.getItem("shelfs")) || [];
 
     const index = arrShelfs.findIndex(shelf => shelf.id === id.toString());
-
     
+
+    arrShelfs[index].id_carrer = id_carrer;
     arrShelfs[index].nom = nom;
-    arrShelfs[index].adreça = adreça; 
-    arrShelfs[index].tipus = tipus; 
-    arrShelfs[index].id_carrer = id_carrer; 
+    arrShelfs[index].adreça = adreça;
+    arrShelfs[index].tipus = tipus;
 
     localStorage.setItem("shelfs", JSON.stringify(arrShelfs));
 
