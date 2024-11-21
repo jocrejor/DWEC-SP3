@@ -1,5 +1,6 @@
 const API = "http://localhost:3000/";
-const ENDPOINT = "OrderReception/";
+const orderReceptionEP = "OrderReception/";
+const orderLineReceptionEP = "OrderLineReception/";
 
 let orderRception;
 let orderLineReception;
@@ -9,9 +10,7 @@ var productID = 0;
 var idorderRception;
 var idOrderLineReception;
 
-window.onload = main;
-
-function main() {
+$(document).ready(function () {
   cargarProveidor();
   cargarProductos();
 
@@ -32,13 +31,13 @@ function main() {
   document
     .getElementById("llistatOrden")
     .addEventListener("click", llistarOrden, false);
-}
+});
 
 function cargarProductos() {
-  const ENDPOINT = "Product";
+  const productEP = "Product";
   const productSelect = document.getElementById("product");
 
-  fetch(API + ENDPOINT)
+  fetch(API + productEP)
     .then((res) => res.json())
     .then((data) => {
       data.forEach((product) => {
@@ -53,9 +52,9 @@ function cargarProductos() {
 
 function cargarProveidor() {
   const supplierSelect = document.getElementById("supplier");
-  const ENDPOINT = "Supplier";
+  const supplierEP = "Supplier";
 
-  fetch(API + ENDPOINT)
+  fetch(API + supplierEP)
     .then((res) => res.json())
     .then((data) => {
       data.forEach((supplier) => {
@@ -187,61 +186,71 @@ function guardarModificacion() {
   productoEditadoID = null;
 }
 
-function gravarOrden() {
-  let idorderRception;
-  let idOrderLineReception;
+async function gravarOrden() {
+  try {
+    let idorderRception;
+    let idOrderLineReception;
 
-  let orderReception = JSON.parse(localStorage.getItem("orderRception")) || [];
-  let orderLineReception =
-    JSON.parse(localStorage.getItem("orderLineReception")) || [];
+    const [response1, response2] = await Promise.all([
+      fetch(API + orderReceptionEP),
+      fetch(API + orderLineReceptionEP),
+    ]);
 
-  if (orderReception.length == 0) {
-    idorderRception = 1;
-  } else {
-    const maxObj = orderRception.reduce(
-      (max, obj) => (obj.id > max.id ? obj : max),
-      orderReception[0]
+    let orderReception = await response1.json();
+    let orderLineReception = await response2.json();
+
+    if (orderReception.length == 0) {
+      idorderRception = 1;
+    } else {
+      const maxObj = orderRception.reduce(
+        (max, obj) => (obj.id > max.id ? obj : max),
+        orderReception[0]
+      );
+      idorderRception = ++maxObj.id;
+    }
+
+    var supplier = document.getElementById("supplier").value;
+    var dataEstimada = document.getElementById(
+      "estimated_reception_date"
+    ).value;
+
+    let order = {
+      id: idorderRception,
+      supplier: supplier,
+      estimated_reception_date: dataEstimada,
+      created_by: 1,
+      orderreception_status_id: 1,
+    };
+
+    orderRception.push(order);
+
+    localStorage.setItem("orderRception", JSON.stringify(orderRception));
+
+    if (orderLineReception.length == 0) {
+      idOrderLineReception = 0;
+    } else {
+      const maxObj = orderLineReception.reduce(
+        (max, obj) => (obj.id > max.id ? obj : max),
+        orderLineReception[0]
+      );
+      idOrderLineReception = maxObj.id;
+    }
+
+    arrTemp.forEach((product) => {
+      product.id = Number(idOrderLineReception);
+      product.order_reception_id = idorderRception;
+      orderLineReception.push(product);
+    });
+
+    localStorage.setItem(
+      "orderLineReception",
+      JSON.stringify(orderLineReception)
     );
-    idorderRception = ++maxObj.id;
+
+    alert("Guardado correctamente");
+  } catch (error) {
+    console.error("ERROR: ", error);
   }
-
-  var supplier = document.getElementById("supplier").value;
-  var dataEstimada = document.getElementById("estimated_reception_date").value;
-
-  let order = {
-    id: idorderRception,
-    supplier: supplier,
-    estimated_reception_date: dataEstimada,
-    created_by: 1,
-    orderreception_status_id: 1,
-  };
-
-  orderRception.push(order);
-
-  localStorage.setItem("orderRception", JSON.stringify(orderRception));
-
-  if (orderLineReception.length == 0) {
-    idOrderLineReception = 0;
-  } else {
-    const maxObj = orderLineReception.reduce(
-      (max, obj) => (obj.id > max.id ? obj : max),
-      orderLineReception[0]
-    );
-    idOrderLineReception = maxObj.id;
-  }
-
-  arrTemp.forEach((product) => {
-    product.id = ++idOrderLineReception;
-    product.order_reception_id = idorderRception;
-    orderLineReception.push(product);
-  });
-
-  localStorage.setItem(
-    "orderLineReception",
-    JSON.stringify(orderLineReception)
-  );
-
-  alert("Guardado correctamente");
 }
 
 function validarProveidor() {

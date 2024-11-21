@@ -1,8 +1,8 @@
 window.onload = main;
 
 const API = "http://localhost:3000/";
-const ENDPOINT1 = "OrderReception/";
-const ENDPOINT2 = "OrderLineReception/";
+const orderReceptionEP = "OrderReception/";
+const orderLineReceptionEP = "OrderLineReception/";
 
 function main() {
   document.getElementById("nuevaOrden").addEventListener("click", nuevaOrden);
@@ -14,7 +14,7 @@ function nuevaOrden() {
 }
 
 function obtindreOrdens() {
-  fetch(API + ENDPOINT1)
+  fetch(API + orderReceptionEP)
     .then((response) => response.json())
     .then((data) => {
       data.forEach((order) => crearLinea(order));
@@ -81,8 +81,8 @@ async function esborrarOrdre(id) {
       )
     ) {
       const [response1, response2] = await Promise.all([
-        fetch(API + ENDPOINT1),
-        fetch(API + ENDPOINT2),
+        fetch(API + orderReceptionEP),
+        fetch(API + orderLineReceptionEP),
       ]);
       if (!response1.ok) {
         throw new Error("Error fetch 1");
@@ -98,11 +98,11 @@ async function esborrarOrdre(id) {
         (linea) => linea.order_reception_id !== id
       );
 
-      await fetch(`${API}${ENDPOINT1}${id}`, {
+      await fetch(`${API}${orderReceptionEP}${id}`, {
         method: "DELETE"
       });
 
-      await fetch(`${API}${ENDPOINT2}${id}`, {
+      await fetch(`${API}${orderLineReceptionEP}${id}`, {
         method: "DELETE"
       });
 
@@ -118,7 +118,7 @@ async function esborrarOrdre(id) {
 }
 
 function modificarOrdre(id) {
-  fetch(API + ENDPOINT1)
+  fetch(API + orderReceptionEP)
     .then((res) => res.json())
     .then((data) => {
       const orderReceptionSelected = data.find((order) => order.id === id);
@@ -135,7 +135,7 @@ function modificarOrdre(id) {
 }
 
 function visualizarOrdre(id) {
-  fetch(API + ENDPOINT1)
+  fetch(API + orderReceptionEP)
     .then((res) => res.json())
     .then((data) => {
       const ordenSeleccionada = data.find((order) => order.id === id);
