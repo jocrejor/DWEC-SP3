@@ -26,7 +26,7 @@ async function postData(endPoint, data = {}) {
   async function getNewId(endPoint) {
     try {
       const response = await fetch('http://localhost:5002/'+ endPoint );  // Reemplaza 'data.json' con la ruta de tu archivo
-  
+        console.log("hola");
       if (!response.ok) {
         throw new Error('Error al obtener el archivo JSON');
       }
@@ -42,6 +42,7 @@ async function postData(endPoint, data = {}) {
     }
   }
 
+  
   
 
 function iniciar() {
@@ -107,7 +108,7 @@ function validarRepeatPassword() {
 }
 
 function validar(e) {
-    
+    e.preventDefault();
     borrarError();
 
     if (validarName() && validarEmail() && validarPassword() && validarRepeatPassword() && confirm("Confirma si vols enviar el formulari")) {
@@ -200,7 +201,7 @@ async function enviarFormulari () {
     let password    = document.getElementById("password").value;
 
     try{
-        let newId   = await getNewId('User') || "0";
+        let newId   = await getNewId('User') ?? "0";
         console.log(newId);
         let user = {
             id: newId,
@@ -211,12 +212,12 @@ async function enviarFormulari () {
         };
         console.log(user);
         await postData('User', user);
+
         //window.location.href = '../access/login.html';
+        
     } catch (error) {
         console.error('Error al registrar usuario: ', error);
     }
-
-
 }
 
 
