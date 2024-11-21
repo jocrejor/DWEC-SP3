@@ -3,21 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Creació d'Estat</title>
-    <script src="alta.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <style>
-        .error {
-            color: red;
-        }
-
-        .valid {
-            color: green;
-        }
-    </style>
+    <title>Alta Estat</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="alta.js" defer></script>
 </head>
 <body>
-    
+    <div class="container">
+        <h2>Alta Estat</h2>
+        <form id="altaForm">
+            <div class="form-group">
+                <label for="id">ID Estat:</label>
+                <input type="text" id="id" name="id" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="nom">Nom:</label>
+                <input type="text" id="nom" name="nom" class="form-control" placeholder="Nom de l'estat">
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="button" id="cancelar" class="btn btn-primary">Cancel·lar</button>
+        </form>
+        <div id="missatgeError" class="text-danger"></div>
+    </div>
 </body>
 </html>
