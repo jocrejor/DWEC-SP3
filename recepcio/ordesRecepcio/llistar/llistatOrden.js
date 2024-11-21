@@ -1,7 +1,8 @@
 window.onload = main;
 
 const API = "http://localhost:3000/";
-const ENDPOINT = "OrderReception";
+const ENDPOINT1 = "OrderReception/";
+const ENDPOINT2 = "OrderLineReception/";
 
 function main() {
   document.getElementById("nuevaOrden").addEventListener("click", nuevaOrden);
@@ -13,7 +14,7 @@ function nuevaOrden() {
 }
 
 function obtindreOrdens() {
-  fetch(API + ENDPOINT)
+  fetch(API + ENDPOINT1)
     .then((response) => response.json())
     .then((data) => {
       data.forEach((order) => crearLinea(order));
@@ -69,40 +70,55 @@ function crearLinea(order) {
   files.appendChild(linea);
 }
 
-function esborrarOrdre(id) {
+async function esborrarOrdre(id) {
   // fer les comprobacions si l'orden es pot esborrars.
   // esborrar del localstorage
   //Esborrar de la llista de la pàgina html ( mai recargar la pàgina)
-  if (
-    confirm(
-      "¿Estás seguro de que quieres eliminar esta orden y sus productos asociados?"
-    )
-  ) {
-    var arrOrden = JSON.parse(localStorage.getItem("orderRception")) || [];
-    var arrLineReception =
-      JSON.parse(localStorage.getItem("orderLineReception")) || [];
+  try {
+    if (
+      confirm(
+        "¿Estás seguro de que quieres eliminar esta orden y sus productos asociados?"
+      )
+    ) {
+      const [response1, response2] = await Promise.all([
+        fetch(API + ENDPOINT1),
+        fetch(API + ENDPOINT2),
+      ]);
+      if (!response1.ok) {
+        throw new Error("Error fetch 1");
+      }
+      if (!response2.ok) {
+        throw new Error("Error fetch 2");
+      }
 
-    arrOrden = arrOrden.filter((orden) => orden.id !== id);
+      let arrOrden = await response1.json();
+      let arrLineReception = await response2.json();
+      arrOrden = arrOrden.filter((orden) => orden.id !== id);
+      arrLineReception = arrLineReception.filter(
+        (linea) => linea.order_reception_id !== id
+      );
 
-    arrLineReception = arrLineReception.filter(
-      (linea) => linea.order_reception_id !== id
-    );
+      await fetch(`${API}${ENDPOINT1}${id}`, {
+        method: "DELETE"
+      });
 
-    localStorage.setItem("orderRception", JSON.stringify(arrOrden));
-    localStorage.setItem(
-      "orderLineReception",
-      JSON.stringify(arrLineReception)
-    );
+      await fetch(`${API}${ENDPOINT2}${id}`, {
+        method: "DELETE"
+      });
 
-    const filaOrden = document.querySelector(`tr[id="${id}"]`);
-    if (filaOrden) {
-      filaOrden.remove();
+      const filaOrden = document.querySelector(`tr[id="${id}"]`);
+      if (filaOrden) {
+        filaOrden.remove();
+      }
+
     }
+  } catch (error) {
+    console.error("ERROR: ", error);
   }
 }
 
 function modificarOrdre(id) {
-  fetch(API + ENDPOINT)
+  fetch(API + ENDPOINT1)
     .then((res) => res.json())
     .then((data) => {
       const orderReceptionSelected = data.find((order) => order.id === id);
@@ -119,7 +135,7 @@ function modificarOrdre(id) {
 }
 
 function visualizarOrdre(id) {
-  fetch(API + ENDPOINT)
+  fetch(API + ENDPOINT1)
     .then((res) => res.json())
     .then((data) => {
       const ordenSeleccionada = data.find((order) => order.id === id);
