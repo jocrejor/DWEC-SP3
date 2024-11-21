@@ -7,12 +7,8 @@ function main() {
   const currentUserId = JSON.parse(localStorage.getItem("currentUserId"));
   const newUserButton = document.getElementById("nouUsuari");
 
-  const currentUser = data.users.find((u) => u.id == currentUserId);
-  if (currentUser.role != 1) {
-    newUserButton.style.display = "none";
-  } else {
-    document.getElementById("nouUsuari").addEventListener("click", nouUsuari);
-  }
+  // Ara tothom pot crear un nou usuari, independentment del rol.
+  document.getElementById("nouUsuari").addEventListener("click", nouUsuari);
 }
 
 function home() {
@@ -44,38 +40,32 @@ function crearFila(user) {
   const tdDeleteButton = document.createElement("td");
   const tdModifyButton = document.createElement("td");
 
-  const currentUser = data.users.find((u) => u.id == currentUserId);
-  // Creació botons
-  if (currentUser.role == 1 && user.id != 1) {
-    const deleteButton = document.createElement("button");
-    deleteButton.addEventListener("click", () => esborrarUsuari(user.id));
-    deleteButton.setAttribute("id", "esborrar");
-    deleteButton.classList.add("btn", "btn-primary", "btn-lg");
-    const innerDeleteButton = document.createTextNode("Esborrar");
-    deleteButton.appendChild(innerDeleteButton);
-    tdDeleteButton.appendChild(deleteButton);
-    const modifyButton = document.createElement("button");
-    modifyButton.addEventListener("click", () => modificarUsuari(user));
-    modifyButton.setAttribute("id", "modificar");
-    modifyButton.classList.add("btn", "btn-primary", "btn-lg");
-    const innerModifyButton = document.createTextNode("Modificar");
-    modifyButton.appendChild(innerModifyButton);
-    tdModifyButton.appendChild(modifyButton);
-  }
+  // Ara tothom pot esborrar o modificar usuaris
+  const deleteButton = document.createElement("button");
+  deleteButton.addEventListener("click", () => esborrarUsuari(user.id));
+  deleteButton.setAttribute("id", "esborrar");
+  deleteButton.classList.add("btn", "btn-primary", "btn-lg");
+  const innerDeleteButton = document.createTextNode("Esborrar");
+  deleteButton.appendChild(innerDeleteButton);
+  tdDeleteButton.appendChild(deleteButton);
+
+  const modifyButton = document.createElement("button");
+  modifyButton.addEventListener("click", () => modificarUsuari(user));
+  modifyButton.setAttribute("id", "modificar");
+  modifyButton.classList.add("btn", "btn-primary", "btn-lg");
+  const innerModifyButton = document.createTextNode("Modificar");
+  modifyButton.appendChild(innerModifyButton);
+  tdModifyButton.appendChild(modifyButton);
 
   // Creació camps
   const tdEmail = document.createElement("td");
-  const tdRole = document.createElement("td");
   const innerTdEmail = document.createTextNode(user.email);
-  const innerTdRole = document.createTextNode(user.role);
   tdEmail.appendChild(innerTdEmail);
-  tdRole.appendChild(innerTdRole);
 
   // Afegir a la taula
   newRow.appendChild(tdDeleteButton);
   newRow.appendChild(tdModifyButton);
   newRow.appendChild(tdEmail);
-  newRow.appendChild(tdRole);
   tableBody.appendChild(newRow);
 }
 
@@ -84,9 +74,7 @@ function esborrarUsuari(id) {
   let indexToDelete;
 
   data.users.forEach((user, index) => {
-    // fer les comprobacions si l'autor es pot esborrars.
-
-    if (user.id == id && user.role != 1) {
+    if (user.id == id) {
       indexToDelete = index;
     }
   });
@@ -95,13 +83,13 @@ function esborrarUsuari(id) {
   data.users.splice(indexToDelete, 1);
   localStorage.setItem("data", JSON.stringify(data));
 
-  //Esborrar de la llista de la pàgina html ( mai recargar la pàgina)
+  // Esborrar de la llista de la pàgina html (mai recarregar la pàgina)
   const rowToDelete = document.getElementById(`${id}`);
   rowToDelete.remove();
 }
 
 function modificarUsuari(user) {
-  //guardar valors al local storage
+  // Guardar valors al local storage
   localStorage.setItem("modUser", JSON.stringify(user));
 
   window.location.assign("modificarUsuaris.html");
