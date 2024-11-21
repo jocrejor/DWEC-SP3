@@ -1,4 +1,5 @@
 const API = "http://localhost:3000/";
+const ENDPOINT = "OrderReception/";
 
 let orderRception;
 let orderLineReception;
@@ -240,7 +241,7 @@ function gravarOrden() {
     JSON.stringify(orderLineReception)
   );
 
-  alert("Guardad0 correctamente");
+  alert("Guardado correctamente");
 }
 
 function validarProveidor() {
