@@ -1,32 +1,67 @@
 {
-    "User":{
-        "id": "1",
-        "name": "user1",
-        "email": "user1@example.com",
-        "password": "password1",
-        "user_profile": "admin"
+  "User": [
+    {
+      "id": "1",
+      "name": "user1",
+      "email": "user1@example.com",
+      "password": "password1",
+      "user_profile": "admin"
     },
-    "Post":{
-        "id": 1,
-        "title": "title1",
-        "photo": "photo1.png",
-        "cretion_date": "2024-04-23",
-        "creator_id": 1,
-        "description": "descriptionPost1",
-        "name": "user1"
+    {
+      "id": "2",
+      "name": "user2",
+      "email": "user2@example.com",
+      "password": "password2",
+      "user_profile": "editor"
     },
-    "Comment":{
-        "id": 1,
-        "description": "descriptionComment1",
-        "post_id": 1
+    {
+      "id": "3",
+      "name": "user3",
+      "email": "user3@example.com",
+      "password": "password3",
+      "user_profile": "publisher"
     },
-    "Tag":{
-        "id": 1,
-        "name": "tag1"
-    },
-    "Post_Tag":{
-        "id": 1,
-        "post_id": 1,
-        "tag_id": 1
+    {
+      "id": "4",
+      "name": "Andrea",
+      "email": "email@email.com",
+      "password": "Andrea123!",
+      "user_profile": "Publicador"
     }
+  ],
+  "Post": [
+    {
+      "id": "1",
+      "title": "title1",
+      "photo": "photo1.png",
+      "cretion_date": "2024-04-23",
+      "creator_id": 1,
+      "description": "descriptionPost1",
+      "name": "1"
+    }
+  ],
+  "Comment": [
+    {
+      "id": "1",
+      "description": "descriptionComment1",
+      "post_id": "1"
+    }
+  ],
+  "Tag": [
+    {
+      "id": "1",
+      "name": "Nuevas insrtalaciones"
+    },
+    {
+      "id": "2",
+      "name": "Casos de exito"
+    }
+  ],
+  "Post_Tag": [
+    {
+      "id": "1",
+      "post_id": "1",
+      "tag_id": "1"
+    }
+  ]
 }
