@@ -12,6 +12,10 @@ function carregarOrdres() {
         // Crear celda para el botón "Revisar"
         let tdRevisar = document.createElement("td");
         let btnRevisar = document.createElement("button");
+        $(btnRevisar).click(function(){
+            revisarOrdre(ordre.id);
+        });
+
         btnRevisar.className = "btn btn-primary";
         let textRevisar = document.createTextNode("Revisar");
         btnRevisar.appendChild(textRevisar);
@@ -44,4 +48,14 @@ function getOrderStatus(estatID) {
         3: "Finalitzat"
     };
     return estatText[estatID] ;
+}
+
+function revisarOrdre(id){
+    const ordresRecepcio = JSON.parse(localStorage.getItem("OrderReception")) || [];
+    const ordreSeleccionada = ordresRecepcio.find(o => o.id === id);
+
+    if(ordreSeleccionada){
+        localStorage.setItem("ordreSeleccionada", JSON.stringify(ordreSeleccionada));
+        window.location.href = "revisarIncident.html";
+    }
 }
