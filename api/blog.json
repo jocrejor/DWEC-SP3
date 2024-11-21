@@ -1,102 +1,108 @@
 {
-    "Users": [
-        {
-            "id_user": "1",
-            "name": "user1",
-            "email": "user1@example.com",
-            "password": "password1",
-            "user_profile": "admin"
-        },
-        {
-            "id_user": "2",
-            "name": "user2",
-            "email": "user2@example.com",
-            "password": "password2",
-            "user_profile": "editor"
-        },
-        {
-            "id_user": "3",
-            "name": "user3",
-            "email": "user3@example.com",
-            "password": "password3",
-            "user_profile": "publisher"
-        }
-    ],
-    "Posts": [
-        {
-            "id_post": "1",
-            "title": "title1",
-            "photo": "photo1.png",
-            "creation_date": "2024-04-23",
-            "creator_id": "1",
-            "description": "descriptionPost1",
-            "id_user": "1"
-        },
-        {
-            "id": "2",
-            "title": "title2",
-            "photo": "photo2.png",
-            "creation_date": "2024-05-10",
-            "creator_id": "2",
-            "description": "descriptionPost2",
-            "id_user": "2"
-        },
-        {
-            "id": "3",
-            "title": "title3",
-            "photo": "photo3.png",
-            "creation_date": "2024-06-15",
-            "creator_id": "3",
-            "description": "descriptionPost3",
-            "id_user": "3"
-        }
-    ],
-    "Comments": [
-        {
-            "id_comment": "1",
-            "description": "descriptionComment1",
-            "id_post": "1"
-        },
-        {
-            "id_comment": "2",
-            "description": "descriptionComment2",
-            "id_post": "2"
-        },
-        {
-            "id_comment": "3",
-            "description": "descriptionComment3",
-            "id_post": "3"
-        }
-    ],
-    "Tags": [
-        {
-            "id_tag": "1",
-            "name": "tag1"
-        },
-        {
-            "id_tag": "2",
-            "name": "tag2"
-        },
-        {
-            "id_tag": "3",
-            "name": "tag3"
-        }
-    ],
-    "Post_Tags": [
-        {
-            "id": "1",
-            "id_post": "1",
-            "id_tag": "1"
-        },
-        {
-            "id": "2",
-            "id_post": "2",
-            "id_tag": "2"
-        },
-        {
-            "id": "3",
-            "id_post": "3",
-            "id_tag": "3"
-        }
-    ]
+  "Users": [
+    {
+      "id_user": "1",
+      "name": "user1",
+      "email": "user1@example.com",
+      "password": "password1",
+      "user_profile": "admin",
+      "id": "1cef"
+    },
+    {
+      "id_user": "2",
+      "name": "user2",
+      "email": "user2@example.com",
+      "password": "password2",
+      "user_profile": "editor",
+      "id": "df39"
+    },
+    {
+      "id_user": "3",
+      "name": "user3",
+      "email": "user3@example.com",
+      "password": "password3",
+      "user_profile": "publisher",
+      "id": "e2e3"
+    }
+  ],
+  "Posts": [
+    {
+      "id_post": "1",
+      "title": "title1",
+      "photo": "photo1.png",
+      "creation_date": "2024-04-23",
+      "description": "descriptionPost1",
+      "id_user": "1",
+      "id": "8094"
+    },
+    {
+      "id_post": "2",
+      "title": "title2",
+      "photo": "photo2.png",
+      "creation_date": "2024-05-10",
+      "description": "descriptionPost2",
+      "id_user": "2",
+      "id": "f7c7"
+    },
+    {
+      "id_post": "3",
+      "title": "title3",
+      "photo": "photo3.png",
+      "creation_date": "2024-06-15",
+      "description": "descriptionPost3",
+      "id_user": "3",
+      "id": "c5a7"
+    }
+  ],
+  "Comments": [
+    {
+      "id_comment": "1",
+      "description": "descriptionComment1",
+      "id_post": "1",
+      "id": "25d7"
+    },
+    {
+      "id_comment": "2",
+      "description": "descriptionComment2",
+      "id_post": "2",
+      "id": "1bec"
+    },
+    {
+      "id_comment": "3",
+      "description": "descriptionComment3",
+      "id_post": "3",
+      "id": "9eb5"
+    }
+  ],
+  "Tags": [
+    {
+      "id_tag": "1",
+      "name": "tag1"
+    },
+    {
+      "id_tag": "2",
+      "name": "tag2"
+    },
+    {
+      "id_tag": "3",
+      "name": "tag3"
+    }
+  ],
+  "Post_Tags": [
+    {
+      "id": "1",
+      "id_post": "1",
+      "id_tag": "1"
+    },
+    {
+      "id": "2",
+      "id_post": "2",
+      "id_tag": "2"
+    },
+    {
+      "id": "3",
+      "id_post": "3",
+      "id_tag": "3"
+    }
+  ]
 }
