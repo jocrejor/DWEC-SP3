@@ -1,7 +1,7 @@
 window.onload = loadStates;
 
 function loadStates() {
-    let states = JSON.parse(localStorage.getItem('State')) || [];
+    const states = JSON.parse(localStorage.getItem('State')) || [];
     displayStates(states);
 }
 
@@ -10,24 +10,27 @@ function displayStates(states) {
     stateList.innerHTML = ''; 
 
     states.forEach((state, index) => {
-        const listItem = document.createElement('li');
-        listItem.innerHTML = `
-            ${state.name} 
-            <button onclick="editState(${index})">Editar</button>
-            <button onclick="deleteState(${index})">Eliminar</button>
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${state.name}</td>
+            <td>
+                <button class="btn btn-warning btn-sm mr-2" onclick="editState(${index})">Editar</button>
+                <button class="btn btn-danger btn-sm" onclick="deleteState(${index})">Eliminar</button>
+            </td>
         `;
-        stateList.appendChild(listItem);
+        stateList.appendChild(row);
     });
 }
 
 function addState() {
     const stateName = document.getElementById('newStateName').value.trim();
     if (stateName === '') {
-        alert('Por favor, ingresa un nombre de estado.');
+        alert('Per favor, ingresa un nom de estat.');
         return;
     }
 
-    let states = JSON.parse(localStorage.getItem('State')) || [];
+    const states = JSON.parse(localStorage.getItem('State')) || [];
     const newState = {
         id: (states.length + 1).toString(),
         name: stateName
@@ -35,12 +38,12 @@ function addState() {
     states.push(newState);
     localStorage.setItem('State', JSON.stringify(states));
     document.getElementById('newStateName').value = ''; 
-    loadStates(); 
+    loadStates();
 }
 
 function editState(index) {
-    let states = JSON.parse(localStorage.getItem('State')) || [];
-    const newName = prompt('Editar nombre del estado:', states[index].name);
+    const states = JSON.parse(localStorage.getItem('State')) || [];
+    const newName = prompt('Editar nom del estat:', states[index].name);
     if (newName !== null && newName.trim() !== '') {
         states[index].name = newName.trim();
         localStorage.setItem('State', JSON.stringify(states));
@@ -49,11 +52,10 @@ function editState(index) {
 }
 
 function deleteState(index) {
-    if (confirm('Estás seguro de que deseas eliminar este estado?')) {
-        let states = JSON.parse(localStorage.getItem('State')) || [];
+    if (confirm('¿Estás seguro de que deseas eliminar este estado?')) {
+        const states = JSON.parse(localStorage.getItem('State')) || [];
         states.splice(index, 1);
         localStorage.setItem('State', JSON.stringify(states));
-        loadStates(); 
+        loadStates();
     }
 }
-
