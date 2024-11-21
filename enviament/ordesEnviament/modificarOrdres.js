@@ -9,27 +9,26 @@ function iniciar() {
 function validar(e) {
     esborrarError();
     e.preventDefault();
-    if (validarIdentificador() 
-        && validarClient()
-        && validarEstado()
-        && validarTransportista()
-        && validarDataEnviament()
-        && validarNom()
-        && validarCantitat()) {
+
+    if (validarIdentificador() && validarClient() && validarEstado() && validarTransportista() && validarDataEnviament() && validarNom() && validarCantitat()) {
         enviarFormulari();
         return true;
-    } else {
-        return false;
     }
+    
+    else
+        return false;
 }
 
 function validarClient() {
     const elementClient = document.getElementById("client");
+
     if (!elementClient.checkValidity()) {
         if (elementClient.validity.valueMissing) {
             error(elementClient, "Has d'introduir un client");
             return false;
-        } else if (elementClient.validity.patternMismatch) {
+        } 
+        
+        else if (elementClient.validity.patternMismatch) {
             error(elementClient, "Introdueix un nom de client vàlid");
             return false;
         }
@@ -39,11 +38,14 @@ function validarClient() {
 
 function validarTransportista() {
     const transportista = document.getElementById("transportista");
+
     if (!transportista.checkValidity()) {
         if (transportista.validity.valueMissing) {
             error(transportista, "Has d'introduir un transportista");
             return false;
-        } else if (transportista.validity.patternMismatch) {
+        }
+        
+        else if (transportista.validity.patternMismatch) {
             error(transportista, "Introdueix un transportista vàlid");
             return false;
         }
@@ -53,11 +55,14 @@ function validarTransportista() {
 
 function validarNom() {
     const elementNom = document.getElementById("producte");
+
     if (!elementNom.checkValidity()) {
         if (elementNom.validity.valueMissing) {
             error(elementNom, "Has d'indicar un producte");
             return false;
-        } else if (elementNom.validity.patternMismatch) {
+        }
+        
+        else if (elementNom.validity.patternMismatch) {
             error(elementNom, "El nom del producte ha de ser vàlid");
         }
     }
@@ -66,6 +71,7 @@ function validarNom() {
 
 function validarCantitat() {
     const cantitat = document.getElementById("cantitat");
+
     if (!cantitat.checkValidity()) {
         if (cantitat.validity.valueMissing) {
             error(cantitat, "Has d'indicar una quantitat");
@@ -76,7 +82,7 @@ function validarCantitat() {
 }
 
 function error(element, missatge) {
-    const textError = document.createTextNode(missatge);
+    const textError    = document.createTextNode(missatge);
     const elementError = document.getElementById("missatgeError");
     elementError.appendChild(textError);
     element.classList.add("error");
@@ -104,9 +110,11 @@ function enviarFormulari() {
     };
 
     const index = ordres.findIndex(ordre => ordre.identificadorProducte == ordreModificada.identificadorProducte);
+
     if (index !== -1) {
         ordres[index] = ordreModificada;
     }
+    
     localStorage.setItem("ordresEmmagatzemades", JSON.stringify(ordres));
     localStorage.removeItem("ordreSeleccionada");
     window.location.assign("llistatOrdres.html");
