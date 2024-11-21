@@ -10,7 +10,7 @@ function validarSKU() {
     let sku = document.getElementById("sku");
     if (!sku.checkValidity()) {
         if (sku.validity.valueMissing) {
-            error2(sku, "Ha d'introduir el nom del SKU.");
+            error2(sku, "Ha d'introduir el SKU.");
         }
         else if (sku.validity.patternMismatch) {
             error2(sku, "El SKU té que ser en majúscules i tindre entre 6 i 12 caràcters");
@@ -27,10 +27,10 @@ function validarName() {
     let name = document.getElementById("name");
     if (!name.checkValidity()) {
         if (name.validity.valueMissing) {
-            error2(name, "Ha d'introduir el nom del SKU.");
+            error2(name, "Ha d'introduir el nom.");
         }
         else if (name.validity.patternMismatch) {
-            error2(name, "El SKU té que ser en majúscules i tindre entre 6 i 12 caràcters");
+            error2(name, "El nom ha de tindre entre 2 i 50 caràcters");
         }
         name.classList.add("error");
         return false;
@@ -44,11 +44,17 @@ function validarVol() {
     let volume = document.getElementById("volume");
     if (!volume.checkValidity()) {
         if (volume.validity.valueMissing) {
-            error2(volume, "Ha d'introduir el nom del SKU.");
+            error2(volume, "Ha d'introduir un volumen.");
         }
         else if (volume.validity.patternMismatch) {
-            error2(volume, "El SKU té que ser en majúscules i tindre entre 6 i 12 caràcters");
+            if (value.split('.')[1] && value.split('.')[1].length > 2) {
+                error2(volume, "El volumen ha de tindre 2 decimals com a màxim");
+                volume.classList.remove("valid");
+                volume.classList.add("error");
+                return false;
+            }
         }
+        volume.classList.remove("valid");
         volume.classList.add("error");
         return false;
     }
@@ -59,22 +65,44 @@ function validarVol() {
 
 function validarWeight() {
     let weight = document.getElementById("weight");
-    if (!weight.checkValidity()) {
-        if (weight.validity.valueMissing) {
-            error2(weight, "Ha d'introduir el nom del SKU.");
-        }
-        else if (weight.validity.patternMismatch) {
-            error2(weight, "El SKU té que ser en majúscules i tindre entre 6 i 12 caràcters");
-        }
+    let value = weight.value;
+
+    // Verificar si el campo está vacío
+    if (weight.validity.valueMissing) {
+        error2(weight, "Ha d'introduir un pes.");
+        weight.classList.remove("valid");
         weight.classList.add("error");
         return false;
     }
+
+    // Verificar si el valor tiene más de 2 decimales
+    if (value.split('.')[1] && value.split('.')[1].length > 2) {
+        error2(weight, "El pes ha de tindre 2 decimals com a màxim");
+        weight.classList.remove("valid");
+        weight.classList.add("error");
+        return false;
+    }
+
+    // Si todo es válido
     weight.classList.remove("error");
     weight.classList.add("valid");
     return true;
 }
 
+function validarLote() {
+    let lote = document.getElementById("lotorserial");
 
+    if (lote.value == "Empty") {
+        error2(lote, "Tens que elegir un lot");
+        lote.classList.remove("valid");
+        lote.classList.add("error");
+        return false;
+    }
+
+    lote.classList.remove("error");
+    lote.classList.add("valid");
+    return true;
+}
 
 function validarImage() {
     let image_url = document.getElementById("image_url");
@@ -89,7 +117,7 @@ function validar(e) {
     borrarError();
     e.preventDefault();
 
-    if (validarSKU() && validarName() && validarVol() && validarWeight() && validarImage) {
+    if (validarSKU() && validarName() && validarVol() && validarWeight() && validarImage && validarLote()) {
         enviarFormulario();
         return true;
     } else {
