@@ -1,7 +1,7 @@
 window.onload = main;
 
 function main() {
-    let modifica = JSON.parse(localStorage.getItem("modificaFormulari"));
+    var modifica = JSON.parse(localStorage.getItem("modificaFormulari"));
     console.log("Dades cargades per a modificar:", modifica); 
     if (modifica) {
         document.getElementById("id").value = modifica.id || "";
@@ -12,7 +12,7 @@ function main() {
         alert("No s'ha trobat el registre a modificar.");
         window.location.assign("formulariLlista.html");
     }
-    document.getElementById("btnGuardar").addEventListener("click", validar, false);
+    document.getElementById("btnGuardar").addEventListener("click", btnGuardar, false);
 }
 function validarId() {
     var idValidar = document.getElementById("id");
@@ -72,18 +72,16 @@ function validarAdress() {
 
 function btnGuardar(e) {
     e.preventDefault();
-    let modifica = {
+    var modifica = {
         id: document.getElementById("id").value,
         name: document.getElementById("name").value,
         tipus: document.getElementById("tipus").value,
-        adress: document.getElementById("adress").value,
-        id_pasillo: document.getElementById("id_pasillo").value,
-        name_: document.getElementById("name_").value
+        adress: document.getElementById("adress").value
     };
 
-    let magatzems = JSON.parse(localStorage.getItem("magatzems")) || [];
+    var magatzems = JSON.parse(localStorage.getItem("magatzems")) || [];
     if (modifica.id) {
-        const index = magatzems.findIndex(m => m.id === modifica.id);
+        var index = magatzems.findIndex(m => m.id === modifica.id);
         if (index !== -1) {
             magatzems[index] = modifica; 
             localStorage.setItem("magatzems", JSON.stringify(magatzems));

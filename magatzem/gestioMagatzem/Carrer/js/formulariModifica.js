@@ -1,7 +1,7 @@
 window.onload = main;
 
 function main() {
-    let modifica = JSON.parse(localStorage.getItem("modificaFormulari"));
+    var modifica = JSON.parse(localStorage.getItem("modificaFormulari"));
     console.log("Dades cargades per a modificar:", modifica); 
     if (modifica) {
         document.getElementById("id").value = modifica.id || "";
@@ -10,7 +10,8 @@ function main() {
         alert("No s'ha trobat el registre a modificar.");
         window.location.assign("formulariLlista.html");
     }
-    document.getElementById("btnGuardar").addEventListener("click", validar, false);
+    document.getElementById("btnGuardar").addEventListener("click", btnGuardar, false);
+   
 }
 
 function validarId() {
@@ -40,9 +41,9 @@ function validarNom() {
 
 function btnGuardar(e) {
     e.preventDefault();
-    let modifica = {
+    const modifica = {
         id: document.getElementById("id").value,
-        name: document.getElementById("name").value,
+        name: document.getElementById("name").value
     };
 
     let carrers = JSON.parse(localStorage.getItem("carrers")) || [];
@@ -59,6 +60,6 @@ function btnGuardar(e) {
         alert("L'ID no és buit.");
     }
 
-    window.location.assign("formulariLlista.html"); 
+    window.location.assign("formularuLlistatC.html"); 
 }
 

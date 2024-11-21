@@ -6,7 +6,9 @@
     <title>Llistat Carrer</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script type="text/javascript" src="./js/formulariLlista.js"></script>
+    <script type="text/javascript" src="./js/formulariLlistaC.js"></script>
+    <script type="text/javascript" src="./js/formulariInci.js"></script>
+
     <style>
         .error {
             border: solid 2px #FF0000;
@@ -17,9 +19,11 @@
 <body>
     <div class="container">
         <h1>Llistat Carrer</h1>
-        <h3></h3>
+        <h3>Magatzem: <b id="magatzem"></b></h3>
 
         <button class=" btn btn-primary my-3" id="producte">Nou Carrer</button>
+        <button id="carrer" class="btn btn-primary">
+            <a href="formulariLlistaC.html" style="color:inherit ">Estanteria</a></button>
 
         <table class="table">
             <thead class="thead-light">
@@ -31,7 +35,6 @@
                 </tr>
             </thead>
             <tbody id="files">
-              
             </tbody>
         </table>
     </div>

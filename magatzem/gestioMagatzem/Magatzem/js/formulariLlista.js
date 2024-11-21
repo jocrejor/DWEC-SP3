@@ -2,9 +2,17 @@ window.onload = main;
 
 function main() {
     document.getElementById("producte").addEventListener("click", nou);
+    carregarInformacio();
     obtindreProducte();
+
 }
 
+function carregarInformacio() {
+    let storage = JSON.parse(localStorage.getItem("storage")) || { storage: { name: "Desconegut" } };
+    let street = JSON.parse(localStorage.getItem("street")) || { street: { name: "Desconegut" } };
+    let shelf = JSON.parse(localStorage.getItem("shelf")) || { shelf: { name: "Desconegut" } };
+   
+}
 function nou() {
     window.location.assign("nouFormulari.html");
 }
@@ -36,8 +44,9 @@ function esborrar(index) {
     obtindreProducte(); 
 }
 
-function modificar(id, name, tipus, adress, id_pasillo, name_) {
-    var nouMagatzem = { id, name, tipus, adress, id_pasillo, name_ };
+function modificar(id, name, tipus, adress) {
+    var nouMagatzem = { id, name, tipus, adress };
     localStorage.setItem("modificaFormulari", JSON.stringify(nouMagatzem));
     window.location.assign("modificarFormulari.html");
 }
+

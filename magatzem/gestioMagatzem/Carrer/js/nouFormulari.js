@@ -38,7 +38,7 @@ function validarNom() {
             error(element, "Deus d'introduïr un nom.");
         }
         if (element.validity.patternMismatch) {
-            error(element, "El nom ha de tindre entre 2 i 40 caracters.");
+            error(element, "El nom ha de tindre entre 2 i 70 caracters.");
         }
         return false; 
     }
@@ -77,7 +77,7 @@ function gravarCarrer() {
 
     alert("Informació emmagatzemada correctament!"); 
     neteja();
-    window.location.assign("formulariLlista.html"); 
+    window.location.assign("formulariLlistaC.html"); 
 }
 
 function neteja() {

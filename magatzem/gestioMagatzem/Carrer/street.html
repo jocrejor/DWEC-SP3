@@ -11,22 +11,17 @@
 <body>
     <div class="container">
         <h2>Pasillo</h2>
-        <form id="formulariMagatzem">
+        <form id="formulariCarrer">
             <div class="form-group">
                 <label for="id">ID Passadís:</label>
-                <input type="text" id="id_pasillo" name="id_pasillo" pattern="^\d{2}$" 
+                <input type="text" id="id" name="id" pattern="^\d{2}$" 
                        placeholder="01" class="form-control" required>
             </div>
             <div class="form-group">
                 <label for="name">Nom:</label>
-                <input type="text" id="name_" name="name_pasillo" class="form-control">
+                <input type="text" id="name" name="name" class="form-control">
             </div>
-            <div class="form-group">
-                <label for="id">ID Magatzem:</label>
-                <input type="text" id="id" name="id" pattern="^\d{2}$" placeholder="01"
-                    class="form-control" required>
-            </div>
-
+          
             <button type="submit" id="btnGuardar" class="btn btn-primary">Guardar</button>
             <button type="reset" id="btnNetejar" class="btn btn-secondary">Netejar</button>
         </form>
