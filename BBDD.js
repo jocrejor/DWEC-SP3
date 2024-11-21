@@ -220,7 +220,7 @@ let Storage = [
       {
         "id": "01",
         "name": "buit Recepció",
-        "product_id": 0,
+        "product_id": 1,
         "quantity": 0,
 
         "storage_id": "01",
@@ -230,11 +230,11 @@ let Storage = [
       {
         "id": "01",
         "name": "buit Enviament",
-        "product_id": 0,
+        "product_id": 2,
         "quantity": 0,
         "maxVol" : 1000,
         "maxWeight" : 500, 
-        "storage_id": "02",
+        "storage_id": "01",
         "steet_id": "01",
         "selft_id": "01"
       },

@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alta Inventari</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     
-    <script type="text/javascript"src=""></script>
+    <script type="text/javascript"src="altaGeneral.js"></script>
     <style> 
         .error {
             border:solid 2px #FF0000; 
@@ -24,7 +25,7 @@
             <label for="product" class="col-sm-2 col-form-label" >Producte:</label>
 
             <div class="col-sm-10">
-                <select id="product" required onchange="">
+                <select id="product" required onchange="carregarProductes()">
                     <option value="" disabled selected>Selecciona un producte:</option>
                 </select>
             </div>
@@ -44,6 +45,12 @@
             <div class="col-sm-10">
                 <select id="inventory_reason" required onchange="">
                     <option value="" disabled selected>Selecciona una raó:</option>
+                    <option value="defectuos">Defectuós</option>
+                    <option value="trencat">Trencat</option>
+                    <option value="robatori">Robatori</option>
+                    <option value="desaparegut">Desaparegut</option>
+                    <option value="error">Error administratiu</option>
+                    <option value="recompte">Recompte cíclic</option>
                 </select>
             </div>
         </div>
