@@ -4,37 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventari</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <title>Plantilla Formualaris</title>
-    <script src="script.js" defer></script>
+
+    <script src="BBDD.js"></script>
+    <script src="index.js"></script>
 </head>
 
 <body>
     <div class="container">
-        <h1>Inici de sessió</h1>
-        <form id="loginForm" method="post">
-            <div class="form-group">
-                <label for="username">Usuari:</label>
-                <input type="text" id="username" name="username" class="form-control"
-                    placeholder="Introdueix el teu usuari" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Contrasenya:</label>
-                <input type="password" id="password" name="password" class="form-control"
-                    placeholder="Introdueix la teva contrasenya"
-                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':\
-                    \\|,./?])[A-Za-z\d!@#$%^&*()_+\-=[\]{};':\\|,./?]{8,}$"
-                    title="La contrasenya ha de tenir al menys 8 caràcters i contenir al menys una lletra majúscula, una minúscula, un nombre i un caràcter especial."
-                    required>
-            </div>
-            <button type="submit" id="loginButton" class="btn btn-primary">Log In</button>
-        </form> <br>
+        <h1>Inventari</h1>
+        <div class="mx-auto">
+            <button id="General" class="btn btn-primary btn-lg m-4">
+                <a href="./General/indexGeneral.html" style="color:inherit ">General</a></button>
+            
+            <button id="Carrer" class="btn btn-primary btn-lg m-4">
+                <a href="./Carrer/indexCarrer.html" style="color:inherit ">Carrer</a></button>
+        </div>
     </div>
 </body>
 </html>
-
-
-
-
-
