@@ -6,5 +6,5 @@ document.addEventListener("DOMContentLoaded", () =>{
 function carregar () {
     localStorage.setItem("product", JSON.stringify(Product));
     localStorage.setItem("lot", JSON.stringify(lot));
-
+    localStorage.setItem("supplier", JSON.stringify(Supplier));
 }

@@ -12,7 +12,7 @@ function iniciar ( ){
 
     // Afegir listeners a les validacions dels camps
     document.getElementById("name").addEventListener("blur", validarNomLot, false);
-    document.getElementById("product_id").addEventListener ("blur", validarIdProducte, false);
+    /*document.getElementById("product_id").addEventListener ("blur", validarIdProducte, false);*/
     document.getElementById("supplier_id").addEventListener("blur", validarIdProveidor, false);
     document.getElementById("quantity").addEventListener("blur", validarUnitats, false);
     document.getElementById("production_date").addEventListener("blur", validarDataProduccio, false);
@@ -41,10 +41,10 @@ function crearFormulari() {
 
     // Camps del formulari i els seus atributs
     const campos = [
-        { label: "id:", id: "id", type: "text", required: true },
+        /*{ label: "id:", id: "id", type: "text", required: true },*/
         { label: "Nom del lot", id: "name", type: "text", required: true, minlength: 2, maxlength: 40, pattern: "[\\p{L}0-9.,;@$&\\s]{2,40}" },
-        { label: "id del producte", id: "product_id", type: "text", required: true, minlength: 2, maxlength: 40 },
-        { label: "id del proveïdor", id: "supplier_id", type: "text", required: true, minlength: 2, maxlength: 40 },
+        /*{ label: "id del producte", id: "product_id", type: "text", required: true, minlength: 2, maxlength: 40 },*/
+        { label: "Proveïdor", id: "supplier_id", type: "text", required: true, minlength: 2, maxlength: 40 },
         { label: "Unitats totals", id: "quantity", type: "number", required: true, min: 1 },
         { label: "Data de producció", id: "production_date", type: "date", required: true },
         { label: "Data d'expiració", id: "expiration_date", type: "date", required: true }

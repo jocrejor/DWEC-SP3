@@ -1,3 +1,6 @@
+// Recuperar dades de localStorage o inicialitzar un array buit
+let arrayTransportista = JSON.parse(localStorage.getItem('carriers')) || [];
+
 window.onload = iniciar;
 
 function iniciar() {
@@ -9,11 +12,12 @@ function iniciar() {
 
     // Afegim events de validació per als camps específics
     document.getElementById("name").addEventListener("blur", validarNomLot, false);
-    document.getElementById("product_id").addEventListener ("blur", validarIdProducte, false);
+    /*document.getElementById("product_id").addEventListener ("blur", validarIdProducte, false);*/
     document.getElementById("supplier_id").addEventListener("blur", validarIdProveidor, false);
     document.getElementById("quantity").addEventListener("blur", validarUnitats, false);
     document.getElementById("production_date").addEventListener("blur", validarDataProduccio, false);
     document.getElementById("expiration_date").addEventListener("blur", validarDataExpiracio, false);
+    crearSelectProveidors();
 }
 
 
@@ -39,10 +43,10 @@ function crearFormulari() {
 
     // Definició dels camps del formulari
     const campos = [
-        { label: "id:", id: "id", type: "text", required: true },
-        { label: "Nom del lot", id: "name", type: "text", required: true, minlength: 2, maxlength: 40, pattern: "[\\p{L}0-9.,;@$&\\s]{2,40}" },
-        { label: "id del producte", id: "product_id", type: "text", required: true, minlength: 2, maxlength: 40 },
-        { label: "id del proveïdor", id: "supplier_id", type: "text", required: true, minlength: 2, maxlength: 40 },
+        /*{ label: "id:", id: "id", type: "text", required: true },*/
+        { label: "Nom del lot", id: "name", type: "text", required: true, minlength: 4, maxlength: 20, pattern: "[\\p{L}0-9.,;@$&\\s]{2,40}" },
+        /*{ label: "id del producte", id: "product_id", type: "text", required: true, minlength: 2, maxlength: 40 },*/
+        { label: "Proveïdor", id: "supplier_id", type: "text", required: true, minlength: 2, maxlength: 40 },
         { label: "Unitats totals", id: "quantity", type: "number", required: true, min: 1 },
         { label: "Data de producció", id: "production_date", type: "date", required: true },
         { label: "Data d'expiració", id: "expiration_date", type: "date", required: true },
@@ -119,24 +123,24 @@ function altaLote() {
 
 // Obtenim totes les dades del formulari
 function obtindreDadesFormulari() {
-    const id = document.getElementById("id").value;
+    /*const id = document.getElementById("id").value;*/
     const name = document.getElementById("name").value.trim();
-    const product_id = document.getElementById("product_id").value.trim();
+    /*const product_id = document.getElementById("product_id").value.trim();*/
     const supplier_id = document.getElementById("supplier_id").value.trim();
     const quantity = document.getElementById("quantity").value.trim();
     const production_date = document.getElementById("production_date").value.trim();
     const expiration_date = document.getElementById("expiration_date").value.trim();
 
     // Verifiquem si falta alguna dada
-    if (!id || !name || !product_id || !supplier_id || !quantity || !production_date || !expiration_date) {
+    if (/*!id ||*/ !name || /*!product_id ||*/ !supplier_id || !quantity || !production_date || !expiration_date) {
         alert("Has d'omplir tots els camps");
         return null;
     }
 
     return {
-        id,
+        /*id,*/
         name,
-        product_id,
+        /*product_id,*/
         supplier_id,
         quantity,
         production_date,
@@ -168,7 +172,7 @@ function validarNomLot() {
 
 
 // Validació de l'id del producte
-function validarIdProducte() {
+/*function validarIdProducte() {
     let element = document.getElementById("product_id");
 
     // Comprobar si el campo no es válido
@@ -183,7 +187,7 @@ function validarIdProducte() {
         return false; 
     }
     return true;
-}
+}*/
 
 
 // Validació de l'id del proveïdor
@@ -304,3 +308,57 @@ function esborrarError( ) {
     }   
 }
 
+
+function crearSelectProveidors() {
+    // Crear el elemento select
+    let select = document.createElement("select");
+    select.setAttribute("id", "supplier_id");
+
+    // Recorrer el array y añadir las opciones
+    arrayTransportista.forEach(carrier => {
+        let option = document.createElement("option");
+        option.setAttribute("value", carrier.id); // Usamos el ID como valor
+        option.textContent = carrier.name; // Mostramos el nombre del transportista
+        select.appendChild(option);
+    });
+
+    // Añadir el select al formulario
+    const supplierTd = document.querySelector('td input[id="supplier_id"]');
+    if (supplierTd) {
+        supplierTd.replaceWith(select);
+    }
+}
+
+
+
+
+
+/*function crearSelectProveidors(){
+    let select = document.createElement("select");
+    let option1 = document.createElement("option");
+    option1.setAttribute("value", "value1");
+    let option1Texto = document.createTextNode("opcion 1");
+    option1.appendChild(option1Texto);
+
+    let option2 = document.createElement("option");
+    option2.setAttribute("value", "value2");
+    let option2Texto = document.createTextNode("opcion 2");
+    option2.appendChild(option2Texto);
+
+    select.appendChild(option1);
+    select.appendChild(option2);
+
+    document.body.appendChild(select);
+
+}*/
+/*
+// Creem els nodes de text per a les dades del producte
+let id = document.createTextNode(product.id);
+let sku = document.createTextNode(product.sku);  
+let name = document.createTextNode(product.name);
+
+// Afegim les dades a les cel·les corresponents
+celda2.appendChild(id);
+celda3.appendChild(sku);
+celda4.appendChild(name);
+});  */

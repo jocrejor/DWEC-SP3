@@ -6,10 +6,24 @@
     <title>Estats</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="ver.js"></script>
-    
+    <script src="ver.js" defer></script>
 </head>
 <body>
-    
+    <div class="container">
+        <h2>Visualitzar Estat</h2>
+        <form id="formulario">
+            <table>
+                <tr>
+                    <td>ID Estat</td>
+                    <td><input type="text" id="id" disabled></td>
+                </tr>
+                <tr>
+                    <td>Nom</td>
+                    <td><input type="text" id="name" disabled></td>
+                </tr>
+            </table>
+        </form>
+        <button type="button" id="volver" class="btn btn-primary">Tornar</button>
+    </div>
 </body>
 </html>
