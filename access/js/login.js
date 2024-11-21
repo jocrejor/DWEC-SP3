@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function validar(e) {
     esborrarError();
     e.preventDefault();
-    
+
     if (validarEmail() && validarContrasenya()) {
         enviarFormulari();
         return true;
@@ -64,14 +64,29 @@ function enviarFormulari() {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
-    localStorage.setItem("email", email);
-    localStorage.setItem("password", password); // Normalment, mai es guarda la contrasenya sense xifrar
+    // Comprovem si l'usuari existeix al localStorage
+    const savedEmail = localStorage.getItem("email");
+    const savedPassword = localStorage.getItem("password");
 
-    alert("Inici de sessió correcte!");
+    // Validació de les credencials
+    if (email === savedEmail && password === savedPassword) {
+        alert("Inici de sessió correcte!");
 
-    // Netejar el formulari després d'enviar
-    setTimeout(function () {
-        document.getElementById("email").value = "";
-        document.getElementById("password").value = "";
-    }, 1000);
+        // Emmagatzemem la sessió a localStorage
+        localStorage.setItem("loggedIn", "true");  // Marquem que l'usuari està logat
+
+        // Redirigir a l'àrea personal després de 1 segon
+        setTimeout(function () {
+            window.location.href = "personalArea.html";  // Redirigeix a l'àrea personal
+        }, 1000);
+
+        // Netejar el formulari després d'enviar
+        setTimeout(function () {
+            document.getElementById("email").value = "";
+            document.getElementById("password").value = "";
+        }, 1000);
+    } else {
+        error(document.getElementById("email"), "Les credencials no són vàlides.");
+    }
 }
+

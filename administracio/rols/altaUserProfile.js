@@ -32,7 +32,7 @@ async function postData(url,endPoint, data = {}) {
 // Acces a les dades
 async function getNewId(url,endPoint) {
   try {
-    const response = await fetch(url + endPoint );  // Reemplaza 'data.json' con la ruta de tu archivo
+    const response = await fetch(url + endPoint );
 
     if (!response.ok) {
       throw new Error('Error al obtener el archivo JSON');
