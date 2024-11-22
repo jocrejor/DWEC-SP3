@@ -43031,13 +43031,6 @@
       "orderreception_status_id": 3
     },
     {
-      "id": "5",
-      "supplier_id": 5,
-      "estimated_reception_date": "2024-10-09",
-      "created_by": 5,
-      "orderreception_status_id": 2
-    },
-    {
       "id": "6",
       "supplier_id": 5,
       "estimated_reception_date": "2024-10-11",
@@ -43097,14 +43090,6 @@
       "product_id": 4,
       "quantity_ordered": 75,
       "quantity_received": 0
-    },
-    {
-      "id": "5",
-      "order_reception_id": 2,
-      "orderlinereception_status_id": 2,
-      "product_id": 5,
-      "quantity_ordered": 60,
-      "quantity_received": 60
     },
     {
       "id": "6",

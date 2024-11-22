@@ -28,21 +28,21 @@ function crearLinea(order) {
   const esborrarTD = document.createElement("td");
   const buttonEsborrar = document.createElement("button");
   buttonEsborrar.textContent = "Esborrar";
-  buttonEsborrar.className = "btn btn-primary btn-lg";
+  buttonEsborrar.className = "botoRoig text-blanc";
   esborrarTD.appendChild(buttonEsborrar);
   buttonEsborrar.addEventListener("click", () => esborrarOrdre(order.id));
 
   const modificarTD = document.createElement("td");
   const buttonModificar = document.createElement("button");
   buttonModificar.textContent = "Modificar";
-  buttonModificar.className = "btn btn-primary btn-lg";
+  buttonModificar.className = "botoBlau text-blanc";
   buttonModificar.addEventListener("click", () => modificarOrdre(order.id));
   modificarTD.appendChild(buttonModificar);
 
   const visualizarTD = document.createElement("td");
   const buttonVisualizar = document.createElement("button");
   buttonVisualizar.textContent = "Visualitzar";
-  buttonVisualizar.className = "btn btn-primary btn-lg";
+  buttonVisualizar.className = "botoBlau text-blanc";
   visualizarTD.appendChild(buttonVisualizar);
   buttonVisualizar.addEventListener("click", () => visualizarOrdre(order.id));
 

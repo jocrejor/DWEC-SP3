@@ -1,0 +1,32 @@
+:root {
+    --negre: #222831;
+    --blau: #30475E;
+    --taronja: #FF7000;
+    --blanc: #ECECEC;
+}
+
+.botoTaronja {
+    background-color: var(--taronja);
+}
+
+.botoBlau {
+background-color: var(--blau);
+}
+
+.botoRoig{
+	background-color: red;
+}
+
+.padding-zero {
+	padding: 0;
+}
+
+.text-blanc {
+	color: white;
+}
+
+.centrat {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
