@@ -77,6 +77,6 @@ function enviarFormulari() {
 
     localStorage.setItem("spaces", JSON.stringify(arrSpaces));
 
-    alert("Hueco creat correctament.");
+    alert("Espai creat correctament.");
     window.location.assign("../llista/llistatSpace.html");
 }
