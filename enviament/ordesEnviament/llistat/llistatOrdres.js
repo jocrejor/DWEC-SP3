@@ -6,7 +6,7 @@ function main() {
 }
 
 function nouordre() {
-    window.location.href = "altaOrdre.html";
+    window.location.href = "../alta/altaOrdre.html";
 }
 
 // Obtindre ordres del localStorage y mostrarles en una tabla 
@@ -83,7 +83,7 @@ function modificar(id) {
     const ordreSeleccionada = ordresShipping.find(o => o.id === id);
     if (ordreSeleccionada) {
         localStorage.setItem("ordreSeleccionada", JSON.stringify(ordreSeleccionada));
-        window.location.href = "altaOrdre.html"; 
+        window.location.href = "../alta/altaOrdre.html"; 
     }
 }
 

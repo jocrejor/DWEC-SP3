@@ -14,7 +14,7 @@ function iniciar() {
 
 /* llistarOrdres: funcio que redirigeix a la página llistatOrdres.html */
 function llistarOrdres(){
-    window.location.href = "llistatOrdres.html";
+    window.location.href = "../llistat/llistatOrdres.html";
 }
 
 /* funcio que valida si esta tot correcte per donar d'alta una nova ordre */

@@ -109,5 +109,5 @@ function enviarFormulari() {
     }
     localStorage.setItem("ordresEmmagatzemades", JSON.stringify(ordres));
     localStorage.removeItem("ordreSeleccionada");
-    window.location.assign("llistatOrdres.html");
+    window.location.assign("./llistat/llistatOrdres.html");
 }
