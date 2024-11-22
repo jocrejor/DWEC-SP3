@@ -5,6 +5,10 @@
     --blanc: #ECECEC;
 }
 
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 .botoTaronja {
     background-color: var(--taronja);
 }
@@ -26,7 +30,40 @@ background-color: var(--blau);
 }
 
 .centrat {
-	display: flex;
-	align-items: center;
-	justify-content: center;
+	text-align: center;
+}
+
+input {
+    padding: .5em 0;
+    border: 1px solid var(--negre);
+    border-radius: 1em;
+}
+
+button {
+    padding: 1em 1.5em;
+    border: 0;
+    border-radius: 1em;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+tr {
+    border: 1px solid var(--negre);
+}
+
+tr:nth-child(even) {
+    background-color: #ECECEC;
+}
+
+th, 
+td {
+    padding: 1em;
+}
+
+thead {
+    background-color: var(--blau);
 }
