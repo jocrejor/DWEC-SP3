@@ -43007,70 +43007,70 @@ let incident = [
         "supplier_id": 101,
         "estimated_reception_date": "2024-10-01",
         "created_by": 201,
-        "orderreception_status_id": 1
+        "order_reception_status_id": 1
     },
     {
         "id": 2,
         "supplier_id": 102,
         "estimated_reception_date": "2024-10-03",
         "created_by": 202,
-        "orderreception_status_id": 2
+        "order_reception_status_id": 2
     },
     {
         "id": 3,
         "supplier_id": 103,
         "estimated_reception_date": "2024-10-05",
         "created_by": 203,
-        "orderreception_status_id": 1
+        "order_reception_status_id": 1
     },
     {
         "id": 4,
         "supplier_id": 104,
         "estimated_reception_date": "2024-10-07",
         "created_by": 204,
-        "orderreception_status_id": 3
+        "order_reception_status_id": 3
     },
     {
         "id": 5,
         "supplier_id": 105,
         "estimated_reception_date": "2024-10-09",
         "created_by": 205,
-        "orderreception_status_id": 2
+        "order_reception_status_id": 2
     },
     {
         "id": 6,
         "supplier_id": 106,
         "estimated_reception_date": "2024-10-11",
         "created_by": 206,
-        "orderreception_status_id": 1
+        "order_reception_status_id": 1
     },
     {
         "id": 7,
         "supplier_id": 107,
         "estimated_reception_date": "2024-10-13",
         "created_by": 207,
-        "orderreception_status_id": 3
+        "order_reception_status_id": 3
     },
     {
         "id": 8,
         "supplier_id": 108,
         "estimated_reception_date": "2024-10-15",
         "created_by": 208,
-        "orderreception_status_id": 2
+        "order_reception_status_id": 2
     },
     {
         "id": 9,
         "supplier_id": 109,
         "estimated_reception_date": "2024-10-17",
         "created_by": 209,
-        "orderreception_status_id": 1
+        "order_reception_status_id": 1
     },
     {
         "id": 10,
         "supplier_id": 110,
         "estimated_reception_date": "2024-10-19",
         "created_by": 210,
-        "orderreception_status_id": 3
+        "order_reception_status_id": 3
     }
 ];
 
