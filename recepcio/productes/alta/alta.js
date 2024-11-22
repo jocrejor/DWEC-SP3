@@ -8,41 +8,101 @@ function iniciar() {
 
 function validarSKU() {
     let sku = document.getElementById("sku");
-    if (!/^[A-Z0-9]{8,12}$/.test(sku.value)) {
-        error(sku, "El SKU debe tener entre 8 y 12 caracteres");
+    if (!sku.checkValidity()) {
+        if (sku.validity.valueMissing) {
+            error2(sku, "Ha d'introduir el SKU.");
+        }
+        else if (sku.validity.patternMismatch) {
+            error2(sku, "El SKU té que ser en majúscules i tindre entre 6 i 12 caràcters");
+        }
+        sku.classList.add("error");
         return false;
     }
+    sku.classList.remove("error");
+    sku.classList.add("valid");
     return true;
 }
 
 function validarName() {
     let name = document.getElementById("name");
-    if (!/^[A-Za-z\s]{2,50}$/.test(name.value)) {
-        error(name, "El nombre debe tener entre 2 y 30 caracteres");
+    if (!name.checkValidity()) {
+        if (name.validity.valueMissing) {
+            error2(name, "Ha d'introduir el nom.");
+        }
+        else if (name.validity.patternMismatch) {
+            error2(name, "El nom ha de tindre entre 2 i 50 caràcters");
+        }
+        name.classList.add("error");
         return false;
     }
+    name.classList.remove("error");
+    name.classList.add("valid");
     return true;
 }
 
 function validarVol() {
     let volume = document.getElementById("volume");
-    if (!/^\d+(\.\d{1,2})?$/.test(volume.value)) {
-        error(volume, "Volumen no válido");
+    if (!volume.checkValidity()) {
+        if (volume.validity.valueMissing) {
+            error2(volume, "Ha d'introduir un volumen.");
+        }
+        else if (volume.validity.patternMismatch) {
+            if (value.split('.')[1] && value.split('.')[1].length > 2) {
+                error2(volume, "El volumen ha de tindre 2 decimals com a màxim");
+                volume.classList.remove("valid");
+                volume.classList.add("error");
+                return false;
+            }
+        }
+        volume.classList.remove("valid");
+        volume.classList.add("error");
         return false;
     }
+    volume.classList.remove("error");
+    volume.classList.add("valid");
     return true;
 }
 
 function validarWeight() {
     let weight = document.getElementById("weight");
-    if (!/^\d+(\.\d{1,2})?$/.test(weight.value)) {
-        error(weight, "Peso no válido");
+    let value = weight.value;
+
+    // Verificar si el campo está vacío
+    if (weight.validity.valueMissing) {
+        error2(weight, "Ha d'introduir un pes.");
+        weight.classList.remove("valid");
+        weight.classList.add("error");
         return false;
     }
+
+    // Verificar si el valor tiene más de 2 decimales
+    if (value.split('.')[1] && value.split('.')[1].length > 2) {
+        error2(weight, "El pes ha de tindre 2 decimals com a màxim");
+        weight.classList.remove("valid");
+        weight.classList.add("error");
+        return false;
+    }
+
+    // Si todo es válido
+    weight.classList.remove("error");
+    weight.classList.add("valid");
     return true;
 }
 
+function validarLote() {
+    let lote = document.getElementById("lotorserial");
 
+    if (lote.value == "Empty") {
+        error2(lote, "Tens que elegir un lot");
+        lote.classList.remove("valid");
+        lote.classList.add("error");
+        return false;
+    }
+
+    lote.classList.remove("error");
+    lote.classList.add("valid");
+    return true;
+}
 
 function validarImage() {
     let image_url = document.getElementById("image_url");
@@ -57,7 +117,7 @@ function validar(e) {
     borrarError();
     e.preventDefault();
 
-    if (validarSKU() && validarName() && validarVol() && validarWeight() && validarImage) {
+    if (validarSKU() && validarName() && validarVol() && validarWeight() && validarImage && validarLote()) {
         enviarFormulario();
         return true;
     } else {
@@ -65,7 +125,7 @@ function validar(e) {
     }
 }
 
-function error(element, mensaje) {
+function error2(element, mensaje) {
     const textError = document.createTextNode(mensaje);
     const elementError = document.getElementById("mensajeError");
     elementError.appendChild(textError);
@@ -100,7 +160,6 @@ function enviarFormulario() {
     let arrProductos = JSON.parse(localStorage.getItem("products")) || [];
     arrProductos.push(product);
     localStorage.setItem("products", JSON.stringify(arrProductos));
-
     
     setTimeout(function (){
         document.getElementById("name").value = "";

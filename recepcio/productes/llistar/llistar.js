@@ -1,20 +1,16 @@
 window.onload = main;
 
-
 function main() {
-
-document.getElementById("nuevoProducto").addEventListener("click",nuevoProducto);
-
-obtenerProductos();
-    }
+    document.getElementById("nuevoProducto").addEventListener("click",nuevoProducto);
+    obtenerProductos();
+}
 
 function nuevoProducto(){
     window.location.assign("altaProductos.html");
 }
 
-
 function obtenerProductos() {
-    let arrProductos = JSON.parse(localStorage.getItem("products")) || [];
+    let arrProductos = JSON.parse(localStorage.getItem("Product")) || [];
     let tbody = document.getElementById("files");
 
     while (tbody.firstChild) {
@@ -75,11 +71,11 @@ function obtenerProductos() {
 
 
 function eliminar(id) {
-    let arrProductos = JSON.parse(localStorage.getItem("products")) || [];
+    let arrProductos = JSON.parse(localStorage.getItem("Product")) || [];
     arrProductos = arrProductos.filter(function(product) {
         return product.id !== id;
     });
-    localStorage.setItem("products", JSON.stringify(arrProductos));
+    localStorage.setItem("Product", JSON.stringify(arrProductos));
     obtenerProductos();
 }
 
@@ -98,4 +94,3 @@ function modificar(id, name, description, volume, weight, lotoreserial, sku, ima
     localStorage.setItem("modProducto", JSON.stringify(product));
     window.location.assign("modificarProductos.html");
 }
-

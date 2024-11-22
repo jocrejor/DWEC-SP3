@@ -6,10 +6,14 @@
     <title>Formulario Alta Productos</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script type="text/javascript"src="altaProductos.js" defer></script>
-    <style> .error {
-        border:solid 2px #FF0000; 
-}
- </style>
+    <style> 
+        .error {
+            color: red;
+        }
+        .valid {
+            color: green;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -18,14 +22,14 @@
         <div class="form-group row">
             <label for="sku" class="col-sm-2 col-form-label" >SKU</label>
         <div class="col-sm-10">
-            <input type="text"  class="form-control" id="sku" placeholder="SKU12345" pattern="^[A-Z0-9]{8,12}$" required></br>
+            <input type="text"  class="form-control" id="sku" placeholder="SKU12345" pattern="^[A-Z0-9]{6,12}$" required></br>
             </div>
         </div>
 
         <div class="form-group row">
             <label for="name" class="col-sm-2 col-form-label">Nombre</label>
         <div class="col-sm-10">
-            <input type="text"  class="form-control" id="name"  pattern="^[A-Za-z\s]{2,50}$" required></br>
+            <input type="text"  class="form-control" id="name"  pattern="^[A-Za-z0-9\s]{2,50}$" required></br>
         </div>
         </div>
 
@@ -39,24 +43,28 @@
         <div class="form-group row">
             <label for="volume" class="col-sm-2 col-form-label">Volumen</label>
         <div class="col-sm-10">
-            <input type="number"  class="form-control" id="volume" placeholder="00.00" pattern="^\d+(\.\d{1,2})?$" step="0.01" required></br>
+            <input type="number"  class="form-control" id="volume" placeholder="00.00" step="0.01" required></br>
         </div>
         </div>
 
         <div class="form-group row">
             <label for="weight" class="col-sm-2 col-form-label">Peso</label>
         <div class="col-sm-10">
-            <input type="number"  class="form-control" id="weight" placeholder="00.00" pattern="^\d+(\.\d{1,2})?$" step="0.01" required></br>
+            <input type="number"  class="form-control" id="weight" placeholder="00.00kg" step="0.01" required></br>
         </div>
         </div>
 
-        <label for="lotorserial" class="col-sm-2 col-form-label">Control lotes</label>
-
-        <select name="lotorserial" id="lotorserial" >
-            <option value="Lot">Lot</option>
-            <option value="Non">Non</option>
-            <option value="Serial">Serial</option>
-        </select>
+        <div class="form-group row">
+            <label for="lotorserial" class="col-sm-2 col-form-label">Control lotes</label>
+            <div class="col-sm-10">
+                <select name="lotorserial" id="lotorserial" class="form-control">
+                    <option value="Empty"   id="empty"></option>
+                    <option value="Non"     id="non">Non</option>
+                    <option value="Lote"     id="lote">Lot</option>
+                    <option value="Serial"  id="serial">Serial</option>
+                </select>
+            </div>
+        </div>
         
         <div class="form-group row">
             <label for="image_url" class="col-sm-2 col-form-label">URL_Imagen</label>
@@ -66,7 +74,7 @@
         </div>
         
         <h5 id="mensajeError" class="text-danger"></h5>
-        <button id="btnAñadir" class="btn btn-primary">Añadir</button>      
+        <button id="btnAñadir" class="btn btn-primary">Añadir</button>  
         
     </form>
 </div>
