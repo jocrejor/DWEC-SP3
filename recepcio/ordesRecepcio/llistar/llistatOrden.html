@@ -1,47 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Llistat Ordens de Recepció</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="llistatOrden.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="llistatOrden.js"></script>
     <style>
-        .error {
-            border: solid 2px #FF0000;
-        }
+      .error {
+        border: solid 2px #ff0000;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-    <div class="container">
-        <h1>Llistat Orden de Recepció</h1>
-        
-        <button class=" btn btn-primary my-3" id="nuevaOrden">Nova Ordre</button></br>
-        <table class="table" id="table">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col">Esborrar</th>
-                    <th scope="col">Modificar</th>
-                    <th scope="col">Visualitzar</th>
-                    <th scope="col">ID</th>
-                    <th scope="col">Proveïdor</th>
-                    <th scope="col">Data Estimada</th>
-                </tr>
-            </thead>
-            <tbody id="files">
-                
-            </tbody>
-        </table>
+  <body>
+    <div class="container-fluid">
+      <h1>Llistat Orden de Recepció</h1>
 
+      <div class="input-group">
+        <input type="search" class="form-control" />
+        <button class="botoBlau text-blanc">Cerca</button>
+      </div>
 
+      <button class="botoTaronja text-blanc" id="nuevaOrden">Nova Ordre</button>
+      <br />
 
+      <table class="table centrat" id="table">
+        <thead class="text-blanc">
+          <tr>
+            <th scope="col">Esborrar</th>
+            <th scope="col">Modificar</th>
+            <th scope="col">Visualitzar</th>
+            <th scope="col">ID</th>
+            <th scope="col">Proveïdor</th>
+            <th scope="col">Data Estimada</th>
+          </tr>
+        </thead>
+        <tbody id="files"></tbody>
+      </table>
     </div>
-</body>
-
+  </body>
 </html>
-
-
-
-

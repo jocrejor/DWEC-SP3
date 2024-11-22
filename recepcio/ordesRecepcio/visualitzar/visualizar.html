@@ -1,59 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Llistat Ordens de Recepció</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
     <script type="text/javascript" src="visualizar.js"></script>
     <style>
-        .error {
-            border: solid 2px #FF0000;
-        }
+      .error {
+        border: solid 2px #ff0000;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="container">
-        <h1>Detalls de la Ordre</h1>
+      <h1>Detalls de la Ordre</h1>
 
-        <table class="table" id="ordenTable">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Proveïdor</th>
-                    <th scope="col">Data de Recepció Estimada</th>
-                </tr>
-            </thead>
-            <tbody id="ordenBody">
-                
-            </tbody>
-        </table>
-        <br><br><br><br><br>
+      <table class="table" id="ordenTable">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Proveïdor</th>
+            <th scope="col">Data de Recepció Estimada</th>
+          </tr>
+        </thead>
+        <tbody id="ordenBody"></tbody>
+      </table>
+      <br /><br /><br /><br /><br />
 
-        <h2>Productes de la Ordre</h2>
+      <h2>Productes de la Ordre</h2>
 
-        <table class="table" id="ordenTable">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col">Producte</th>
-                    <th scope="col">Quantitat Demanada</th>
-                </tr>
-            </thead>
-            <tbody id="productosBody">
-                
-            </tbody>
-        </table>
-        <button class=" btn btn-primary my-3"  id="btnRegresar">Tornar</button>
+      <table class="table" id="ordenTable">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">Producte</th>
+            <th scope="col">Quantitat Demanada</th>
+          </tr>
+        </thead>
+        <tbody id="productosBody"></tbody>
+      </table>
+      <button class="btn btn-primary my-3" id="btnRegresar">Tornar</button>
     </div>
-</body>
-
+  </body>
 </html>
-
-
-
-
-
-
-

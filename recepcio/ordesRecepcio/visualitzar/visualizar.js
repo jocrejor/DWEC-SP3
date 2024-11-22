@@ -1,6 +1,4 @@
-window.onload = inicio;
-
-function inicio() {
+$(document).ready(function inicio() {
     const orden = JSON.parse(localStorage.getItem("ordenVisualizar")); 
     if (orden) {
         mostrarOrden(orden);
@@ -11,7 +9,7 @@ function inicio() {
         localStorage.removeItem("ordenVisualizar");
         window.location.assign("../llistar/llistatOrden.html"); 
     });
-}
+});
 
 function mostrarOrden(orden) {
     const ordenBody = document.getElementById("ordenBody");
