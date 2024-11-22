@@ -1,13 +1,11 @@
-window.onload = main;
-
 const API = "http://localhost:3000/";
 const orderReceptionEP = "OrderReception/";
 const orderLineReceptionEP = "OrderLineReception/";
 
-function main() {
+$(document).ready(function() {
   document.getElementById("nuevaOrden").addEventListener("click", nuevaOrden);
   obtindreOrdens();
-}
+});
 
 function nuevaOrden() {
   window.location.assign("../alta/altaOrden.html");

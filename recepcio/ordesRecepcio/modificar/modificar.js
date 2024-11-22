@@ -1,10 +1,8 @@
-window.onload = iniciar;
-
 let arrTemp = []; 
 let productoEditadoID = null;
 let orderLineReception;
 
-function iniciar(){
+$(document).ready(function(){
     cargarProductos();
     cargarProveidor();
 
@@ -24,7 +22,7 @@ function iniciar(){
     document.getElementById("btnCancelar").addEventListener("click", () => {
         window.location.assign("../llistar/llistatOrden.html"); 
     });
-}
+});
 
 function cargarProveidor() {
     const suppliers = JSON.parse(localStorage.getItem("Supplier")) || [];
