@@ -1,4 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const currentUser = localStorage.getItem("currentUser");
+    if (currentUser === "true") {
+        window.location.href = "../index.html";
+    }
+
     document.getElementById("enviar").addEventListener("click", validar);
 });
 
@@ -8,9 +13,6 @@ function validar(e) {
 
     if (validarEmail() && validarContrasenya()) {
         enviarFormulari();
-        return true;
-    } else {
-        return false;
     }
 }
 
@@ -22,7 +24,7 @@ function validarEmail() {
             error(element, "Deus d'introduïr el correu electrònic.");
         }
         if (element.validity.patternMismatch) {
-            error(element, "El correu electrònic no és vàlid, exemple: nom@domini.com");
+            error(element, "El correu electrònic no és vàlid.");
         }
         return false;
     }
@@ -47,6 +49,7 @@ function validarContrasenya() {
 function error(element, missatge) {
     const textError = document.createTextNode(missatge);
     const elementError = document.getElementById("missatgeError");
+    elementError.innerHTML = "";  // Netegem missatges d'error anteriors
     elementError.appendChild(textError);
     element.classList.add("error");
     element.focus();
@@ -57,36 +60,34 @@ function esborrarError() {
     for (let ele of formulari) {
         ele.classList.remove("error");
     }
-    document.getElementById("missatgeError").replaceChildren();
+    document.getElementById("missatgeError").innerHTML = "";  // Netegem el missatge d'error
 }
 
 function enviarFormulari() {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
-    // Comprovem si l'usuari existeix al localStorage
+    // Comprovem si l'usuari existeix a localStorage
     const savedEmail = localStorage.getItem("email");
     const savedPassword = localStorage.getItem("password");
 
-    // Validació de les credencials
+    // Validem les credencials
     if (email === savedEmail && password === savedPassword) {
-        alert("Inici de sessió correcte!");
+        // Si les credencials són correctes, emmagatzemem que l'usuari està logat
+        localStorage.setItem("currentUser", "true");
 
-        // Emmagatzemem la sessió a localStorage
-        localStorage.setItem("loggedIn", "true");  // Marquem que l'usuari està logat
-
-        // Redirigir a l'àrea personal després de 1 segon
-        setTimeout(function () {
-            window.location.href = "personalArea.html";  // Redirigeix a l'àrea personal
+        // Redirigim l'usuari a la pàgina principal
+        setTimeout(() => {
+            window.location.href = "../index.html";  // Redirecció després d'1 segon
         }, 1000);
 
-        // Netejar el formulari després d'enviar
-        setTimeout(function () {
+        // Netegem el formulari
+        setTimeout(() => {
             document.getElementById("email").value = "";
             document.getElementById("password").value = "";
         }, 1000);
+
     } else {
         error(document.getElementById("email"), "Les credencials no són vàlides.");
     }
 }
-
