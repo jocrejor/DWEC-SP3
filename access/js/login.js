@@ -1,9 +1,6 @@
+let currentUser;
 document.addEventListener("DOMContentLoaded", () => {
-    const currentUser = localStorage.getItem("currentUser");
-    if (currentUser === "true") {
-        window.location.href = "../index.html";
-    }
-
+    
     document.getElementById("enviar").addEventListener("click", validar);
 });
 
@@ -11,7 +8,7 @@ function validar(e) {
     esborrarError();
     e.preventDefault();
 
-    if (validarEmail() && validarContrasenya()) {
+    if (validarEmail() && validarContrasenya() && validarExisteixUser()) {
         enviarFormulari();
     }
 }
@@ -46,6 +43,24 @@ function validarContrasenya() {
     return true;
 }
 
+
+
+async function validarExisteixUser() {
+    const email =  document.getElementById("email");
+    const password =  document.getElementById("password");
+    
+    //obtinre els usuaris 
+    const users = await getData(url,"User");
+    const currentUser = users.find( ele =>{ele.email=== email.value && ele.password=== password.value });
+    if (currentUser == undefined ){  
+        error(email, "El correu o la contrasenya no coincideix amb cap usuari");
+        return false;
+    }
+    return true;
+}
+
+
+
 function error(element, missatge) {
     const textError = document.createTextNode(missatge);
     const elementError = document.getElementById("missatgeError");
@@ -64,30 +79,13 @@ function esborrarError() {
 }
 
 function enviarFormulari() {
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-
-    // Comprovem si l'usuari existeix a localStorage
-    const savedEmail = localStorage.getItem("email");
-    const savedPassword = localStorage.getItem("password");
-
-    // Validem les credencials
-    if (email === savedEmail && password === savedPassword) {
-        // Si les credencials són correctes, emmagatzemem que l'usuari està logat
-        localStorage.setItem("currentUser", "true");
+    
+    // Si les credencials són correctes, emmagatzemem que l'usuari està logat
+        localStorage.setItem("currentUser", currentUser);
 
         // Redirigim l'usuari a la pàgina principal
         setTimeout(() => {
             window.location.href = "../index.html";  // Redirecció després d'1 segon
         }, 1000);
 
-        // Netegem el formulari
-        setTimeout(() => {
-            document.getElementById("email").value = "";
-            document.getElementById("password").value = "";
-        }, 1000);
-
-    } else {
-        error(document.getElementById("email"), "Les credencials no són vàlides.");
-    }
 }
