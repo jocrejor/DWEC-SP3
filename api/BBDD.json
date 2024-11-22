@@ -562,15 +562,15 @@
     {
       "id": "1",
       "email": "admin@gmail.com",
-      "password": "admin1234!",
+      "password": "123456",
       "role": "1",
       "image": "img/face.png"
     },
     {
       "id": "2",
-      "email": "lorenzocremonese@gmail.com",
-      "password": "Lorenzo27!",
-      "role": "1",
+      "email": "encarregat@gmail.com",
+      "password": "123456",
+      "role": "2",
       "image": "img/face.png"
     },
     {
@@ -582,8 +582,8 @@
     },
     {
       "id": "4",
-      "email": "adrianavarro@gmail.com",
-      "password": "Adria11!",
+      "email": "operari@gmail.com",
+      "password": "123456",
       "role": "3",
       "image": "img/face.png"
     },

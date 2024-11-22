@@ -1,12 +1,21 @@
 let currentUser;
-document.addEventListener("DOMContentLoaded", () => {
+ //obtinre els usuaris 
+let users; 
+    
+
+ document.addEventListener("DOMContentLoaded", () => {
     
     document.getElementById("enviar").addEventListener("click", validar);
+    carregarUsuaris();
 });
 
+async function carregarUsuaris () {
+    users = await getData(url,"User");    
+}
+
 function validar(e) {
-    esborrarError();
     e.preventDefault();
+    esborrarError();
 
     if (validarEmail() && validarContrasenya() && validarExisteixUser()) {
         enviarFormulari();
@@ -44,15 +53,12 @@ function validarContrasenya() {
 }
 
 
-
-async function validarExisteixUser() {
-    const email =  document.getElementById("email");
-    const password =  document.getElementById("password");
+function validarExisteixUser() {
+    const email =  document.getElementById("email").value;
+    const password =  document.getElementById("password").value;
     
-    //obtinre els usuaris 
-    const users = await getData(url,"User");
-    const currentUser = users.find( ele =>{ele.email=== email.value && ele.password=== password.value });
-    if (currentUser == undefined ){  
+    currentUser = users.find( ele => ele.email == email );
+    if (currentUser == undefined || currentUser.password != password ){  
         error(email, "El correu o la contrasenya no coincideix amb cap usuari");
         return false;
     }
@@ -81,11 +87,11 @@ function esborrarError() {
 function enviarFormulari() {
     
     // Si les credencials són correctes, emmagatzemem que l'usuari està logat
-        localStorage.setItem("currentUser", currentUser);
+        localStorage.setItem("currentUser",JSON.stringify(currentUser));
 
         // Redirigim l'usuari a la pàgina principal
         setTimeout(() => {
-            window.location.href = "../index.html";  // Redirecció després d'1 segon
+           window.location.href = "../index.html";  // Redirecció després d'1 segon
         }, 1000);
 
 }
