@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Llistat estats</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="../js/llistaEstat.js" defer></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Gestió d'estats</h1>
+         <a href="../province/llistaProvincia.html" class="btn btn-success">Mostrar Provincies de Espanya</a>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="newStateName" placeholder="Nuevo estado" />
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" onclick="addState()">Agregar Estat</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="mt-4">Estados en el LocalStorage</h2>
+        <table class="table table-striped mt-3">
+                <tr>
+                    <th>#</th>
+                    <th>Nom del Estat</th>
+                    <th>Accions</th>
+                </tr>
+            <tbody id="stateList">
+
+            </tbody>
+        </table>
+
+    </div>
+</body>
+</html>
