@@ -4,29 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Magatzem</title>
+    <title>Modificar </title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="js/altaStorage.js" defer></script>
-</head>
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="formulariModificaMagatzem.js" defer></script>
+    </head>
 
 <body>
     <div class="container">
-        <h2>Magatzem</h2>
-        <form id="formulariMagatzem">
+        <h2>Modificar Formulari</h2>
+
+        <form id="magatzemForm">
             <div class="form-group">
                 <label for="id">ID Magatzem:</label>
-                <input type="text" id="id" name="id_almacen" pattern="^\d{2}$"  class="form-control" required>
+                <input type="text" id="id" name="id" pattern="^\d{2}$"  class="form-control" required>
             </div>
+
             <div class="form-group">
-                <label for="name">Nom : </label>
-                <input type="text" id="name" name="nom_almacen" class="form-control"
+                <label for="name">Nom: </label>
+                <input type="text" id="name" name="name" class="form-control"
                 pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]{2,40}$" required>
             </div>
+
             <div class="form-group">
-                <label for="type">Tipus:</label>
+                <label for="tipus">Tipus:</label>
                 <select name="tipus" id="tipus">
-                    <option value=""></option>
+                    <option ></option>
                     <option value="Recepcion">Recepció</option>
                     <option value="General">Principal</option>
                     <option value="incidents">Incidències</option>
@@ -36,15 +39,13 @@
 
             <div class="form-group">
                 <label for="adress">Adreça:</label>
-                <input type="text" id="adress" name="adreca" class="form-control" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d10-9\s\/]{2,40}$" required>
+                <input type="text" id="adress" name="adress" class="form-control" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d10-9\s\/]{2,40}$" required>
             </div>
 
-            <button type="submit" id="btnGrabar" class="btn btn-primary">Grabar</button>
-            <button type="reset" id="btnNeteja" class="btn btn-secondary">Neteja</button>
-
+            <button type="submit" id="btnGuardar" class="btn btn-primary">Guardar</button>
         </form>
-        <div id="missatgeError" class="text-danger"></div>
     </div>
+    <div id="missatgeError"></div>
 </body>
 
 </html>

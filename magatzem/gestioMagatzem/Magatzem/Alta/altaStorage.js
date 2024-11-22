@@ -1,19 +1,25 @@
-window.onload = main;
 
-function main() {
-    var modifica = JSON.parse(localStorage.getItem("modificaFormulari"));
-    console.log("Dades cargades per a modificar:", modifica); 
-    if (modifica) {
-        document.getElementById("id").value = modifica.id || "";
-        document.getElementById("name").value = modifica.name || "";
-        document.getElementById("tipus").value = modifica.tipus || "";
-        document.getElementById("adress").value = modifica.adress || "";
-    } else {
-        alert("No s'ha trobat el registre a modificar.");
-        window.location.assign("formulariLlista.html");
-    }
-    document.getElementById("btnGuardar").addEventListener("click", btnGuardar, false);
+document.addEventListener("DOMContentLoaded", function () {
+    iniciar();
+});
+
+function iniciar() {
+    document.getElementById("btnGrabar").addEventListener("click", validar, false);
+
 }
+
+function validar(e) {
+    e.preventDefault();
+    esborrarError();
+    if (validarId() && validarNom() && validarTipus() && validarAdress() && confirm("Confirma si vols enviar el formulari")) {
+        gravarMagatzem();
+
+    } else {
+
+        return false;
+    }
+}
+
 function validarId() {
     var idValidar = document.getElementById("id");
     if (!idValidar.checkValidity()) {
@@ -70,29 +76,45 @@ function validarAdress() {
 
 }
 
-function btnGuardar(e) {
-    e.preventDefault();
-    var modifica = {
+function error(element, missatge) {
+    const textError = document.createTextNode(missatge);
+    const elementError = document.getElementById("missatgeError");
+    elementError.innerHTML = "";  
+    elementError.appendChild(textError);
+    element.classList.add("error");
+    element.focus();
+}
+
+function esborrarError() {
+    let formulari = document.forms[0].elements;
+    for (let ele of formulari) {
+        ele.classList.remove("error");
+    }
+    document.getElementById("missatgeError").innerHTML = "";
+}
+
+function gravarMagatzem() {
+    let magatzems = JSON.parse(localStorage.getItem("magatzems")) || [];
+
+    let nouMagatzem = {
         id: document.getElementById("id").value,
         name: document.getElementById("name").value,
         tipus: document.getElementById("tipus").value,
-        adress: document.getElementById("adress").value
+        adress: document.getElementById("adress").value,
+        id_pasillo: null,   
+        name_: null         
     };
 
-    var magatzems = JSON.parse(localStorage.getItem("magatzems")) || [];
-    if (modifica.id) {
-        var index = magatzems.findIndex(m => m.id === modifica.id);
-        if (index !== -1) {
-            magatzems[index] = modifica; 
-            localStorage.setItem("magatzems", JSON.stringify(magatzems));
-            alert("Informació guardada correctament!");
-        } else {
-            alert("El registre no s'ha trobat.");
-        }
-    } else {
-        alert("L'ID no és buit.");
-    }
+    magatzems.push(nouMagatzem);
+    localStorage.setItem("magatzems", JSON.stringify(magatzems));
 
-    window.location.assign("formulariLlistaMagatzem.html"); 
+    alert("Informació emmagatzemada correctament!");
+    neteja();
+    window.location.assign("../Llistar/formulariLlistaMagatzem.html");
 }
 
+function neteja() {
+    const formulari = document.forms[0];
+    formulari.reset();
+    esborrarError();
+}

@@ -15,7 +15,7 @@ function carregarInformacio() {
 }
 
 function nou() {
-    window.location.assign("nouFormulariCarrer.html");
+    window.location.assign("../Nou/nouFormulariCarrer.html");
 }
 
 function obtindreProducte() {
@@ -54,5 +54,5 @@ function modificar(index) {
     let carrers = JSON.parse(localStorage.getItem("carrers")) || [];
     let product = carrers[index];  
     localStorage.setItem("modificaFormulari", JSON.stringify(product));  
-    window.location.assign("modificarFormulariCarrer.html"); 
+    window.location.assign("../Modificar/modificarFormulariCarrer.html"); 
 }

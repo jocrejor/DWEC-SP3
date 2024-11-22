@@ -3,15 +3,15 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function iniciar() {
-    document.getElementById("magatzemForm").addEventListener("submit", validar, false);
+    document.getElementById("carrerForm").addEventListener("submit", validar, false);
 }
 
 function validar(e) {
     e.preventDefault(); 
     esborrarError(); 
 
-    if (validarId() && validarNom() && validarTipus() && validarAdress() && confirm("Confirma si vols enviar el formulari")) {
-        gravarMagatzem(); 
+    if (validarId() && validarNom() && confirm("Confirma si vols enviar el formulari")) {
+        gravarCarrer(); 
     } else {
         return false; 
     }
@@ -38,32 +38,7 @@ function validarNom() {
             error(element, "Deus d'introduïr un nom.");
         }
         if (element.validity.patternMismatch) {
-            error(element, "El nom ha de tindre entre 2 i 40 caracters.");
-        }
-        return false; 
-    }
-    return true; 
-}
-
-function validarTipus() {
-    var tipusValidar = document.getElementById("tipus");
-    if (!tipusValidar.checkValidity()) {
-        if (tipusValidar.validity.valueMissing) {
-            error(tipusValidar, "Deus de seleccionar una opció.");
-        }
-        return false; 
-    }
-    return true; 
-}
-
-function validarAdress() {
-    var adrecaValidar = document.getElementById("adress");
-    if (!adrecaValidar.checkValidity()) {
-        if (adrecaValidar.validity.valueMissing) {
-            error(adrecaValidar, "Deus d'introduïr una adreça.");
-        }
-        if (adrecaValidar.validity.patternMismatch) {
-            error(adrecaValidar, "L'adreça ha de tindre entre 2 i 40 caracters.");
+            error(element, "El nom ha de tindre entre 2 i 70 caracters.");
         }
         return false; 
     }
@@ -88,22 +63,21 @@ function esborrarError() {
     document.getElementById("missatgeError").innerHTML = ""; 
 }
 
-function gravarMagatzem() {
-    let magatzems = JSON.parse(localStorage.getItem("magatzems")) || []; 
+function gravarCarrer() {
+    let carrers = JSON.parse(localStorage.getItem("carrers")) || []; 
 
-    let nouMagatzem = {
+    let nouCarrer = {
         id: document.getElementById("id").value,
         name: document.getElementById("name").value,
-        tipus: document.getElementById("tipus").value,
-        adress: document.getElementById("adress").value,
+       
     };
 
-    magatzems.push(nouMagatzem); 
-    localStorage.setItem("magatzems", JSON.stringify(magatzems)); 
+    carrers.push(nouCarrer); 
+    localStorage.setItem("carrers", JSON.stringify(carrers)); 
 
     alert("Informació emmagatzemada correctament!"); 
     neteja();
-    window.location.assign("formulariLlistaMagatzem.html"); 
+    window.location.assign("../Llistar/formulariLlistatCarrer.html"); 
 }
 
 function neteja() {

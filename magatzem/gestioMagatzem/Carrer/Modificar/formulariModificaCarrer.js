@@ -60,6 +60,6 @@ function btnGuardar(e) {
         alert("L'ID no és buit.");
     }
 
-    window.location.assign("formulariLlistatCarrer.html"); 
+    window.location.assign("../Llistar/formulariLlistatCarrer.html"); 
 }
 

@@ -14,7 +14,7 @@ function carregarInformacio() {
    
 }
 function nou() {
-    window.location.assign("nouFormulariMagatzem.html");
+    window.location.assign("../Nou/nouFormulariMagatzem.html");
 }
 
 function obtindreProducte() {
@@ -47,6 +47,6 @@ function esborrar(index) {
 function modificar(id, name, tipus, adress) {
     var nouMagatzem = { id, name, tipus, adress };
     localStorage.setItem("modificaFormulari", JSON.stringify(nouMagatzem));
-    window.location.assign("modificarFormulariMagatzem.html");
+    window.location.assign("../Modificar/modificarFormulariMagatzem.html");
 }
 
