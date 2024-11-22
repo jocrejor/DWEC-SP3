@@ -2,14 +2,9 @@ window.onload = iniciar;
 /////
 /////
 /////
-// Local
-let url = 'http://localhost:5001/'
-// Servidor
-//let url = 'http://10.2.218.254:5001/'
-
-async function postData(url,endPoint, data = {}) {
+async function postData(endPoint, data = {}) {
   try {
-    const response = await fetch(url + endPoint, {
+    const response = await fetch('http://localhost:5001/'+ endPoint, {
       method: 'POST',  // Método HTTP
       headers: {
         'Content-Type': 'application/json'  // Tipo de contenido
@@ -30,9 +25,9 @@ async function postData(url,endPoint, data = {}) {
 }
 
 // Acces a les dades
-async function getNewId(url,endPoint) {
+async function getNewId(endPoint) {
   try {
-    const response = await fetch(url + endPoint );
+    const response = await fetch('http://localhost:5001/'+ endPoint );
 
     if (!response.ok) {
       throw new Error('Error al obtener el archivo JSON');
@@ -67,7 +62,7 @@ class Profile {
 }
 
 function home() {
-  location.assign("/index.html");
+  location.assign("../index.html");
 }
 
 function validarNom() {

@@ -1,17 +1,23 @@
 window.onload = main;
 
-//////
-//////
-//////
-// Local
-let url = 'http://localhost:5001/'
-// Servidor
-//let url = 'http://10.2.218.254:5001/'
+function main() {
+  document.getElementById("home").addEventListener("click", home);
+  document
+    .getElementById("btnGravar")
+    .addEventListener("click", validar, false);
 
+  // recuperar les dades del locastorage
+  const modProfile = JSON.parse(localStorage.getItem("modProfile"));
 
-async function updateId(url, endPoint, id,data) {
+  document.getElementById("nom").setAttribute("value", modProfile.name);
+}
+
+////
+////
+////
+async function updateId(endPoint, id,data) {
   try {
-    const response = await fetch(url + endPoint + '/'+ id, {
+    const response = await fetch('http://localhost:5001/'+ endPoint + '/'+ id, {
       method: 'PATCH',  // Configuramos el método HTTP como PATCH
       headers: {
         'Content-Type': 'application/json'  // Tipo de contenido
@@ -30,30 +36,11 @@ async function updateId(url, endPoint, id,data) {
   }
 }
 
-//////
-//////
-//////
 
 
-
-
-
-
-
-
-function main() {
-  document.getElementById("home").addEventListener("click", home);
-  document
-    .getElementById("btnGravar")
-    .addEventListener("click", validar, false);
-
-  // recuperar les dades del locastorage
-  const modProfile = JSON.parse(localStorage.getItem("modProfile"));
-
-  document.getElementById("nom").setAttribute("value", modProfile.name);
-}
-
-
+////
+////
+////
 
 
 function home() {
