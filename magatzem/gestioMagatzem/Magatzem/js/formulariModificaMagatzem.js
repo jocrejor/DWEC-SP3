@@ -93,6 +93,6 @@ function btnGuardar(e) {
         alert("L'ID no és buit.");
     }
 
-    window.location.assign("formulariLlista.html"); 
+    window.location.assign("formulariLlistaMagatzem.html"); 
 }
 

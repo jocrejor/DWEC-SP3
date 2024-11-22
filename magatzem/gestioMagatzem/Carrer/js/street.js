@@ -83,7 +83,7 @@ function gravarMagatzem() {
 
     alert("Informació emmagatzemada correctament!");
     neteja();
-    window.location.assign("formulariLlista.html");
+    window.location.assign("formulariLlistatCarrer.html");
 }
 
 function neteja() {

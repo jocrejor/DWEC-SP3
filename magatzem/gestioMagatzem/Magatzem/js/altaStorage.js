@@ -110,7 +110,7 @@ function gravarMagatzem() {
 
     alert("Informació emmagatzemada correctament!");
     neteja();
-    window.location.assign("formulariLlista.html");
+    window.location.assign("formulariLlistaMagatzem.html");
 }
 
 function neteja() {

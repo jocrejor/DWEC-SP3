@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Llistat Magatzem</title>
+    <title>Llistat Carrer</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script type="text/javascript" src="./js/formulariLlista.js"></script>
+    <script type="text/javascript" src="./js/formulariLlistaCarrer.js"></script>
+    <script type="text/javascript" src="./js/formulariInci.js"></script>
+
     <style>
         .error {
             border: solid 2px #FF0000;
@@ -16,26 +18,23 @@
 
 <body>
     <div class="container">
-     <h1>Llistat magatzem</h1>
- 
-        <button class=" btn btn-primary my-3" id="producte">Nou magatzem</button>
+        <h1>Llistat Carrer</h1>
+        <h3>Magatzem: <b id="magatzem"></b></h3>
 
-            <button id="carrer" class="btn btn-primary">
-                <a href="/magatzem/gestioMagatzem/Carrer/formulariLlistatC.html" style="color:inherit ">Carrer</a></button>
+        <button class=" btn btn-primary my-3" id="producte">Nou Carrer</button>
+        <button id="carrer" class="btn btn-primary">
+            <a href="" style="color:inherit ">Estanteria</a></button>
 
         <table class="table">
             <thead class="thead-light">
                 <tr>
                     <th scope="col">Esborrar</th>
                     <th scope="col">Modificar</th>
-                    <th scope="col">Id Magatzem</th>
+                    <th scope="col">Id Carrer</th>
                     <th scope="col">Nom </th>
-                    <th scope="col">Tipus </th>
-                    <th scope="col">Adreça </th>
                 </tr>
             </thead>
             <tbody id="files">
-              
             </tbody>
         </table>
     </div>
