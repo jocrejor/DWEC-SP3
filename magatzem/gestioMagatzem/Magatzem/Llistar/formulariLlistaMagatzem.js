@@ -2,11 +2,19 @@ window.onload = main;
 
 function main() {
     document.getElementById("producte").addEventListener("click", nou);
+    carregarInformacio();
     obtindreProducte();
+
 }
 
+function carregarInformacio() {
+    let storage = JSON.parse(localStorage.getItem("storage")) || { storage: { name: "Desconegut" } };
+    let street = JSON.parse(localStorage.getItem("street")) || { street: { name: "Desconegut" } };
+    let shelf = JSON.parse(localStorage.getItem("shelf")) || { shelf: { name: "Desconegut" } };
+   
+}
 function nou() {
-    window.location.assign("nouFormulari.html");
+    window.location.assign("../Nou/nouFormulariMagatzem.html");
 }
 
 function obtindreProducte() {
@@ -18,13 +26,11 @@ function obtindreProducte() {
         let row = `
             <tr>
                 <td><button class="btn btn-danger" onclick="esborrar(${index})">Esborrar</button></td>
-                <td><button class="btn btn-primary" onclick="modificar(${product.id}, '${product.name}', '${product.tipus}', '${product.adress}', ${product.id_pasillo}, '${product.name_}')">Modificar</button></td>
+                <td><button class="btn btn-primary" onclick="modificar(${product.id}, '${product.name}', '${product.tipus}', '${product.adress}')">Modificar</button></td>
                 <td>${product.id || ""}</td>
                 <td>${product.name || ""}</td>
                 <td>${product.tipus || ""}</td>
                 <td>${product.adress || ""}</td>
-                <td>${product.id_pasillo || ""}</td>
-                <td>${product.name_ || ""}</td>
             </tr>
         `;
         tbody.innerHTML += row;
@@ -38,8 +44,9 @@ function esborrar(index) {
     obtindreProducte(); 
 }
 
-function modificar(id, name, tipus, adress, id_pasillo, name_) {
-    var nouMagatzem = { id, name, tipus, adress, id_pasillo, name_ };
+function modificar(id, name, tipus, adress) {
+    var nouMagatzem = { id, name, tipus, adress };
     localStorage.setItem("modificaFormulari", JSON.stringify(nouMagatzem));
-    window.location.assign("modificarFormulari.html");
+    window.location.assign("../Modificar/modificarFormulariMagatzem.html");
 }
+
