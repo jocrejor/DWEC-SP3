@@ -1,8 +1,8 @@
 const API = "http://localhost:3000/";
-const orderReceptionEP = "OrderReception/";
-const orderLineReceptionEP = "OrderLineReception/";
+const orderReceptionEP = "OrderReception";
+const orderLineReceptionEP = "OrderLineReception";
 
-$(document).ready(function() {
+$(document).ready(function () {
   document.getElementById("nuevaOrden").addEventListener("click", nuevaOrden);
   obtindreOrdens();
 });
@@ -11,12 +11,13 @@ function nuevaOrden() {
   window.location.assign("../alta/altaOrden.html");
 }
 
-function obtindreOrdens() {
-  fetch(API + orderReceptionEP)
-    .then((response) => response.json())
-    .then((data) => {
-      data.forEach((order) => crearLinea(order));
-    });
+async function obtindreOrdens() {
+  try {
+    const data = await getData(API, orderReceptionEP);
+    data.forEach((order) => crearLinea(order));
+  } catch (error) {
+    console.log("Error:", error);
+  }
 }
 
 function crearLinea(order) {
@@ -78,37 +79,8 @@ async function esborrarOrdre(id) {
         "¿Estás seguro de que quieres eliminar esta orden y sus productos asociados?"
       )
     ) {
-      const [response1, response2] = await Promise.all([
-        fetch(API + orderReceptionEP),
-        fetch(API + orderLineReceptionEP),
-      ]);
-      if (!response1.ok) {
-        throw new Error("Error fetch 1");
-      }
-      if (!response2.ok) {
-        throw new Error("Error fetch 2");
-      }
-
-      let arrOrden = await response1.json();
-      let arrLineReception = await response2.json();
-      arrOrden = arrOrden.filter((orden) => orden.id !== id);
-      arrLineReception = arrLineReception.filter(
-        (linea) => linea.order_reception_id !== id
-      );
-
-      await fetch(`${API}${orderReceptionEP}${id}`, {
-        method: "DELETE"
-      });
-
-      await fetch(`${API}${orderLineReceptionEP}${id}`, {
-        method: "DELETE"
-      });
-
-      const filaOrden = document.querySelector(`tr[id="${id}"]`);
-      if (filaOrden) {
-        filaOrden.remove();
-      }
-
+      await deleteData(API, orderReceptionEP, id);
+      await deleteData(API, orderLineReceptionEP, id);
     }
   } catch (error) {
     console.error("ERROR: ", error);
