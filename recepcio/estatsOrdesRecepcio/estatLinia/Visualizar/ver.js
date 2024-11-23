@@ -3,7 +3,7 @@ window.onload = main;
 function main() {
     cargarDatosEstados();
 
-    document.getElementById("volver").addEventListener("click", () => {
+    document.getElementById("tornar").addEventListener("click", () => {
         document.location.href = "../Listar/listar.html";
     });
 }
