@@ -1,55 +1,9 @@
 window.onload = iniciar;
-/////
-/////
-/////
-async function postData(endPoint, data = {}) {
-  try {
-    const response = await fetch('http://localhost:5001/'+ endPoint, {
-      method: 'POST',  // Método HTTP
-      headers: {
-        'Content-Type': 'application/json'  // Tipo de contenido
-      },
-      body: JSON.stringify(data)  // Datos JSON a enviar
-    });
-
-    if (!response.ok) {
-      throw new Error('Error en la solicitud POST');
-    }
-
-    const result = await response.json();  // Espera la conversión de la respuesta a JSON
-    console.log(result);  // Trabaja con la respuesta
-
-  } catch (error) {
-    console.error('Error:', error);  // Manejo de errores
-  }
-}
-
-// Acces a les dades
-async function getNewId(endPoint) {
-  try {
-    const response = await fetch('http://localhost:5001/'+ endPoint );
-
-    if (!response.ok) {
-      throw new Error('Error al obtener el archivo JSON');
-    }
-
-    const data =  await response.json();
-    const maxId = data.reduce((max, ele) => 
-      (ele.id > max.id ? ele: max), data[0]);
-    const newId= ++ maxId.id;
-    return newId + '' ;
-
-  } catch (error) {
-    console.error('Error:', error);  // Manejo de errores
-  }
-}
-
-////
-////
-////
-
 
 function iniciar() {
+
+  thereIsUser()
+
   document.getElementById("home").addEventListener("click", home);
   document.getElementById("btnGravar").addEventListener("click", validar);
 }
@@ -114,19 +68,12 @@ function esborrarError() {
 
 // enviar dades
 async function enviarFormulari() {
-  // Grabar al localStorage
-  //let user_profile = JSON.parse(localStorage.getItem("user_profile")) || { userProfile: [] };
-  //const profilesLength = user_profile.userProfile.length;
- // const lastId = profilesLength > 0 ? user_profile.userProfile[profilesLength - 1].id : 0;
+  
   const nom = document.getElementById("nom").value;
 
-  const newProfile = new Profile( await  getNewId("UserProfile"), nom);
+  const newProfile = new Profile( await  getNewId(url,"UserProfile"), nom);
 
-  console.log(newProfile)
- 
-  //user_profile.userProfile.push(newProfile);
-  //localStorage.setItem("user_profile", JSON.stringify(user_profile));
-   const resultat = await  postData("UserProfile",newProfile);
+   const resultat = await  postData(url,"UserProfile",newProfile);
 
 
   setTimeout(function () {
@@ -136,5 +83,5 @@ async function enviarFormulari() {
     }
   }, 1000);
 
-  location.assign("llistatUserProfile.html");
+  location.assign("../llistat/llistat/UserProfile.html");
 }

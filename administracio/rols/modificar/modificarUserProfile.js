@@ -1,6 +1,7 @@
 window.onload = main;
 
 function main() {
+  thereIsUser();
   document.getElementById("home").addEventListener("click", home);
   document
     .getElementById("btnGravar")
@@ -11,36 +12,6 @@ function main() {
 
   document.getElementById("nom").setAttribute("value", modProfile.name);
 }
-
-////
-////
-////
-async function updateId(endPoint, id,data) {
-  try {
-    const response = await fetch('http://localhost:5001/'+ endPoint + '/'+ id, {
-      method: 'PATCH',  // Configuramos el método HTTP como PATCH
-      headers: {
-        'Content-Type': 'application/json'  // Tipo de contenido
-      },
-      body: JSON.stringify(data)  // Datos JSON a enviar
-    });  
-
-    if (!response.ok) {
-      throw new Error('Error al actualizar el archivo JSON');
-    }
-
-    return  await response.json();
-
-  } catch (error) {
-    console.error('Error:', error);  // Manejo de errores
-  }
-}
-
-
-
-////
-////
-////
 
 
 function home() {
@@ -101,17 +72,13 @@ async function enviarFormulari() {
   const nom = document.getElementById("nom").value;
   modProfile.name = nom;
 
-  //const index = user_profile.userProfile.findIndex((p) => p.id === modProfile.id);
-  //user_profile.userProfile[index] = modProfile;
-
-  //localStorage.setItem("user_profile", JSON.stringify(user_profile));
-  // esborrar el localstorage
   
-  await  updateId("UserProfile",modProfile.id,modProfile)
+  
+  await  updateId(url,"UserProfile",modProfile.id,modProfile)
   
   
   localStorage.removeItem("modProfile");
 
   // tornar al llistat
-  window.location.assign("llistatUserProfile.html");
+  window.location.assign("../listat/llistatUserProfile.html");
 }

@@ -1,75 +1,25 @@
 window.onload = main;
 
-// Acces a les dades
-async function getData(endPoint) {
-  try {
-    const response = await fetch('http://localhost:5001/'+ endPoint );  // Reemplaza 'data.json' con la ruta de tu archivo
 
-    if (!response.ok) {
-      throw new Error('Error al obtener el archivo JSON');
-    }
-
-    return  await response.json();
-
-  } catch (error) {
-    console.error('Error:', error);  // Manejo de errores
-  }
-}
-
-
-
-// Esborrar per ID
-async function deleteData(endPoint, id) {
-  try {
-    const response = await fetch('http://localhost:5001/'+ endPoint + '/' + id, {
-      method: 'DELETE'  // Configuramos el método HTTP como DELETE
-    });
-
-    if (!response.ok) {
-      throw new Error('Error en la solicitud DELETE');
-    }
-
-    const result = await response.json();  // Si el servidor devuelve JSON en la respuesta
-    console.log('Recurso eliminado:', result);
-
-  } catch (error) {
-    console.error('Error:', error);  // Manejo de errores
-  }
-}
-
-
-async function main() {
-  document.getElementById("home").addEventListener("click", home);
+function main() { 
   
-  obtindreUserProfile();
-  
+  thereIsUser();
 
-   
-  //const data = JSON.parse(localStorage.getItem("data")) ||  [] ;
-  const data = await getData("User");
-  console.log(data)
-
-
-    document.getElementById("nouProfile").addEventListener("click", nouProfile);
-
+  obtindreUserProfile();  
+ 
+  document.getElementById("nouProfile").addEventListener("click", nouProfile);
 }
 
-function home() {
-  location.assign("../index.html");
-}
 
 function nouProfile() {
-  window.location.assign("altaUserProfile.html");
+  window.location.assign("../alta/altaUserProfile.html");
 }
 
 // Obtindre les dades
 async function obtindreUserProfile() {
 
-  //const user_profile = JSON.parse(localStorage.getItem("user_profile")) || { userProfile: [] };
-  //const profilesList = user_profile.userProfile;
-  const profilesList = await getData("UserProfile")
+  const profilesList = await getData(url,"UserProfile")
   
-
   // recorrer l'arrray i mostar en pantalla els elements.
   profilesList.forEach((profile) => {
     crearFila(profile);
@@ -119,23 +69,8 @@ function crearFila(profile) {
 
 async function esborrarProfile(id) {
 
-  /*
-  const user_profile = JSON.parse(localStorage.getItem("user_profile")) || { usersProfile: [] };
-  let indexToDelete;
-  user_profile.userProfile.forEach((profile, index) => {
-    // fer les comprobacions si l'autor es pot esborrars.
 
-    if (profile.id == id && profile.id != 1) {
-      indexToDelete = index;
-    }
-  });
-
-  // esborrar del localstorage
-  user_profile.userProfile.splice(indexToDelete, 1);
-  localStorage.setItem("user_profile", JSON.stringify(user_profile));
-  */
-
-   await deleteData("UserProfile",id);
+   await deleteData(url,"UserProfile",id);
 
   //Esborrar de la llista de la pàgina html ( mai recargar la pàgina)
   const rowToDelete = document.getElementById(`${id}`);
@@ -146,5 +81,5 @@ function modificarProfile(profile) {
   //guardar valors al local storage
   localStorage.setItem("modProfile", JSON.stringify(profile));
 
-  window.location.assign("modificarUserProfile.html");
+  window.location.assign("../modificar/modificarUserProfile.html");
 }

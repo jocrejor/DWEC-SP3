@@ -7,13 +7,13 @@ let url = 'http://localhost:5001/'
 //let url = 'http://10.2.218.254:5001/'
 
 ////////////////////// Hi ha usuari registrat /////////////////////
-
 function thereIsUser() {
    const currentUser= localStorage.getItem("currentUser");
    if (currentUser === null) {
     window.location.href = "/access/login.html";
    }
 }
+
 
 
 ////////////////////// Alta Element /////////////////////
