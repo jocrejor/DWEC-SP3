@@ -6,6 +6,14 @@
     <title>Alta Estat</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="alta.js" defer></script>
+    <style>
+        .error {
+            color: red;
+        }
+        .valid {
+            color: green;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -13,16 +21,16 @@
         <form id="altaForm">
             <div class="form-group">
                 <label for="id">ID Estat:</label>
-                <input type="text" id="id" name="id" class="form-control">
+                <input type="text" id="id" name="id" class="form-control valid">
             </div>
             <div class="form-group">
                 <label for="nom">Nom:</label>
-                <input type="text" id="nom" name="nom" class="form-control" placeholder="Nom de l'estat">
+                <input type="text" id="name" name="nom" class="form-control" placeholder="Nom de l'estat">
             </div>
             <button type="submit" class="btn btn-primary">Guardar</button>
-            <button type="button" id="cancelar" class="btn btn-primary">Cancel·lar</button>
+            <button type="button" id="cancelar" class="btn btn-primary">Torna</button>
         </form>
-        <div id="missatgeError" class="text-danger"></div>
+        <div id="missatgeError" class="error"></div>
     </div>
 </body>
 </html>
