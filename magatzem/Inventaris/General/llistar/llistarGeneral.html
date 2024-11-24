@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Llistat Ordens de Recepció</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+    <script type="text/javascript" src="llistarGeneral.js"></script>
+    
+    <style>
+        .error {
+            border: solid 2px #FF0000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Llistat Inventari General</h1>
+        
+        <button class=" btn btn-primary my-3" id="nouInventari">Nou Inventari</button></br>
+        <table class="table" id="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Esborrar</th>
+                    <th scope="col">Modificar</th>
+                    <th scope="col">Visualitzar</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Data Inventari</th>
+                    <th scope="col">Estat</th>
+                    <th scope="col">Magatzem</th>
+                </tr>
+            </thead>
+            <tbody id="files">
+                
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

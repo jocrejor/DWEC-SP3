@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alta Inventari</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+    <script type="text/javascript"src="modificarGeneral.js"></script>
+    <style> 
+        .error {
+            border:solid 2px #FF0000; 
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <h1>Modificar Inventari</h1>
+    <form>
+        <h2>Productes Inventari</h2>
+
+        <div class="form-group row">
+            <label for="product" class="col-sm-2 col-form-label" >Producte:</label>
+
+            <div class="col-sm-10">
+                <select id="product" required onchange="carregarProductes()">
+                    <option value="" disabled selected>Selecciona un producte:</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="real_quantity" class="col-sm-2 col-form-label" >Quantitat real:</label>
+
+            <div class="col-sm-10">
+                <input type="text"  class="form-control" id="real_quantity" placeholder="Insereix una quantitat" required pattern="^\d+$"></br>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="inventory_reason" class="col-sm-2 col-form-label" >Raó:</label>
+
+            <div class="col-sm-10">
+                <select id="inventory_reason" required onchange="">
+                    <option value="" disabled selected>Selecciona una raó:</option>
+                    <option value="defectuos">Defectuós</option>
+                    <option value="trencat">Trencat</option>
+                    <option value="robatori">Robatori</option>
+                    <option value="desaparegut">Desaparegut</option>
+                    <option value="error">Error administratiu</option>
+                    <option value="recompte">Recompte cíclic</option>
+                </select>
+            </div>
+        </div>
+
+        <h5 id="missatgeError" class="text-danger"></h5>
+        <button id="btnAfegir" class="btn btn-primary">Afegir</button> <br><br>
+    </form>
+        
+        <table class="table" id="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Producte</th>
+                    <th scope="col">Quantitat</th>
+                    <th scope="col">Raó</th>
+                    <th scope="col">Esborrar</th>
+                    <th scope="col">Modificar</th>
+                </tr>
+            </thead>
+            <tbody id="files">
+                
+            </tbody>
+        </table> <br><br>
+    
+    <form>
+        <button id="btnGravar" class="btn btn-primary">Gravar</button>
+        <button type="button" id="llistatInventari" class="btn btn-primary">Llistar Inventari</button>
+        <button type="button" id="btnGuardar" class="btn btn-primary" style="display:none;">Guardar</button>
+    </form>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
