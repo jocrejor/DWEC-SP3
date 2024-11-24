@@ -10,9 +10,6 @@ function main() {
     document.getElementById("crear").addEventListener("click", () => {
         document.location.href = "../Alta/alta.html";
     });
-    document.getElementById("tornar").addEventListener("click", () => {
-        document.location.href = "../estatLinia.html";
-    });
 }
 
 /**
