@@ -6,7 +6,7 @@ function main() {
 }
 
 function nuevoProducto(){
-    window.location.assign("altaProductos.html");
+    window.location.assign("../alta/alta.html");
 }
 
 function obtenerProductos() {
@@ -92,5 +92,5 @@ function modificar(id, name, description, volume, weight, lotoreserial, sku, ima
         image_url: image_url
     };
     localStorage.setItem("modProducto", JSON.stringify(product));
-    window.location.assign("modificarProductos.html");
+    window.location.assign("../modificar/modificar.html");
 }
