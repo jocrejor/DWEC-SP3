@@ -67,11 +67,8 @@ function validar(e) {
 
     if (validarName() && validarEmail() && validarPassword() && validarRepeatPassword() && confirm("Confirma si vols enviar el formulari")) {
         enviarFormulari();
-        window.location.href = '../access/login.html';
         return true;
-    }
-
-    else {
+    } else {
         return false;
     }
 }
@@ -96,49 +93,26 @@ function borrarError() {
     document.getElementById("missatgeError").replaceChildren();
 }
 
-function enviarFormulari() {
-    var name        = document.getElementById("name").value;
-    var email       = document.getElementById("email").value;
-    var password    = document.getElementById("password").value;
 
-    var user = {
-        id: 0,
-        name,
-        email,
-        password,
-        role: "Publicador"
+async function enviarFormulari () {
+    let name        = document.getElementById("name").value;
+    let email       = document.getElementById("email").value;
+    let password    = document.getElementById("password").value;
+
+    let newId   = await getNewId(url2, 'Users') ?? "0";
+
+    let user = {
+        id: newId,
+        name: name,
+        email: email,
+        password: password,
+        user_profile: newId == 0 ? "Administrador" : "Publicador",
     };
+    await postData(url2, 'Users', user);
 
-    var storedUsers = localStorage.getItem("users");
-    var users = storedUsers ? JSON.parse(storedUsers) : [];
-
-    // Asignar rol de "Administrador" si es el primer usuario
-    if (users.length === 0) {
-        user.role = "Administrador";
-    }
-
-    if (storedUsers) {
-        users = JSON.parse(storedUsers);
-    } else {
-        users = [];
-    }
-
-    if (users.length > 0) {
-        var maxId = 0;
-        for (var i = 0; i < users.length; i++) {
-            if (users[i].id > maxId) {
-                maxId = users[i].id;
-            }
-        }
-        user.id = maxId + 1;
-    } else {
-        user.id = 1;
-    }
-
-    users.push(user);
-    localStorage.setItem("users", JSON.stringify(users));
+    window.location.href = '../../access/login.html';
 }
 
 function tornarArrere() {
-    window.location.href = "../access/login.html";
+    window.location.href = "../../access/login.html";
 }
