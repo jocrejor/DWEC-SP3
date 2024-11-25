@@ -1,6 +1,17 @@
 window.onload = iniciar;
 
+// let State = JSON.parse(localStorage.getItem('State')) || [];
+// let Province = JSON.parse(localStorage.getItem('Province')) || [];
+// let City = JSON.parse(localStorage.getItem('City')) || [];
+const url = 'http://localhost:5001/';
+
+const State = await getData(url, 'State');
+const Province = await getData(url, 'Province');
+const City = await getData(url, 'City');
+
 function iniciar() {
+    // thereIsUser();
+
     document.getElementById("botonAlta").addEventListener("click", validar, false);
     cargarPaises();
     cargarProvincias();
@@ -30,14 +41,17 @@ function validar(e) {
 }
 
 function obtenerNuevoIdCliente() {
-    // Obtener el último ID almacenado en localStorage
-    let ultimoId = parseInt(localStorage.getItem("ultimoIdCliente"), 10) || 0;
-
-    // Incrementar el ID para el nuevo cliente
-    const nuevoId = ultimoId + 1;
-
-    // Guardar el nuevo último ID en localStorage
-    localStorage.setItem("ultimoIdCliente", nuevoId);
+    const clientes = JSON.parse(localStorage.getItem('Client')) || [];
+    let nuevoId;
+    
+    if(clientes.length === 0){
+        nuevoId = 1;
+    }
+    else{
+        let ultimoCliente = clientes[clientes.length - 1];
+        let ultimoId = ultimoCliente.id;
+        nuevoId = ultimoId + 1;
+    }
 
     return nuevoId;
 }
@@ -226,7 +240,7 @@ function enviarFormulari() {
     var ciudad = document.getElementById('city').value;
     const cp = document.getElementById('cp').value;
 
-    const clientes = JSON.parse(localStorage.getItem('client')) || [];
+    const clientes = JSON.parse(localStorage.getItem('Client')) || [];
 
     //inicializa la variable para el mensaje de error
     let mensajeError = "";
@@ -277,7 +291,7 @@ function enviarFormulari() {
     };
 
     clientes.push(cliente);                                         //agrega un nuevo cliente al array
-    localStorage.setItem('client', JSON.stringify(clientes));     //guarda en localStorage
+    localStorage.setItem('Client', JSON.stringify(clientes));     //guarda en localStorage
     
     setTimeout(function (){
         vaciarCampos();
@@ -286,7 +300,7 @@ function enviarFormulari() {
 
 //carga y retorna el objeto clientes
 function cargarClientes(){
-    const clientes = JSON.parse(localStorage.getItem('client')) || [];    //coge los clientes almacenados en el local storage y los devuelve
+    const clientes = JSON.parse(localStorage.getItem('Client')) || [];    //coge los clientes almacenados en el local storage y los devuelve
     return clientes;
 }
 
@@ -304,10 +318,13 @@ function vaciarCampos(){
 }
 
 //función que carga comunidades autónomas en el select
-function cargarPaises(){
+async function cargarPaises(){
+    const url = 'http://localhost:5001/';
+    const State = await getData(url, "State");
+
     var selectPais = document.getElementById('state_id');
     State.forEach(function(pais){
-        var opcion = document.createElement('option');
+        const opcion = document.createElement('option');
         opcion.value = pais.id;
 
         var nombreOpcion = document.createTextNode(pais.name);

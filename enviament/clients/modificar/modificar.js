@@ -1,5 +1,71 @@
 window.onload = main;
 
+let State = JSON.parse(localStorage.getItem('State')) || [];
+let Province = JSON.parse(localStorage.getItem('Province')) || [];
+let City = JSON.parse(localStorage.getItem('City')) || [];
+
+/////
+/////
+/////
+// Local
+let url = 'http://localhost:5001/'
+// Servidor
+//let url = 'http://10.2.218.254:5001/'
+
+async function postData(url,endPoint, data = {}) {
+  try {
+    const response = await fetch(url + endPoint, {
+      method: 'POST',  // Método HTTP
+      headers: {
+        'Content-Type': 'application/json'  // Tipo de contenido
+      },
+      body: JSON.stringify(data)  // Datos JSON a enviar
+    });
+
+    if (!response.ok) {
+      throw new Error('Error en la solicitud POST');
+    }
+
+    const result = await response.json();  // Espera la conversión de la respuesta a JSON
+    console.log(result);  // Trabaja con la respuesta
+
+  } catch (error) {
+    console.error('Error:', error);  // Manejo de errores
+  }
+}
+
+// Acces a les dades
+async function getNewId(url,endPoint) {
+  try {
+    const response = await fetch(url + endPoint );  // Reemplaza 'data.json' con la ruta de tu archivo
+
+    if (!response.ok) {
+      throw new Error('Error al obtener el archivo JSON');
+    }
+
+    const data =  await response.json();
+    const maxId = data.reduce((max, ele) => 
+      (ele.id > max.id ? ele: max), data[0]);
+    const newId= ++ maxId.id;
+    return newId + '' ;
+
+  } catch (error) {
+    console.error('Error:', error);  // Manejo de errores
+  }
+}
+
+////
+////
+////
+
+
+
+
+
+
+
+
+
 function main() {
     document.getElementById("botonModificar").addEventListener("click", validar, false);
     
@@ -64,7 +130,6 @@ function main() {
         document.getElementById('province').value = provinciaID; 
         document.getElementById('city').value = ciudadID; 
         document.getElementById('cp').value = cliente.cp; 
-
     }
     else{
         console.log("Cliente no encontrado");
@@ -497,7 +562,7 @@ function enviarFormulari() {
     var cliente = clientes.find(c => c.id === idCliente);
     //inicializa la variable para el mensaje de error
     let mensajeError = "";
-    fromIndex < -array.length
+
     const dni = document.getElementById('nif').value;
     const telefono = document.getElementById('phone').value;
     const correo = document.getElementById('email').value;
@@ -557,5 +622,5 @@ function enviarFormulari() {
 
 //función que vacía todos los campos del formulario
 function listarCliente(){
-    window.location.assign("listar.html");
+    window.location.assign("../llistar/llistar.html");
 }
