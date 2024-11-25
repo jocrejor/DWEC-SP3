@@ -16,7 +16,7 @@ function iniciar() {
 }
 
 function login() {
-    window.location.href = './access/login.html';
+    window.location.href = 'access/login.html';
 }
 
 function gestioUsuaris() {

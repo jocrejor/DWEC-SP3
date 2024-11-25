@@ -1,5 +1,7 @@
 window.onload = iniciar;
 
+let url = 'http://localhost:5002/';
+
 function iniciar() {
     editUser();
     document.getElementById("saveChanges").addEventListener("click", saveChanges);
@@ -28,7 +30,8 @@ function saveChanges(e) {
         role: document.getElementById("role").value,
     };
 
-    var users = JSON.parse(localStorage.getItem("users")) || [];
+    updatedUser(url, 'Users', updatedUser.id, updateUser)
+    /*var users = JSON.parse(localStorage.getItem("users")) || [];
     for (var i = 0; i < users.length; i++) {
         if (users[i].id === updatedUser.id) {
             users[i] = updatedUser; // Actualizar usuario
@@ -37,7 +40,7 @@ function saveChanges(e) {
     }
 
     localStorage.setItem("users", JSON.stringify(users));
-    localStorage.removeItem("userToEdit"); // Limpiar el almacenamiento temporal
+    localStorage.removeItem("userToEdit"); */// Limpiar el almacenamiento temporal
     window.location.href = "gestioUsuaris.html"; // Volver a la página de gestión
 }
 

@@ -1,54 +1,6 @@
 {
   "Users": [
-    {
-      "id": "1",
-      "name": "user1",
-      "email": "user1@example.com",
-      "password": "password1",
-      "user_profile": "admin"
-    },
-    {
-      "id": "2",
-      "name": "user2",
-      "email": "user2@example.com",
-      "password": "password2",
-      "user_profile": "editor"
-    },
-    {
-      "id": "3",
-      "name": "user3",
-      "email": "user3@example.com",
-      "password": "password3",
-      "user_profile": "publisher"
-    },
-    {
-      "id": "4",
-      "name": "Juan Pablo Perez",
-      "email": "jpp@stockflow.com",
-      "password": "JuanPa123!",
-      "user_profile": "Publicador"
-    },
-    {
-      "id": "5",
-      "name": "Susana Rodriguez",
-      "email": "susi@gmail.com",
-      "password": "Abc12345!",
-      "user_profile": "Publicador"
-    },
-    {
-      "id": "6",
-      "name": "Sebastian Perez",
-      "email": "sebas__@gmail.com",
-      "password": "SebasSebas123!",
-      "user_profile": "Publicador"
-    },
-    {
-      "id": "7",
-      "name": "Ana Maria Zarate",
-      "email": "z.ana.m@hotmail.com",
-      "password": "Z@rate123!",
-      "user_profile": "Publicador"
-    }
+
   ],
   "Posts": [
     {
