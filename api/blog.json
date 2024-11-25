@@ -1,78 +1,53 @@
 {
-<<<<<<< HEAD
-    "User":[{
-        "id": "1",
-        "name": "user1",
-        "email": "user1@example.com",
-        "password": "password1",
-        "user_profile": "admin"
-    },{
-        "id": "2",
-        "name": "user2",
-        "email": "user2@example.com",
-        "password": "password2",
-        "user_profile": "editor"
-    },{
-        "id": "3",
-        "name": "user3",
-        "email": "user3@example.com",
-        "password": "password3",
-        "user_profile": "publisher"
-    }],
-    "Post":[
-        {
-        "id": "1",
-        "title": "title1",
-        "photo": "photo1.png",
-        "cretion_date": "2024-04-23",
-        "creator_id": 1,
-        "description": "descriptionPost1",
-        "name": "1"
-    }],
-    "Comment":[
-    {
-        "id": "1",
-        "description": "descriptionComment1",
-        "post_id": "1"
-    }],
-    "Tag":[{
-        "id": "1",
-        "name": "Nuevas insrtalaciones"
-    },
-    {
-        "id": "2",
-        "name": "Casos de exito"
-    }],
-    "Post_Tag":[{
-        "id": "1",
-        "post_id": "1",
-        "tag_id": "1"
-    }]
-=======
   "Users": [
     {
-      "id_user": "1",
+      "id": "1",
       "name": "user1",
       "email": "user1@example.com",
       "password": "password1",
-      "user_profile": "admin",
-      "id": "1cef"
+      "user_profile": "admin"
     },
     {
-      "id_user": "2",
+      "id": "2",
       "name": "user2",
       "email": "user2@example.com",
       "password": "password2",
-      "user_profile": "editor",
-      "id": "df39"
+      "user_profile": "editor"
     },
     {
-      "id_user": "3",
+      "id": "3",
       "name": "user3",
       "email": "user3@example.com",
       "password": "password3",
-      "user_profile": "publisher",
-      "id": "e2e3"
+      "user_profile": "publisher"
+    },
+    {
+      "id": "4",
+      "name": "Juan Pablo Perez",
+      "email": "jpp@stockflow.com",
+      "password": "JuanPa123!",
+      "user_profile": "Publicador"
+    },
+    {
+      "id": "5",
+      "name": "Susana Rodriguez",
+      "email": "susi@gmail.com",
+      "password": "Abc12345!",
+      "user_profile": "Publicador"
+    },
+    {
+      "id": "6",
+      "name": "Sebastian Perez",
+      "email": "sebas__@gmail.com",
+      "password": "SebasSebas123!",
+      "user_profile": "Publicador"
+    },
+    {
+      "id": "7",
+      "name": "Ana Maria Zarate",
+      "email": "z.ana.m@hotmail.com",
+      "password": "Z@rate123!",
+      "user_profile": "Publicador"
     }
   ],
   "Posts": [
@@ -127,15 +102,18 @@
   "Tags": [
     {
       "id_tag": "1",
-      "name": "tag1"
+      "name": "tag1",
+      "id": "41bc"
     },
     {
       "id_tag": "2",
-      "name": "tag2"
+      "name": "tag2",
+      "id": "df39"
     },
     {
       "id_tag": "3",
-      "name": "tag3"
+      "name": "tag3",
+      "id": "967e"
     }
   ],
   "Post_Tags": [
@@ -155,5 +133,4 @@
       "id_tag": "3"
     }
   ]
->>>>>>> origin/Javier
 }

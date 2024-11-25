@@ -2,7 +2,8 @@
 /////
 /////
 // Local
-let url = 'http://localhost:5001/'
+let url = 'http://localhost:5001/';
+let url2 = 'http://localhost:5002/';
 // Servidor
 //let url = 'http://10.2.218.254:5001/'
 
