@@ -43124,4 +43124,20 @@
   "Inventori": []
   ,
   "InventoriLine": []
+  ,
+  "Moviment":[
+    {"id":1,
+     "product_id":"1",
+     "storage_id": "03",
+     "street_id":  "01",
+     "shelf_id": "02",
+     "space_id": "03",
+     "quantity": 100,
+     "date": "2024-02-01",
+     "operator_id": "3",
+     "orgin" : "Reception",
+     "document": "2"
+    }
+  ]
+
 }
