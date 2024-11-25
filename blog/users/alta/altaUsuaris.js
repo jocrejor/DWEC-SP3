@@ -67,7 +67,7 @@ function validar(e) {
 
     if (validarName() && validarEmail() && validarPassword() && validarRepeatPassword() && confirm("Confirma si vols enviar el formulari")) {
         enviarFormulari();
-        window.location.href = '../access/login.html';
+        window.location.href = '../../access/login.html';
         return true;
     }
 
@@ -140,5 +140,5 @@ function enviarFormulari() {
 }
 
 function tornarArrere() {
-    window.location.href = "../access/login.html";
+    window.location.href = "../../access/login.html";
 }

@@ -71,7 +71,7 @@ function listUsers() {
 }
 
 function altaUsuari() {
-    window.location.href = "altaUsuaris.html";
+    window.location.href = "../alta/altaUsuaris.html";
 }
 
 function deleteUser(id) {
@@ -96,12 +96,12 @@ function modifyUser(id) {
         if (user.id === id) {
             // Guardar los datos del usuario en localStorage temporalmente
             localStorage.setItem("userToEdit", JSON.stringify(users[i]));
-            window.location.href = "modificarUsuari.html";
+            window.location.href = "../modificar/modificarUsuari.html";
             break;
         }
     }
 }
 
 function backToBlog() {
-    window.location.href = "blog.html";
+    window.location.href = "../../index.html";
 }

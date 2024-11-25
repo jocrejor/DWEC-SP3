@@ -20,7 +20,7 @@ function login() {
 }
 
 function gestioUsuaris() {
-    window.location.href = './users/gestioUsuaris.html';
+    window.location.href = './users/llistat/gestioUsuaris.html';
 }
 
 function verifyUser() {
@@ -156,7 +156,7 @@ function mostrarPosts() {
         btnAfegirComentari.addEventListener("click", function() {
             sessionStorage.setItem("currentPostID", post.id);
             sessionStorage.setItem("currentPostTitle", post.titol);
-            window.location.href = "comments/altaComentari.html";
+            window.location.href = "comments/alta/altaComentari.html";
         });
 
         // Agregar el botón al contenedor de información
@@ -229,11 +229,10 @@ function mostrarComentariosPorPost(postID, comentariosDiv) {
     });
 }
 
-//Canvis Hilariano per a que funcione lo de JaviManu
 function crearPost() {
-    window.location.href = "./posts/index.html";
+    window.location.href = "./posts/llistat/llistarPosts.html";
 }
 
 function crearEtiqueta() {
-    window.location.href = "./tag/index.html";
+    window.location.href = "./tag/llistat/llistarEtiquetes.html";
 }

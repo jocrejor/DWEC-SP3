@@ -38,6 +38,6 @@ function saveChanges(e) {
 
     localStorage.setItem("users", JSON.stringify(users));
     localStorage.removeItem("userToEdit"); // Limpiar el almacenamiento temporal
-    window.location.href = "gestioUsuaris.html"; // Volver a la página de gestión
+    window.location.href = "../llistat/gestioUsuaris.html"; // Volver a la página de gestión
 }
 

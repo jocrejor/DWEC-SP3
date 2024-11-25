@@ -7,12 +7,12 @@ function main() {
 }
 
 function nouComentari() {
-    window.location.assign("altaComentari.html");
+    window.location.assign("../alta/altaComentari.html");
 }
 
 // Nueva función para redirigir a mainBlog.html
 function irAMainBlog() {
-    window.location.assign("../index.html");
+    window.location.assign("../../index.html");
 }
 
 // Obtindre les dades
@@ -61,5 +61,5 @@ function modificar(id, nomPost, descripcio) {
     };
     
     localStorage.setItem("modComentari", JSON.stringify(comentari));
-    window.location.assign("modificaComentari.html");
+    window.location.assign("../modificar/modificaComentari.html");
 }

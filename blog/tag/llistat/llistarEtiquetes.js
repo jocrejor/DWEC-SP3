@@ -7,12 +7,12 @@ function main() {
 }
 
 function mainBlog() {
-  window.location.assign("../index.html");
+  window.location.assign("../../index.html");
 }
 
 
 function novaEtiqueta() {
-  window.location.assign("altaEtiqueta.html");
+  window.location.assign("../alta/altaEtiqueta.html");
 }
 
 // Función para obtener y mostrar etiquetas almacenadas en localStorage
@@ -81,5 +81,5 @@ function modificar(id, nom) {
   localStorage.setItem("modEtiqueta", JSON.stringify(etiqueta));
 
   // Redirigir a la página de modificación
-  window.location.assign("modificaEtiqueta.html");
+  window.location.assign("../modificar/modificaEtiqueta.html");
 }

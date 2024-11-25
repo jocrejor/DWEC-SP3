@@ -7,11 +7,11 @@ function main() {
 }
 
 function mainBlog() {
-  window.location.assign("../index.html");
+  window.location.assign("../../index.html");
 }
 
 function nouPost() {
-  window.location.assign("altaPost.html");
+  window.location.assign("../alta/altaPost.html");
 }
 
 function obtindrePosts() {
@@ -86,7 +86,7 @@ function modificar(id, titol, foto, descripcio, etiqueta) {
   localStorage.setItem("modPost", JSON.stringify(post));
 
   // Redirigir a la página de modificación
-  window.location.assign("modificaPost.html");
+  window.location.assign("../modificar/modificaPost.html");
 }
 
 

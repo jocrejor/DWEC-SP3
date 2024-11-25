@@ -46,5 +46,5 @@ function tornaAlBlog() {
 }
 
 function signup() {
-    window.location.href = "../users/altaUsuaris.html";
+    window.location.href = "../users/alta/altaUsuaris.html";
 }
