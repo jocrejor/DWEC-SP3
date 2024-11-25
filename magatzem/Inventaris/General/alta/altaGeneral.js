@@ -14,7 +14,7 @@ $(document).ready(function() {
 
     if (storageSelectID) {
         carregarProductes(storageSelectID);
-        localStorage.removeItem("storageSelectedID");
+        //localStorage.removeItem("storageSelectedID");
     }
 });
 

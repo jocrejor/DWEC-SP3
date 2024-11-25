@@ -1,11 +1,14 @@
+let inventory;
+let inventoryLine;
+
 $(document).ready(function() {
     carregarMagatzem();
 
     document.getElementById("btnGenerar").addEventListener("click", generarInventari, false);
 });
 
-function carregarMagatzem() {
-    const storages = JSON.parse(localStorage.getItem("Storage")) || [];
+async function carregarMagatzem() {
+    const storages = await getData(url,"Storage");
     const storageSelect = document.getElementById("storage");
 
     storages.forEach(storage => {
@@ -16,10 +19,81 @@ function carregarMagatzem() {
     });
 }
 
-function generarInventari() {
-    const storageSelect = $("#storage").val();
-    if (storageSelect) {
-        localStorage.setItem("storageSelectedID", storageSelect);
-        window.location.href = "alta/altaGeneral.html";
+async function carregarCarrers() {
+    const streets = await getData(url,"Street");
+    const selectedStorageId = document.getElementById("storage").value;
+    const streeetSelect = document.getElementById("street");
+
+    const filteredStreets = streets.filter(street => street.storage_id === selectedStorageId);
+
+    filteredStreets.forEach(street => {
+        const option = document.createElement("option");
+        option.value = street.id; 
+        option.text = street.name;
+        streeetSelect.appendChild(option);
+    });
+}
+
+async function generarInventari() {
+    const spaces = await getData(url,"Space");
+    const storageSelect = document.getElementById("storage").value;
+    const streetSelect = document.getElementById("street").value;
+
+    const filteredSpaces = spaces.filter(space => 
+        space.storage_id === storageSelect && space.street_id === streetSelect
+    );
+
+    inventory = JSON.parse(localStorage.getItem('inventory')) || [];
+    inventoryLine = JSON.parse(localStorage.getItem('inventoryLine')) || [];
+
+    //inventory
+    let idInventory;
+    let dataInventory = new Date().toISOString();
+    
+    if(inventory.length == 0) {
+        idInventory = 1;
+    } else {
+        const maxObj = inventory.reduce((max, obj) => (obj.id > max.id ? obj : max), inventory[0]);
+        idInventory= ++ maxObj.id;
     }
+
+    let inventory = {
+        id: idInventory,
+        date: dataInventory,
+        created_by: 1,
+        inventory_status: "Pendent",
+    }
+
+    localStorage.setItem('inventoryGeneral', JSON.stringify(inventory));
+
+    //inventoryLine
+    let idInventoryLine;
+    
+    if(inventoryLine.length == 0) {
+        idInventoryLine = 0;
+    } else {
+        const maxObj = inventoryLine.reduce((max, obj) => (obj.id > max.id ? obj : max), inventoryLine[0]);
+        idInventoryLine = maxObj.id;
+    }
+
+    const inventoryLines = filteredSpaces.map((space, index) => ({
+        id_inventario: idInventory,
+        id_lineInventory: idInventoryLine, // Generar ID único para la línea.
+        id_producto: space.product_id,
+        cantidad_real: space.quantity,
+        user: 1,
+        id_storage: space.storage_id,
+        id_street: space.street_id,
+        id_shelf: space.selft_id,
+        id_space: space.id
+    }));
+
+
+
+    
+    
+    /*if (storageSelect) {
+        localStorage.setItem("storageSelectedID", storageSelect);
+        window.location.href = "llistar/llistarGeneral.html";
+    }*/
 }
