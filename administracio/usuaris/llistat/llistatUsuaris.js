@@ -1,38 +1,33 @@
 window.onload = main;
 
 function main() {
-  document.getElementById("home").addEventListener("click", home);
+  thereIsUser();  // Comprovar si l'usuari existeix
   obtindreUsuaris();
-  const data = JSON.parse(localStorage.getItem("data")) || { users: [] };
-  const currentUserId = JSON.parse(localStorage.getItem("currentUserId"));
-  const newUserButton = document.getElementById("nouUsuari");
-
-  // Ara tothom pot crear un nou usuari, independentment del rol.
   document.getElementById("nouUsuari").addEventListener("click", nouUsuari);
 }
 
-function home() {
-  location.assign("../index.html");
-}
-
 function nouUsuari() {
-  window.location.assign("altaUsuaris.html");
+  window.location.assign("../alta/altaUsuaris.html");
 }
 
-// Obtindre les dades
-function obtindreUsuaris() {
-  const data = JSON.parse(localStorage.getItem("data")) || { users: [] };
-  const users = data.users;
+function thereIsUser() {
+  const currentUserId = JSON.parse(localStorage.getItem("currentUserId"));
+  if (!currentUserId) {
+    alert("No hi ha cap usuari actiu.");
+    return;
+  }
+}
 
-  // recorrer l'arrray i mostar en pantalla els elements.
-  users.forEach((user) => {
+async function obtindreUsuaris() {
+  const data = JSON.parse(localStorage.getItem("data")) || { users: [] };
+  const usersList = await getData(url, "users"); // Obtenció asíncrona
+
+  usersList.forEach((user) => {
     crearFila(user);
   });
 }
 
 function crearFila(user) {
-  const data = JSON.parse(localStorage.getItem("data")) || { users: [] };
-  const currentUserId = JSON.parse(localStorage.getItem("currentUserId"));
   const tableBody = document.querySelector("tbody");
 
   const newRow = document.createElement("tr");
@@ -40,7 +35,7 @@ function crearFila(user) {
   const tdDeleteButton = document.createElement("td");
   const tdModifyButton = document.createElement("td");
 
-  // Ara tothom pot esborrar o modificar usuaris
+  // Botó per esborrar usuari
   const deleteButton = document.createElement("button");
   deleteButton.addEventListener("click", () => esborrarUsuari(user.id));
   deleteButton.setAttribute("id", "esborrar");
@@ -49,6 +44,7 @@ function crearFila(user) {
   deleteButton.appendChild(innerDeleteButton);
   tdDeleteButton.appendChild(deleteButton);
 
+  // Botó per modificar usuari
   const modifyButton = document.createElement("button");
   modifyButton.addEventListener("click", () => modificarUsuari(user));
   modifyButton.setAttribute("id", "modificar");
@@ -57,33 +53,26 @@ function crearFila(user) {
   modifyButton.appendChild(innerModifyButton);
   tdModifyButton.appendChild(modifyButton);
 
-  // Creació camps
+  // Creació dels camps
   const tdEmail = document.createElement("td");
+  const tdName = document.createElement("td");
   const innerTdEmail = document.createTextNode(user.email);
+  const innerTdName = document.createTextNode(user.name); // Afegit el nom
   tdEmail.appendChild(innerTdEmail);
+  tdName.appendChild(innerTdName);
 
   // Afegir a la taula
   newRow.appendChild(tdDeleteButton);
   newRow.appendChild(tdModifyButton);
   newRow.appendChild(tdEmail);
+  newRow.appendChild(tdName); // Afegit el nom a la fila
   tableBody.appendChild(newRow);
 }
 
-function esborrarUsuari(id) {
-  const data = JSON.parse(localStorage.getItem("data")) || { users: [] };
-  let indexToDelete;
+// Funció asíncrona per esborrar un usuari
+async function esborrarUsuari(id) {
+  await deleteData(url, "users", id); // Eliminació asíncrona
 
-  data.users.forEach((user, index) => {
-    if (user.id == id) {
-      indexToDelete = index;
-    }
-  });
-
-  // esborrar del localstorage
-  data.users.splice(indexToDelete, 1);
-  localStorage.setItem("data", JSON.stringify(data));
-
-  // Esborrar de la llista de la pàgina html (mai recarregar la pàgina)
   const rowToDelete = document.getElementById(`${id}`);
   rowToDelete.remove();
 }
@@ -91,6 +80,5 @@ function esborrarUsuari(id) {
 function modificarUsuari(user) {
   // Guardar valors al local storage
   localStorage.setItem("modUser", JSON.stringify(user));
-
-  window.location.assign("modificarUsuaris.html");
+  window.location.assign("../modificar/modificarUsuaris.html");
 }

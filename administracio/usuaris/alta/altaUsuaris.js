@@ -1,13 +1,11 @@
 window.onload = iniciar;
 
 function iniciar() {
+  thereIsUser(); // Comprova si hi ha un usuari actiu
+
   document.getElementById("home").addEventListener("click", home);
   document.getElementById("btnGravar").addEventListener("click", validar);
   listTipus();
-}
-
-function home() {
-  location.assign(".../index.html");
 }
 
 class User {
@@ -21,10 +19,22 @@ class User {
   }
 }
 
+function home() {
+  location.assign("../index.html");
+}
+
+// Comprovar si hi ha un usuari en localStorage
+function thereIsUser() {
+  const currentUserId = JSON.parse(localStorage.getItem("currentUserId"));
+  if (!currentUserId) {
+    alert("No hi ha cap usuari actiu.");
+    return;
+  }
+}
+
+// Funció per llistar els tipus d'usuaris des del localStorage
 function listTipus() {
-  const user_profile = JSON.parse(
-    localStorage.getItem("user_profile") || { userProfile: [] }
-  );
+  const user_profile = JSON.parse(localStorage.getItem("user_profile")) || { userProfile: [] };
   const select = document.querySelector("select");
 
   user_profile.userProfile.forEach((tipus) => {
@@ -38,6 +48,7 @@ function listTipus() {
   });
 }
 
+// Funció per validar el nom
 function validarNom() {
   const pattern = RegExp(/^[A-Za-záéíóúÁÉÍÓÚñÑ\s]{2,25}$/);
   const nom = document.getElementById("nom");
@@ -56,6 +67,7 @@ function validarNom() {
   return false;
 }
 
+// Funció per validar l'email
 function validarEmail() {
   const pattern = RegExp(/^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/);
   const email = document.getElementById("email");
@@ -74,64 +86,12 @@ function validarEmail() {
   return false;
 }
 
-function validarRepEmail() {
-  const email = document.getElementById("email");
-  const repEmail = document.getElementById("repEmail");
-
-  if (!repEmail.value == email.value) {
-    if (repEmail.validity.valueMissing) error(repEmail, "Ompli el camp!");
-    else error(repEmail, "El correu no és el mateix que el primer");
-  } else {
-    return true;
-  }
-
-  return false;
-}
-
-function validarPw() {
-  const pattern = RegExp(
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/
-  );
-  const pw = document.getElementById("pw");
-
-  if (!pw.checkValidity()) {
-    if (pw.validity.valueMissing) error(pw, "Ompli el camp!");
-    if (pw.validity.patternMismatch)
-      error(
-        pw,
-        "La contrasenya ha de tenir entre 8 i 20 caràcters, incloent una lletra minúscula, una lletra majúscula, un dígit i un caràcter especial (!@#$%^&*)."
-      );
-  } else if (pattern.test(pw.value)) {
-    return true;
-  }
-
-  return false;
-}
-
-function validarRepPw() {
-  const pw = document.getElementById("pw");
-  const repPw = document.getElementById("repPw");
-
-  if (!repPw.value == pw.value) {
-    if (repPw.validity.valueMissing) error(repPw, "Ompli el camp!");
-    else error(repPw, "La contrasenya no és la mateixa que la primera");
-  } else {
-    return true;
-  }
-
-  return false;
-}
-
+// Funció de validació principal
 function validar(e) {
   esborrarError();
   e.preventDefault();
   if (
-    validarNom() &&
-    validarEmail() &&
-    validarRepEmail() &&
-    validarPw() &&
-    validarRepPw()
-    // validarImatge()
+    validarNom()
   ) {
     enviarFormulari();
     return true;
@@ -140,6 +100,7 @@ function validar(e) {
   }
 }
 
+// Funció per mostrar errors
 function error(element, missatge) {
   const textError = document.createTextNode(missatge);
   const elementError = document.getElementById("missatgeError");
@@ -148,6 +109,7 @@ function error(element, missatge) {
   element.focus();
 }
 
+// Funció per esborrar errors de validació
 function esborrarError() {
   let formulari = document.forms[0].elements;
   for (let ele of formulari) {
@@ -156,12 +118,8 @@ function esborrarError() {
   document.getElementById("missatgeError").replaceChildren();
 }
 
-// enviar dades
-function enviarFormulari() {
-  // Grabar al localStorage
-  let data = JSON.parse(localStorage.getItem("data")) || { users: [] };
-  const usersLength = data.users.length;
-  const lastId = usersLength > 0 ? data.users[usersLength - 1].id : 0;
+// Funció asíncrona per enviar el formulari
+async function enviarFormulari() {
   const nom = document.getElementById("nom").value;
   const email = document.getElementById("email").value;
   const pw = document.getElementById("pw").value;
@@ -169,12 +127,14 @@ function enviarFormulari() {
   const rol = select.options[select.selectedIndex] ? select.options[select.selectedIndex].id : "0";
   const imatge = "img/face.png";
 
-  const newUser = new User(lastId + 1, nom, email, pw, rol, imatge);
+  // Obtenir un nou ID de forma asíncrona
+  const newId = await getNewId(url, "users");
 
-  data.users.push(newUser);
+  const newUser = new User(newId, nom, email, pw, rol, imatge);
 
-  localStorage.setItem("data", JSON.stringify(data));
+  const resultat = await postData(url, "users", newUser);
 
+  // Reset del formulari després de guardar
   setTimeout(function () {
     let formulari = document.forms[0].elements;
     for (let ele of formulari) {

@@ -561,6 +561,7 @@
   "User": [
     {
       "id": "1",
+      "name": "administrador",
       "email": "admin@gmail.com",
       "password": "123456",
       "role": "1",
@@ -568,6 +569,7 @@
     },
     {
       "id": "2",
+      "name": "encarregat",
       "email": "encarregat@gmail.com",
       "password": "123456",
       "role": "2",
@@ -575,6 +577,7 @@
     },
     {
       "id": "3",
+      "name": "ivan",
       "email": "ivanlloret@gmail.com",
       "password": "Ivan9900!",
       "role": "2",
@@ -582,6 +585,7 @@
     },
     {
       "id": "4",
+      "name": "operari",
       "email": "operari@gmail.com",
       "password": "1234",
       "role": "3",
@@ -589,6 +593,7 @@
     },
     {
       "id": "5",
+      "name": "lorena",
       "email": "lorenasiscar@gmail.com",
       "password": "Lorena222!",
       "role": "3",
