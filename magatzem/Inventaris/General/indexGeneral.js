@@ -54,17 +54,17 @@ async function generarInventari() {
         idInventory = 1;
     } else {
         const maxObj = inventory.reduce((max, obj) => (obj.id > max.id ? obj : max), inventory[0]);
-        idInventory= ++ maxObj.id;
+        idInventory = ++ maxObj.id;
     }
 
-    let inventory = {
+    let newInventory = {
         id: idInventory,
         date: dataInventory,
         created_by: 1,
         inventory_status: "Pendent",
     }
 
-    localStorage.setItem('inventoryGeneral', JSON.stringify(inventory));
+    localStorage.setItem('inventory', JSON.stringify(newInventory));
 
     //inventoryLine
     let idInventoryLine;
@@ -76,22 +76,25 @@ async function generarInventari() {
         idInventoryLine = maxObj.id;
     }
 
-    const inventoryLines = filteredSpaces.map((space, index) => ({
-        id_inventario: idInventory,
-        id_lineInventory: idInventoryLine, // Generar ID único para la línea.
-        id_producto: space.product_id,
-        cantidad_real: space.quantity,
-        user: 1,
-        id_storage: space.storage_id,
-        id_street: space.street_id,
-        id_shelf: space.selft_id,
-        id_space: space.id
-    }));
+    filteredSpaces.forEach(space => {
+        let newInventoryLine =  {
+            id_inventario: idInventory,
+            id_lineInventory: idInventoryLine, // Generar ID único para la línea.
+            id_producto: space.product_id,
+            cantidad_real: space.quantity,
+            user: 1,
+            id_storage: space.storage_id,
+            id_street: space.street_id,
+            id_shelf: space.selft_id,
+            id_space: space.id
+        }
 
+        inventoryLine.push(newInventoryLine);
+    });
 
+    localStorage.setItem('inventoryLine', JSON.stringify(inventoryLine));
+    alert("Inventari Generat Correctament")
 
-    
-    
     /*if (storageSelect) {
         localStorage.setItem("storageSelectedID", storageSelect);
         window.location.href = "llistar/llistarGeneral.html";

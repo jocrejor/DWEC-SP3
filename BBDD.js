@@ -224,7 +224,7 @@ let Storage = [
         "quantity": 0,
 
         "storage_id": "01",
-        "steet_id": "01",
+        "street_id": "01",
         "selft_id": "01"
       },
       {
@@ -235,7 +235,7 @@ let Storage = [
         "maxVol" : 1000,
         "maxWeight" : 500, 
         "storage_id": "01",
-        "steet_id": "01",
+        "street_id": "01",
         "selft_id": "01"
       },
       {
