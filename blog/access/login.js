@@ -1,4 +1,6 @@
 window.onload = iniciar;
+let users;
+let currentUser;
 
 function iniciar() {
     document.getElementById("tornaAlBlog").addEventListener("click", tornaAlBlog);
@@ -6,18 +8,13 @@ function iniciar() {
     document.getElementById("signup").addEventListener("click", signup);
 }
 
-function verificarUser(e) {
+async function verificarUser(e) {
     e.preventDefault();
 
     var email           = document.getElementById("email").value;
     var contrassenya    = document.getElementById("password").value;
-    var users           = JSON.parse(localStorage.getItem("users")) || []; // Obtener los usuarios
-
-    if (users.length === 0) {
-        alert("Almacenament buit");
-        return; // Salir de la función si el almacenamiento está vacío
-    }
-
+    var users           = await getData(url2, 'Users');
+    
     for (var i = 0; i < users.length; i++) {
         if (email == "" || contrassenya == "") {
             alert("Es necessari omplir els 2 camps");
@@ -46,5 +43,5 @@ function tornaAlBlog() {
 }
 
 function signup() {
-    window.location.href = "../users/altaUsuaris.html";
+    window.location.href = "../users/alta/altaUsuaris.html";
 }
