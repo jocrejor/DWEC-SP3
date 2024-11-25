@@ -43069,14 +43069,6 @@
       "orderlinereception_status_id": 1,
       "product_id": 2,
       "quantity_ordered": 100,
-      "quantity_received": 0
-    },
-    {
-      "id": "3",
-      "order_reception_id": 1,
-      "orderlinereception_status_id": 1,
-      "product_id": 3,
-      "quantity_ordered": 30,
       "quantity_received": 25
     },
     {
@@ -43128,4 +43120,8 @@
       "quantity_received": 190
     }
   ]
+  ,
+  "Inventori": []
+  ,
+  "InventoriLine": []
 }
