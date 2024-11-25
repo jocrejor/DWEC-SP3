@@ -5,7 +5,7 @@ function iniciar () {
     replenaSelectTransportistes();
     replenaSelectClients();
     replenarProductes();
-    document.getElementById("btnGravar").addEventListener("click", validar);
+    document.getElementById("btnGravar").addEventListener("click", enviarFormulari);
     document.getElementById("btnAfegir").addEventListener("click", validarLlistar);
     document.getElementById("btnGuardar").addEventListener("click", guardarModificacio);
     document.getElementById("btnLlistat").addEventListener("click", llistarOrdres);
@@ -14,21 +14,7 @@ function iniciar () {
 
 /* llistarOrdres: Funció que redirigeix a la página llistatOrdres.html */
 function llistarOrdres () {
-    window.location.href = "llistatOrdres.html";
-}
-
-/* Funció que valida si esta tot correcte per donar d'alta una nova ordre */
-function validar (e) {
-    esborrarError();
-    e.preventDefault();
-
-    if (validarClient() && validarTransportista() && validarProducte() && validarQuantitat()) {
-        enviarFormulari();
-        return true;
-    }
-
-    else
-        return false;
+    window.location.href = "../llistat/llistatOrdres.html";
 }
 
 /* validarLlistar: Funció que valida si es pot llistar en la taula per al orderLineShipping */
@@ -36,7 +22,7 @@ function validarLlistar (e) {
     esborrarError();
     e.preventDefault();
 
-    if (validarProducte() && validarQuantitat()) {
+    if (validarProducte() && validarQuantitat() && validarClient() && validarTransportista()) {
         llistar();
         return true;
     }
@@ -45,8 +31,7 @@ function validarLlistar (e) {
         return false;
 }
 
-/** validarClient: Funció que valida el nom del client del formulari
- */
+/** validarClient: Funció que valida el nom del client del formulari */
 function validarClient () {
     const elementClient = document.getElementById("client");
 
@@ -59,8 +44,7 @@ function validarClient () {
     return true;
 }
 
-/** validarTransportista: Funció que valida el transportista
- */
+/** validarTransportista: Funció que valida el transportista */
 function validarTransportista () {
     const elementTransportista = document.getElementById("carrier");
 
@@ -73,8 +57,7 @@ function validarTransportista () {
     return true;
 }
 
-/** replenaSelectClients: Funció que replena el select de les comunitats a partir del JSON
-*/
+/** replenaSelectClients: Funció que replena el select de les comunitats a partir del JSON */
 function replenaSelectClients () {
     var clientSeleccionat = document.getElementById("client");
 
@@ -103,8 +86,7 @@ function replenarProductes () {
 
 }
 
-/** replenaSelectTransportistes: Funció que replena el select dels transportistes a partir del JSON
-*/
+/** replenaSelectTransportistes: Funció que replena el select dels transportistes a partir del JSON */
 function replenaSelectTransportistes () {
     var transportistaSeleccionat = document.getElementById("carrier");
 
@@ -118,8 +100,7 @@ function replenaSelectTransportistes () {
     });
 }
 
-/** validarProducte: Funció que valida el producte
- */
+/** validarProducte: Funció que valida el producte */
 function validarProducte () {
     const elementNom = document.getElementById("product");
 
@@ -133,8 +114,7 @@ function validarProducte () {
 }
 
 
-/** validarquantitat: Funció que valida la quantitat dels productes del formulari
- */
+/** validarquantitat: Funció que valida la quantitat dels productes del formulari */
 function validarQuantitat () {
     const quantitat = document.getElementById("quantitat");
 
@@ -299,64 +279,46 @@ function esborrarError () {
 let idAEditar = null; 
 
 /** enviarFormulari: Funció que agafara les dades introduides al formulari i les guardara al localStorage */
-function enviarFormulari() {
-    const nomClient         = document.getElementById("client").value;
-    const producte          = document.getElementById("product").value;
-    const quantitat         = document.getElementById("quantitat").value;
-    const fecha             = new Date();
-    const data              = fecha.getDate();
-    const transportista     = document.getElementById("carrier").value;
+function enviarFormulari () {
     const orderLineShipping = JSON.parse(localStorage.getItem("orderLineShipping")) || [];
     const orderShipping     = JSON.parse(localStorage.getItem("orderShipping")) || [];
     let idOrdre             = parseInt(localStorage.getItem("ultimIDOrdre")) || 1000;
 
-    if (idAEditar !== null) {
-        const idExistente = orderShipping.findIndex(order => order.id === idAEditar);
-
-        if (idExistente >= 0) {
-            orderShipping[idExistente].client_id    = nomClient;
-            orderShipping[idExistente].carrier_id   = transportista;
-            orderLineShipping[idExistente].product  = producte;
-            orderLineShipping[idExistente].quantity = quantitat;
-        }
-
-        idAEditar = null; 
-    }
-
-    else {
-        const novaOrdre = {
+    arrayTemporal.forEach (nouElement => {
+        const novaOrdre  = {
             id: idOrdre,
-            client_id: nomClient,
+            client_id: document.getElementById("client").value,
             ordershipping_status: "Pendent",
-            carrier_id: transportista,
-            shipping_date: data,
+            carrier_id: document.getElementById("carrier").value,
+            shipping_date: new Date().toLocaleDateString()
         };
 
         const orderLine = {
             id: idOrdre,
-            product: producte,
-            quantity: quantitat,
+            product: nouElement.producte,
+            quantity: nouElement.quantitat
         };
 
         orderShipping.push(novaOrdre);
         orderLineShipping.push(orderLine);
         idOrdre ++;
-    }
+    });
 
+    // Actualitzar LocalStorage
     localStorage.setItem("ultimIDOrdre", idOrdre);
     localStorage.setItem("orderLineShipping", JSON.stringify(orderLineShipping));
     localStorage.setItem("orderShipping", JSON.stringify(orderShipping));
 
-    setTimeout(function () {
-        document.getElementById("client").value    = "";
-        document.getElementById("carrier").value   = "";
-        document.getElementById("product").value   = "";
-        document.getElementById("quantitat").value = "";
-    }, 1000);
+    // Buidar el arrayTemporal i reiniciar la taula
+    arrayTemporal = [];
+    document.getElementById("tabla").innerHTML = "";
+
+    alert("Ordres gravades correctament!");
 }
 
+
 /*carregarDadesOrdre: Funció per carregar les dades de la ordreSeleccionada en llistarOrdres en els inputs*/
-function carregarDadesOrdre() {
+function carregarDadesOrdre () {
     const ordreSeleccionada  = JSON.parse(localStorage.getItem("ordreSeleccionada"));
     const ordresLineShipping = JSON.parse(localStorage.getItem("orderLineShipping")) || [];
     const ordresLine         = JSON.parse(localStorage.getItem("orderShipping")) || [];
