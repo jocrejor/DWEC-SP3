@@ -1,9 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-<<<<<<< HEAD
     // Genera un ID incrementat automáticament al carregar la pàgina
-=======
-    // Assignar automàticament l'ID
->>>>>>> main
     const idIncrementat = seguentID();
     document.getElementById("id").value = idIncrementat;
 
@@ -12,11 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
         window.location.href = "../Listar/listar.html"; 
     });
 
-<<<<<<< HEAD
     // Validació i guardat del formulari
-=======
-    // Event listener per al formulari
->>>>>>> main
     document.getElementById("altaForm").addEventListener("submit", validar);
 });
 /*
@@ -33,13 +25,7 @@ function seguentID() {
     Aquesta funció valida el formulari i si tot està correcte, el guarda a la base de dades
 */
 function validar(e) {
-<<<<<<< HEAD
     e.preventDefault();
-=======
-    e.preventDefault(); // Evita que el formulari es tanqui
-
-    // Obtenim els valors dels camps
->>>>>>> main
     const id = document.getElementById("id").value.trim();
     const nom = document.getElementById("name").value.trim();
     const missatgeError = document.getElementById("missatgeError");
@@ -50,13 +36,8 @@ function validar(e) {
         missatgeError.textContent = "Tots els camps són obligatoris.";
         return;
     }
-<<<<<<< HEAD
     
     // Guardar estat al localStorage
-=======
-
-    // Aquí pots afegir la lògica per guardar les dades en localStorage o enviar-les al servidor
->>>>>>> main
     guardarEstat(id, nom);
     document.getElementById("altaForm").reset();
     document.getElementById("id").value = seguentID();  // Genera el següent ID per al seguent registre
