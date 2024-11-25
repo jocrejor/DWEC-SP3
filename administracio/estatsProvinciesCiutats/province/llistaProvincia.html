@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestió de Provincies</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <script src="../js/llistaProvincia.js" defer></script>
+    <script src="./llistaProvincia.js" defer></script>
 </head>
 <body>
     <div class="container mt-5">
         <h1 class="text-center">Llistat de Provincies</h1>
-        <a href="../state/index.html" class="btn btn-secondary">Torna als estats</a>
+        <a href="../state/llistaEstat.html" class="btn btn-secondary">Torna als estats</a>
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="input-group mb-3">
@@ -24,11 +24,13 @@
 
         <h2 class="mt-4">Provincies</h2>
         <table class="table table-striped mt-3">
+            <thead>
                 <tr>
                     <th>#</th>
                     <th>Nom de la Provincia</th>
                     <th>Accions</th>
                 </tr>
+            </thead>
             <tbody id="provinceList">
             </tbody>
         </table>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestió de Ciutats</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="./llistaCiutat.js" defer></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Llistat de Ciutats</h1>
+        <a href="../province/llistaProvincia.html" class="btn btn-secondary">Torna a provincies</a>
+        <h2 id="provinceTitle" class="mt-4"></h2>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="newCityName" placeholder="Nova ciutat" />
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" onclick="addCity()">Agregar Ciutat</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <table class="table table-striped mt-3">
+            <tr>
+                <th>#</th>
+                <th>Nom de la Ciutat</th>
+                <th>Accions</th>
+            </tr>
+            <tbody id="cityList">
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

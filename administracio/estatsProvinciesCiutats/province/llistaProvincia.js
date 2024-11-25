@@ -17,6 +17,8 @@ function displayProvinces(provinces) {
             <td>${index + 1}</td>
             <td>${province.name}</td>
             <td>
+                <a href="../city/llistaCiutat.html?provinceId=${province.id}&provinceName=${encodeURIComponent(province.name)}" 
+                   class="btn btn-info btn-sm mr-2">Llista Ciutats</a>
                 <button class="btn btn-warning btn-sm mr-2" onclick="editProvince(${index})">Editar</button>
                 <button class="btn btn-danger btn-sm" onclick="deleteProvince(${index})">Eliminar</button>
             </td>
@@ -25,8 +27,43 @@ function displayProvinces(provinces) {
     });
 }
 
+function validarNom() {
+    const pattern = /^[A-Za-záéíóúÁÉÍÓÚñÑ\s]{2,25}$/;
+    const nom = document.getElementById("newProvinceName");
+
+    if (!nom.value) {
+        error(nom, "Ompli el camp!"); 
+        return false;
+    }
+
+    if (!pattern.test(nom.value)) {
+        error(nom, "El nom no pot contenir números ni caràcters especials, ha de tenir entre 2 i 25 caràcters.");
+        return false;
+    }
+
+    return true; 
+}
+
+function error(input, message) {
+    esborrarError();
+    const errorElement = document.createElement('div');
+    errorElement.classList.add('error-message', 'text-danger', 'mt-2');
+    errorElement.innerText = message;
+    input.parentNode.appendChild(errorElement);
+}
+
+function esborrarError() {
+    const errorMessages = document.querySelectorAll('.error-message');
+    errorMessages.forEach((message) => message.remove());
+}
+
 function addProvince() {
     const provinceName = document.getElementById('newProvinceName').value.trim();
+
+    if (!validarNom()) {
+        return;
+    }
+
     if (provinceName === '') {
         alert('Por favor, ingresa un nombre de provincia.');
         return;
@@ -41,6 +78,7 @@ function addProvince() {
     provinces.push(newProvince);
     localStorage.setItem('Province', JSON.stringify(provinces)); 
     document.getElementById('newProvinceName').value = ''; 
+    alert("Has agregat una nova provincia");
     loadProvinces(); 
 }
 
