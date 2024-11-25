@@ -43158,6 +43158,14 @@ let OrderLineReception = [
   }
 ];
 
+let Inventory = [ 
+
+];
+
+let InventoryLine = [ 
+  
+]
+
     
 
   
