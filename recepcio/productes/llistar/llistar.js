@@ -1,37 +1,53 @@
 window.onload = main;
 
+const url = 'http://localhost:5001/';  // URL del servidor backend
+
 function main() {
-    document.getElementById("nuevoProducto").addEventListener("click",nuevoProducto);
+    document.getElementById("nuevoProducto").addEventListener("click", nuevoProducto);
     obtenerProductos();
 }
 
-function nuevoProducto(){
+function nuevoProducto() {
     window.location.assign("../alta/alta.html");
 }
 
-function obtenerProductos() {
-    let arrProductos = JSON.parse(localStorage.getItem("Product")) || [];
+// Función para obtener todos los productos de la base de datos
+async function obtenerProductos() {
+    try {
+        const response = await fetch(url + 'Product');  // Endpoint para obtener los productos
+        if (!response.ok) {
+            throw new Error('Error al obtener los productos');
+        }
+        const arrProductos = await response.json();
+        mostrarProductos(arrProductos);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+// Función para mostrar los productos en la tabla
+function mostrarProductos(arrProductos) {
     let tbody = document.getElementById("files");
 
     while (tbody.firstChild) {
         tbody.removeChild(tbody.firstChild);
     }
 
-    arrProductos.forEach(function(product) {
+    arrProductos.forEach(function (product) {
         let row = document.createElement('tr');
 
         let eliminarCell = document.createElement('td');
         let eliminarBtn = document.createElement('button');
         eliminarBtn.appendChild(document.createTextNode('Eliminar'));
         eliminarBtn.className = 'btn btn-primary btn-lg';
-        eliminarBtn.onclick = function() { eliminar(product.id); };
+        eliminarBtn.onclick = function () { eliminar(product.id); };
         eliminarCell.appendChild(eliminarBtn);
 
         let modificarCell = document.createElement('td');
         let modificarBtn = document.createElement('button');
         modificarBtn.appendChild(document.createTextNode('Modificar'));
         modificarBtn.className = 'btn btn-primary btn-lg';
-        modificarBtn.onclick = function() { modificar(product.id, product.name, product.description, product.volume, product.weight, product.lotorserial, product.sku, product.image_url); };
+        modificarBtn.onclick = function () { modificar(product.id); };
         modificarCell.appendChild(modificarBtn);
 
         let nameCell = document.createElement('td');
@@ -67,30 +83,4 @@ function obtenerProductos() {
 
         tbody.appendChild(row);
     });
-}
-
-
-function eliminar(id) {
-    let arrProductos = JSON.parse(localStorage.getItem("Product")) || [];
-    arrProductos = arrProductos.filter(function(product) {
-        return product.id !== id;
-    });
-    localStorage.setItem("Product", JSON.stringify(arrProductos));
-    obtenerProductos();
-}
-
-
-function modificar(id, name, description, volume, weight, lotoreserial, sku, image_url) {
-    let product = {
-        id: id,
-        name: name,
-        description: description,
-        volume: volume,
-        weight: weight,
-        lotoreserial: lotoreserial,
-        sku: sku,
-        image_url: image_url
-    };
-    localStorage.setItem("modProducto", JSON.stringify(product));
-    window.location.assign("../modificar/modificar.html");
 }
