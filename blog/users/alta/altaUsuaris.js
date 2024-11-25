@@ -1,4 +1,5 @@
 window.onload = iniciar;
+url = 'http://localhost:5002/';
 
 function iniciar() {
     document.getElementById("signup").addEventListener("click", validar);
@@ -99,7 +100,7 @@ async function enviarFormulari () {
     let email       = document.getElementById("email").value;
     let password    = document.getElementById("password").value;
 
-    let newId   = await getNewId(url2, 'Users') ?? "0";
+    let newId   = await getNewId(url, 'Users') ?? "0";
 
     let user = {
         id: newId,
@@ -108,7 +109,7 @@ async function enviarFormulari () {
         password: password,
         user_profile: newId == 0 ? "Administrador" : "Publicador",
     };
-    await postData(url2, 'Users', user);
+    await postData(url, 'Users', user);
 
     window.location.href = '../../access/login.html';
 }

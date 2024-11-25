@@ -1,7 +1,7 @@
 let currentUser;
  //obtinre els usuaris 
 let users; 
-    
+
 
  document.addEventListener("DOMContentLoaded", () => {
     

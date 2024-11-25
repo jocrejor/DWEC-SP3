@@ -1,6 +1,6 @@
 window.onload = iniciar;
-let users;
-let currentUser;
+
+url = 'http://localhost:5002/';
 
 function iniciar() {
     document.getElementById("tornaAlBlog").addEventListener("click", tornaAlBlog);
@@ -13,7 +13,7 @@ async function verificarUser(e) {
 
     var email           = document.getElementById("email").value;
     var contrassenya    = document.getElementById("password").value;
-    var users           = await getData(url2, 'Users');
+    var users           = await getData(url, 'Users');
     
     for (var i = 0; i < users.length; i++) {
         if (email == "" || contrassenya == "") {
