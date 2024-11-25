@@ -6,7 +6,7 @@ function loadCities() {
     const provinceName = urlParams.get('provinceName');
 
     if (!provinceId || !provinceName) {
-        alert('No se ha proporcionado una provincia válida.');
+        alert("No s'ha proporcionat una provincia válida");
         return;
     }
 
@@ -107,7 +107,7 @@ function editCity(index) {
 }
 
 function deleteCity(index) {
-    if (confirm('Seguro que vols eliminar la ciutat?')) {
+    if (confirm('Estas segur que vols eliminar la ciutat?')) {
         const urlParams = new URLSearchParams(window.location.search);
         const provinceId = urlParams.get('provinceId');
         const cities = JSON.parse(localStorage.getItem('City')) || [];

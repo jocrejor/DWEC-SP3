@@ -99,7 +99,7 @@ function editState(index) {
 }
 
 function deleteState(index) {
-    if (confirm('¿Estás seguro de que deseas eliminar este estado?')) {
+    if (confirm("Estas segur que vols eliminar l'estat?")) {
         const states = JSON.parse(localStorage.getItem('State')) || [];
         states.splice(index, 1);
         localStorage.setItem('State', JSON.stringify(states));

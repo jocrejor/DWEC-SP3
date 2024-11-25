@@ -65,7 +65,7 @@ function addProvince() {
     }
 
     if (provinceName === '') {
-        alert('Por favor, ingresa un nombre de provincia.');
+        alert('Per favor, ingresa una provincia');
         return;
     }
 
@@ -87,7 +87,7 @@ function editProvince(index) {
     const stateIdSpain = "194";
     const provincesOfSpain = provinces.filter(province => province.state_id === stateIdSpain);
 
-    const newName = prompt('Editar nombre de la provincia:', provincesOfSpain[index].name);
+    const newName = prompt('Editar nom de la provincia:', provincesOfSpain[index].name);
     if (newName !== null && newName.trim() !== '') {
         provincesOfSpain[index].name = newName.trim();
 
@@ -100,7 +100,7 @@ function editProvince(index) {
 }
 
 function deleteProvince(index) {
-    if (confirm('¿Estás seguro de que deseas eliminar esta provincia?')) {
+    if (confirm('Estas segur que vols eliminar esta provincia?')) {
         const provinces = JSON.parse(localStorage.getItem('Province')) || [];
         const stateIdSpain = "194";
         const provincesOfSpain = provinces.filter(province => province.state_id === stateIdSpain);
