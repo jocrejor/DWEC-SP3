@@ -6,14 +6,15 @@ async function main() {
     // Busca el cliente en el array Client utilizando el ID
     const url = 'http://localhost:5001/';
     const clientes = await getData(url, "Client");
+    const Province = await getData(url, "Province");
+    const City = await getData(url, "City");
     // const cliente = clientes.find(c => c.id === idCliente);
 
     const cliente = clientes[idCliente - 1];
-
-    alert(cliente.name);
     if (cliente) {
         // Asegúrate de que cargarPaises esté bien definida para llenar el select de países
         cargarPaises();
+        
         // Carga el país seleccionado
         var paisSeleccionado = cliente.state_id; // Asumiendo que state_id es el ID del país
 
@@ -73,24 +74,25 @@ async function main() {
 }
 
 //función que carga comunidades autónomas en el select
-async function cargarPaises(){
+async function cargarPaises() {
     const url = 'http://localhost:5001/';
-    const State = await getData(url, "State");
-
+    const State = await getData(url, "State"); // Llamamos a la API para obtener los estados
+    
     var selectPais = document.getElementById('state_id');
-    State.forEach(function(pais){
+
+    // Iteramos sobre los estados y creamos las opciones
+    State.forEach(function(pais) {
+        // alert(pais.name);
         var opcion = document.createElement('option');
-        opcion.value = pais.id;
-
-        var nombreOpcion = document.createTextNode(pais.name);
-        opcion.appendChild(nombreOpcion);
-
-        selectPais.appendChild(opcion);
+        opcion.value = pais.id; // Asignamos el ID como valor de la opción
+        var optionText = document.createTextNode(pais.name);
+        opcion.appendChild(optionText);
+        selectPais.appendChild(opcion); // Añadimos la opción al select
     });
 }
 
 // Función para crear el select de provincias
-function crearSelectProvincias(contenedor){
+async function crearSelectProvincias(contenedor){
     // Crear el label para el input de provincia
     var labelProvincia = document.createElement('label');
     labelProvincia.setAttribute('for', 'province'); // Asegúrate de que el 'for' coincida con el ID del input
@@ -119,6 +121,8 @@ function crearSelectProvincias(contenedor){
     selectProvincia.appendChild(optionProvincia);
     
 
+    const url = 'http://localhost:5001/';
+    const Province = await getData(url, "Province"); // Llamamos a la API para obtener las provincias
     //Cargar las provincias
     Province.forEach(function(provincia) {
         var opcion = document.createElement('option');
