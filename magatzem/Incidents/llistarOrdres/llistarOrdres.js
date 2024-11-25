@@ -58,6 +58,6 @@ async function revisarOrdre(id){
 
     if(ordreSeleccionada){
         localStorage.setItem("ordreSeleccionada", JSON.stringify(ordreSeleccionada));
-        window.location.href = "../revisarIncident/revisarIncident.html";
+        window.location.href = "../alta/altaIncidencia.html";
     }
 }

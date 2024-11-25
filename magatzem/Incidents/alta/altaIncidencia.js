@@ -2,26 +2,10 @@ $(document).ready(function () {
     replenaProducte();
     replenaOperaris();
     replenaEstats();
-    revisarOrdre();
     $("#btnTorna").click(function(){
         window.location.href = "../incidencies.html";
-    }
-    )
+    })
 });
-
-async function revisarOrdre(){
-    const incidencies = await getData(url,"Incident"); 
-    const incidentSeleccionat = JSON.parse(localStorage.getItem("incidentSeleccionat"));
-    if(incidentSeleccionat){
-        const incidentRevisar = incidencies.find(o => o.id === incidentSeleccionat.id);
-        if(incidentRevisar){
-            document.getElementById("operator").value = incidentRevisar.operator_id;
-            document.getElementById("product").value = incidentRevisar.product_id;
-            document.getElementById("status").value = incidentRevisar.orderlinereception_status_id;
-            document.getElementById("quantity").value = incidentRevisar.quantity;
-        }
-    }
-}
 
 async function replenaEstats(){
     const estats = await getData(url,"OrderLineReception_Status");
