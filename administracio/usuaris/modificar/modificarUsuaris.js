@@ -1,16 +1,14 @@
 window.onload = main;
 
 function main() {
+  thereIsUser(); // Verifica si hi ha un usuari actiu
   document.getElementById("home").addEventListener("click", home);
-  document
-    .getElementById("btnGravar")
-    .addEventListener("click", validar, false);
+  document.getElementById("btnGravar").addEventListener("click", validar, false);
 
-  listTipus();
-
-  // recuperar les dades del localStorage
+  // Recuperar les dades de l'usuari des del localStorage
   const modUser = JSON.parse(localStorage.getItem("modUser"));
 
+  // Omplir el formulari amb les dades recuperades
   document.getElementById("nom").setAttribute("value", modUser.name);
   document.getElementById("email").setAttribute("value", modUser.email);
   document.getElementById("pw").setAttribute("value", modUser.password);
@@ -20,23 +18,7 @@ function home() {
   location.assign("../index.html");
 }
 
-function listTipus() {
-  const user_profile = JSON.parse(
-    localStorage.getItem("user_profile") || { userProfile: [] }
-  );
-  const select = document.querySelector("select");
-
-  user_profile.userProfile.forEach((tipus) => {
-    if (tipus.id != 1) {
-      let newOption = document.createElement("option");
-      newOption.setAttribute("id", `${tipus.id}`);
-      let innerOption = document.createTextNode(`${tipus.name}`);
-      newOption.appendChild(innerOption);
-      select.appendChild(newOption);
-    }
-  });
-}
-
+// Validació del nom
 function validarNom() {
   const pattern = RegExp(/^[A-Za-záéíóúÁÉÍÓÚñÑ\s]{2,25}$/);
   const nom = document.getElementById("nom");
@@ -55,6 +37,41 @@ function validarNom() {
   return false;
 }
 
+// Funció de validació principal
+function validar(e) {
+  esborrarError();
+  e.preventDefault();
+  if (
+    validarNom() &&
+    validarEmail() &&
+    validarPw()
+  ) {
+    enviarFormulari();
+    return true;
+  } else {
+    return false;
+  }
+}
+
+// Funció per mostrar errors
+function error(element, missatge) {
+  const textError = document.createTextNode(missatge);
+  const elementError = document.getElementById("missatgeError");
+  elementError.appendChild(textError);
+  element.classList.add("error");
+  element.focus();
+}
+
+// Funció per esborrar errors de validació
+function esborrarError() {
+  let formulari = document.forms[0].elements;
+  for (let ele of formulari) {
+    ele.classList.remove("error");
+  }
+  document.getElementById("missatgeError").replaceChildren();
+}
+
+// Funció per validar l'email
 function validarEmail() {
   const pattern = RegExp(/^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/);
   const email = document.getElementById("email");
@@ -73,6 +90,7 @@ function validarEmail() {
   return false;
 }
 
+// Validació de la contrasenya
 function validarPw() {
   const pattern = RegExp(
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/
@@ -93,60 +111,35 @@ function validarPw() {
   return false;
 }
 
-function validar(e) {
-  esborrarError();
-  e.preventDefault();
-  if (
-    validarNom() &&
-    validarEmail() &&
-    validarPw()
-    // validarImatge()
-  ) {
-    enviarFormulari();
-    return true;
-  } else {
-    return false;
-  }
-}
+// Enviar dades
+async function enviarFormulari() {
+  const modUser = JSON.parse(localStorage.getItem("modUser"));
 
-function error(element, missatge) {
-  const textError = document.createTextNode(missatge);
-  const elementError = document.getElementById("missatgeError");
-  elementError.appendChild(textError);
-  element.classList.add("error");
-  element.focus();
-}
-
-function esborrarError() {
-  let formulari = document.forms[0].elements;
-  for (let ele of formulari) {
-    ele.classList.remove("error");
-  }
-  document.getElementById("missatgeError").replaceChildren();
-}
-
-// enviar dades
-function enviarFormulari() {
-  const data = JSON.parse(localStorage.getItem("data")) || { users: [] };
-  const modUser = JSON.parse(localStorage.getItem("modUser")) || {};
   const nom = document.getElementById("nom").value;
   const email = document.getElementById("email").value;
   const password = document.getElementById("pw").value;
   const select = document.getElementById("rol");
   const rol = select.options[select.selectedIndex] ? select.options[select.selectedIndex].id : "0";
 
+  // Actualitzar el perfil de l'usuari amb les noves dades
   modUser.name = nom;
   modUser.email = email;
   modUser.password = password;
   modUser.user_profile_id = rol;
 
-  const index = data.users.findIndex((u) => u.id === modUser.id);
-  data.users[index] = modUser;
+  await updateId(url, "users", modUser.id, modUser);
 
-  localStorage.setItem("data", JSON.stringify(data));
-  // esborrar el localStorage
+  // Actualitzar les dades al localStorage
+  const data = JSON.parse(localStorage.getItem("data")) || { users: [] };
+  const index = data.users.findIndex((u) => u.id === modUser.id);
+  if (index !== -1) {
+    data.users[index] = modUser;
+    localStorage.setItem("data", JSON.stringify(data));
+  }
+
+  // Eliminar les dades temporals del localStorage
   localStorage.removeItem("modUser");
 
-  // tornar al llistat
-  window.location.assign("llistatUsuaris.html");
+  // Redirigir al llistat d'usuaris
+  window.location.assign("../llistat/llistatUsuaris.html");
 }
