@@ -1,45 +1,38 @@
 window.onload = main;
 
+url = 'http://localhost:5002/';
+
 let postSeleccionado;
 
 function main() {
-    document.getElementById("btnGravar").addEventListener("click", validar, false);
-    postSeleccionado = JSON.parse(localStorage.getItem("modPost"));
+    const postSeleccionado = JSON.parse(localStorage.getItem("modPost"));
 
-    if (postSeleccionado) {
-        // Rellenar los campos del formulario
-        document.getElementById("titol").value = postSeleccionado.titol;
-        document.getElementById("descripcio").value = postSeleccionado.descripcio;
-
-        // Llamar a cargarEtiquetas con el valor correcto de la etiqueta
-        cargarEtiquetas(postSeleccionado.etiqueta); 
-    }
+    document.getElementById("titol").setAttribute("value", postSeleccionado.title);
+    document.getElementById("descripcio").textContent = postSeleccionado.description;
+    document.getElementById("foto").setAttribute("value", postSeleccionado.photo);
+    cargarEtiquetas(postSeleccionado.tag);
 }
 
-function cargarEtiquetas(etiquetaSeleccionada) {
-    let etiquetas = JSON.parse(localStorage.getItem("Etiquetas")) || [];
+
+async function cargarEtiquetas(etiquetaSeleccionada) {
+    const etiquetas = await getData(url, "Tag");
     const selectEtiqueta = document.getElementById("nom-etiqueta");
 
-    // Limpiar opciones existentes
-    selectEtiqueta.innerHTML = '<option value="" disabled selected>Select an etiqueta</option>';
+    selectEtiqueta.innerHTML = '<option value="" disabled selected>Selecciona una etiqueta</option>';
 
-    // Añadir las etiquetas guardadas
     etiquetas.forEach(etiqueta => {
         const option = document.createElement("option");
-        option.value = etiqueta.nom; 
+        option.value = etiqueta.name;
+        option.textContent = etiqueta.name;
 
-        // Crear un nodo de texto y añadirlo al elemento option
-        const optionText = document.createTextNode(etiqueta.nom);
-        option.appendChild(optionText);
+        if (etiqueta.name === etiquetaSeleccionada) {
+            option.selected = true;
+        }
 
         selectEtiqueta.appendChild(option);
     });
-
-    // Seleccionar la etiqueta guardada
-    if (etiquetaSeleccionada) {
-        selectEtiqueta.value = etiquetaSeleccionada; 
-    }
 }
+
 
 
 function validar(e) {
@@ -75,26 +68,23 @@ function esborrarError() {
     document.getElementById("missatgeError").textContent = "";
 }
 
-function enviarFormulari() {
+async function enviarFormulari() {
+    const postSeleccionado = JSON.parse(localStorage.getItem("modPost"));
+
     const titolModificat = document.getElementById("titol").value;
     const descripcioModificada = document.getElementById("descripcio").value;
     const fotoModificada = document.getElementById("foto").files[0];
     const nomEtiquetaModificada = document.getElementById("nom-etiqueta").value;
 
-    let posts = JSON.parse(localStorage.getItem("Posts")) || [];
+    postSeleccionado.title = titolModificat;
+    postSeleccionado.description = descripcioModificada;
+    postSeleccionado.photo = fotoModificada;
+    postSeleccionado.tag = nomEtiquetaModificada;
 
-    for (let i = 0; i < posts.length; i++) {
-        if (posts[i].id === postSeleccionado.id) {
-            posts[i].titol = titolModificat;
-            posts[i].descripcio = descripcioModificada;
-            if (fotoModificada) posts[i].foto = URL.createObjectURL(fotoModificada);
-            posts[i].etiqueta = nomEtiquetaModificada;
-            break;
-        }
-    }
+    await updateId(url, "Post", postSeleccionado.id, postSeleccionado);
 
-    localStorage.setItem("Posts", JSON.stringify(posts));
     localStorage.removeItem("modPost");
+
     window.location.href = "../llistat/llistarPosts.html";
 }
 

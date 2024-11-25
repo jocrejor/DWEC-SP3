@@ -1,6 +1,10 @@
 window.onload = iniciar;
 
+url = 'http://localhost:5002/';
+
 function iniciar() {
+  //thereIsUser();
+
   document
     .getElementById("btnGravar")
     .addEventListener("click", validar);
@@ -13,7 +17,10 @@ function validarNom() {
       error2(element, "Deus d'introduïr un nom.");
     }
     if (element.validity.patternMismatch) {
-      error2(element, "El nom ha de tindre entre 2 i 30 caracters, i començar amb majuscula.");
+      error2(
+        element,
+        "El nom ha de tindre entre 2 i 30 caracters, i començar amb majuscula."
+      );
     }
     error(element);
     return false;
@@ -24,7 +31,7 @@ function validarNom() {
 function validar(e) {
   e.preventDefault();
   esborrarError();
-  
+
   if (validarNom()) {
     enviarFormulari();
     return true;
@@ -43,12 +50,11 @@ function error(element, missatge) {
 }
 
 function error2(element, missatge) {
-    const elementError = document.getElementById("missatgeError");
-    elementError.textContent = missatge; // Usa textContent en lugar de innerHTML
-    element.classList.add("error");
-    element.focus();
+  const elementError = document.getElementById("missatgeError");
+  elementError.textContent = missatge;
+  element.classList.add("error");
+  element.focus();
 }
-
 
 function esborrarError() {
   let formulari = document.forms[0].elements;
@@ -58,34 +64,15 @@ function esborrarError() {
   document.getElementById("missatgeError").replaceChildren();
 }
 
-let idContador = 1;
-
-function enviarFormulari() {
+async function enviarFormulari() {
   const nom = document.getElementById("nom").value;
-  let etiquetas = JSON.parse(localStorage.getItem("Etiquetas")) || [];
-  let idsEliminados = JSON.parse(localStorage.getItem("IdsEliminados")) || [];
 
-  // Verificar si el nombre ya existe
-  for (let i = 0; i < etiquetas.length; i++) {
-    if (etiquetas[i].nom.toLowerCase() === nom.toLowerCase()) {
-      error2(document.getElementById("nom"), "Aquest nom ja existeix.");
-      return;
-    }
-  }
-
-  // Obtener el siguiente ID disponible
-  let idNuevo = 1;
-  while (etiquetas.some(etiqueta => etiqueta.id === idNuevo) || idsEliminados.includes(idNuevo)) {
-    idNuevo++;
-  }
-
-  const etiqueta = {
-    id: idNuevo,
-    nom: nom
+  const newEtiqueta = {
+    id: await getNewId(url, "Tag"),
+    name: nom,
   };
 
-  etiquetas.push(etiqueta);
-  localStorage.setItem("Etiquetas", JSON.stringify(etiquetas));
+  const resultat = await postData(url, "Tag", newEtiqueta);
 
   // Limpiar el campo después de guardar
   setTimeout(function () {

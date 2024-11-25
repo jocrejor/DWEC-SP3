@@ -1,15 +1,18 @@
 window.onload = main;
 
+url = 'http://localhost:5002/';
+
 let etiquetaSeleccionada;
 
 function main() {
+    //thereIsUser();
     document.getElementById("btnGravar").addEventListener("click", validar, false);
 
     // Recuperar la etiqueta seleccionada desde localStorage
-    etiquetaSeleccionada = JSON.parse(localStorage.getItem("modEtiqueta"));
+    const etiquetaSeleccionada = JSON.parse(localStorage.getItem("modEtiqueta"));
 
     // Mostrar el nombre de la etiqueta en el campo de texto
-    document.getElementById("nom").value = etiquetaSeleccionada.nom;
+    document.getElementById("nom").setAttribute("value", etiquetaSeleccionada.name);
 }
 
 function validarNom() {
@@ -45,26 +48,17 @@ function esborrarError() {
     document.getElementById("missatgeError").textContent = "";
 }
 
-function enviarFormulari() {
-    const nomModificat = document.getElementById("nom").value;
-    
-    // Obtener todas las etiquetas del localStorage
-    let etiquetas = JSON.parse(localStorage.getItem("Etiquetas")) || [];
+async function enviarFormulari() {
+    const etiquetaSeleccionada = JSON.parse(localStorage.getItem("modEtiqueta"));
+    const nom = document.getElementById("nom").value;
+    etiquetaSeleccionada.name = nom;
 
-    // Buscar y actualizar la etiqueta correspondiente por ID
-    for (let i = 0; i < etiquetas.length; i++) {
-        if (etiquetas[i].id === etiquetaSeleccionada.id) {
-            etiquetas[i].nom = nomModificat;
-            break;
-        }
-    }
+    await updateId(url, "Tag", etiquetaSeleccionada.id, etiquetaSeleccionada);
 
-    // Guardar los cambios en localStorage
-    localStorage.setItem("Etiquetas", JSON.stringify(etiquetas));
-    
-    // Eliminar el marcador de modificación en localStorage
     localStorage.removeItem("modEtiqueta");
 
-    // Redirigir de nuevo al listado
-    window.location.href = "../llistat/llistarEtiquetes.html";
+    // Tornar a la pàgina de llistat
+    window.location.assign("../llistat/llistarEtiquetes.html");
 }
+  
+  

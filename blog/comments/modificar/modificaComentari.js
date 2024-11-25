@@ -2,18 +2,21 @@ window.onload = function () {
     iniciar();
 };
 
+url = 'http://localhost:5002/';
+
+let comentarioSeleccionado;
+
 function iniciar() {
+    //thereIsUser();
+
+    document.getElementById("btnGravar").addEventListener("click", validar);
+
     // Recuperar el comentario seleccionado desde localStorage
     const comentarioSeleccionado = JSON.parse(localStorage.getItem("modComentari")); 
     
     // Mostrar el comentario en el campo de texto
-    if (comentarioSeleccionado && comentarioSeleccionado.descripcio) {
-        document.getElementById("descripcio").value = comentarioSeleccionado.descripcio;
-    }
-
-    document
-        .getElementById("btnGravar")
-        .addEventListener("click", validar);
+    document.getElementById("descripcio").setAttribute("value", comentarioSeleccionado.description);
+    
 }
 
 function validarDescripcio() {
@@ -68,25 +71,12 @@ function esborrarError() {
 }
 
 // enviar dades
-function enviarFormulari() {
-    const descripcioModificada = document.getElementById("descripcio").value;
-
-    // Obtener todas los comentarios del localStorage
-    let comentarios = JSON.parse(localStorage.getItem("Comentaris")) || []; 
-
-    // Recuperar el comentario seleccionado
+async function enviarFormulari() {
     const comentarioSeleccionado = JSON.parse(localStorage.getItem("modComentari")); 
+    const descripcioModificada = document.getElementById("descripcio").value;
+    comentarioSeleccionado.description = descripcioModificada;
 
-    // Buscar y actualizar el comentario correspondiente por ID
-    for (let i = 0; i < comentarios.length; i++) {
-        if (comentarios[i].id === comentarioSeleccionado.id) {
-            comentarios[i].descripcio = descripcioModificada;
-            break;
-        }
-    }
-
-    // Guardar los cambios en localStorage
-    localStorage.setItem("Comentaris", JSON.stringify(comentarios)); 
+    await updateId(url, "Comment", comentarioSeleccionado.id, comentarioSeleccionado);
     
     // Eliminar el marcador de modificación en localStorage
     localStorage.removeItem("modComentari"); 

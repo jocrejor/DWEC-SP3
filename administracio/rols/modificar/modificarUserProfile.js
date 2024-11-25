@@ -67,7 +67,7 @@ function esborrarError() {
 
 // enviar dades
 async function enviarFormulari() {
-  const modProfile = JSON.parse(localStorage.getItem("modProfile")) ;
+  const modProfile = JSON.parse(localStorage.getItem("modProfile"));
   
   const nom = document.getElementById("nom").value;
   modProfile.name = nom;

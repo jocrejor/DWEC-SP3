@@ -1,6 +1,10 @@
 window.onload = iniciar;
 
+url = 'http://localhost:5002/';
+
 function iniciar() {
+  //thereIsUser();
+
     cargarEtiquetas();
     document.getElementById("btnGravar").addEventListener("click", validar);
     document.getElementById("btnTornaArrere").addEventListener("click", tornarArrere);
@@ -99,8 +103,8 @@ function esborrarError() {
   document.getElementById("missatgeError").replaceChildren();
 }
 
-function cargarEtiquetas() {
-    let etiquetas = JSON.parse(localStorage.getItem("Etiquetas")) || [];
+async function cargarEtiquetas() {
+    let etiquetas = await getData(url, "Tag");
     const selectEtiqueta = document.getElementById("nom-etiqueta");
   
     // Limpiar opciones existentes
@@ -109,43 +113,37 @@ function cargarEtiquetas() {
     // Añadir las etiquetas guardadas
     etiquetas.forEach(etiqueta => {
       const option = document.createElement("option");
-      option.value = etiqueta.nom;
-      option.textContent = etiqueta.nom;
+      option.value = etiqueta.name;
+      option.textContent = etiqueta.name;
       selectEtiqueta.appendChild(option);
     });
   }
   
-  function enviarFormulari() {
+  function formatDate(date) {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; 
+    const day = date.getDate();
+    return `${year}-${month}-${day}`;
+  }
+
+  async function enviarFormulari() {
     const nomPost = document.getElementById("titol").value.trim();
     const foto = document.getElementById("foto").value;
     const descripcio = document.getElementById("descripcio").value;
     const etiqueta = document.getElementById("nom-etiqueta").value;
-
-    let posts = JSON.parse(localStorage.getItem("Posts")) || [];
-    let IdsPostsEliminados = JSON.parse(localStorage.getItem("IdsPostsEliminados")) || [];
-
-    // Verificar si el nombre del post ya existe (ignorando mayúsculas y espacios)
-    if (posts.some(post => post.titol.toLowerCase() === nomPost.toLowerCase())) {
-        error2(document.getElementById("titol"), "Aquest nom del post ja existeix.");
-        return;
-    }
-
-    // Obtener el siguiente ID disponible
-    let idNuevo = 1;
-    while (posts.some(post => post.id === idNuevo) || IdsPostsEliminados.includes(idNuevo)) {
-        idNuevo++;
-    }
+    //const currentUser = localStorage.getItem("currentUser").value;
 
     const post = {
-        id: idNuevo,
-        titol: nomPost,
-        foto: foto,
-        descripcio: descripcio,
-        etiqueta: etiqueta
+        id: await getNewId(url, "Post"),
+        title: nomPost,
+        photo: foto,
+        creation_date: formatDate(new Date()),
+        //creator_id: currentUser,
+        description: descripcio,
+        tag: etiqueta
     };
 
-    posts.push(post);
-    localStorage.setItem("Posts", JSON.stringify(posts));
+    const resultat = await postData(url, "Post", post);
 
     // Limpiar los campos después de guardar
     setTimeout(function () {

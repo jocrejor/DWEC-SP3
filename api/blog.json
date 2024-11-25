@@ -24,62 +24,54 @@
   ],
   "Post": [
     {
-      "id": "1",
-      "title": "title1",
-      "photo": "photo1.png",
-      "creation_date": "2024-04-23",
-      "creator_id": "1",
-      "description": "descriptionPost1",
-      "name": "user1"
+      "id": "4",
+      "title": "Primerpost",
+      "photo": "C:\\fakepath\\Screenshot 2024-10-02 235940.png",
+      "creation_date": "2024-11-25T21:51:59.601Z",
+      "description": "Descripcion detallada del post",
+      "tag": "Tecnologia"
     },
     {
-      "id": "2",
-      "title": "title2",
-      "photo": "photo2.png",
-      "creation_date": "2024-05-10",
-      "creator_id": "2",
-      "description": "descriptionPost2",
-      "name": "user2"
+      "id": "5",
+      "title": "Provapost",
+      "photo": "C:\\fakepath\\Screenshot 2024-10-01 002110.png",
+      "creation_date": "2024-11-25T21:52:49.835Z",
+      "description": "Descripcio una altra vegada detallada",
+      "tag": "Tecnologia"
     },
     {
-      "id": "3",
-      "title": "title3",
-      "photo": "photo3.png",
-      "creation_date": "2024-06-15",
-      "creator_id": "3",
-      "description": "descriptionPost3",
-      "name": "user3"
+      "id": "6",
+      "title": "BuenosDias",
+      "photo": "C:\\fakepath\\Screenshot 2024-10-01 002110.png",
+      "creation_date": "2024-11-25",
+      "description": "Descripcio detallada amb molts de detalls incorporats",
+      "tag": "Tecnologia"
     }
   ],
   "Comment": [
     {
-      "id": "1",
-      "description": "descriptionComment1",
-      "post_id": "1"
-    },
-    {
-      "id": "2",
-      "description": "descriptionComment2",
-      "post_id": "2"
-    },
-    {
-      "id": "3",
-      "description": "descriptionComment3",
-      "post_id": "3"
+      "id": "5",
+      "description": "Intentamos hacer un comentario con todo bien hecho",
+      "post_id": null,
+      "post_title": null
     }
   ],
   "Tag": [
     {
-      "id": "1",
-      "name": "tag1"
-    },
-    {
-      "id": "2",
-      "name": "tag2"
-    },
-    {
       "id": "3",
       "name": "tag3"
+    },
+    {
+      "id": "5",
+      "name": "Tecnologia"
+    },
+    {
+      "id": "6",
+      "name": "Hola"
+    },
+    {
+      "id": "8",
+      "name": "Holas"
     }
   ],
   "Post_Tag": [
@@ -99,5 +91,4 @@
       "tag_id": "3"
     }
   ]
-
 }

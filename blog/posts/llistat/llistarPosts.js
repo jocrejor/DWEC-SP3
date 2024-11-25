@@ -1,6 +1,11 @@
 window.onload = main;
 
+url = 'http://localhost:5002/';
+
 function main() {
+
+  //thereIsUser();
+
   document.getElementById("nouPost").addEventListener("click", nouPost);
   document.getElementById("mainBlog").addEventListener("click", mainBlog);
   obtindrePosts();
@@ -14,14 +19,14 @@ function nouPost() {
   window.location.assign("../alta/altaPost.html");
 }
 
-function obtindrePosts() {
-  const posts = JSON.parse(localStorage.getItem("Posts")) || [];
+async function obtindrePosts() {
+  const llistaPosts = await getData(url, "Post");
   const tbody = document.getElementById("files");
   
   // Limpiar el contenido de la tabla antes de añadir los posts
   tbody.innerHTML = "";
 
-  posts.forEach((post) => {
+  llistaPosts.forEach((post) => {
       const tr = document.createElement("tr");
 
       // Botón para eliminar el post
@@ -37,19 +42,18 @@ function obtindrePosts() {
       const tdModificar = document.createElement("td");
       const btnModificar = document.createElement("button");
       btnModificar.className = "btn btn-primary btn-lg";
-      const modificarText = document.createTextNode("Modificar");
-      btnModificar.appendChild(modificarText);
-      btnModificar.onclick = () => modificar(post.id, post.titol, post.foto, post.descripcio, post.etiqueta);
+      btnModificar.appendChild(document.createTextNode("Modificar"));
+      btnModificar.onclick = () => modificar(post);
       tdModificar.appendChild(btnModificar);
 
       // Título del post
       const tdTitol = document.createElement("td");
-      const titolText = document.createTextNode(post.titol);
+      const titolText = document.createTextNode(post.title);
       tdTitol.appendChild(titolText);
 
       // Etiqueta del post
       const tdEtiqueta = document.createElement("td");
-      const etiquetaText = document.createTextNode(post.etiqueta); 
+      const etiquetaText = document.createTextNode(post.tag); 
       tdEtiqueta.appendChild(etiquetaText);
 
       // Añadir elementos a la fila
@@ -61,32 +65,16 @@ function obtindrePosts() {
   });
 }
 
-  function esborrar(id) {
-    let posts = JSON.parse(localStorage.getItem("Posts")) || [];
-    let IdsPostsEliminados = JSON.parse(localStorage.getItem("IdsPostsEliminados")) || [];
-
-    // Filtrar posts para eliminar el seleccionado
-    posts = posts.filter(post => post.id !== id);
-
-    // Agregar el ID eliminado a la lista de IDs eliminados si aún no está en la lista
-    if (!IdsPostsEliminados.includes(id)) {
-        IdsPostsEliminados.push(id);
-    }
-    localStorage.setItem("IdsPostsEliminados", JSON.stringify(IdsPostsEliminados));
-
-    // Guardar el nuevo array de posts en localStorage
-    localStorage.setItem("Posts", JSON.stringify(posts));
+  async function esborrar(id) {
+    await deleteData(url, "Post", id);
 
     // Actualizar la tabla sin recargar la página
     obtindrePosts();
 }
 
-function modificar(id, titol, foto, descripcio, etiqueta) {
-  const post = { id, titol, foto, descripcio, etiqueta }; 
-  localStorage.setItem("modPost", JSON.stringify(post));
+function modificar(post) {
 
-  // Redirigir a la página de modificación
+
+  localStorage.setItem("modPost", JSON.stringify(post));
   window.location.assign("../modificar/modificaPost.html");
 }
-
-
