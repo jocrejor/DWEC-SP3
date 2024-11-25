@@ -1,4 +1,3 @@
-let inventory;
 let inventoryLine;
 
 $(document).ready(function() {
@@ -43,39 +42,23 @@ async function generarInventari() {
         space.storage_id === storageSelect && space.street_id === streetSelect
     );
 
-    inventory = JSON.parse(localStorage.getItem('inventory')) || [];
-    inventoryLine = JSON.parse(localStorage.getItem('inventoryLine')) || [];
-
     //inventory
-    let idInventory;
+    let idInventory = await getNewId(url, "Inventory");
     let dataInventory = new Date().toISOString();
     
-    if(inventory.length == 0) {
-        idInventory = 1;
-    } else {
-        const maxObj = inventory.reduce((max, obj) => (obj.id > max.id ? obj : max), inventory[0]);
-        idInventory = ++ maxObj.id;
-    }
-
     let newInventory = {
         id: idInventory,
         date: dataInventory,
         created_by: 1,
         inventory_status: "Pendent",
     }
-
-    localStorage.setItem('inventory', JSON.stringify(newInventory));
+    
+    await postData(url, "Inventory", newInventory);
 
     //inventoryLine
-    let idInventoryLine;
+    inventoryLine = [];
+    let idInventoryLine = await getNewId(url, "InventoryLine"); 
     
-    if(inventoryLine.length == 0) {
-        idInventoryLine = 0;
-    } else {
-        const maxObj = inventoryLine.reduce((max, obj) => (obj.id > max.id ? obj : max), inventoryLine[0]);
-        idInventoryLine = maxObj.id;
-    }
-
     filteredSpaces.forEach(space => {
         let newInventoryLine =  {
             id_inventario: idInventory,
@@ -92,11 +75,6 @@ async function generarInventari() {
         inventoryLine.push(newInventoryLine);
     });
 
-    localStorage.setItem('inventoryLine', JSON.stringify(inventoryLine));
+    await postData(url, "InventoryLine", inventoryLine);
     alert("Inventari Generat Correctament")
-
-    /*if (storageSelect) {
-        localStorage.setItem("storageSelectedID", storageSelect);
-        window.location.href = "llistar/llistarGeneral.html";
-    }*/
 }
