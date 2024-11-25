@@ -1,9 +1,12 @@
-$(document).ready(function () {
+let estats;
+
+$(document).ready(async function () {
+    estats = await getData(url,"OrderReception_Status");
     carregarOrdres();
 });
 
-function carregarOrdres() {
-    const ordresRecepcio = JSON.parse(localStorage.getItem("OrderReception")) || [];
+async function carregarOrdres() {
+    const ordresRecepcio = await getData(url,"OrderReception");
     const tabla = document.getElementById("files");
 
     ordresRecepcio.forEach((ordre) => {
@@ -17,7 +20,7 @@ function carregarOrdres() {
         });
 
         btnRevisar.className = "btn btn-primary";
-        let textRevisar = document.createTextNode("Revisar");
+        let textRevisar = document.createTextNode("Crear Incidencia");
         btnRevisar.appendChild(textRevisar);
         tdRevisar.appendChild(btnRevisar);
         row.appendChild(tdRevisar);
@@ -26,7 +29,7 @@ function carregarOrdres() {
         row.appendChild(CrearCelda(ordre.id));
         row.appendChild(CrearCelda(ordre.supplier_id));
         row.appendChild(CrearCelda(ordre.estimated_reception_date));
-        row.appendChild(CrearCelda(getOrderStatus(ordre.order_reception_status_id)));
+        row.appendChild(CrearCelda(getOrderStatus(ordre.orderreception_status_id)));
 
         // Añadir la fila a la tabla
         tabla.appendChild(row);
@@ -42,20 +45,19 @@ function CrearCelda(contingut) {
 
 // Función para obtener el estado por ID
 function getOrderStatus(estatID) {
-    const estatText = {
-        1: "Pendent",
-        2: "En procés",
-        3: "Finalitzat"
-    };
-    return estatText[estatID] ;
+    const estatIncidencia = estats.find(o => o.id == estatID);
+
+    if(estatIncidencia){
+        return estatIncidencia.name;
+    }
 }
 
-function revisarOrdre(id){
-    const ordresRecepcio = JSON.parse(localStorage.getItem("OrderReception")) || [];
+async function revisarOrdre(id){
+    const ordresRecepcio = await getData(url,"OrderReception");
     const ordreSeleccionada = ordresRecepcio.find(o => o.id === id);
 
     if(ordreSeleccionada){
         localStorage.setItem("ordreSeleccionada", JSON.stringify(ordreSeleccionada));
-        window.location.href = "revisarIncident.html";
+        window.location.href = "../revisarIncident/revisarIncident.html";
     }
 }

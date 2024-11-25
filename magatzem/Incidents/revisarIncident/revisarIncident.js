@@ -2,14 +2,13 @@ $(document).ready(function () {
     revisarOrdre();
 });
 
-function revisarOrdre(){
-    const ordresRecepcio = JSON.parse(localStorage.getItem("OrderReception")) || [];
-    const ordreSeleccionada = JSON.parse(localStorage.getItem("ordreSeleccionada"));
-    
-    if(ordreSeleccionada){
-        const ordreRevisar = ordresRecepcio.find(o => o.id === ordreSeleccionada.id);
-        if(ordreRevisar){
-            document.getElementById("supplier").value = ordreRevisar.supplier_id;
+async function revisarOrdre(){
+    const incidencies = await getData(url,"Incident"); 
+    const incidentSeleccionat = JSON.parse(localStorage.getItem("incidentSeleccionat"));
+    if(incidentSeleccionat){
+        const incidentRevisar = incidencies.find(o => o.id === incidentSeleccionat.id);
+        if(incidentRevisar){
+            document.getElementById("operator").value = incidentRevisar.operator_id;
         }
     }
 }

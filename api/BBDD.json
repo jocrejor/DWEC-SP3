@@ -561,6 +561,7 @@
   "User": [
     {
       "id": "1",
+      "name": "administrador",
       "email": "admin@gmail.com",
       "password": "123456",
       "role": "1",
@@ -568,6 +569,7 @@
     },
     {
       "id": "2",
+      "name": "encarregat",
       "email": "encarregat@gmail.com",
       "password": "123456",
       "role": "2",
@@ -575,6 +577,7 @@
     },
     {
       "id": "3",
+      "name": "ivan",
       "email": "ivanlloret@gmail.com",
       "password": "Ivan9900!",
       "role": "2",
@@ -582,6 +585,7 @@
     },
     {
       "id": "4",
+      "name": "operari",
       "email": "operari@gmail.com",
       "password": "1234",
       "role": "3",
@@ -589,6 +593,7 @@
     },
     {
       "id": "5",
+      "name": "lorena",
       "email": "lorenasiscar@gmail.com",
       "password": "Lorena222!",
       "role": "3",
@@ -42984,28 +42989,28 @@
     },
     {
       "incident_id": "1",
-      "operator_id": "6",
+      "operator_id": "1",
       "description": "El producte esta desaparegut",
       "created_at": "CURRENT_TIMESTAMP",
       "id": "f19a"
     },
     {
       "incident_id": "2",
-      "operator_id": "7",
+      "operator_id": "2",
       "description": "El prodcute té el soroll distorsionat",
       "created_at": "CURRENT_TIMESTAMP",
       "id": "6fde"
     },
     {
       "incident_id": "4",
-      "operator_id": "8",
+      "operator_id": "3",
       "description": "La pantalla de prodcute no funciona",
       "created_at": "CURRENT_TIMESTAMP",
       "id": "b360"
     },
     {
       "incident_id": "5",
-      "operator_id": "9",
+      "operator_id": "4",
       "description": "La batería del producte es descarga ràpidament",
       "created_at": "CURRENT_TIMESTAMP",
       "id": "5771"
