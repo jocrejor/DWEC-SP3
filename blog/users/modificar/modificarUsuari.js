@@ -1,46 +1,46 @@
 window.onload = iniciar;
 
-let url = 'http://localhost:5002/';
+url = 'http://localhost:5002/';
 
 function iniciar() {
     editUser();
+    console.log('hola');
+    var userToEdit = JSON.parse(localStorage.getItem("userToEdit"));
+    console.log(userToEdit)
     document.getElementById("saveChanges").addEventListener("click", saveChanges);
 }
 
 function editUser() {
     var userToEdit = JSON.parse(localStorage.getItem("userToEdit"));
+    console.log(userToEdit)
 
     if (userToEdit) {
         document.getElementById("name").value = userToEdit.name;
         document.getElementById("email").value = userToEdit.email;
         document.getElementById("password").value = userToEdit.password;
-        document.getElementById("role").value = userToEdit.role;
+        document.getElementById("role").value = userToEdit.user_profile;
     }
 }
 
 // Función para guardar los cambios
-function saveChanges(e) {
+async function saveChanges(e) {
     e.preventDefault();
 
+    let userToEdit = JSON.parse(localStorage.getItem("userToEdit"));
+
     var updatedUser = {
-        id: JSON.parse(localStorage.getItem("userToEdit")).id,
+        id: userToEdit.id,
         name: document.getElementById("name").value,
         email: document.getElementById("email").value,
         password: document.getElementById("password").value,
-        role: document.getElementById("role").value,
+        user_profile: document.getElementById("role").value,
     };
 
-    updatedUser(url, 'Users', updatedUser.id, updateUser)
-    /*var users = JSON.parse(localStorage.getItem("users")) || [];
-    for (var i = 0; i < users.length; i++) {
-        if (users[i].id === updatedUser.id) {
-            users[i] = updatedUser; // Actualizar usuario
-            break;
-        }
-    }
+    console.log(updatedUser);
 
-    localStorage.setItem("users", JSON.stringify(users));
-    localStorage.removeItem("userToEdit"); */// Limpiar el almacenamiento temporal
-    window.location.href = "gestioUsuaris.html"; // Volver a la página de gestión
+   await updateId(url, 'Users', userToEdit.id, updatedUser);
+   
+   localStorage.removeItem('userToEdit');
+    window.location.href = "../llistat/gestioUsuaris.html"; 
 }
 
