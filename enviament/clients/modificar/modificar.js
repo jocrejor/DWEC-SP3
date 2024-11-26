@@ -1,16 +1,26 @@
 window.onload = main;
 
+let clientes;
+let Province;
+let City;
+let State;
+
+
 async function main() {
     document.getElementById("botonModificar").addEventListener("click", validar, false);
-    
+    clientes = await getData(url, "Client");
+    Province = await getData(url, "Province");
+    City = await getData(url, "City");
+    State = await getData(url, "State");
+
     // Recupera el ID del cliente desde localStorage y asegúrate de que sea un número
     const idCliente = parseInt(localStorage.getItem('idModificar'), 10);
     // Busca el cliente en el array Client utilizando el ID
     // const clientes = JSON.parse(localStorage.getItem('Client')) || [];
     // const cliente = clientes.find(c => c.id === idCliente);
 
-    const url = 'http://localhost:5001/';
-    const clientes = await getData(url, "Client");
+   
+    
     // const cliente = clientes.find(c => c.id === idCliente);
 
     const cliente = clientes[idCliente - 1];
@@ -29,9 +39,8 @@ async function main() {
         var provinciaID = "";
         var ciudadID = "";
 
-        const url = 'http://localhost:5001/';
-        const Province = await getData(url, "Province");
-        const City = await getData(url, "City");
+        
+       
 
         // Crea los selects o inputs dependiendo del país seleccionado
         if (paisSeleccionado == 194) { 
@@ -75,9 +84,7 @@ async function main() {
         document.getElementById('phone').value = cliente.phone;
         document.getElementById('email').value = cliente.email;
         document.getElementById('state_id').value = paisSeleccionado;
-        console.log(document.getElementById('province'));
         document.getElementById('province').value = provinciaID; 
-        alert("A");
         document.getElementById('city').value = ciudadID;
         document.getElementById('cp').value = cliente.cp; 
     }
@@ -280,8 +287,7 @@ function esborrarError() {
 
 //función que carga comunidades autónomas en el select
 async function cargarPaises(){
-    const url = 'http://localhost:5001/';
-    const State = await getData(url, "State");
+    
 
     var selectPais = document.getElementById('state_id');
     State.forEach(function(pais){
@@ -346,7 +352,7 @@ function cargarCiudades() {
 }
 
 // Función para crear el select de provincias
-async function crearSelectProvincias(contenedor){
+function crearSelectProvincias(contenedor){
     // Crear el label para el input de provincia
     var labelProvincia = document.createElement('label');
     labelProvincia.setAttribute('for', 'province'); // Asegúrate de que el 'for' coincida con el ID del input
@@ -373,8 +379,7 @@ async function crearSelectProvincias(contenedor){
     optionProvincia.appendChild(text);
     selectProvincia.appendChild(optionProvincia);
     
-    const url = 'http://localhost:5001/';
-    const Province = await getData(url, "Province");
+   
     //Cargar las provincias
     Province.forEach(function(provincia) {
         var opcion = document.createElement('option');
