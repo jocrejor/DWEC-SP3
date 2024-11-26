@@ -1,248 +1,288 @@
-let arrTemp = []; 
+const API = "http://localhost:3000/";
+const orderReceptionEP = "OrderReception";
+const orderLineReceptionEP = "OrderLineReception";
+
+let arrTemp = [];
 let productoEditadoID = null;
 let orderLineReception;
 
-$(document).ready(function(){
-    cargarProductos();
-    cargarProveidor();
+$(document).ready(async function () {
+  cargarProductos();
+  cargarProveidor();
 
-    let ordenMod = JSON.parse(localStorage.getItem("modOrden"));
-    orderLineReception = JSON.parse(localStorage.getItem("orderLineReception"));
+  let ordenMod = JSON.parse(localStorage.getItem("modOrden"));
+  orderLineReception = await getData(API, orderLineReceptionEP);
 
-    if (ordenMod) {
-        document.getElementById("supplier").value = ordenMod.supplier;
-        document.getElementById("estimated_reception_date").value = ordenMod.estimated_reception_date;
-        arrTemp = orderLineReception.filter(line => line.order_reception_id === ordenMod.id);
-        arrTemp.forEach(afegirLinea); 
-    }
+  if (ordenMod) {
+    document.getElementById("supplier").value = ordenMod.supplier_id;
+    document.getElementById("estimated_reception_date").value =
+      ordenMod.estimated_reception_date;
+    arrTemp = orderLineReception.filter(
+      (line) => line.order_reception_id === ordenMod.id
+    );
+    arrTemp.forEach(afegirLinea);
+  }
 
-    document.getElementById("btnAfegir").addEventListener("click", validar, false);
-    document.getElementById("btnGuardarCambios").addEventListener("click", guardarCambios, false);
-    document.getElementById("btnGuardar").addEventListener("click", guardarModificacion, false);
-    document.getElementById("btnCancelar").addEventListener("click", () => {
-        window.location.assign("../llistar/llistatOrden.html"); 
-    });
+  document
+    .getElementById("btnAfegir")
+    .addEventListener("click", validar, false);
+  document
+    .getElementById("btnGuardarCambios")
+    .addEventListener("click", guardarCambios, false);
+  document
+    .getElementById("btnGuardar")
+    .addEventListener("click", guardarModificacion, false);
+  document.getElementById("btnCancelar").addEventListener("click", () => {
+    window.location.assign("../llistar/llistatOrden.html");
+  });
 });
 
-function cargarProveidor() {
-    const suppliers = JSON.parse(localStorage.getItem("Supplier")) || [];
-    const supplierSelect = document.getElementById("supplier");
+async function cargarProveidor() {
+  const supplierSelect = document.getElementById("supplier");
+  const supplierEP = "Supplier";
 
-    suppliers.forEach(supplier => {
-        const option = document.createElement("option");
-        option.value = supplier.id;
-        option.text = supplier.name;
-        supplierSelect.appendChild(option);
+  try {
+    const suppliers = await getData(API, supplierEP);
+
+    suppliers.forEach((supplier) => {
+      const option = document.createElement("option");
+      option.value = supplier.id;
+      option.text = supplier.name;
+      option.setAttribute("id", supplier.id);
+      supplierSelect.appendChild(option);
     });
+  } catch (error) {
+    console.error("Error:", error);
+  }
 }
 
-function cargarProductos() {
-    const products = JSON.parse(localStorage.getItem("Product")) || [];
-    const productSelect = document.getElementById("product");
+async function cargarProductos() {
+  const productEP = "Product";
+  const productSelect = document.getElementById("product");
 
-    products.forEach(product => {
-        const option = document.createElement("option");
-        option.value = product.name;
-        option.text = product.name;
-        productSelect.appendChild(option);
+  try {
+    const products = await getData(API, productEP);
+
+    products.forEach((product) => {
+      const option = document.createElement("option");
+      option.value = product.name;
+      option.text = product.name;
+      option.setAttribute("id", product.id);
+      productSelect.appendChild(option);
     });
+  } catch (error) {
+    console.error("Error:", error);
+  }
 }
 
 function afegirProducte() {
-    var producto = document.getElementById("product").value;
-    var cantidadPedida = document.getElementById("quantity_ordered").value;
-    var idObj;
+  var producto = document.getElementById("product").value;
+  var cantidadPedida = document.getElementById("quantity_ordered").value;
+  var idObj;
 
-    if(orderLineReception.length == 0) {
-        idObj = 0;
-    } else {
-        const maxObj = orderLineReception.reduce((max, obj) => (obj.id > max.id ? obj : max), orderLineReception[0]);
-        idObj = maxObj.id;
-    }
-    
-    const productoObj = { 
-        id: ++idObj, 
-        product: producto, 
-        quantity_ordered: cantidadPedida 
-    };
+  if (orderLineReception.length == 0) {
+    idObj = 0;
+  } else {
+    const maxObj = orderLineReception.reduce(
+      (max, obj) => (obj.id > max.id ? obj : max),
+      orderLineReception[0]
+    );
+    idObj = maxObj.id;
+  }
 
-    arrTemp.push(productoObj);
-    afegirLinea(productoObj);
+  const productoObj = {
+    id: ++idObj,
+    product: producto,
+    quantity_ordered: cantidadPedida,
+  };
 
-    document.getElementById("product").value = "";
-    document.getElementById("quantity_ordered").value = "";
+  arrTemp.push(productoObj);
+  afegirLinea(productoObj);
+
+  document.getElementById("product").value = "";
+  document.getElementById("quantity_ordered").value = "";
 }
 
 function afegirLinea(productObj) {
-    var files = document.getElementById('files');
+  var files = document.getElementById("files");
 
-    var linea = document.createElement('tr');
-    linea.setAttribute("id", `fila-${productObj.id}`);
+  var linea = document.createElement("tr");
+  linea.setAttribute("id", `fila-${productObj.id}`);
 
-    var productoTD = document.createElement('td');
-    var textProducto = document.createTextNode(productObj.product);
-    productoTD.appendChild(textProducto);
+  var productoTD = document.createElement("td");
+  var textProducto = document.createTextNode(productObj.product);
+  productoTD.appendChild(textProducto);
 
-    var cantidadOrdenadaTD = document.createElement('td');
-    var textCantidadOrdenada = document.createTextNode(productObj.quantity_ordered);
-    cantidadOrdenadaTD.appendChild(textCantidadOrdenada);
+  var cantidadOrdenadaTD = document.createElement("td");
+  var textCantidadOrdenada = document.createTextNode(
+    productObj.quantity_ordered
+  );
+  cantidadOrdenadaTD.appendChild(textCantidadOrdenada);
 
-    var esborrarTD = document.createElement('td');
-    var checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.value = 'opcio';
-    checkbox.addEventListener("click", () => borrarLineReception(productObj.id));
-    esborrarTD.appendChild(checkbox);
+  var esborrarTD = document.createElement("td");
+  var checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.value = "opcio";
+  checkbox.addEventListener("click", () => borrarLineReception(productObj.id));
+  esborrarTD.appendChild(checkbox);
 
-    var modificarTD = document.createElement('td');
-    var buttonModificar = document.createElement('button');
-    buttonModificar.textContent = 'Modificar';
-    buttonModificar.className = "btn btn-primary btn-lg";
-    buttonModificar.addEventListener("click", () => modificarLineReception(productObj.id, productObj.product, productObj.quantity_ordered));
-    modificarTD.appendChild(buttonModificar);
+  var modificarTD = document.createElement("td");
+  var buttonModificar = document.createElement("button");
+  buttonModificar.textContent = "Modificar";
+  buttonModificar.className = "btn btn-primary btn-lg";
+  buttonModificar.addEventListener("click", () =>
+    modificarLineReception(
+      productObj.id,
+      productObj.product,
+      productObj.quantity_ordered
+    )
+  );
+  modificarTD.appendChild(buttonModificar);
 
-    linea.appendChild(productoTD);
-    linea.appendChild(cantidadOrdenadaTD);
-    linea.appendChild(esborrarTD);
-    linea.appendChild(modificarTD);
+  linea.appendChild(productoTD);
+  linea.appendChild(cantidadOrdenadaTD);
+  linea.appendChild(esborrarTD);
+  linea.appendChild(modificarTD);
 
-    files.appendChild(linea);
+  files.appendChild(linea);
 }
 
 function borrarLineReception(productId) {
-    arrTemp = arrTemp.filter(producto => producto.id !== productId);
+  arrTemp = arrTemp.filter((producto) => producto.id !== productId);
 
-    var fila = document.getElementById(`fila-${productId}`);
-    if (fila) {
-        fila.remove();
-    }
+  var fila = document.getElementById(`fila-${productId}`);
+  if (fila) {
+    fila.remove();
+  }
 }
 
 function modificarLineReception(productID, product, quantity_ordered) {
-    productoEditadoID = productID;
+  productoEditadoID = productID;
 
-    document.getElementById("btnGuardar").style.display = "inline-block";
-    document.getElementById("btnAfegir").style.display = "none";
-    document.getElementById("btnGuardarCambios").style.display = "none";
-    document.getElementById('btnCancelar').style.display = "none";
+  document.getElementById("btnGuardar").style.display = "inline-block";
+  document.getElementById("btnAfegir").style.display = "none";
+  document.getElementById("btnGuardarCambios").style.display = "none";
+  document.getElementById("btnCancelar").style.display = "none";
 
-    document.getElementById("product").value = product;
-    document.getElementById("quantity_ordered").value = quantity_ordered;
+  document.getElementById("product").value = product;
+  document.getElementById("quantity_ordered").value = quantity_ordered;
 }
 
 function guardarModificacion() {
-    const nuevoProducto = document.getElementById("product").value;
-    const nuevaCantidad = document.getElementById("quantity_ordered").value;
+  const nuevoProducto = document.getElementById("product").value;
+  const nuevaCantidad = document.getElementById("quantity_ordered").value;
 
-    const productObj = arrTemp.find(product => product.id === productoEditadoID);
-    if (productObj) {
-        productObj.product = nuevoProducto;
-        productObj.quantity_ordered = nuevaCantidad;
-    }
+  const productObj = arrTemp.find(
+    (product) => product.id === productoEditadoID
+  );
+  if (productObj) {
+    productObj.product = nuevoProducto;
+    productObj.quantity_ordered = nuevaCantidad;
+  }
 
-    const fila = document.getElementById(`fila-${productoEditadoID}`);
+  const fila = document.getElementById(`fila-${productoEditadoID}`);
 
-    if (fila && fila.children.length > 1) {
-        fila.children[0].textContent = nuevoProducto;
-        fila.children[1].textContent = nuevaCantidad;
-    } 
+  if (fila && fila.children.length > 1) {
+    fila.children[0].textContent = nuevoProducto;
+    fila.children[1].textContent = nuevaCantidad;
+  }
 
-    document.getElementById("product").value = "";
-    document.getElementById("quantity_ordered").value = "";
+  document.getElementById("product").value = "";
+  document.getElementById("quantity_ordered").value = "";
 
-    document.getElementById("btnGuardar").style.display = "none";
-    document.getElementById("btnGuardarCambios").style.display = "block";
-    document.getElementById('btnCancelar').style.display = "inline-block";
-    document.getElementById("btnAfegir").style.display = "inline-block";
+  document.getElementById("btnGuardar").style.display = "none";
+  document.getElementById("btnGuardarCambios").style.display = "block";
+  document.getElementById("btnCancelar").style.display = "inline-block";
+  document.getElementById("btnAfegir").style.display = "inline-block";
 
-    productoEditadoID = null;
+  productoEditadoID = null;
 }
 
-function guardarCambios() {
-    let ordenMod = JSON.parse(localStorage.getItem("modOrden"));
+async function guardarCambios() {
+  let ordenMod = JSON.parse(localStorage.getItem("modOrden"));
 
-    if (ordenMod) {
-        ordenMod.supplier = document.getElementById("supplier").value;
-        ordenMod.estimated_reception_date = document.getElementById("estimated_reception_date").value;
+  if (ordenMod) {
+    ordenMod.supplier = document.getElementById("supplier").value;
+    ordenMod.estimated_reception_date = document.getElementById(
+      "estimated_reception_date"
+    ).value;
 
-        let orderReception = JSON.parse(localStorage.getItem("orderReception")) || [];
-        if (orderReception.length > 0) {
-            orderReception = orderReception.map(order => 
-                order.id === ordenMod.id ? ordenMod : order
-            );
-        }
-
-        let orderLineReception = JSON.parse(localStorage.getItem("orderLineReception")) || [];
-        orderLineReception = orderLineReception.filter(line => line.order_reception_id !== ordenMod.id);
-
-        arrTemp.forEach(product => {
-            product.order_reception_id = ordenMod.id;
-            orderLineReception.push(product);
-        });
-
-        if (orderReception.length > 0) {
-            localStorage.setItem("orderReception", JSON.stringify(orderReception));
-        }
-        localStorage.setItem("orderLineReception", JSON.stringify(orderLineReception));
-        localStorage.removeItem("modOrden");
-
-        alert("Cambios guardados correctamente");
-        window.location.assign("../llistar/llistatOrden.html");
+    let orderReception = await getData(API, orderReceptionEP);
+    if (orderReception.length > 0) {
+      orderReception = orderReception.map((order) =>
+        order.id === ordenMod.id ? ordenMod : order
+      );
     }
-}
 
+    let orderLineReception = await getData(API, orderLineReceptionEP);
+    orderLineReception = orderLineReception.filter(
+      (line) => line.order_reception_id !== ordenMod.id
+    );
+
+    arrTemp.forEach((product) => {
+      product.order_reception_id = ordenMod.id;
+      orderLineReception.push(product);
+    });
+
+    if (orderReception.length > 0) {
+      await postData(API, orderReceptionEP, ordenMod);
+    }
+    await postData(API, orderLineReceptionEP, orderLineReception);
+    localStorage.removeItem("modOrden");
+
+    alert("Cambios guardados correctamente");
+    window.location.assign("../llistar/llistatOrden.html");
+  }
+}
 
 function validarProducto() {
-    var proveidor = document.getElementById("product");
-    if (!proveidor.checkValidity()) {
-        if (proveidor.validity.valueMissing) {
-            error(proveidor, "Selecciona un producto");
-        }
-        return false;
+  var proveidor = document.getElementById("product");
+  if (!proveidor.checkValidity()) {
+    if (proveidor.validity.valueMissing) {
+      error(proveidor, "Selecciona un producto");
     }
-    return true;
+    return false;
+  }
+  return true;
 }
 
-
 function validarCantidadPedida() {
-    var cantidadPedida = document.getElementById("quantity_ordered");
-    if (!cantidadPedida.checkValidity()) {
-        if (cantidadPedida.validity.valueMissing) {
-            error(cantidadPedida, "Introduce la cantidad pedida");
-        }
-        else if (cantidadPedida.validity.patternMismatch) {
-            error(cantidadPedida, "Introduce solo numeros");
-        }
-        return false;
+  var cantidadPedida = document.getElementById("quantity_ordered");
+  if (!cantidadPedida.checkValidity()) {
+    if (cantidadPedida.validity.valueMissing) {
+      error(cantidadPedida, "Introduce la cantidad pedida");
+    } else if (cantidadPedida.validity.patternMismatch) {
+      error(cantidadPedida, "Introduce solo numeros");
     }
-    return true;
+    return false;
+  }
+  return true;
 }
 
 function validar(e) {
-    esborrarError();
-    e.preventDefault();
+  esborrarError();
+  e.preventDefault();
 
-    if (validarProducto() && validarCantidadPedida()) {
-        afegirProducte();
-        return true;
-
-    } else {
-        return false;
-    }
+  if (validarProducto() && validarCantidadPedida()) {
+    afegirProducte();
+    return true;
+  } else {
+    return false;
+  }
 }
 
 function error(element, missatge) {
-    const textError = document.createTextNode(missatge);
-    const elementError = document.getElementById("missatgeError")
-    elementError.appendChild(textError)
-    element.classList.add("error")
-    element.focus();
+  const textError = document.createTextNode(missatge);
+  const elementError = document.getElementById("missatgeError");
+  elementError.appendChild(textError);
+  element.classList.add("error");
+  element.focus();
 }
 
 function esborrarError() {
-    let formulari = document.forms[0].elements;
-    for (let ele of formulari) {
-        ele.classList.remove("error")
-    }
-    document.getElementById("missatgeError").replaceChildren();
+  let formulari = document.forms[0].elements;
+  for (let ele of formulari) {
+    ele.classList.remove("error");
+  }
+  document.getElementById("missatgeError").replaceChildren();
 }

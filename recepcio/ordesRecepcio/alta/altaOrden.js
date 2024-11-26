@@ -195,17 +195,8 @@ async function gravarOrden(e) {
   }
 
   try {
-    let idorderRception;
-    let idOrderLineReception;
 
-    let orderReception = await getData(API, orderReceptionEP);
     let orderLineReception = await getData(API, orderLineReceptionEP);
-
-    if (orderReception.length == 0) {
-      idorderRception = 1;
-    } else {
-      idorderRception = await getNewId(API, orderReceptionEP);
-    }
     
     var supplier = Number(document.getElementById("supplier").value);
     var dataEstimada = document.getElementById(
@@ -213,27 +204,21 @@ async function gravarOrden(e) {
     ).value;
 
     let order = {
-      id: idorderRception,
       supplier_id: supplier,
       estimated_reception_date: dataEstimada,
       created_by: 1,
       orderreception_status_id: 1,
     };
-    
-    await postData(API, orderReceptionEP, order);
-    
 
-    if (orderLineReception.length == 0) {
-      idOrderLineReception = 1;
-    } else {
-      idOrderLineReception = await getNewId(API, orderLineReceptionEP);
-    }
+    let newOrderId = await postData(API, orderReceptionEP, order);
 
     if (arrTemp) {
       arrTemp.forEach((product) => {
+        let newProduct = {
+          order_reception_id: newOrderId,
+        }
         product.id = idOrderLineReception;
-        product.order_reception_id = idorderRception;
-        orderLineReception.push(product);
+        orderLineReception.push(newProduct);
       });
     }
 
