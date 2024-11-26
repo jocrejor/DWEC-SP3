@@ -1,58 +1,51 @@
 window.onload = main;
+let streets;
 
 function main() {
     document.getElementById("producte").addEventListener("click", nou);
     carregarInformacio();
-    obtindreProducte();
 }
-function carregarInformacio() {
-    let storage = JSON.parse(localStorage.getItem("storage")) || { storage: { name: "Desconegut" } };
-    let street = JSON.parse(localStorage.getItem("street")) || { street: { name: "Desconegut" } };
-    let shelf = JSON.parse(localStorage.getItem("shelf")) || { shelf: { name: "Desconegut" } };
 
-    document.getElementById("magatzem").innerText = storage.storage.name || "Desconegut";
-    
+async function carregarInformacio() {
+    streets = await getData(url, "Street");
+    obtindreMagatzem();
 }
+
 
 function nou() {
     window.location.assign("../Nou/nouCarrer.html");
 }
 
-function obtindreProducte() {
+function obtindreCarrer() {
+            let tbody = document.getElementById("files");
+        tbody.innerHTML = ""; 
     
-    let carrers = JSON.parse(localStorage.getItem("carrers")) || [];
-    let tbody = document.getElementById("files");
-    tbody.innerHTML = "";  
-
-    if(carrers.length === 0){
-        let row = document.createElement("tr");
-        row.innerHTML = `<td colspan="4" class="text-center">No hi ha carrers disponibles.</td>`;
-        tbody.appendChild(row);
-        return; 
+        streets.forEach((street) => {
+            let row = `
+            <tr id="${street.id}">
+                <td><button class="btn btn-danger" onclick="esborrar(${street.id})">Esborrar</button></td>
+                <td><button class="btn btn-primary" onclick="modificar(${street.id})">Modificar</button></td>
+                <td><button class="btn btn-primary" onclick="estanteria(${street.id})">Estanteria</button></td>
+       
+                <td>${street.id || ""}</td>
+                <td>${street.name || ""}</td>
+            </tr>
+       `;
+            tbody.innerHTML += row;
+        });
     }
 
-    carrers.forEach((product, index) => {
-        let row = document.createElement("tr");
-        row.innerHTML = `
-            <td><button class="btn btn-danger" onclick="esborrar(${index})">Esborrar</button></td>
-            <td><button class="btn btn-primary" onclick="modificar(${index})">Modificar</button></td>
-            <td>${product.id || ""}</td>
-            <td>${product.name || ""}</td>
-        `;
-        tbody.appendChild(row);  
-    });
-}
-
-function esborrar(index) {
-    let carrers = JSON.parse(localStorage.getItem("carrers")) || [];
-    carrers.splice(index, 1);  
-    localStorage.setItem("carrers", JSON.stringify(carrers));  
-    obtindreProducte();  
-}
-
-function modificar(index) {
-    let carrers = JSON.parse(localStorage.getItem("carrers")) || [];
-    let product = carrers[index];  
-    localStorage.setItem("modificaFormulari", JSON.stringify(product));  
-    window.location.assign("../Modificar/modificarCarrer.html"); 
-}
+    async function esborrar(id) {
+   
+        await deleteData(url, "Street", id);
+        document.getElementById(id).remove();
+    }
+    
+    function modificar(storageId) {
+     
+            localStorage.setItem("modificaCarrer", JSON.stringify(storageId));
+            window.location.assign("../Modificar/modificarCarrer.html");
+    }
+    function estanteria(storageId) {
+        window.location.assign(``);//Posar la ruta de la estanteria
+    }
