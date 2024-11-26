@@ -77,7 +77,7 @@ function gravarCarrer() {
 
     alert("Informació emmagatzemada correctament!"); 
     neteja();
-    window.location.assign("../Llistar/formulariLlistatCarrer.html"); 
+    window.location.assign("../Llistar/LlistatCarrer.html"); 
 }
 
 function neteja() {

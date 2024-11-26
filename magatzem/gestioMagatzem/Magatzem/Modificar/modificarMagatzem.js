@@ -10,7 +10,7 @@ function main() {
         document.getElementById("adress").value = modifica.adress || "";
     } else {
         alert("No s'ha trobat el registre a modificar.");
-        window.location.assign("formulariLlista.html");
+        window.location.assign("LlistaMagatzem.html");
     }
     document.getElementById("btnGuardar").addEventListener("click", btnGuardar, false);
 }
@@ -93,6 +93,6 @@ function btnGuardar(e) {
         alert("L'ID no és buit.");
     }
 
-    window.location.assign("../Llistar/formulariLlistaMagatzem.html"); 
+    window.location.assign("../Llistar/LlistaMagatzem.html"); 
 }
 

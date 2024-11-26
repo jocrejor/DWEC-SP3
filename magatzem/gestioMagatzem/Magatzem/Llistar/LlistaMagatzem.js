@@ -3,8 +3,6 @@ let storages
 function main() {
     document.getElementById("producte").addEventListener("click", nou);
     carregarInformacio();
-   
-
 }
 
 async function carregarInformacio() {
@@ -13,7 +11,7 @@ async function carregarInformacio() {
     
 }
 function nou() {
-    window.location.assign("../Nou/nouFormulariMagatzem.html");
+    window.location.assign("../Nou/nouMagatzem.html");
 }
 
 function obtindreMagatzem() {
@@ -25,6 +23,8 @@ function obtindreMagatzem() {
             <tr id="${storage.id}">
                 <td><button class="btn btn-danger" onclick="esborrar(${storage.id})">Esborrar</button></td>
                 <td><button class="btn btn-primary" onclick="modificar(${storage})">Modificar</button></td>
+                <td><button class="btn btn-primary" onclick="carrers(${storage.id})">Carrer</button></td>
+
                 <td>${storage.id || ""}</td>
                 <td>${storage.name || ""}</td>
                 <td>${storage.type || ""}</td>
@@ -43,6 +43,10 @@ async function esborrar(id) {
 
 function modificar(storage) {
     localStorage.setItem("modificaMagatzem", JSON.stringify(storage));
-    window.location.assign("../Modificar/modificarFormulariMagatzem.html");
+    window.location.assign("../Modificar/modificarMagatzem.html");
+}
+
+function carrers(storageId) {
+    window.location.assign(`../../Carrer/Llistar/LlistatCarrer.html`);
 }
 
