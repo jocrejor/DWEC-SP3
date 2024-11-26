@@ -4,11 +4,11 @@ $(document).ready(function() {
 });
 
 function nouInventari() {
-    window.location.assign("../indexGeneral.html");
+    window.location.assign("../alta/altaInventari.html");
 }
 
-function obtindreInventaris() {
-    var arrInventari = JSON.parse(localStorage.getItem('inventoryGeneral')) || [];
+async function obtindreInventaris() {
+    var arrInventari = await getData(url,"Inventory");
     var files = document.getElementById('files');
 
     arrInventari.forEach(inventari => {
@@ -20,21 +20,21 @@ function obtindreInventaris() {
         buttonEsborrar.textContent = 'Esborrar';
         buttonEsborrar.className = "btn btn-primary btn-lg";
         esborrarTD.appendChild(buttonEsborrar);
-        //buttonEsborrar.addEventListener("click", () => esborrarOrdre(order.id));
-
-        var modificarTD = document.createElement('td');
-        var buttonModificar = document.createElement ('button');
-        buttonModificar.textContent = 'Modificar';
-        buttonModificar.className = "btn btn-primary btn-lg";
-        buttonModificar.addEventListener("click", () => modificarinventari(inventari.id));
-        modificarTD.appendChild(buttonModificar);
+        buttonEsborrar.addEventListener("click", () => esborrarInventari(inventari.id));
 
         var visualizarTD = document.createElement('td');
         var buttonVisualizar = document.createElement ('button');
         buttonVisualizar.textContent = 'Visualitzar';
         buttonVisualizar.className = "btn btn-primary btn-lg";
         visualizarTD.appendChild(buttonVisualizar);
-        //buttonVisualizar.addEventListener("click", () => visualizarOrdre(order.id));
+        buttonVisualizar.addEventListener("click", () => visualitzarInventari(inventari.id));
+
+        var inventariarTD = document.createElement('td');
+        var buttonInventariar = document.createElement ('button');
+        buttonInventariar.textContent = 'Inventariar';
+        buttonInventariar.className = "btn btn-primary btn-lg";
+        inventariarTD.appendChild(buttonInventariar);
+        buttonInventariar.addEventListener("click", () => inventariar(inventari.id));
 
         var id = document.createElement('td');
         var textId = document.createTextNode(inventari.id);
@@ -53,8 +53,8 @@ function obtindreInventaris() {
         storage.appendChild(textStorage);
 
         linea.appendChild(esborrarTD);
-        linea.appendChild(modificarTD);
         linea.appendChild(visualizarTD);
+        linea.appendChild(inventariarTD);
         linea.appendChild(id);
         linea.appendChild(dataInventari);
         linea.appendChild(estatInventari);
@@ -62,48 +62,46 @@ function obtindreInventaris() {
 
         files.appendChild(linea);
     });
-
 }
 
-/*function esborrarOrdre(id) {
+async function esborrarOrdre(id) {
     // fer les comprobacions si l'orden es pot esborrars. 
     // esborrar del localstorage
     //Esborrar de la llista de la pàgina html ( mai recargar la pàgina)
-    if (confirm("¿Estás seguro de que quieres eliminar esta orden y sus productos asociados?")) {
-        var arrOrden = JSON.parse(localStorage.getItem('orderRception')) || [];
-        var arrLineReception = JSON.parse(localStorage.getItem('orderLineReception')) || [];
+    if (confirm("¿Estàs segur de que vols esborrar aquest inventari?")) {
+        var arrInventari = await getData(url,"Inventory");
+        var arrInventariLine = await getData(url,"InventoryLine");
 
-        arrOrden = arrOrden.filter(orden => orden.id !== id);
-        
-        arrLineReception = arrLineReception.filter(linea => linea.order_reception_id !== id);
+        arrInventari = arrInventari.filter(inventari => inventari.id !== id);
+        arrInventariLine = arrInventariLine.filter(linea => linea.inventory_id !== id);
 
-        localStorage.setItem('orderRception', JSON.stringify(arrOrden));
-        localStorage.setItem('orderLineReception', JSON.stringify(arrLineReception));
+        await deleteData(url, "Inventory",arrInventari.id);
+        //esborrar linies
 
         const filaOrden = document.querySelector(`tr[id="${id}"]`);
         if (filaOrden) {
             filaOrden.remove();
         }
     }
-}*/
+}
 
-function modificarinventari(id) {
-    const inventory = JSON.parse(localStorage.getItem("inventoryGeneral")) || []; 
+async function inventariar(id) {
+    const inventory = await getData(url,"Inventory");
     const inventorySelected = inventory.find(inventory => inventory.id === id);
         
     // Guardar el objeto seleccionado en el localStorage
     if (inventorySelected) {
-        localStorage.setItem("modInventory", JSON.stringify(inventorySelected));
+        localStorage.setItem("inventariarInventory", JSON.stringify(inventorySelected));
         window.location.assign("../modificar/modificarGeneral.html");
     }   
 }
 
-/*function visualizarOrdre(id) {
-    const arrOrden = JSON.parse(localStorage.getItem("orderRception")) || []; 
-    const ordenSeleccionada = arrOrden.find(order => order.id === id);
+async function visualitzarInventari(id) {
+    const inventory = await getData(url,"Inventory");
+    const inventorySelected = inventory.find(inventari => inventari.id === id);
 
-    if (ordenSeleccionada) {
-        localStorage.setItem("ordenVisualizar", JSON.stringify(ordenSeleccionada));
-        window.location.assign("../visualitzar/visualizar.html"); 
+    if (inventorySelected) {
+        localStorage.setItem("inventoryVisualizar", JSON.stringify(inventorySelected));
+        window.location.assign("../visualitzar/visualitzarInventari.html"); 
     }
-}*/
+}

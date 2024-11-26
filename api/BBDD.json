@@ -37,57 +37,57 @@
       "storage_id": "02"
     },
     {
-      "id": "04",
+      "id": "03",
       "name": "Carrer Incidencies",
       "storage_id": "04"
     },
     {
-      "id": "01",
+      "id": "04",
       "name": "Carrer 01",
       "storage_id": "03"
     },
     {
-      "id": "02",
+      "id": "05",
       "name": "Carrer 02",
       "storage_id": "03"
     },
     {
-      "id": "03",
-      "name": "Carrer 04",
-      "storage_id": "03"
-    },
-    {
-      "id": "04",
-      "name": "Carrer 04",
-      "storage_id": "03"
-    },
-    {
-      "id": "05",
-      "name": "Carrer 05",
-      "storage_id": "03"
-    },
-    {
       "id": "06",
-      "name": "Carrer 06",
+      "name": "Carrer 04",
       "storage_id": "03"
     },
     {
       "id": "07",
-      "name": "Carrer 07",
+      "name": "Carrer 04",
       "storage_id": "03"
     },
     {
       "id": "08",
-      "name": "Carrer 08",
+      "name": "Carrer 05",
       "storage_id": "03"
     },
     {
       "id": "09",
-      "name": "Carrer 09",
+      "name": "Carrer 06",
       "storage_id": "03"
     },
     {
       "id": "10",
+      "name": "Carrer 07",
+      "storage_id": "03"
+    },
+    {
+      "id": "11",
+      "name": "Carrer 08",
+      "storage_id": "03"
+    },
+    {
+      "id": "12",
+      "name": "Carrer 09",
+      "storage_id": "03"
+    },
+    {
+      "id": "13",
       "name": "Carrer 10",
       "storage_id": "03"
     }
@@ -221,326 +221,326 @@
       "product_id": 0,
       "quantity": 0,
       "storage_id": "01",
-      "steet_id": "01",
+      "street_id": "01",
       "selft_id": "01"
     },
     {
-      "id": "01",
+      "id": "02",
       "name": "buit Enviament",
       "product_id": 0,
       "quantity": 0,
       "maxVol": 1000,
       "maxWeight": 500,
       "storage_id": "02",
-      "steet_id": "01",
+      "street_id": "02",
       "selft_id": "01"
     },
     {
-      "id": "01",
+      "id": "03",
       "name": "buit Indències",
       "product_id": 0,
       "quantity": 0,
       "maxVol": 1000,
       "maxWeight": 500,
       "storage_id": "04",
-      "steet_id": "01",
+      "street_id": "03",
       "selft_id": "01"
     },
     {
-      "id": "01",
+      "id": "04",
       "name": "buit 01",
       "product_id": 104,
       "quantity": 60,
       "maxVol": 1000,
       "maxWeight": 500,
       "storage_id": "03",
-      "steet_id": "01",
+      "street_id": "04",
       "selft_id": "01"
     },
     {
-      "id": "02",
+      "id": "05",
       "name": "buit 02",
       "product_id": 105,
       "quantity": 45,
       "maxVol": 1000,
       "maxWeight": 500,
       "storage_id": "03",
-      "steet_id": "01",
+      "street_id": "05",
       "selft_id": "01"
     },
     {
-      "id": "03",
+      "id": "06",
       "name": "buit F1",
       "product_id": 106,
       "quantity": 120,
       "maxVol": 1000,
       "maxWeight": 500,
       "storage_id": "03",
-      "steet_id": "01",
+      "street_id": "06",
       "selft_id": "01"
     },
     {
-      "id": "04",
+      "id": "07",
       "name": "buit G1",
       "product_id": 107,
       "quantity": 90,
       "maxVol": 1000,
       "maxWeight": 500,
       "storage_id": "03",
-      "steet_id": "01",
+      "street_id": "07",
       "selft_id": "01"
     },
     {
-      "id": "05",
+      "id": "08",
       "name": "buit H1",
       "product_id": 108,
       "quantity": 55,
       "maxVol": 1000,
       "maxWeight": 500,
       "storage_id": "03",
-      "steet_id": "01",
+      "street_id": "08",
       "selft_id": "01"
     },
     {
-      "id": "06",
+      "id": "09",
       "name": "buit I1",
       "product_id": 109,
       "quantity": 40,
       "maxVol": 1000,
       "maxWeight": 500,
       "storage_id": "03",
-      "steet_id": "01",
+      "street_id": "09",
       "selft_id": "01"
     },
     {
-      "id": "01",
+      "id": "10",
       "name": "buit J1",
       "product_id": 110,
       "quantity": 80,
       "maxVol": 1000,
       "maxWeight": 500,
       "storage_id": "03",
-      "steet_id": "01",
+      "street_id": "10",
       "selft_id": "02"
     },
     {
-      "id": "02",
+      "id": "11",
       "name": "buit A2",
       "product_id": 111,
       "quantity": 65,
       "maxVol": 1000,
       "maxWeight": 500,
-      "storage_id": "03",
-      "steet_id": "01",
+      "storage_id": "01",
+      "street_id": "01",
       "selft_id": "01"
     },
     {
-      "id": "03",
+      "id": "12",
       "name": "buit B2",
       "product_id": 112,
       "quantity": 70,
       "maxVol": 1000,
       "maxWeight": 500,
-      "storage_id": "03",
-      "steet_id": "01",
+      "storage_id": "02",
+      "street_id": "02",
       "selft_id": "01"
     },
     {
-      "id": "04",
+      "id": "13",
       "name": "buit C2",
       "product_id": 113,
       "quantity": 85,
       "maxVol": 1000,
       "maxWeight": 500,
-      "storage_id": "03",
-      "steet_id": "01",
+      "storage_id": "04",
+      "street_id": "03",
       "selft_id": "01"
     },
     {
-      "id": "01",
+      "id": "14",
       "name": "buit Slot D2",
       "product_id": 114,
       "quantity": 35,
       "maxVol": 1000,
       "maxWeight": 500,
       "storage_id": "03",
-      "steet_id": "01",
+      "street_id": "04",
       "selft_id": "02"
     },
     {
-      "id": "02",
+      "id": "15",
       "name": "buit E2",
       "product_id": 115,
       "quantity": 75,
       "maxVol": 1000,
       "maxWeight": 500,
       "storage_id": "03",
-      "steet_id": "01",
+      "street_id": "05",
       "selft_id": "02"
     },
     {
-      "id": "03",
+      "id": "16",
       "name": "buit F2",
       "product_id": 116,
       "quantity": 90,
       "maxVol": 1000,
       "maxWeight": 500,
       "storage_id": "03",
-      "steet_id": "01",
+      "street_id": "06",
       "selft_id": "02"
     },
     {
-      "id": "04",
+      "id": "17",
       "name": "buit G2",
       "product_id": 117,
       "quantity": 50,
       "maxVol": 1000,
       "maxWeight": 500,
       "storage_id": "03",
-      "steet_id": "01",
+      "street_id": "07",
       "selft_id": "02"
     },
     {
-      "id": "01",
+      "id": "18",
       "name": "buit H2",
       "product_id": 118,
       "quantity": 65,
       "maxVol": 1000,
       "maxWeight": 500,
       "storage_id": "03",
-      "steet_id": "02",
+      "street_id": "08",
       "selft_id": "01"
     },
     {
-      "id": "02",
+      "id": "19",
       "name": "buit I2",
       "product_id": 119,
       "quantity": 110,
       "maxVol": 1000,
       "maxWeight": 500,
       "storage_id": "03",
-      "steet_id": "02",
+      "street_id": "09",
       "selft_id": "01"
     },
     {
-      "id": "03",
+      "id": "20",
       "name": "buit J2",
       "product_id": 120,
       "quantity": 95,
       "maxVol": 1000,
       "maxWeight": 500,
       "storage_id": "03",
-      "steet_id": "02",
+      "street_id": "10",
       "selft_id": "01"
     },
     {
-      "id": "04",
+      "id": "21",
       "name": "buit A3",
       "product_id": 121,
       "quantity": 55,
       "maxVol": 1000,
       "maxWeight": 500,
-      "storage_id": "03",
-      "steet_id": "02",
+      "storage_id": "01",
+      "street_id": "01",
       "selft_id": "01"
     },
     {
-      "id": "01",
+      "id": "22",
       "name": "buit B3",
       "product_id": 122,
       "quantity": 60,
       "maxVol": 1000,
       "maxWeight": 500,
-      "storage_id": "03",
-      "steet_id": "02",
+      "storage_id": "02",
+      "street_id": "02",
       "selft_id": "02"
     },
     {
-      "id": "02",
+      "id": "23",
       "name": "buit C3",
       "product_id": 123,
       "quantity": 45,
       "maxVol": 1000,
       "maxWeight": 500,
-      "storage_id": "03",
-      "steet_id": "02",
+      "storage_id": "04",
+      "street_id": "03",
       "selft_id": "02"
     },
     {
-      "id": "03",
+      "id": "24",
       "name": "buit D3",
       "product_id": 124,
       "quantity": 50,
       "maxVol": 1000,
       "maxWeight": 500,
       "storage_id": "03",
-      "steet_id": "02",
+      "street_id": "04",
       "selft_id": "02"
     },
     {
-      "id": "04",
+      "id": "25",
       "name": "buit E3",
       "product_id": 125,
       "quantity": 100,
       "maxVol": 1000,
       "maxWeight": 500,
       "storage_id": "03",
-      "steet_id": "02",
+      "street_id": "05",
       "selft_id": "02"
     },
     {
-      "id": "01",
+      "id": "26",
       "name": "buit F3",
       "product_id": 126,
       "quantity": 80,
       "maxVol": 1000,
       "maxWeight": 500,
       "storage_id": "03",
-      "steet_id": "03",
+      "street_id": "06",
       "selft_id": "02"
     },
     {
-      "id": "02",
+      "id": "27",
       "name": "buit G3",
       "product_id": 127,
       "quantity": 120,
       "maxVol": 1000,
       "maxWeight": 500,
       "storage_id": "03",
-      "steet_id": "03",
+      "street_id": "07",
       "selft_id": "02"
     },
     {
-      "id": "03",
+      "id": "28",
       "name": "buit H3",
       "product_id": 128,
       "quantity": 65,
       "maxVol": 1000,
       "maxWeight": 500,
       "storage_id": "03",
-      "steet_id": "03",
+      "street_id": "08",
       "selft_id": "02"
     },
     {
-      "id": "04",
+      "id": "29",
       "name": "buit I3",
       "product_id": 129,
       "quantity": 95,
       "maxVol": 1000,
       "maxWeight": 500,
       "storage_id": "03",
-      "steet_id": "03",
+      "street_id": "09",
       "selft_id": "04"
     },
     {
-      "id": "01",
+      "id": "30",
       "name": "buit J3",
       "product_id": 130,
       "quantity": 70,
       "maxVol": 1000,
       "maxWeight": 500,
       "storage_id": "03",
-      "steet_id": "04",
+      "street_id": "10",
       "selft_id": "01"
     }
   ],
@@ -43126,6 +43126,42 @@
       "product_id": 10,
       "quantity_ordered": 200,
       "quantity_received": 190
+    }
+  ],
+  "Inventory": [
+    {
+      "id": "01",
+      "date": "2024-02-01",
+      "created_by": 1,
+      "inventory_status": "Pendent"
+    }
+  ],
+  "InventoryLine": [
+    {
+      "inventory_id": "01",
+      "lineInventory_id": "01",
+      "product_id": "01",
+      "real_quantity": "20",
+      "user": 1,
+      "storage_id": "01",
+      "street_id": "01",
+      "selft_id": "01",
+      "space_id": "01"
+    }
+  ],
+  "Moviment": [
+    {
+      "id": "1",
+      "product_id": "1",
+      "storage_id": "03",
+      "street_id": "01",
+      "shelf_id": "02",
+      "space_id": "03",
+      "quantity": 100,
+      "date": "2024-02-01",
+      "operator_id": "3",
+      "orgin": "Reception",
+      "document": "2"
     }
   ]
 }

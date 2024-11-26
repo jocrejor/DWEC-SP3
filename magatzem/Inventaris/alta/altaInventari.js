@@ -42,6 +42,8 @@ async function generarInventari() {
         space.storage_id === storageSelect && space.street_id === streetSelect
     );
 
+    console.log(filteredSpaces);
+
     //inventory
     let idInventory = await getNewId(url, "Inventory");
     let dataInventory = new Date().toISOString();
@@ -61,15 +63,15 @@ async function generarInventari() {
     
     filteredSpaces.forEach(space => {
         let newInventoryLine =  {
-            id_inventario: idInventory,
-            id_lineInventory: idInventoryLine, // Generar ID único para la línea.
-            id_producto: space.product_id,
-            cantidad_real: space.quantity,
+            inventory_id: idInventory,
+            lineInventory_id: ++idInventoryLine, // Generar ID único para la línea.
+            product_id: space.product_id,
+            real_quantity: space.quantity,
             user: 1,
-            id_storage: space.storage_id,
-            id_street: space.street_id,
-            id_shelf: space.selft_id,
-            id_space: space.id
+            storage_id: space.storage_id,
+            street_id: space.street_id,
+            selft_id: space.selft_id,
+            space_id: space.id
         }
 
         inventoryLine.push(newInventoryLine);

@@ -7,8 +7,7 @@
     <title>Alta Inventari</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     
-    <script type="text/javascript" src="../../../../apiAccess/crud.js"></script>
-    <script type="text/javascript"src="altaGeneral.js"></script>
+    <script type="text/javascript"src="modificarGeneral.js"></script>
     <style> 
         .error {
             border:solid 2px #FF0000; 
@@ -18,7 +17,7 @@
 
 <body>
 <div class="container">
-    <h1>Alta Inventari</h1>
+    <h1>Modificar Inventari</h1>
     <form>
         <h2>Productes Inventari</h2>
 
@@ -27,7 +26,7 @@
 
             <div class="col-sm-10">
                 <select id="product" required onchange="carregarProductes()">
-                    <option value="Prod 1" disabled selected>Prod 1:</option>
+                    <option value="" disabled selected>Selecciona un producte:</option>
                 </select>
             </div>
         </div>
@@ -84,7 +83,30 @@
 </body>
 </html>
 
+<body>
+    <h2>Inventari:</h2>
 
+    <table class="table" id="ordenTable">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Data</th>
+                <th scope="col">Estat</th>
+                <th scope="col">Magatzem</th>
+            </tr>
+        </thead>
+        <tbody id="inventariBody">
+
+        </tbody>
+    </table>
+    <br><br><br><br><br>
+
+    <h3>Productos del Inventario</h3>
+    <form id="formProductes"></form>
+
+    <button id="guardarBtn">Guardar Cantidades</button>
+
+</body>
 
 
 
