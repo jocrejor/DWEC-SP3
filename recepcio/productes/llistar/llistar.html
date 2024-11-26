@@ -7,7 +7,10 @@
     <title>Lista Productos</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script type="text/javascript" src="../../../apiAccess/crud.js"></script>
     <script type="text/javascript" src="./llistar.js" defer></script>
+
     <style>
         .error {
             border: solid 2px #FF0000;
@@ -19,25 +22,25 @@
     <div class="container">
         <h1>Lista Productos</h1>
         
-        <button class=" btn btn-primary my-3" id="nuevoProducto">Nuevo Producto</button></br>
+        <button class="btn btn-primary my-3" id="altaProducte">Alta producte</button></br>
         <table class="table">
             <thead class="thead-light">
                 <tr>
                     <th scope="col">Eliminar</th>
                     <th scope="col">Modificar</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Descripción</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Descripció</th>
                     <th scope="col">Volumen</th>
-                    <th scope="col">Peso</th>
-                    <th scope="col">Control lotes</th>
+                    <th scope="col">Pes</th>
+                    <th scope="col">Control lots</th>
                     <th scope="col">SKU</th>
                     <th scope="col">URL_Imagen</th>
                 </tr>
             </thead>
             <tbody id="files">
                 <tr>
-                    <td><button class="btn btn-primary btn-lg">Eliminar</button></td>
-                    <td><button class="btn btn-primary btn-lg">Modificar</button></td>          
+                    <td><button class="btn btn-primary btn-lg" id="btnEliminar">Eliminar</button></td>
+                    <td><button class="btn btn-primary btn-lg" id="btnModificar">Modificar</button></td>          
                 </tr>
             </tbody>
         </table>

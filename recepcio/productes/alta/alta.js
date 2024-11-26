@@ -3,7 +3,7 @@ let ultimoId = localStorage.getItem("ultimoId") ? parseInt(localStorage.getItem(
 window.onload = iniciar;
 
 function iniciar() {
-    document.getElementById("btnAñadir").addEventListener("click", validar, false);
+    document.getElementById("btnAfegir").addEventListener("click", validar, false);
 }
 
 function validarSKU() {
@@ -113,15 +113,49 @@ function validarImage() {
     return true;
 }
 
-function validar(e) {
+async function validar(e) {
     borrarError();
     e.preventDefault();
 
-    if (validarSKU() && validarName() && validarVol() && validarWeight() && validarImage && validarLote()) {
-        enviarFormulario();
-        return true;
-    } else {
-        return false;
+    // Verificar si todos los campos son válidos
+    if (validarSKU() && validarName() && validarVol() && validarWeight() /*&& validarImage()*/ && validarLote()) {
+        // Crear el objeto producto
+        let product = {
+            name: document.getElementById("name").value,
+            description: document.getElementById("description").value,
+            volume: document.getElementById("volume").value,
+            weight: document.getElementById("weight").value,
+            lotorserial: document.getElementById("lotorserial").value,
+            sku: document.getElementById("sku").value,
+            image_url: document.getElementById("image_url").value
+        };
+
+        // Obtener el nuevo ID para el producto
+        try {
+            const newId = await getNewId(url, 'Product');
+
+            // Añadim el nou ID al producte utilitzant el getNewId del crud.js
+            product.id = newId;
+
+            // Utilitzem postData per enviar el producte al server
+            await postData(url, 'Product', product);
+
+            // Netegem els camps
+            setTimeout(function (){
+                document.getElementById("name").value = "";
+                document.getElementById("description").value = "";
+                document.getElementById("volume").value = "";
+                document.getElementById("weight").value = "";
+                document.getElementById("lotorserial").value = "";
+                document.getElementById("sku").value = "";
+                document.getElementById("image_url").value = "";
+            }, 1000);
+
+            // Redirigir a la página de llistat de productes
+            window.location.href = '../llistar/llistar.html';
+        } catch (error) {
+            console.error('Error al obtener el nuevo ID:', error);
+        }
     }
 }
 
@@ -139,38 +173,4 @@ function borrarError() {
         ele.classList.remove("error");
     }
     document.getElementById("mensajeError").replaceChildren();
-}
-
-function enviarFormulario() {
-    
-    ultimoId++;
-    localStorage.setItem("ultimoId", ultimoId);
-
-    let product = {
-        id: ultimoId,
-        name: document.getElementById("name").value,
-        description: document.getElementById("description").value,
-        volume: document.getElementById("volume").value,
-        weight: document.getElementById("weight").value,
-        lotorserial: document.getElementById("lotorserial").value,
-        sku: document.getElementById("sku").value,
-        image_url: document.getElementById("image_url").value
-    };
-
-    let arrProductos = JSON.parse(localStorage.getItem("products")) || [];
-    arrProductos.push(product);
-    localStorage.setItem("products", JSON.stringify(arrProductos));
-    
-    setTimeout(function (){
-        document.getElementById("name").value = "";
-        document.getElementById("description").value = "";
-        document.getElementById("volume").value = "";
-        document.getElementById("weight").value = "";
-        document.getElementById("lotorserial").value = "";
-        document.getElementById("sku").value = "";
-        document.getElementById("image_url").value = "";
-    }, 1000);
-
-    
-    window.location.assign("listaProductos.html");
 }
