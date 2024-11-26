@@ -4,16 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Llistat d'Estanteries</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous">
-    <script src="./llistatShelf.js" defer></script>
+    <title>Llistat d'estanteries</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="llistatShelf.js"></script>
     <script type="text/javascript" src="../../../../apiAccess/crud.js"></script>
+    <style>
+        .error {
+            border: solid 2px #FF0000;
+        }
+    </style>
 </head>
 
 <body>
     <div class="container">
         <h1>Estanteries</h1>
-        <button type="button" class="btn btn-primary my-3" id="nouShelf">Nova Estanteria</button>
+        <button type="button" class="btn btn-primary my-3" id="nouShelf">Nova estanteria</button><br>
         <table class="table">
             <thead class="thead-light">
                 <tr>
@@ -21,13 +26,43 @@
                     <th scope="col">Modificar</th>
                     <th scope="col">ID</th>
                     <th scope="col">Nom</th>
+                    <th scope="col">ID Carrer</th>
                     <th scope="col">ID Magatzem</th>
-                    <th scope="col">ID Carrer </th>
-                    
                 </tr>
             </thead>
             <tbody id="files">
-                <!-- Contingut dinàmic -->
+                <tr>
+                    <td><button type="button" class="btn btn-primary btn-lg" onclick="esborrar('1')">Esborrar</button></td>
+                    <td><button type="button" class="btn btn-primary btn-lg" ">Modificar</button></td>
+                    <td>01</td>
+                    <td>Estanteria Recepcio</td>
+                    <td>01</td>
+                    <td>01</td>
+                </tr>
+                <tr>
+                    <td><button type="button" class="btn btn-primary btn-lg" onclick="esborrar('1')">Esborrar</button></td>
+                    <td><button type="button" class="btn btn-primary btn-lg" ">Modificar</button></td>
+                    <td>01</td>
+                    <td>Estanteria Enviament</td>
+                    <td>02</td>
+                    <td>01</td>
+                </tr>
+                <tr>
+                    <td><button type="button" class="btn btn-primary btn-lg" onclick="esborrar('1')">Esborrar</button></td>
+                    <td><button type="button" class="btn btn-primary btn-lg"">Modificar</button></td>
+                    <td>04</td>
+                    <td>Estanteria Incidencies</td>
+                    <td>04</td>
+                    <td>01</td>
+                </tr>
+                <tr>
+                    <td><button type="button" class="btn btn-primary btn-lg" onclick="esborrar('1')">Esborrar</button></td>
+                    <td><button type="button" class="btn btn-primary btn-lg"">Modificar</button></td>
+                    <td>01</td>
+                    <td>Estanteria01</td>
+                    <td>03</td>
+                    <td>01</td>
+                </tr>
             </tbody>
         </table>
     </div>
