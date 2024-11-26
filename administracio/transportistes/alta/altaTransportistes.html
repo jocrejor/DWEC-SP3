@@ -4,26 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulari Modificació</title>
+    <title>Formulari Alta</title>
+    <link rel="stylesheet" href="altaTransportistes.css">
+    <script type="text/javascript" src="altaTransportistes.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous">
-    <script type="text/javascript" src="modificarTransportistes.js"></script>
-    <style>
-        .error {
-            border: solid 2px #FF0000;
-        }
-    </style>
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+    
 </head>
 
 <body>
     <div class="container">
-        <h1>Modificar Transportista</h1>
+        <h1>Alta de Transportista</h1>
         <form>
             <div class="form-group row">
                 <label for="name" class="col-sm-2 col-form-label">Nom</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="name" pattern="^[A-Za-z\s]{2,30}$" required>
+                    <input type="text" class="form-control" id="name" pattern="^[A-Za-z\s]{2,30}" required></br>
                 </div>
             </div>
 
@@ -36,15 +33,16 @@
 
             <div class="form-group row">
                 <label for="nif" class="col-sm-2 col-form-label">NIF</label>
+
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="nif" pattern="^\d{8}[A-Za-z]$" required>
+                    <input type="text" class="form-control" id="nif" pattern="^\d{8}[A-Za-z]$" required></br>
                 </div>
             </div>
 
             <div class="form-group row">
                 <label for="phone" class="col-sm-2 col-form-label">Telèfon</label>
                 <div class="col-sm-10">
-                    <input type="tel" class="form-control" id="phone" pattern="\d{9}" required>
+                    <input type="tel" class="form-control" id="phone" pattern="^\d{9}$" required></br>
                 </div>
             </div>
 
@@ -52,14 +50,14 @@
                 <label for="email" class="col-sm-2 col-form-label">Correu electrònic</label>
                 <div class="col-sm-10">
                     <input type="email" class="form-control" id="email"
-                        pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" required>
+                        pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" required></br>
                 </div>
             </div>
 
             <div class="form-group row">
                 <label for="state" class="col-sm-2 col-form-label">Estat</label>
                 <div class="col-sm-10">
-                    <select id="state" class="form-control" required>
+                    <select id="state" class="form-control" onchange="carregarProvincies()" required>
                         <option value="">Selecciona un estat</option>
                     </select>
                 </div>
@@ -68,7 +66,7 @@
             <div class="form-group row">
                 <label for="province" class="col-sm-2 col-form-label">Província</label>
                 <div class="col-sm-10">
-                    <select id="province" class="form-control" required>
+                    <select id="province" class="form-control" onchange="carregarCiutats()" required>
                         <option value="">Selecciona una província</option>
                     </select>
                 </div>
@@ -83,8 +81,17 @@
                 </div>
             </div>
 
+            <div class="form-group row">
+                <label for="address" class="col-sm-2 col-form-label">Direcció</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="address" pattern="^(?=\S*\s)(?=[^a-zA-Z]*[a-zA-Z])(?=\D*\d)[a-zA-Z\d\s',.#/-]*$" required></br>
+                </div>
+            </div>
+
             <h5 id="missatgeError" class="text-danger"></h5>
-            <button id="btnGravar" type="button" class="btn btn-primary">Modificar</button>
+            <button id="btnGravar" class="btn btn-primary">Gravar</button>
+            <button type="button" class="btn btn-primary"
+                onclick="location.href='../llistar/llistatTransportistes.html'">Tornar</button>
         </form>
     </div>
 </body>

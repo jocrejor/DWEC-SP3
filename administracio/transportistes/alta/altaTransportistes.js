@@ -1,4 +1,68 @@
+
+
 window.onload = iniciar;
+
+
+
+
+/////
+/////
+/////
+// Local
+let url = 'http://localhost:5001/'
+// Servidor
+//let url = 'http://10.2.218.254:5001/'
+
+async function postData(url,endPoint, data = {}) {
+  try {
+    const response = await fetch(url + endPoint, {
+      method: 'POST',  // Método HTTP
+      headers: {
+        'Content-Type': 'application/json'  // Tipo de contenido
+      },
+      body: JSON.stringify(data)  // Datos JSON a enviar
+    });
+
+    if (!response.ok) {
+      throw new Error('Error en la solicitud POST');
+    }
+
+    const result = await response.json();  // Espera la conversión de la respuesta a JSON
+    console.log(result);  // Trabaja con la respuesta
+
+  } catch (error) {
+    console.error('Error:', error);  // Manejo de errores
+  }
+}
+
+// Acces a les dades
+async function getNewId(url,endPoint) {
+  try {
+    const response = await fetch(url + endPoint );  // Reemplaza 'data.json' con la ruta de tu archivo
+
+    if (!response.ok) {
+      throw new Error('Error al obtener el archivo JSON');
+    }
+
+    const data =  await response.json();
+    const maxId = data.reduce((max, ele) => 
+      (ele.id > max.id ? ele: max), data[0]);
+    const newId= ++ maxId.id;
+    return newId + '' ;
+
+  } catch (error) {
+    console.error('Error:', error);  // Manejo de errores
+  }
+}
+
+////
+////
+////
+
+
+
+
+
 
 function iniciar() {
     document.getElementById("btnGravar").addEventListener("click", validar, false);
@@ -63,20 +127,7 @@ function validarNom() {
     return true; // Tot correcte
 }
 
-function validarID() {
-    var elementID = document.getElementById("id");
-    var idPattern = /^\d{4}$/; 
-    if (!elementID.checkValidity()) {
-        if (elementID.validity.valueMissing) {
-            error(elementID, "Deus introduïr un ID.");
-            return false;
-        } else if (!idPattern.test(elementID.value)) {
-            error(elementID, "Deus introduïr un ID vàlid de 4 caràcters numèrics.");
-            return false;
-        }
-    }
-    return true; // Tot correcte
-}
+
 
 function validarNIF() {
     let element = document.getElementById("nif");
@@ -131,11 +182,28 @@ function validarEmail() {
     }
     return true;
 }
+
+function validarDireccio() {
+    var elementaddress = document.getElementById("address");
+    var addressPattern = /^(?=\S*\s)(?=[^a-zA-Z]*[a-zA-Z])(?=\D*\d)[a-zA-Z\d\s',.#/-]*$/;
+
+    if (!elementaddress.checkValidity()) {
+        if (elementaddress.validity.valueMissing) {
+            error(elementaddress, "Deus introduïr una direcció.");
+            return false;
+        } else if (!addressPattern.test(elementaddress.value)) {
+            error(elementaddress, "Deus introduïr una direcció.");
+            return false;
+        }
+    }
+    return true;
+}
+
 function validar(e) {
     esborrarError();
     e.preventDefault();
     if (validarNom() && 
-    validarID() && 
+    validarDireccio() &&
     validarNIF() && 
     validarNum()&& 
     validarEmail()) {
@@ -162,6 +230,8 @@ function esborrarError() {
     document.getElementById("missatgeError").replaceChildren(); 
 }
 
+
+
 function enviarFormulari() {
     // Gravar al localStorage
     var carriers = JSON.parse(localStorage.getItem("Carriers")) || [];
@@ -173,7 +243,8 @@ function enviarFormulari() {
             email: document.getElementById("email").value,
             state: document.getElementById("state").value,
             province: document.getElementById("province").value,
-            city: document.getElementById("city").value
+            city: document.getElementById("city").value,
+            address: document.getElementById("address").value
     };
 
     carriers.push(nouTransportista);
@@ -188,8 +259,11 @@ function enviarFormulari() {
     document.getElementById("state").value = "";
     document.getElementById("province").value = "";
     document.getElementById("city").value = "";
+    document.getElementById("address").value = "";
 
     setTimeout(function () {
-        window.location.assign("llistatTransportistes.html");
+        window.location.assign("../llistar/llistatTransportistes.html");
     }, 100);
+    console.log("Transportista gravat correctament:", nouTransportista);
+
 }

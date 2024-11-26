@@ -1,5 +1,60 @@
 window.onload = main;
 
+/////
+/////
+/////
+// Local
+let url = 'http://localhost:5001/'
+// Servidor
+//let url = 'http://10.2.218.254:5001/'
+
+async function postData(url,endPoint, data = {}) {
+  try {
+    const response = await fetch(url + endPoint, {
+      method: 'POST',  // Método HTTP
+      headers: {
+        'Content-Type': 'application/json'  // Tipo de contenido
+      },
+      body: JSON.stringify(data)  // Datos JSON a enviar
+    });
+
+    if (!response.ok) {
+      throw new Error('Error en la solicitud POST');
+    }
+
+    const result = await response.json();  // Espera la conversión de la respuesta a JSON
+    console.log(result);  // Trabaja con la respuesta
+
+  } catch (error) {
+    console.error('Error:', error);  // Manejo de errores
+  }
+}
+
+// Acces a les dades
+async function getNewId(url,endPoint) {
+  try {
+    const response = await fetch(url + endPoint );  // Reemplaza 'data.json' con la ruta de tu archivo
+
+    if (!response.ok) {
+      throw new Error('Error al obtener el archivo JSON');
+    }
+
+    const data =  await response.json();
+    const maxId = data.reduce((max, ele) => 
+      (ele.id > max.id ? ele: max), data[0]);
+    const newId= ++ maxId.id;
+    return newId + '' ;
+
+  } catch (error) {
+    console.error('Error:', error);  // Manejo de errores
+  }
+}
+
+////
+////
+////
+
+
 function main() {
     const btnGravar = document.getElementById("btnGravar");
     if (btnGravar) {
@@ -28,8 +83,10 @@ function main() {
         document.getElementById("province").value = carrier.province || '';
         carregarCiutats(carrier.province);
         document.getElementById("city").value = carrier.city || '';
+        carregarCiutats(carrier.city);
+        document.getElementById("address").value = carrier.address || '';
     } else {
-        window.location.assign("./llistatTransportistes.html");
+        window.location.assign("../llistar/llistatTransportistes.html");
     }
 }
 
@@ -183,6 +240,20 @@ function validarCity() {
     return true;
 }
 
+function validarDireccio() {
+    var elementNom = document.getElementById("address");
+    if (!elementNom.checkValidity()) {
+        if (elementNom.validity.valueMissing) {
+            error(elementNom, "Deus introduïr una Direcció.");
+            return false;
+        } else if (elementNom.validity.patternMismatch) {
+            error(elementNom, "La direcció es incorrecta");
+            return false;
+        }
+    }
+    return true; // Tot correcte
+}
+
 function validar(e) {
     esborrarError();
     e.preventDefault();
@@ -196,6 +267,7 @@ function validar(e) {
     if (!validarState()) errors.push("Estat no seleccionat.");
     if (!validarProvince()) errors.push("Província no seleccionada.");
     if (!validarCity()) errors.push("Ciutat no seleccionada.");
+    if (!validarDireccio()) errors.push("Direcció incorrecta.");
 
     if (errors.length > 0) {
         error(document.getElementById("missatgeError"), errors.join(" "));
@@ -234,12 +306,13 @@ function enviarFormulari() {
             email: document.getElementById("email").value,
             state: document.getElementById("state").value,
             province: document.getElementById("province").value,
-            city: document.getElementById("city").value
+            city: document.getElementById("city").value,
+            address: document.getElementById("address").value
         };
         localStorage.setItem("Carriers", JSON.stringify(carriers));
     } else {
         alert("No s'ha trobat cap transportista amb aquest ID.");
     }
     localStorage.removeItem("modTransportista");
-    window.location.assign("./llistatTransportistes.html");
+    window.location.assign("../llistar/llistatTransportistes.html");
 }
