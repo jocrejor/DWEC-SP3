@@ -1,7 +1,9 @@
 // URL base i endpoint del servidor
-const urlBase = "http://localhost:5001/";
+const urlBase = "http://localhost:3000/";
 const endPoint = "OrderReception_Status";
 
+const idElement = document.getElementById("id");
+const nameElement = document.getElementById("name");
 // Inicialització principal
 window.onload = function () {
     carregarDadesEstat();

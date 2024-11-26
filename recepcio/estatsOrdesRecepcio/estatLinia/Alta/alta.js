@@ -1,13 +1,12 @@
 document.addEventListener("DOMContentLoaded", async function () {
-    const urlBase = "http://localhost:5001/";  // URL base del backend
-    const endPoint = "OrderLineReception_Status"; // Endpoint corresponent al CRUD del servidor
+    const urlBase = "http://localhost:3000/";
+    const endPoint = "OrderLineReception_Status";
 
-    // Obtenir i mostrar el següent ID al carregar la pàgina
+    // Incrementa ID
     const idElement = document.getElementById("id");
     const idIncrementat = await getNewId(urlBase, endPoint);
     idElement.value = idIncrementat;
 
-    // Configurar el botó de cancel·lar
     document.getElementById("cancelar").addEventListener("click", function () {
         window.location.href = "../Listar/listar.html";
     });

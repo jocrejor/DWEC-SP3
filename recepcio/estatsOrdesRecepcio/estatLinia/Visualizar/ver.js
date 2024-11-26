@@ -1,39 +1,36 @@
 document.addEventListener("DOMContentLoaded", async function () {
-    const urlBase = "http://localhost:5001/"; // URL base del backend
-    const endPoint = "OrderLineReception_Status"; // Endpoint corresponent al CRUD del servidor
+    const urlBase = "http://localhost:3000/";  // URL base pero s'ha de canviar depenent del npm start
+    const endPoint = "OrderLineReception_Status"; 
 
-    const idElement = document.getElementById("id");
-    const nameElement = document.getElementById("name");
+    const inputId = document.getElementById("id");
+    const inputName = document.getElementById("name");
 
-    // Obté l'ID de l'estat des de la URL
+    // Obtindre el paràmetre `id` de la URL
     const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get("id");
+    const obtindreID = urlParams.get("id");
 
-    if (!id) {
+    if (!obtindreID) {
         alert("No s'ha trobat cap ID a la URL.");
         window.location.href = "../Listar/listar.html";
         return;
     }
 
     try {
-        // Petició per obtenir l'estat des del backend
-        const resposta = await fetch(`${urlBase}${endPoint}/${id}`);
-        if (!resposta.ok) {
-           console.error("Error obtenint l'estat del servidor.");
+        const recordData = await getData(urlBase, `${endPoint}/${obtindreID}`);
+
+        if (recordData) {
+            inputId.value = recordData.id;
+            inputName.value = recordData.name;
+        } else {
+            console.error("Error obtenint l'estat del servidor.");
         }
-
-        const estat = await resposta.json();
-
-        // Mostrar les dades al formulari
-        idElement.value = estat.id;
-        nameElement.value = estat.name;
     } catch (error) {
         console.error("Error carregant l'estat:", error);
         alert("No s'han pogut obtenir les dades de l'estat.");
         window.location.href = "../Listar/listar.html";
     }
 
-    // Acció del botó "Tornar"
+    // Acción del botón "Tornar"
     document.getElementById("tornar").addEventListener("click", function () {
         window.location.href = "../Listar/listar.html";
     });

@@ -1,6 +1,9 @@
 // URL base i endpoint del servidor
-const urlBase = "http://localhost:5001/";
+const urlBase = "http://localhost:3000/";
 const endPoint = "OrderLineReception_Status";
+
+const idElement = document.getElementById("id");
+const nameElement = document.getElementById("name");
 
 // Inicialització principal
 window.onload = function () {
@@ -65,7 +68,7 @@ function mostrarMissatgeError(missatge) {
     errorElement.textContent = missatge;
 }
 
-// Guarda els canvis a l'estat
+// Guarda els canvis a l'estat he copiat lo de crespo, perque no se com connectar-ho
 async function guardarCanvis(e) {
     e.preventDefault(); 
 
@@ -77,7 +80,7 @@ async function guardarCanvis(e) {
             const estatModificat = { id, name };
 
             const resposta = await fetch(`${urlBase}${endPoint}/${id}`, {
-                method: "PUT",
+                method: "PATCH",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(estatModificat),
             });

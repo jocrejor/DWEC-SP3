@@ -1,3 +1,7 @@
+// URL base i endpoint del servidor
+const urlBase = "http://localhost:3000/";
+const endPoint = "OrderReception_Status";
+
 window.onload = main;
 
 /**
@@ -59,7 +63,7 @@ function mostrarTaula(estats) {
         tablaContenido.appendChild(fila);
 
         // Afegir addEventListeners als botons
-        fila.querySelector("#eliminar").addEventListener("click",() => eliminarEstado(estat.id));
+        fila.querySelector("#eliminar").addEventListener("click",() => deleteData(urlBase,endPoint,estat.id));
         fila.querySelector("#modificar").addEventListener("click",() => modificarEstado(estat.id));
         fila.querySelector("#ver").addEventListener("click",() => verEstado(estat.id));
     });
@@ -81,30 +85,3 @@ function modificarEstado(id) {
     window.location.href = `../Modificar/modificar.html?id=${id}`;
 }
 
-/**
- * Elimina l'estat de línia d'ordres de recepció seleccionat i actualitza la taula.
- * @param {number} id - ID de l'estat a eliminar.
- */
-async function eliminarEstado(id) {
-    try {
-        const response = await fetch('../../../../api/BBDD.json');
-        const estats = await response.json();
-        
-        if (confirm("Estàs segur que vols eliminar aquest estat?")) {
-            const indice = estats.findIndex(estado => estado.id === id);
-            if (indice !== -1) {
-                estats.splice(indice, 1); 
-                await fetch('../../../../api/BBDD.json', {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(estats) 
-                });
-                mostrarTaula(estats); 
-            }
-        }
-    } catch (error) {
-        console.error('Error al eliminar el estat:', error); // tio no em deixa ficar " ' "  
-    }
-}
