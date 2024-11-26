@@ -1,14 +1,14 @@
 window.onload = main;
 
 function main() {
-    var modifica = JSON.parse(localStorage.getItem("modificaFormulari"));
+    var modifica = JSON.parse(localStorage.getItem("modificaCarrer"));
     console.log("Dades cargades per a modificar:", modifica); 
     if (modifica) {
         document.getElementById("id").value = modifica.id || "";
         document.getElementById("name").value = modifica.name || "";
     } else {
         alert("No s'ha trobat el registre a modificar.");
-        window.location.assign("formulariLlista.html");
+        window.location.assign("../Llistar/LlistaCarrer.html");  
     }
     document.getElementById("btnGuardar").addEventListener("click", btnGuardar, false);
    
