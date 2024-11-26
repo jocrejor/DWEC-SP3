@@ -11,8 +11,9 @@ function iniciar() {
 function carregarDades(shelf) {
     document.getElementById("id").value = shelf.id;
     document.getElementById("nom").value = shelf.nom;
-    document.getElementById("id_storage").value = shelf.id_storage;
     document.getElementById("id_carrer").value = shelf.id_carrer;
+    document.getElementById("id_magatzem").value = shelf.id_magatzem;
+    
 }
 
 function guardarModificacions(e) {
@@ -20,17 +21,19 @@ function guardarModificacions(e) {
 
     const id = document.getElementById("id").value;
     const nom = document.getElementById("nom").value;
-    const id_storage = document.getElementById("id_storage").value;
+    const id_magatzem = document.getElementById("id_magatzem").value;
     const id_carrer = document.getElementById("id_carrer").value;
-  
 
     const estanteries = JSON.parse(localStorage.getItem("shelfs")) || [];
     const index = estanteries.findIndex((e) => e.id === id);
 
     if (index !== -1) {
-        estanteries[index] = { id, nom, id_carrer, adreça, tipus };
+        
+        estanteries[index] = { id, nom, id_magatzem, id_carrer };
         localStorage.setItem("shelfs", JSON.stringify(estanteries));
         alert("Estanteria modificada correctament.");
         window.location.assign("../llista/llistatShelf.html");
+    } else {
+        alert("No s'ha trobat l'estanteria a modificar.");
     }
 }
