@@ -8,6 +8,12 @@
     <script src="altaIncidencia.js"></script>
     <script src="../../../apiAccess/crud.js"></script>
     <title>Modificar</title>
+
+    <style> 
+        .error {
+            border:solid 2px #FF0000; 
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -18,7 +24,7 @@
             <div class="form-group row">      
                 <label for="operator" class="col-sm-2 col-form-label" >Operari</label>
                 <div class="col-sm-10">
-                    <select name="operator" class="form-control" id="operator" required disa>
+                    <select name="operator" class="form-control" id="operator" required>
                         <option value="" selected>Selecciona un operari</option>
                     </select>
                 </div>
@@ -47,6 +53,13 @@
                 </div>
             </div>
 
+            <div class="form-group row">      
+                <label for="description" class="col-sm-2 col-form-label" >Descripció</label>
+                <div class="col-sm-10">
+                    <input type="text" id="description" minlength="10" maxlength="50" class="form-control" placeholder="Indica una descripció" pattern="^.{20,50}$" required>
+                </div>
+            </div>
+
             <div class="form-group row">
                 <div class="col-sm-1">
                     <button id="btnGravar" type="button" class="btn btn-primary">Gravar</button>
@@ -57,6 +70,7 @@
                 </div>
             </div>
         </form>
+        <h5 id="missatgeError" class="text-danger"></h5>
     </div>
 </body>
 </html>

@@ -25,7 +25,7 @@ async function carregarIncidencies() {
         let tdRevisar = document.createElement("td");
         let btnModificar = document.createElement("button");
         $(btnModificar).click(function(){
-            modificarIncidencia(ordre.incident_id);
+            modificarIncidencia(ordre.id);
         });
         btnModificar.className = "btn btn-primary";
         let textRevisar = document.createTextNode("Modificar");
@@ -36,7 +36,7 @@ async function carregarIncidencies() {
         let tdEliminar = document.createElement("td");
         let btnEliminar = document.createElement("button");
         $(btnEliminar).click(function(){
-            eliminarIncidencia(ordre.incident_id);
+            eliminarIncidencia(ordre.id);
         });
         btnEliminar.className = "btn btn-primary";
         let textEliminar = document.createTextNode("Eliminar");
@@ -45,7 +45,7 @@ async function carregarIncidencies() {
         row.appendChild(tdEliminar);
 
         // Crear celdas para las demás columnas
-        row.appendChild(CrearCelda(ordre.incident_id));
+        row.appendChild(CrearCelda(ordre.id));
         row.appendChild(CrearCelda(getOperari(ordre.operator_id)));
         row.appendChild(CrearCelda(ordre.description));
         row.appendChild(CrearCelda(getEstat(ordre.orderlinereception_status_id)));
@@ -90,12 +90,16 @@ function getProducte(id){
 
 async function modificarIncidencia(id){
     const incidencies = await getData(url,"Incident"); 
-    const incidentSeleccionat = incidencies.find(o => o.incident_id === id);
+    const incidentSeleccionat = incidencies.find(o => o.id === id);
 
     if(incidentSeleccionat){
         localStorage.setItem("incidentSeleccionat", JSON.stringify(incidentSeleccionat));
         window.location.href = "revisarIncident/revisarIncident.html";
     }
+}
+
+async function eliminarIncidencia(id){
+    await deleteData(url,"Incident",id);
 }
 
 

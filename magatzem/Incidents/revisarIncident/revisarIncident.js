@@ -4,9 +4,12 @@ $(document).ready(function () {
     replenaEstats();
     revisarOrdre();
     $("#btnTorna").click(function(){
-        window.location.href = "../incidencies.html";
-    }
-    )
+        window.location.assign("../incidencies.html");
+    }),
+    $("#btnGravar").click(function(){
+        modificarIncidencia();
+    })
+    
 });
 
 async function revisarOrdre(){
@@ -64,4 +67,15 @@ async function replenaOperaris(){
         operariSeleccionat.appendChild(option); 
         }
     )
+}
+
+async function modificarIncidencia(){
+    const incidentSeleccionat = JSON.parse(localStorage.getItem("incidentSeleccionat"));
+
+    incidentSeleccionat.operator_id = document.getElementById("operator").value;
+    incidentSeleccionat.product_id = document.getElementById("product").value;
+    incidentSeleccionat.orderlinereception_status_id = document.getElementById("status").value;
+    incidentSeleccionat.quantity = document.getElementById("quantity").value;
+    await updateId(url,"Incident",incidentSeleccionat.id,incidentSeleccionat);
+    window.location.href = "../incidencies.html";
 }

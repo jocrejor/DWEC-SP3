@@ -42981,54 +42981,67 @@
   ],
   "Incident": [
     {
-      "incident_id": "0",
-      "operator_id": "3",
-      "product_id": "1",
+      "id": "0",
+      "operator_id": "1",
+      "product_id": "2",
       "quantity": "98",
       "orderlinereception_status_id": "1",
       "description": "Este producte esta trencat",
-      "created_at": "CURRENT_TIMESTAMP",
-      "id": "ecbb"
+      "created_at": "CURRENT_TIMESTAMP"
     },
     {
-      "incident_id": "1",
+      "id": "1",
       "operator_id": "1",
       "product_id": "2",
       "quantity": "22",
       "orderlinereception_status_id": "3",
       "description": "El producte esta desaparegut",
-      "created_at": "CURRENT_TIMESTAMP",
-      "id": "f19a"
+      "created_at": "CURRENT_TIMESTAMP"
     },
     {
-      "incident_id": "2",
+      "id": "2",
       "operator_id": "2",
       "product_id": "3",
       "quantity": "54",
       "orderlinereception_status_id": "2",
       "description": "El prodcute té el soroll distorsionat",
-      "created_at": "CURRENT_TIMESTAMP",
-      "id": "6fde"
+      "created_at": "CURRENT_TIMESTAMP"
     },
     {
-      "incident_id": "4",
+      "id": "4",
       "operator_id": "3",
       "product_id": "2",
       "quantity": "58",
       "orderlinereception_status_id": "3",
       "description": "La pantalla de prodcute no funciona",
-      "created_at": "CURRENT_TIMESTAMP",
-      "id": "b360"
+      "created_at": "CURRENT_TIMESTAMP"
     },
     {
-      "incident_id": "5",
+      "id": "5",
       "operator_id": "4",
       "product_id": "5",
       "quantity": "5",
       "orderlinereception_status_id": "1",
       "description": "La batería del producte es descarga ràpidament",
+      "created_at": "CURRENT_TIMESTAMP"
+    },
+    {
+      "id": "8",
       "created_at": "CURRENT_TIMESTAMP",
-      "id": "5771"
+      "description": "Menys productes dels esperats",
+      "operator_id": "3",
+      "orderlinereception_status_id": "2",
+      "product_id": "1",
+      "quantity": "433"
+    },
+    {
+      "id": "9",
+      "created_at": "CURRENT_TIMESTAMP",
+      "description": "Menys productes dels esperats",
+      "operator_id": "1",
+      "orderlinereception_status_id": "2",
+      "product_id": "3",
+      "quantity": "43"
     }
   ],
   "OrderReception": [
