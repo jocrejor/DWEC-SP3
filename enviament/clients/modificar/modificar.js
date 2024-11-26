@@ -1,79 +1,19 @@
 window.onload = main;
 
-let State = JSON.parse(localStorage.getItem('State')) || [];
-let Province = JSON.parse(localStorage.getItem('Province')) || [];
-let City = JSON.parse(localStorage.getItem('City')) || [];
-
-/////
-/////
-/////
-// Local
-let url = 'http://localhost:5001/'
-// Servidor
-//let url = 'http://10.2.218.254:5001/'
-
-async function postData(url,endPoint, data = {}) {
-  try {
-    const response = await fetch(url + endPoint, {
-      method: 'POST',  // Método HTTP
-      headers: {
-        'Content-Type': 'application/json'  // Tipo de contenido
-      },
-      body: JSON.stringify(data)  // Datos JSON a enviar
-    });
-
-    if (!response.ok) {
-      throw new Error('Error en la solicitud POST');
-    }
-
-    const result = await response.json();  // Espera la conversión de la respuesta a JSON
-    console.log(result);  // Trabaja con la respuesta
-
-  } catch (error) {
-    console.error('Error:', error);  // Manejo de errores
-  }
-}
-
-// Acces a les dades
-async function getNewId(url,endPoint) {
-  try {
-    const response = await fetch(url + endPoint );  // Reemplaza 'data.json' con la ruta de tu archivo
-
-    if (!response.ok) {
-      throw new Error('Error al obtener el archivo JSON');
-    }
-
-    const data =  await response.json();
-    const maxId = data.reduce((max, ele) => 
-      (ele.id > max.id ? ele: max), data[0]);
-    const newId= ++ maxId.id;
-    return newId + '' ;
-
-  } catch (error) {
-    console.error('Error:', error);  // Manejo de errores
-  }
-}
-
-////
-////
-////
-
-
-
-
-
-
-
-
-
-function main() {
+async function main() {
     document.getElementById("botonModificar").addEventListener("click", validar, false);
     
     // Recupera el ID del cliente desde localStorage y asegúrate de que sea un número
     const idCliente = parseInt(localStorage.getItem('idModificar'), 10);
     // Busca el cliente en el array Client utilizando el ID
-    const clientes = JSON.parse(localStorage.getItem('Client')) || [];
-    const cliente = clientes.find(c => c.id === idCliente);
+    // const clientes = JSON.parse(localStorage.getItem('Client')) || [];
+    // const cliente = clientes.find(c => c.id === idCliente);
+
+    const url = 'http://localhost:5001/';
+    const clientes = await getData(url, "Client");
+    // const cliente = clientes.find(c => c.id === idCliente);
+
+    const cliente = clientes[idCliente - 1];
 
     if (cliente) {
         // Asegúrate de que cargarPaises esté bien definida para llenar el select de países
@@ -88,9 +28,14 @@ function main() {
 
         var provinciaID = "";
         var ciudadID = "";
+
+        const url = 'http://localhost:5001/';
+        const Province = await getData(url, "Province");
+        const City = await getData(url, "City");
+
         // Crea los selects o inputs dependiendo del país seleccionado
         if (paisSeleccionado == 194) { 
-            crearSelectProvincias(divContenedor); 
+            crearSelectProvincias(divContenedor);
             crearSelectCiudades(divContenedorCiudades);
             crearInputCodigoPostal(divContenedorCodigoPostal); 
             
@@ -106,19 +51,22 @@ function main() {
             provinciaID = cliente.province;
             ciudadID = cliente.city;
         }
-        
+
         var provinciaSeleccionada = provinciaID;
         var selectCiudad = document.getElementById('city');
         
         // agregar las ciudades correspondientes a la provincia seleccionada
         City.forEach(function(ciudad) {
+            // alert(ciudad.province_id);
+            //     alert(provinciaSeleccionada);
             if (ciudad.province_id === provinciaSeleccionada) {
+                
                 var opcion = document.createElement('option');
                 opcion.value = ciudad.id; // asigna el id de la ciudad como valor
                 opcion.textContent = ciudad.name; // asigna el nombre de la ciudad como texto
                 selectCiudad.appendChild(opcion); // añade la opción al select de ciudades
             }
-        }); 
+        });
 
         // Carga los datos en los campos del formulario
         document.getElementById('name').value = cliente.name;
@@ -127,8 +75,10 @@ function main() {
         document.getElementById('phone').value = cliente.phone;
         document.getElementById('email').value = cliente.email;
         document.getElementById('state_id').value = paisSeleccionado;
+        console.log(document.getElementById('province'));
         document.getElementById('province').value = provinciaID; 
-        document.getElementById('city').value = ciudadID; 
+        alert("A");
+        document.getElementById('city').value = ciudadID;
         document.getElementById('cp').value = cliente.cp; 
     }
     else{
@@ -329,7 +279,10 @@ function esborrarError() {
 }
 
 //función que carga comunidades autónomas en el select
-function cargarPaises(){
+async function cargarPaises(){
+    const url = 'http://localhost:5001/';
+    const State = await getData(url, "State");
+
     var selectPais = document.getElementById('state_id');
     State.forEach(function(pais){
         var opcion = document.createElement('option');
@@ -393,7 +346,7 @@ function cargarCiudades() {
 }
 
 // Función para crear el select de provincias
-function crearSelectProvincias(contenedor){
+async function crearSelectProvincias(contenedor){
     // Crear el label para el input de provincia
     var labelProvincia = document.createElement('label');
     labelProvincia.setAttribute('for', 'province'); // Asegúrate de que el 'for' coincida con el ID del input
@@ -420,7 +373,8 @@ function crearSelectProvincias(contenedor){
     optionProvincia.appendChild(text);
     selectProvincia.appendChild(optionProvincia);
     
-
+    const url = 'http://localhost:5001/';
+    const Province = await getData(url, "Province");
     //Cargar las provincias
     Province.forEach(function(provincia) {
         var opcion = document.createElement('option');
@@ -435,6 +389,7 @@ function crearSelectProvincias(contenedor){
     divInput.appendChild(selectProvincia);
     divInput.appendChild(br);
     contenedor.appendChild(divInput);
+    console.log(document.getElementById('province'));
 }
 
 function crearInputProvincia(contenedor) {

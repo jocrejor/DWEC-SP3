@@ -20,8 +20,9 @@ async function cargarClientes(){
 }
 
 //función para modificar un cliente en específico
-function modificarCliente(index){
-    // const clientes = cargarClientes();      //carga los clientes del localStorage
+async function modificarCliente(index){
+    const url = 'http://localhost:5001/';
+    const clientes = await getData(url, "Client");
     const cliente = clientes[index];        //obtiene el cliente seleccionado
 
     localStorage.setItem("idModificar", cliente.id);
