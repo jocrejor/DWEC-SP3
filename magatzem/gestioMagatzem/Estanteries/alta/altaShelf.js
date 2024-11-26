@@ -45,9 +45,9 @@ function validarCarrer() {
 }
 
 function validarStorage() {
-    const id_storage = document.getElementById("id_storage");
-    if (id_storage.value.trim() === "" || isNaN(id_storage.value) || id_storage.value < 1 || id_storage.value > 99) {
-        error(id_storage, "L'ID del storage ha de ser un número entre 1 i 99.");
+    const id_magatzem = document.getElementById("id_magatzem");
+    if (id_magatzem.value.trim() === "" || isNaN(id_magatzem.value) || id_magatzem.value < 1 || id_magatzem.value > 99) {
+        error(id_magatzem, "L'ID del storage ha de ser un número entre 1 i 99.");
         return false;
     }
     return true;
@@ -67,10 +67,10 @@ function enviarFormulari() {
     const id = document.getElementById("id").value;
     const nom = document.getElementById("nom").value;
     const id_carrer = document.getElementById("id_carrer").value;
-    const id_storage = document.getElementById("id_storage").value;
+    const id_magatzem = document.getElementById("id_magatzem").value;
     
 
-    const novaEstanteria = { id, nom, id_carrer, id_storage };
+    const novaEstanteria = { id, nom, id_carrer, id_magatzem };
 
     let arrShelfs = JSON.parse(localStorage.getItem("shelfs")) || [];
     arrShelfs.push(novaEstanteria);
