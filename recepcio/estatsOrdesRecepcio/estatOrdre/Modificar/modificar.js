@@ -1,119 +1,94 @@
-document.addEventListener("DOMContentLoaded", main);
+// URL base i endpoint del servidor
+const urlBase = "http://localhost:5001/";
+const endPoint = "OrderReception_Status";
 
-function main() {
-    cargarDatosEstados();
-
-    document.getElementById("guardar").addEventListener("click", validar);
+// Inicialització principal
+window.onload = function () {
+    carregarDadesEstat();
+    document.getElementById("guardar").addEventListener("click", guardarCanvis);
     document.getElementById("cancelar").addEventListener("click", () => {
         document.location.href = "../Listar/listar.html";
     });
+};
 
-    document.getElementById("name").addEventListener("blur", validarNombreEstado, false);
-}
-/**
- * Carga la llista d'estats en línea d'orden de recepció des-de localStorage.
- * @returns {Array} Llista d'estats
- */
-function inicializarEstados() {
-    let estados = JSON.parse(localStorage.getItem("OrderReception_Status"));
-    if (!estados) {
-        estados = [];
-        localStorage.setItem("OrderReception_Status", JSON.stringify(estados));
-    }
-    return estados;
-}
-/**
- * Carga les dades del estat que es va a modificar en el formulari.
- */
-function cargarDatosEstados() {
+// Carrega les dades de l'estat al formulari
+function carregarDadesEstat() {
     const urlParams = new URLSearchParams(window.location.search);
     const id = parseInt(urlParams.get("id"));
 
-    const estados = inicializarEstados();
-    const estado = estados.find(estado => estado.id === id);
-
-    if (estado) {
-        document.getElementById("id").value = id;
-        document.getElementById("name").value = estado.name;
-    }
+    fetch(`${urlBase}${endPoint}/${id}`)
+        .then((res) => res.json())
+        .then((estat) => {
+            document.getElementById("id").value = estat.id;
+            document.getElementById("name").value = estat.name;
+        })
+        .catch((error) => {
+            console.error("Error carregant l'estat:", error);
+            alert("No s'han pogut carregar les dades de l'estat.");
+        });
 }
 
-/**
- * Guarda les dades modificades de l'estat de linia d'ordre de recepció.
- */
-function modificarEstado() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const id = parseInt(urlParams.get("id"));
-
-    const estados = inicializarEstados();
-    const indiceEstado = estados.findIndex(estado => estado.id === id);
-
-    const eModificado = {
-        id: id,
-        name: document.getElementById("name").value.trim(),
-    };
-
-    if (!eModificado.name) {
-        alert("Per favor, emplene tots els camps.");
-        return;
-    }
-
-    estados[indiceEstado] = eModificado;
-    localStorage.setItem("OrderReception_Status", JSON.stringify(estados));
-
-    alert("Estat modificat correctament.");
-    document.location.href = "../Listar/listar.html";
-}
-
-/**
- * Verifica que el nom de l'estat no estiga repetit.
- */
-function validarNombreEstado() {
+// Valida el nom de l'estat
+function validarNomEstat() {
     const element = document.getElementById("name");
+    const errorElement = document.getElementById("mensajeError");
+
+    // Neteja missatges d'error anteriors
+    if (errorElement) errorElement.textContent = "";
+
     if (!element.checkValidity()) {
+        element.classList.add("is-invalid");
+        element.classList.remove("is-valid");
+
         if (element.validity.valueMissing) {
-            error2(element, "Ha d'introduir el nom de l'estat.");
-        }
-        if (element.validity.patternMismatch || element.value.length < 2) {
-            error2(element, "El nom de l'estat ha de tindre entre 2 i 25 caràcters.");
+            mostrarMissatgeError("El nom és obligatori.");
+        } else if (element.validity.patternMismatch || element.value.length < 2) {
+            mostrarMissatgeError("El nom ha de tenir entre 2 i 25 caràcters.");
         }
         return false;
     }
-    borrarError();
-    element.classList.add("valid");
+
+    element.classList.remove("is-invalid");
+    element.classList.add("is-valid");
     return true;
 }
 
-/**
- * Valida el formulari i guarda els canvis si son correctes.
- * @param {Event} e 
- * @returns {boolean}
- */
-function validar(e) {
-    borrarError();
-    if (validarNombreEstado() && confirm("Desitja guardar l'estat?")) {
-        modificarEstado();
-        return true;
-    } else {
-        e.preventDefault();
-        return false;
+// Mostra un missatge d'error al formulari
+function mostrarMissatgeError(missatge) {
+    let errorElement = document.getElementById("mensajeError");
+    if (!errorElement) {
+        errorElement = document.createElement("p");
+        errorElement.id = "mensajeError";
+        errorElement.className = "text-danger";
+        document.getElementById("formulario").appendChild(errorElement);
     }
+    errorElement.textContent = missatge;
 }
 
-/**
- * Mostra un missatge d'error si no s'ha validat el nom de l'estat.
- */
-function error2(element, mensaje) {
-    const p = document.getElementById("mensajeError");
-    p.textContent = mensaje;
-    element.classList.add("error");
-    element.focus();
-}
-/**
- * Elimina els CSS d'error de tots els elements del formulari.
- */
-function borrarError() {
-    const mensajeError = document.getElementById("mensajeError");
-    mensajeError.textContent = "";
-    document.getElementById("name").classList.remove("error");
-}
+// Guarda els canvis a l'estat
+async function guardarCanvis(e) {
+    e.preventDefault(); 
+
+    if (validarNomEstat()) {
+        try {
+            const id = parseInt(document.getElementById("id").value);
+            const name = document.getElementById("name").value.trim();
+
+            const estatModificat = { id, name };
+
+            const resposta = await fetch(`${urlBase}${endPoint}/${id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(estatModificat),
+            });
+
+            if (!resposta.ok) throw new Error("Error en modificar l'estat");
+
+            alert("Estat modificat correctament.");
+            document.location.href = "../Listar/listar.html";
+        } catch (error) {
+            console.error("Error modificant l'estat:", error);
+            alert("No s'ha pogut modificar l'estat.");
+        }
+    }
+} // He eliminat coses que no eren necessàries i he fet alguns canvis per fer que el codi funcione mel
