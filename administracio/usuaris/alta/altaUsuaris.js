@@ -27,7 +27,7 @@ function home() {
 async function listTipus() {
   try {
     // Carregar els rols des del servidor
-    const userProfileData = await getData(url, "userProfile");
+    const userProfileData = await getData(url, "UserProfile");
 
     const select = document.getElementById("rol");
     select.innerHTML = "";

@@ -4,6 +4,9 @@ function main() {
   thereIsUser();  // Comprovar si l'usuari existeix
   obtindreUsuaris();
   document.getElementById("nouUsuari").addEventListener("click", nouUsuari);
+  document.getElementById("home").addEventListener("click", () => {
+    window.location.assign("../../../index.html");
+  });
 }
 
 function nouUsuari() {
@@ -16,7 +19,6 @@ async function obtindreUsuaris() {
     const usersList = await getData(url, "User");
 
     if (usersList && Array.isArray(usersList)) {
-      // Comprova si la llista té usuaris
       if (usersList.length === 0) {
         console.log("No hi ha usuaris disponibles.");
       } else {
