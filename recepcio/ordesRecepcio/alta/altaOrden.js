@@ -1,6 +1,6 @@
 const API = "http://localhost:3000/";
-const orderReceptionEP = "OrderReception/";
-const orderLineReceptionEP = "OrderLineReception/";
+const orderReceptionEP = "OrderReception";
+const orderLineReceptionEP = "OrderLineReception";
 
 let orderRception;
 let orderLineReception;
@@ -33,37 +33,42 @@ $(document).ready(function () {
     .addEventListener("click", llistarOrden, false);
 });
 
-function cargarProductos() {
+async function cargarProductos() {
   const productEP = "Product";
   const productSelect = document.getElementById("product");
 
-  fetch(API + productEP)
-    .then((res) => res.json())
-    .then((data) => {
-      data.forEach((product) => {
-        const option = document.createElement("option");
-        option.value = product.name;
-        option.text = product.name;
-        option.setAttribute("id", product.id);
-        productSelect.appendChild(option);
-      });
+  try {
+    const products = await getData(API, productEP);
+
+    products.forEach((product) => {
+      const option = document.createElement("option");
+      option.value = product.name;
+      option.text = product.name;
+      option.setAttribute("id", product.id);
+      productSelect.appendChild(option);
     });
+  } catch (error) {
+    console.error("Error:", error);
+  }
 }
 
-function cargarProveidor() {
+async function cargarProveidor() {
   const supplierSelect = document.getElementById("supplier");
   const supplierEP = "Supplier";
 
-  fetch(API + supplierEP)
-    .then((res) => res.json())
-    .then((data) => {
-      data.forEach((supplier) => {
-        const option = document.createElement("option");
-        option.value = supplier.id;
-        option.text = supplier.name;
-        supplierSelect.appendChild(option);
-      });
+  try {
+    const suppliers = await getData(API, supplierEP);
+
+    suppliers.forEach((supplier) => {
+      const option = document.createElement("option");
+      option.value = supplier.name;
+      option.text = supplier.name;
+      option.setAttribute("id", supplier.id);
+      supplierSelect.appendChild(option);
     });
+  } catch (error) {
+    console.error("Error:", error);
+  }
 }
 
 function llistarOrden() {
@@ -108,8 +113,6 @@ function afegirLinea(productObj) {
   var esborrarTD = document.createElement("td");
   var checkbox = document.createElement("input");
   checkbox.type = "checkbox";
-  checkbox.value = "opcio";
-  checkbox.addEventListener("click", () => borrarLineReception(productObj.id));
   esborrarTD.appendChild(checkbox);
 
   var modificarTD = document.createElement("td");
@@ -191,22 +194,13 @@ async function gravarOrden() {
     let idorderRception;
     let idOrderLineReception;
 
-    const [response1, response2] = await Promise.all([
-      fetch(API + orderReceptionEP),
-      fetch(API + orderLineReceptionEP),
-    ]);
-
-    let orderReception = await response1.json();
-    let orderLineReception = await response2.json();
+    let orderReception = await getData(API, orderReceptionEP);
+    let orderLineReception = await getData(API, orderLineReceptionEP);
 
     if (orderReception.length == 0) {
       idorderRception = 1;
     } else {
-      const maxObj = orderRception.reduce(
-        (max, obj) => (obj.id > max.id ? obj : max),
-        orderReception[0]
-      );
-      idorderRception = ++maxObj.id;
+      idorderRception = await getNewId(API, orderReceptionEP);
     }
 
     var supplier = document.getElementById("supplier").value;
@@ -222,30 +216,23 @@ async function gravarOrden() {
       orderreception_status_id: 1,
     };
 
-    orderRception.push(order);
-
-    localStorage.setItem("orderRception", JSON.stringify(orderRception));
+    await postData(API, orderReceptionEP, orderReception);
 
     if (orderLineReception.length == 0) {
       idOrderLineReception = 0;
     } else {
-      const maxObj = orderLineReception.reduce(
-        (max, obj) => (obj.id > max.id ? obj : max),
-        orderLineReception[0]
-      );
-      idOrderLineReception = maxObj.id;
+      idOrderLineReception = await getNewId(API, orderLineReceptionEP);
     }
 
-    arrTemp.forEach((product) => {
-      product.id = Number(idOrderLineReception);
-      product.order_reception_id = idorderRception;
-      orderLineReception.push(product);
-    });
+    if (arrTemp) {
+      arrTemp.forEach((product) => {
+        product.id = ++idOrderLineReception;
+        product.order_reception_id = idorderRception;
+        orderLineReception.push(product);
+      });
+    }
 
-    localStorage.setItem(
-      "orderLineReception",
-      JSON.stringify(orderLineReception)
-    );
+    await postData(API, orderLineReceptionEP, orderLineReception);
 
     alert("Guardado correctamente");
   } catch (error) {
