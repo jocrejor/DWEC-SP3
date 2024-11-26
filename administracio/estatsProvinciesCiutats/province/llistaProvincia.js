@@ -78,25 +78,11 @@ function addProvince() {
     provinces.push(newProvince);
     localStorage.setItem('Province', JSON.stringify(provinces)); 
     document.getElementById('newProvinceName').value = ''; 
-    alert("Has agregat una nova provincia");
     loadProvinces(); 
 }
 
 function editProvince(index) {
-    const provinces = JSON.parse(localStorage.getItem('Province')) || [];
-    const stateIdSpain = "194";
-    const provincesOfSpain = provinces.filter(province => province.state_id === stateIdSpain);
-
-    const newName = prompt('Editar nom de la provincia:', provincesOfSpain[index].name);
-    if (newName !== null && newName.trim() !== '') {
-        provincesOfSpain[index].name = newName.trim();
-
-        const updatedProvinces = provinces.map(province =>
-            province.id === provincesOfSpain[index].id ? provincesOfSpain[index] : province
-        );
-        localStorage.setItem('Province', JSON.stringify(updatedProvinces));
-        loadProvinces(); 
-    }
+    window.location.href = `modificar.html?index=${index}`;
 }
 
 function deleteProvince(index) {

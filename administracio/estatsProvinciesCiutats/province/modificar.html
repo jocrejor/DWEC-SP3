@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modificar Provincia</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="./modificar.js" defer></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Modificar Provincia</h1>
+        <a href="llistaProvincia.html" class="btn btn-secondary mb-3">Torna a la llista de Provincies</a>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form id="editProvinceForm" onsubmit="return modifyProvince(event)">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" id="provinceName" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    <a href="llistaProvincia.html" class="btn btn-secondary ml-2">Cancelar</a> <!-- Botón para cancelar -->
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

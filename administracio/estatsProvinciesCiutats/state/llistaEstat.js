@@ -1,9 +1,12 @@
-window.onload = loadStates;
+window.onload = function () {
+    loadStates();     
+};
 
 function loadStates() {
     const states = JSON.parse(localStorage.getItem('State')) || [];
     displayStates(states);
 }
+
 function validarNom() {
     const pattern = /^[A-Za-záéíóúÁÉÍÓÚñÑ\s]{2,25}$/;
     const nom = document.getElementById("newStateName"); 
@@ -20,7 +23,6 @@ function validarNom() {
 
     return true; 
 }
-
 
 function error(input, message) {
     esborrarError();
@@ -48,7 +50,7 @@ function validar(e) {
 
 function displayStates(states) {
     const stateList = document.getElementById('stateList');
-    stateList.innerHTML = ''; 
+    stateList.innerHTML = ''; // Limpiar la tabla
 
     states.forEach((state, index) => {
         const row = document.createElement('tr');
@@ -83,19 +85,11 @@ function addState() {
     localStorage.setItem('State', JSON.stringify(states));
 
     document.getElementById('newStateName').value = ''; 
-    alert("Has agregat un nou Estat");
     loadStates(); 
 }
 
-
 function editState(index) {
-    const states = JSON.parse(localStorage.getItem('State')) || [];
-    const newName = prompt('Editar nom del estat:', states[index].name);
-    if (newName !== null && newName.trim() !== '') {
-        states[index].name = newName.trim();
-        localStorage.setItem('State', JSON.stringify(states));
-        loadStates();
-    }
+    window.location.href = `modificar.html?index=${index}`;
 }
 
 function deleteState(index) {

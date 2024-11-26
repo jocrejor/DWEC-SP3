@@ -14,7 +14,6 @@ function loadCities() {
 
     const cities = JSON.parse(localStorage.getItem('City')) || [];
     const citiesOfProvince = cities.filter(city => city.province_id === provinceId);
-
     displayCities(citiesOfProvince);
 }
 
@@ -27,7 +26,7 @@ function displayCities(cities) {
             <td>${index + 1}</td>
             <td>${city.name}</td>
             <td>
-                <button class="btn btn-warning btn-sm mr-2" onclick="editCity(${index})">Editar</button>
+                <a href="modificar.html?provinceId=${city.province_id}&index=${index}" class="btn btn-warning btn-sm mr-2">Editar</a>
                 <button class="btn btn-danger btn-sm" onclick="deleteCity(${index})">Eliminar</button>
             </td>
         `;
@@ -84,26 +83,7 @@ function addCity() {
     cities.push(newCity);
     localStorage.setItem('City', JSON.stringify(cities));
     document.getElementById('newCityName').value = '';
-    alert("Has agregat un nou poble");
     loadCities();
-}
-
-function editCity(index) {
-    const urlParams = new URLSearchParams(window.location.search);
-    const provinceId = urlParams.get('provinceId');
-    const cities = JSON.parse(localStorage.getItem('City')) || [];
-    const citiesOfProvince = cities.filter(city => city.province_id === provinceId);
-
-    const newName = prompt('Editar nom de la ciutat:', citiesOfProvince[index].name);
-    if (newName !== null && newName.trim() !== '') {
-        citiesOfProvince[index].name = newName.trim();
-
-        const updatedCities = cities.map(city =>
-            city.id === citiesOfProvince[index].id ? citiesOfProvince[index] : city
-        );
-        localStorage.setItem('City', JSON.stringify(updatedCities));
-        loadCities();
-    }
 }
 
 function deleteCity(index) {

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modificar Estat</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="./modificar.js" defer></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Modificar Estat</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form id="modifyForm" onsubmit="return validar(event)">
+                    <div class="form-group">
+                        <label for="stateName">Nom de l'Estat</label>
+                        <input type="text" class="form-control" id="stateName" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Modificar</button>
+                    <a href="./llistaEstat.html" class="btn btn-secondary">Cancel·lar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
