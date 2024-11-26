@@ -6,6 +6,7 @@ const endPoint = 'Product'; // Creem la variable endPoint per a que siga més pr
 function main() {
     document.getElementById('altaProducte').addEventListener('click', altaProducte);
     document.getElementById('btnEliminar').addEventListener('click', eliminarProducte);
+    document.getElementById('btnModificar').addEventListener('click', modificarProducte);
     obtenerProductos();
 }
 
@@ -15,18 +16,23 @@ function altaProducte() {
 
 // Función para eliminar un producto
 async function eliminarProducte(productId) {
-    try {
-        // Llamar a la función deleteData para eliminar el producto por su ID
-        await deleteData(url, endPoint, productId);
-
-        // Una vez eliminado, actualizar la lista de productos
-        obtenerProductos();
-    } catch (error) {
-        console.error('Error al eliminar el producto:', error);
-    }
+    deleteData(url, endPoint, productId);
+    obtenerProductos();
 }
 
+async function modificarProducte(productId) {
+    try {
+        // Obtenim les dades actuals del producte
+        const product = await getData(url, `${endPoint}/${productId}`);
+        
+        window.localStorage.setItem('productoModificado', JSON.stringify(product));
 
+        // Redirigim a la página de modificar
+        window.location.href = '../modificar/modificar.html';
+    } catch (error) {
+        console.error('Error al obtener el producto:', error);
+    }
+}
 
 // Función per obtindre tots els productes de la base de datos utilitzant getData() del crud.js
 async function obtenerProductos() {
@@ -64,7 +70,7 @@ function mostrarProductes(arrProductes) {
         let modificarBtn = document.createElement('button');
         modificarBtn.appendChild(document.createTextNode('Modificar'));
         modificarBtn.className = 'btn btn-primary btn-lg';
-        modificarBtn.onclick = function () { modificar(product.id); };
+        modificarBtn.onclick = function () { modificarProducte(product.id); };
         modificarCell.appendChild(modificarBtn);
 
         let nameCell = document.createElement('td');

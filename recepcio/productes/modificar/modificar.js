@@ -1,10 +1,13 @@
 window.onload = main;
 
 function main() {
-    document.getElementById("btnGravar").addEventListener("click", validar, false);
+    document.getElementById("btnModificar").addEventListener("click", validar, false);
 
-    
-    let product = JSON.parse(localStorage.getItem("modProducto"));
+    comprovacioProducteLocalStorage();
+}
+
+function comprovacioProducteLocalStorage() {
+    let product = JSON.parse(localStorage.getItem("producteModificat"));
 
     if (product) {
         document.getElementById("name").value = product.name;
@@ -15,8 +18,10 @@ function main() {
         document.getElementById("sku").value = product.sku;
         document.getElementById("image_url").value = product.image_url;
     }
+    else {
+        console.error("Producto no encontrado en localStorage.");
+    }
 }
-
 
 function validarName() {
     let name = document.getElementById("name");
@@ -94,7 +99,6 @@ function borrarError() {
 }
 
 function enviarFormulario() {
-
     
     let product = {
         id: JSON.parse(localStorage.getItem("modProducto")).id,
