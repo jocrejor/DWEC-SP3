@@ -1,6 +1,124 @@
 {
   "Users": [
-
+    {
+      "id": "1",
+      "name": "user2",
+      "email": "user2@example.com",
+      "password": "password2",
+      "user_profile": "Administrador"
+    },
+    {
+      "id": "2",
+      "name": "Andrea Andrea",
+      "email": "andrea@email.com",
+      "password": "AndreaMendez123!",
+      "user_profile": "Administrador"
+    },
+    {
+      "id": "3",
+      "name": "Pepe pepito",
+      "email": "pepe@pepe.com",
+      "password": "Pepeperez123!",
+      "user_profile": "Administrador"
+    },
+    {
+      "id": "4",
+      "name": "Maria Gonzalez",
+      "email": "maria.gonzalez@hotmail.com",
+      "password": "P3r1od!st@2024",
+      "user_profile": "Moderador"
+    },
+    {
+      "id": "5",
+      "name": "Carlos Martínez",
+      "email": "carlos.martinez@gmail.com",
+      "password": "R3d@c+or2024!",
+      "user_profile": "Publicador"
+    },
+    {
+      "id": "6",
+      "name": "Juan Pérez",
+      "email": "juan.perez@stockflow.com",
+      "password": "B!ogr@f0_2024",
+      "user_profile": "Administrador"
+    },
+    {
+      "id": "7",
+      "name": "Laura López",
+      "email": "laura.lopez@hotmail.com",
+      "password": "C0l@bor@d0r@!24",
+      "user_profile": "Publicador"
+    },
+    {
+      "id": "8",
+      "name": "David Sánchez",
+      "email": "david.sanchez@gmail.com",
+      "password": "P3r!od!sm0#2024",
+      "user_profile": "Moderador"
+    },
+    {
+      "id": "9",
+      "name": "Elena Torres",
+      "email": "elena.torres@hotmail.com",
+      "password": "Redaccion2024!",
+      "user_profile": "Publicador"
+    },
+    {
+      "id": "10",
+      "name": "Miguel Ruiz",
+      "email": "miguel.ruiz@gmail.com",
+      "password": "Bitacora123!",
+      "user_profile": "Publicador"
+    },
+    {
+      "id": 11,
+      "name": "Sofia Navarro",
+      "email": "sofia.navarro@gmail.com",
+      "password": "Contenidos!2024",
+      "user_profile": "Publicador"
+    },
+    {
+      "id": "12",
+      "name": "Diego Garcia",
+      "email": "diego.garcia@outlook.es",
+      "password": "Portada2024!",
+      "user_profile": "Publicador"
+    },
+    {
+      "id": "13",
+      "name": "Javier Jimenez",
+      "email": "javier.jimenez@bloggers.com",
+      "password": "Reportaje11!",
+      "user_profile": "Publicador"
+    },
+    {
+      "id": "14",
+      "name": "Carmen Diaz",
+      "email": "carmen.diaz@bloggers.com",
+      "password": "Colabora25!",
+      "user_profile": "Publicador"
+    },
+    {
+      "id": "15",
+      "name": "ewew",
+      "email": "andrea@email.com",
+      "password": "AndreaMendez123!",
+      "user_profile": "Publicador"
+    },
+    {
+      "id": "16",
+      "name": "ewew",
+      "email": "andrea@email.com",
+      "password": "Andrea123!",
+      "user_profile": "Publicador"
+    },
+    {
+      "id": "17",
+      "name": "Pablo Hernandez",
+      "email": "pablo.hernandez@bloggers.com",
+      "password": "Bitacora12!",
+      "user_profile": "Publicador"
+    }
   ],
   "Posts": [
     {

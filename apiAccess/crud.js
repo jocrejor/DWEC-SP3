@@ -53,6 +53,7 @@ async function getNewId(url,endPoint) {
     const data =  await response.json();
     const maxId = data.reduce((max, ele) => 
       (ele.id > max.id ? ele: max), data[0]);
+    console.log(maxId);
     const newId= ++ maxId.id;
     return newId + '' ;
 

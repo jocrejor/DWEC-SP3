@@ -1,9 +1,13 @@
 window.onload = iniciar;
 url = 'http://localhost:5002/';
 
-function iniciar() {
+async function iniciar() {
     document.getElementById("signup").addEventListener("click", validar);
     document.getElementById("tornar-arrere").addEventListener("click", tornarArrere);
+    let newId   = await getNewId(url, 'Users') ?? "0";
+    let users = await getData(url, 'Users');
+    console.log(users);
+    console.log(newId);
 }
 
 function validarName() {
@@ -101,6 +105,7 @@ async function enviarFormulari () {
     let password    = document.getElementById("password").value;
 
     let newId   = await getNewId(url, 'Users') ?? "0";
+    console.log(newId);
 
     let user = {
         id: newId,
@@ -111,7 +116,7 @@ async function enviarFormulari () {
     };
     await postData(url, 'Users', user);
 
-    window.location.href = '../../access/login.html';
+   // window.location.href = '../../access/login.html';
 }
 
 function tornarArrere() {
