@@ -61,7 +61,7 @@ async function cargarProveidor() {
 
     suppliers.forEach((supplier) => {
       const option = document.createElement("option");
-      option.value = supplier.name;
+      option.value = supplier.id;
       option.text = supplier.name;
       option.setAttribute("id", supplier.id);
       supplierSelect.appendChild(option);
@@ -189,7 +189,11 @@ function guardarModificacion() {
   productoEditadoID = null;
 }
 
-async function gravarOrden() {
+async function gravarOrden(e) {
+  if(e) {
+    e.preventDefault();
+  }
+
   try {
     let idorderRception;
     let idOrderLineReception;
@@ -202,31 +206,32 @@ async function gravarOrden() {
     } else {
       idorderRception = await getNewId(API, orderReceptionEP);
     }
-
-    var supplier = document.getElementById("supplier").value;
+    
+    var supplier = Number(document.getElementById("supplier").value);
     var dataEstimada = document.getElementById(
       "estimated_reception_date"
     ).value;
 
     let order = {
       id: idorderRception,
-      supplier: supplier,
+      supplier_id: supplier,
       estimated_reception_date: dataEstimada,
       created_by: 1,
       orderreception_status_id: 1,
     };
-
-    await postData(API, orderReceptionEP, orderReception);
+    
+    await postData(API, orderReceptionEP, order);
+    
 
     if (orderLineReception.length == 0) {
-      idOrderLineReception = 0;
+      idOrderLineReception = 1;
     } else {
       idOrderLineReception = await getNewId(API, orderLineReceptionEP);
     }
 
     if (arrTemp) {
       arrTemp.forEach((product) => {
-        product.id = ++idOrderLineReception;
+        product.id = idOrderLineReception;
         product.order_reception_id = idorderRception;
         orderLineReception.push(product);
       });
