@@ -546,16 +546,20 @@
   ],
   "UserProfile": [
     {
-      "id": "1",
-      "name": "Administrador"
-    },
-    {
       "id": "2",
       "name": "Encarregat"
     },
     {
       "id": "3",
       "name": "Operari"
+    },
+    {
+      "id": "4",
+      "name": "Administrador"
+    },
+    {
+      "id": "5",
+      "name": "Administrador"
     }
   ],
   "User": [
@@ -42901,7 +42905,7 @@
   "OrderLineReception_Status": [
     {
       "id": "1",
-      "name": "Forzosa"
+      "name": "Forzosaasd"
     },
     {
       "id": "2",
@@ -42910,6 +42914,14 @@
     {
       "id": "3",
       "name": "Completada"
+    },
+    {
+      "id": "4",
+      "name": "asd"
+    },
+    {
+      "id": "5",
+      "name": "Gago"
     }
   ],
   "Carriers": [
@@ -43119,25 +43131,22 @@
       "quantity_ordered": 200,
       "quantity_received": 190
     }
-  ]
-  ,
-  "Inventori": []
-  ,
-  "InventoriLine": []
-  ,
-  "Moviment":[
-    {"id":1,
-     "product_id":"1",
-     "storage_id": "03",
-     "street_id":  "01",
-     "shelf_id": "02",
-     "space_id": "03",
-     "quantity": 100,
-     "date": "2024-02-01",
-     "operator_id": "3",
-     "orgin" : "Reception",
-     "document": "2"
+  ],
+  "Inventori": [],
+  "InventoriLine": [],
+  "Moviment": [
+    {
+      "id": "1",
+      "product_id": "1",
+      "storage_id": "03",
+      "street_id": "01",
+      "shelf_id": "02",
+      "space_id": "03",
+      "quantity": 100,
+      "date": "2024-02-01",
+      "operator_id": "3",
+      "orgin": "Reception",
+      "document": "2"
     }
   ]
-
 }

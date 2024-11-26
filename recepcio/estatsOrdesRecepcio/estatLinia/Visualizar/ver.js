@@ -1,38 +1,40 @@
-window.onload = main;
+document.addEventListener("DOMContentLoaded", async function () {
+    const urlBase = "http://localhost:5001/"; // URL base del backend
+    const endPoint = "OrderLineReception_Status"; // Endpoint corresponent al CRUD del servidor
 
-function main() {
-    cargarDatosEstados();
+    const idElement = document.getElementById("id");
+    const nameElement = document.getElementById("name");
 
-    document.getElementById("tornar").addEventListener("click", () => {
-        document.location.href = "../Listar/listar.html";
+    // Obté l'ID de l'estat des de la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get("id");
+
+    if (!id) {
+        alert("No s'ha trobat cap ID a la URL.");
+        window.location.href = "../Listar/listar.html";
+        return;
+    }
+
+    try {
+        // Petició per obtenir l'estat des del backend
+        const resposta = await fetch(`${urlBase}${endPoint}/${id}`);
+        if (!resposta.ok) {
+           console.error("Error obtenint l'estat del servidor.");
+        }
+
+        const estat = await resposta.json();
+
+        // Mostrar les dades al formulari
+        idElement.value = estat.id;
+        nameElement.value = estat.name;
+    } catch (error) {
+        console.error("Error carregant l'estat:", error);
+        alert("No s'han pogut obtenir les dades de l'estat.");
+        window.location.href = "../Listar/listar.html";
+    }
+
+    // Acció del botó "Tornar"
+    document.getElementById("tornar").addEventListener("click", function () {
+        window.location.href = "../Listar/listar.html";
     });
-}
-
-/**
- * Carga y retorna la lista de estados de línea de ordenes de recepción almacenada en el localStorage.
- * En caso de no haber datos, devuelve un array vacío.
- */
-function inicializarEstados() {
-    let estados = JSON.parse(localStorage.getItem("OrderLineReception_Status"));
-    if (!estados) {
-        estados = [];
-        localStorage.setItem("OrderLineReception_Status", JSON.stringify(estados));
-    }
-    return estados;
-}
-
-/**
- * Carga el formulario con los datos del estado de línea de orden de recepción indicado en la URL por el id.
- */
-function cargarDatosEstados() {
-    let urlParams = new URLSearchParams(window.location.search);
-    let id = parseInt(urlParams.get("id"));
-
-    let estados = inicializarEstados();
-    let estado = estados.find(estado => estado.id === id);
-
-    if (estado) {
-        document.getElementById("id").value = estado.id;
-        document.getElementById("name").value = estado.name;
-    }
-}
+});
