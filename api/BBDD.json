@@ -43127,5 +43127,31 @@
       "quantity_ordered": 200,
       "quantity_received": 190
     }
-  ]
+  ],
+"OrderShipping":[
+  {
+    "id": 1,
+    "client_id": "Carlos Perez",
+    "ordershipping_status_id": 1,
+    "carrier_id": "DHL",
+    "shipping_date": "26/11/2024",
+    "prepared_by ":3
+  }
+],
+"OrderLineShipping":[
+  {
+    "id": 1,
+    "product_id": "1",
+    "quantity": "1",
+    "shipping_order_id":1
+
+},
+{
+  "id": 1001,
+  "product_id": "2",
+  "quantity": "1",
+  "shipping_order_id":1
+
+}
+]
 }
