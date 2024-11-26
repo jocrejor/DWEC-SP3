@@ -12,7 +12,7 @@ function cancelar() {
 function validar(e) {
     e.preventDefault();
 
-    if (validarID() && validarNom() && validarCarrer() && validarAdreça() && validarTipus()) {
+    if (validarID() && validarNom() && validarCarrer() && validarStorage()) {
         enviarFormulari();
     }
 }
@@ -44,23 +44,16 @@ function validarCarrer() {
     return true;
 }
 
-function validarAdreça() {
-    const adreça = document.getElementById("adreça");
-    if (adreça.value.trim() === "" || !adreça.checkValidity()) {
-        error(adreça, "La adreça ha de tindre entre 2 i 100 caràcters.");
+function validarStorage() {
+    const id_storage = document.getElementById("id_storage");
+    if (id_storage.value.trim() === "" || isNaN(id_storage.value) || id_storage.value < 1 || id_storage.value > 99) {
+        error(id_storage, "L'ID del storage ha de ser un número entre 1 i 99.");
         return false;
     }
     return true;
 }
 
-function validarTipus() {
-    const tipus = document.getElementById("tipus");
-    if (tipus.value.trim() === "" || !tipus.checkValidity()) {
-        error(tipus, "El tipus ha de tindre entre 2 i 30 caràcters.");
-        return false;
-    }
-    return true;
-}
+
 
 function error(element, missatge) {
     const textError = document.createTextNode(missatge);
@@ -74,10 +67,10 @@ function enviarFormulari() {
     const id = document.getElementById("id").value;
     const nom = document.getElementById("nom").value;
     const id_carrer = document.getElementById("id_carrer").value;
-    const adreça = document.getElementById("adreça").value;
-    const tipus = document.getElementById("tipus").value;
+    const id_storage = document.getElementById("id_storage").value;
+    
 
-    const novaEstanteria = { id, nom, id_carrer, adreça, tipus };
+    const novaEstanteria = { id, nom, id_carrer, id_storage };
 
     let arrShelfs = JSON.parse(localStorage.getItem("shelfs")) || [];
     arrShelfs.push(novaEstanteria);
