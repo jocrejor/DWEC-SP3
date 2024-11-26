@@ -130,18 +130,16 @@ function validarNIF() {
     return true;
 }
 
-function validarNum() {
-    var elementNum = document.getElementById("phone");
-    var numPattern = /^\d{9}$/;
 
-    if (!elementNum.checkValidity()) {
-        if (elementNum.validity.valueMissing) {
-            error(elementNum, "Deus introduïr un número.");
-            return false;
-        } else if (!numPattern.test(elementNum.value)) {
-            error(elementNum, "Deus introduïr un número vàlid de 9 dígits.");
-            return false;
+function validarNum() {
+    let element = document.getElementById("phone");
+    if (!element.checkValidity()) {
+        if (element.validity.valueMissing) {
+            error(element, "Deus introduïr un número.");
+        } else if (element.validity.patternMismatch) {
+            error(element, "Deus introduïr un número vàlid de 9 dígits.");
         }
+        return false;
     }
     return true;
 }
@@ -250,10 +248,11 @@ function enviarFormulari() {
             nif: document.getElementById("nif").value,
             phone: document.getElementById("phone").value,
             email: document.getElementById("email").value,
+            address: document.getElementById("address").value,
             state: document.getElementById("state").value,
             province: document.getElementById("province").value,
             city: document.getElementById("city").value,
-            address: document.getElementById("address").value
+            cp: document.getElementById("cp").value
         };
         localStorage.setItem("Carriers", JSON.stringify(carriers));
     } else {

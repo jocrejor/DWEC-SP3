@@ -59,10 +59,11 @@ function obtindreTransportistes() {
         tr.appendChild(crearTd(carrier.nif));
         tr.appendChild(crearTd(carrier.phone));
         tr.appendChild(crearTd(carrier.email));
+        tr.appendChild(crearTd(carrier.address,true));
         tr.appendChild(crearTd(carrier.state,true));
         tr.appendChild(crearTd(carrier.province,true));
         tr.appendChild(crearTd(carrier.city,true));
-        tr.appendChild(crearTd(carrier.address,true));
+        tr.appendChild(crearTd(carrier.cp,true));
 
         llistat.appendChild(tr);
     });

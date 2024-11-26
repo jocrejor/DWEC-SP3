@@ -9,13 +9,15 @@ window.onload = function () {
         // Lista de campos y valores
         const fields = [
             { label: "Nom", value: carrier.name },
+            { label: "ID", value: carrier.id },
             { label: "NIF", value: carrier.nif },
             { label: "Telèfon", value: carrier.phone },
             { label: "Correu electrònic", value: carrier.email },
+            { label: "Direcció", value: carrier.address },
             { label: "Estat", value: carrier.state },
             { label: "Província", value: carrier.province },
             { label: "Ciutat", value: carrier.city },
-            { label: "Direcció", value: carrier.address }
+            { label: "cp", value: carrier.cp }
         ];
 
         // Generar las filas de la tabla

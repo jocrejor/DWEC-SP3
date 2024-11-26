@@ -1,66 +1,5 @@
 
-
 window.onload = iniciar;
-
-
-
-
-/////
-/////
-/////
-// Local
-let url = 'http://localhost:5001/'
-// Servidor
-//let url = 'http://10.2.218.254:5001/'
-
-async function postData(url,endPoint, data = {}) {
-  try {
-    const response = await fetch(url + endPoint, {
-      method: 'POST',  // Método HTTP
-      headers: {
-        'Content-Type': 'application/json'  // Tipo de contenido
-      },
-      body: JSON.stringify(data)  // Datos JSON a enviar
-    });
-
-    if (!response.ok) {
-      throw new Error('Error en la solicitud POST');
-    }
-
-    const result = await response.json();  // Espera la conversión de la respuesta a JSON
-    console.log(result);  // Trabaja con la respuesta
-
-  } catch (error) {
-    console.error('Error:', error);  // Manejo de errores
-  }
-}
-
-// Acces a les dades
-async function getNewId(url,endPoint) {
-  try {
-    const response = await fetch(url + endPoint );  // Reemplaza 'data.json' con la ruta de tu archivo
-
-    if (!response.ok) {
-      throw new Error('Error al obtener el archivo JSON');
-    }
-
-    const data =  await response.json();
-    const maxId = data.reduce((max, ele) => 
-      (ele.id > max.id ? ele: max), {});
-    const newId= ++ maxId.id;
-    return newId + '' ;
-
-  } catch (error) {
-    console.error('Error:', error);  // Manejo de errores
-  }
-}
-
-////
-////
-////
-
-
-
 
 
 
@@ -152,51 +91,85 @@ function validarNIF() {
 }
 
 function validarNum() {
-    var elementNum = document.getElementById("phone");
-    var numPattern = /^\d{9}$/;
+    let element = document.getElementById("phone");
+    if (!element.checkValidity()) {
+        if (element.validity.valueMissing) {
+            error(element, "Deus introduïr un número.");
+        } else if (element.validity.patternMismatch) {
+            error(element, "Deus introduïr un número vàlid de 9 dígits.");
+        }
+        return false;
+    }
+    return true;
+}
 
-    if (!elementNum.checkValidity()) {
-        if (elementNum.validity.valueMissing) {
-            error(elementNum, "Deus introduïr un número.");
+
+function validarEmail() {
+    let element = document.getElementById("email");
+    if (!element.checkValidity()) {
+        if (element.validity.valueMissing) {
+            error(element, "El correu electrònic és obligatori.");
+        } else if (element.validity.patternMismatch) {
+            error(element, "El correu electrònic no és vàlid.");
+        }
+        return false;
+    }
+    return true;
+}
+
+function validarDireccio() {
+    var elementNom = document.getElementById("address");
+    if (!elementNom.checkValidity()) {
+        if (elementNom.validity.valueMissing) {
+            error(elementNom, "Deus introduïr una Direcció.");
             return false;
-        } else if (!numPattern.test(elementNum.value)) {
-            error(elementNum, "Deus introduïr un número vàlid.");
+        } else if (elementNom.validity.patternMismatch) {
+            error(elementNom, "La direcció es incorrecta");
             return false;
         }
     }
     return true; // Tot correcte
 }
 
-function validarEmail() {
-    var elementEmail = document.getElementById("email");
-    var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-    if (!elementEmail.checkValidity()) {
-        if (elementEmail.validity.valueMissing) {
-            error(elementEmail, "Deus introduïr un correu electrònic.");
-            return false;
-        } else if (!emailPattern.test(elementEmail.value)) {
-            error(elementEmail, "Deus introduïr un correu electrònic vàlid.");
-            return false;
-        }
+function validarState() {
+    var elementState = document.getElementById("state");
+    if (elementState.value === "") {
+        error(elementState, "Deus introduïr un estat.");
+        return false;
     }
     return true;
 }
 
-function validarDireccio() {
-    var elementaddress = document.getElementById("address");
-    var addressPattern = /^(?=\S*\s)(?=[^a-zA-Z]*[a-zA-Z])(?=\D*\d)[a-zA-Z\d\s',.#/-]*$/;
+function validarProvince() {
+    var elementProvince = document.getElementById("province");
+    if (elementProvince.value === "") {
+        error(elementProvince, "Deus introduïr una província.");
+        return false;
+    }
+    return true;
+}
 
-    if (!elementaddress.checkValidity()) {
-        if (elementaddress.validity.valueMissing) {
-            error(elementaddress, "Deus introduïr una direcció.");
+function validarCity() {
+    var elementCity = document.getElementById("city");
+    if (elementCity.value === "") {
+        error(elementCity, "Deus introduïr una ciutat.");
+        return false;
+    }
+    return true;
+}
+
+function validarCP() {
+    var element = document.getElementById("cp");
+    if (!element.checkValidity()) {
+        if (element.validity.valueMissing) {
+            error(element, "Deus introduïr un codi postal.");
             return false;
-        } else if (!addressPattern.test(elementaddress.value)) {
-            error(elementaddress, "Deus introduïr una direcció.");
+        } else if (element.validity.patternMismatch) {
+            error(element, "El codi postal es incorrecte.");
             return false;
         }
     }
-    return true;
+    return true; // Tot correcte
 }
 
 function validar(e) {
@@ -206,6 +179,10 @@ function validar(e) {
     validarDireccio() &&
     validarNIF() && 
     validarNum()&& 
+    validarCity() &&
+    validarState() &&
+    validarProvince() &&
+    validarCP() &&
     validarEmail()) {
         enviarFormulari();
         return true;
@@ -241,10 +218,12 @@ async function enviarFormulari() {
             nif: document.getElementById("nif").value,
             phone: document.getElementById("phone").value,
             email: document.getElementById("email").value,
+            address: document.getElementById("address").value,
             state: document.getElementById("state").value,
             province: document.getElementById("province").value,
             city: document.getElementById("city").value,
-            address: document.getElementById("address").value
+            cp: document.getElementById("cp").value
+            
     };
 
     await postData(url, "saveTransportista", nouTransportista);
@@ -255,10 +234,10 @@ async function enviarFormulari() {
 
     limpiarFormulari();
 
-    setTimeout(() => {
+    
         window.location.assign("../llistar/llistatTransportistes.html");
-    }, 100);
-    console.log("Transportista gravat correctament:", nouTransportista);
+    
+    
 
 }
 
