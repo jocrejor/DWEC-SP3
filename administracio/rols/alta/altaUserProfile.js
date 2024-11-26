@@ -83,5 +83,5 @@ async function enviarFormulari() {
     }
   }, 1000);
 
-  location.assign("../llistat/llistat/UserProfile.html");
+  location.assign("../llistat/llistatUserProfile.html");
 }

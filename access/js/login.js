@@ -1,5 +1,5 @@
 let currentUser;
- //obtinre els usuaris 
+ //obtindre els usuaris 
 let users; 
     
 

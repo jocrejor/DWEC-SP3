@@ -20,33 +20,37 @@ class User {
 }
 
 function home() {
-  location.assign("../index.html");
+  location.assign("../llistat/llistatUsuaris.html");
 }
 
-// Comprovar si hi ha un usuari en localStorage
-function thereIsUser() {
-  const currentUserId = JSON.parse(localStorage.getItem("currentUserId"));
-  if (!currentUserId) {
-    alert("No hi ha cap usuari actiu.");
-    return;
+// Funció per llistar els tipus d'usuaris des del servidor
+async function listTipus() {
+  try {
+    // Carregar els rols des del servidor
+    const userProfileData = await getData(url, "userProfile");
+
+    const select = document.getElementById("rol");
+    select.innerHTML = "";
+
+    // Opció per defecte
+    const defaultOption = document.createElement("option");
+    defaultOption.text = "Seleccioneu un rol";
+    defaultOption.value = "0";
+    select.appendChild(defaultOption);
+
+    userProfileData.forEach((tipus) => {
+      if (tipus.id != 1) {
+        let newOption = document.createElement("option");
+        newOption.value = `${tipus.id}`;
+        newOption.textContent = `${tipus.name}`;
+        select.appendChild(newOption);
+      }
+    });
+  } catch (error) {
+    console.error('Error al carregar els rols:', error);
   }
 }
 
-// Funció per llistar els tipus d'usuaris des del localStorage
-function listTipus() {
-  const user_profile = JSON.parse(localStorage.getItem("user_profile")) || { userProfile: [] };
-  const select = document.querySelector("select");
-
-  user_profile.userProfile.forEach((tipus) => {
-    if (tipus.id != 1) {
-      let newOption = document.createElement("option");
-      newOption.setAttribute("id", `${tipus.id}`);
-      let innerOption = document.createTextNode(`${tipus.name}`);
-      newOption.appendChild(innerOption);
-      select.appendChild(newOption);
-    }
-  });
-}
 
 // Funció per validar el nom
 function validarNom() {
@@ -142,5 +146,5 @@ async function enviarFormulari() {
     }
   }, 1000);
 
-  location.assign("llistatUsuaris.html");
+  location.assign("../llistat/llistatUsuaris.html");
 }
