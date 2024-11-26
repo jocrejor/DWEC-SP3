@@ -46,7 +46,7 @@ async function getNewId(url,endPoint) {
 
     const data =  await response.json();
     const maxId = data.reduce((max, ele) => 
-      (ele.id > max.id ? ele: max), data[0]);
+      (ele.id > max.id ? ele: max), {});
     const newId= ++ maxId.id;
     return newId + '' ;
 
@@ -232,11 +232,11 @@ function esborrarError() {
 
 
 
-function enviarFormulari() {
-    // Gravar al localStorage
-    var carriers = JSON.parse(localStorage.getItem("Carriers")) || [];
-    var nouTransportista = {
-            id: document.getElementById("id").value,
+async function enviarFormulari() {
+    const nouId = await getNewId(url, "getTransportistaId");
+
+    const nouTransportista = {
+            id: nouId,
             name: document.getElementById("name").value,
             nif: document.getElementById("nif").value,
             phone: document.getElementById("phone").value,
@@ -247,9 +247,22 @@ function enviarFormulari() {
             address: document.getElementById("address").value
     };
 
+    await postData(url, "saveTransportista", nouTransportista);
+
+    const carriers = JSON.parse(localStorage.getItem("Carriers")) || [];
     carriers.push(nouTransportista);
     localStorage.setItem("Carriers", JSON.stringify(carriers));
 
+    limpiarFormulari();
+
+    setTimeout(() => {
+        window.location.assign("../llistar/llistatTransportistes.html");
+    }, 100);
+    console.log("Transportista gravat correctament:", nouTransportista);
+
+}
+
+function limpiarFormulari() {
     // Esborrar camps
     document.getElementById("name").value = "";
     document.getElementById("id").value = "";
@@ -260,10 +273,4 @@ function enviarFormulari() {
     document.getElementById("province").value = "";
     document.getElementById("city").value = "";
     document.getElementById("address").value = "";
-
-    setTimeout(function () {
-        window.location.assign("../llistar/llistatTransportistes.html");
-    }, 100);
-    console.log("Transportista gravat correctament:", nouTransportista);
-
 }
