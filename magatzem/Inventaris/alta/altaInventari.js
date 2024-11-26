@@ -58,13 +58,11 @@ async function generarInventari() {
     await postData(url, "Inventory", newInventory);
 
     //inventoryLine
-    inventoryLine = [];
     let idInventoryLine = await getNewId(url, "InventoryLine"); 
     
-    filteredSpaces.forEach(space => {
+    await filteredSpaces.forEach(space => {
         let newInventoryLine =  {
             inventory_id: idInventory,
-            lineInventory_id: ++idInventoryLine, // Generar ID único para la línea.
             product_id: space.product_id,
             real_quantity: space.quantity,
             user: 1,
@@ -74,9 +72,8 @@ async function generarInventari() {
             space_id: space.id
         }
 
-        inventoryLine.push(newInventoryLine);
+        postData(url, "InventoryLine", newInventoryLine);
     });
 
-    await postData(url, "InventoryLine", inventoryLine);
     alert("Inventari Generat Correctament")
 }

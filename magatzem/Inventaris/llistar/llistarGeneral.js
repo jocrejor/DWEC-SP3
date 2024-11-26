@@ -64,7 +64,7 @@ async function obtindreInventaris() {
     });
 }
 
-async function esborrarOrdre(id) {
+async function esborrarInventari(id) {
     // fer les comprobacions si l'orden es pot esborrars. 
     // esborrar del localstorage
     //Esborrar de la llista de la pàgina html ( mai recargar la pàgina)
@@ -76,8 +76,8 @@ async function esborrarOrdre(id) {
         arrInventariLine = arrInventariLine.filter(linea => linea.inventory_id !== id);
 
         await deleteData(url, "Inventory",arrInventari.id);
+        
         //esborrar linies
-
         const filaOrden = document.querySelector(`tr[id="${id}"]`);
         if (filaOrden) {
             filaOrden.remove();
