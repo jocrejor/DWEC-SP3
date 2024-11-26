@@ -10,14 +10,21 @@ function nouUsuari() {
   window.location.assign("../alta/altaUsuaris.html");
 }
 
+// Funció per obtenir la llista d'usuaris de la base de dades
 async function obtindreUsuaris() {
   try {
-    const usersList = await getData(url, "users"); // Obtenció de la llista d'usuaris des del servidor
+    const usersList = await getData(url, "User");
 
     if (usersList && Array.isArray(usersList)) {
-      usersList.forEach((user) => {
-        crearFila(user);
-      });
+      // Comprova si la llista té usuaris
+      if (usersList.length === 0) {
+        console.log("No hi ha usuaris disponibles.");
+      } else {
+        // Crear una fila per a cada usuari
+        usersList.forEach((user) => {
+          crearFila(user);
+        });
+      }
     } else {
       console.error("No s'ha obtingut una llista d'usuaris vàlida.");
     }
@@ -66,11 +73,15 @@ function crearFila(user) {
 
 // Funció asíncrona per esborrar un usuari
 async function esborrarUsuari(id) {
-  await deleteData(url, "users", id); // Eliminació asíncrona
+  try {
+    await deleteData(url, "users", id); // Eliminació asíncrona de la base de dades
 
-  const rowToDelete = document.getElementById(`${id}`);
-  if (rowToDelete) {
-    rowToDelete.remove();
+    const rowToDelete = document.getElementById(`${id}`);
+    if (rowToDelete) {
+      rowToDelete.remove();
+    }
+  } catch (error) {
+    console.error("Error en esborrar l'usuari:", error);
   }
 }
 

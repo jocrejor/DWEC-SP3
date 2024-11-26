@@ -14,7 +14,7 @@ class User {
     this.name = nom;
     this.email = correu;
     this.password = pw;
-    this.role = rol;
+    this.rol = rol;
     this.image = imatge;
   }
 }
