@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", async function () {
-    const urlBase = "http://localhost:3000/";  // URL base pero s'ha de canviar depenent del npm start
+    const urlBase = "http://localhost:5001/";
     const endPoint = "OrderLineReception_Status"; 
 
     const inputId = document.getElementById("id");

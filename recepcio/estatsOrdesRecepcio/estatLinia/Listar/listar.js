@@ -1,5 +1,5 @@
 // URL base i endpoint del servidor
-const urlBase = "http://localhost:3000/";
+const urlBase = "http://localhost:5001/";
 const endPoint = "OrderLineReception_Status";
 
 window.onload = main;
@@ -21,17 +21,11 @@ function main() {
  */
 async function getEstats() {
     try {
-        const response = await fetch('../../../../api/BBDD.json');
-
-        if (!response.ok) {
-           console.error('Error al obtenir els estats del servidor');
-        }
-
-        const data = await response.json(); 
+        const data = await getData(urlBase,endPoint);
         
         // Comprovació
-        if (data.OrderLineReception_Status && Array.isArray(data.OrderLineReception_Status)) {
-            mostrarTaula(data.OrderLineReception_Status);
+        if (data && Array.isArray(data)) {
+            mostrarTaula(data);
         } else{
             console.error('Error al obtenir els estats del servidor');
         }

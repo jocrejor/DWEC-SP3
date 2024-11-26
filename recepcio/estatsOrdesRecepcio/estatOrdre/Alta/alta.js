@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", async function () {
-    const urlBase = "http://localhost:3000/";
+    const urlBase = "http://localhost:5001/";
     const endPoint = "OrderReception_Status";
 
     // Incrementa ID

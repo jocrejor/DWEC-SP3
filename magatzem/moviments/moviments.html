@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estat de Línia d'Orde de Recepció</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="moviments.js" defer></script>
+    <script src="../../apiAccess/crud.js" defer></script>
+    <style>
+        .error {
+            color: red;
+        }
+        .valid {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Moviments</h2>
+        
+        <div id="tablaEstadoOrdenes" class="table-responsive my-3">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Producte ID</th>
+                        <th>Magatzem ID</th>
+                        <th>Carrer ID</th>
+                        <th>Estanteria ID</th>
+                        <th>Espai ID</th>
+                        <th>Quantitat</th> 
+                        <th>Data</th> <!--aquest es auto-->
+                        <th>Treballador</th> <!--de aon ho trac?-->
+                        <th>Origen</th> <!--selector?-->
+                        <th>Document</th> <!--es alta?-->
+                    </tr>
+                </thead>
+                <tbody id="tablaContenido"></tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
