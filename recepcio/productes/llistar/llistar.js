@@ -25,7 +25,7 @@ async function modificarProducte(productId) {
         // Obtenim les dades actuals del producte
         const product = await getData(url, `${endPoint}/${productId}`);
         
-        window.localStorage.setItem('productoModificado', JSON.stringify(product));
+        window.localStorage.setItem('producteModificat', JSON.stringify(product));
 
         // Redirigim a la página de modificar
         window.location.href = '../modificar/modificar.html';
@@ -44,7 +44,6 @@ async function obtenerProductos() {
         console.error('Error al obtener los productos:', error);
     }
 }
-
 
 // Función para mostrar los productos en la tabla
 function mostrarProductes(arrProductes) {
@@ -85,9 +84,6 @@ function mostrarProductes(arrProductes) {
         let weightCell = document.createElement('td');
         weightCell.appendChild(document.createTextNode(product.weight));
 
-        let lotorserialCell = document.createElement('td');
-        lotorserialCell.appendChild(document.createTextNode(product.lotorserial));
-
         let skuCell = document.createElement('td');
         skuCell.appendChild(document.createTextNode(product.sku));
 
@@ -101,7 +97,6 @@ function mostrarProductes(arrProductes) {
         row.appendChild(descriptionCell);
         row.appendChild(volumeCell);
         row.appendChild(weightCell);
-        row.appendChild(lotorserialCell);
         row.appendChild(skuCell);
         row.appendChild(image_urlCell);
 

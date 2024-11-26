@@ -4,6 +4,25 @@ window.onload = iniciar;
 
 function iniciar() {
     document.getElementById("btnAfegir").addEventListener("click", validar, false);
+    cargarOpcionesLotorserial();
+}
+
+function cargarOpcionesLotorserial() {
+    const opciones = [
+        { value: "Empty", text: "" },
+        { value: "Non", text: "Non" },
+        { value: "Lote", text: "Lot" },
+        { value: "Serial", text: "Serial" }
+    ];
+
+    const selectLotorserial = document.getElementById("lotorserial");
+
+    opciones.forEach(opcion => {
+        const optionElement = document.createElement("option");
+        optionElement.value = opcion.value;
+        optionElement.textContent = opcion.text;
+        selectLotorserial.appendChild(optionElement);
+    });
 }
 
 function validarSKU() {
@@ -130,7 +149,7 @@ async function validar(e) {
             image_url: document.getElementById("image_url").value
         };
 
-        // Obtener el nuevo ID para el producto
+        // Obtindre el nou ID per al producto
         try {
             const newId = await getNewId(url, 'Product');
 

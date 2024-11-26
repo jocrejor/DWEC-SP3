@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulari Alta</title>
+    <title>Formulari Modificar</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script type="text/javascript" src="../../../apiAccess/crud.js"></script>
     <script type="text/javascript"src="modificar.js" defer></script>
     <style> .error {
         border:solid 2px #FF0000; 
@@ -23,14 +24,14 @@
         </div>
 
         <div class="form-group row">
-            <label for="name" class="col-sm-2 col-form-label">Nombre</label>
+            <label for="name" class="col-sm-2 col-form-label">Nom</label>
         <div class="col-sm-10">
             <input type="text"  class="form-control" id="name"  pattern="^[A-Za-z\s]{2,50}$" required></br>
         </div>
         </div>
 
         <div class="form-group row">
-            <label for="description" class="col-sm-2 col-form-label">Descripción</label>
+            <label for="description" class="col-sm-2 col-form-label">Descripció</label>
         <div class="col-sm-10">
             <input type="text" class="form-control" id="description" pattern="^.{0,255}$"></br>
         </div>
@@ -44,29 +45,30 @@
         </div>
 
         <div class="form-group row">
-            <label for="weight" class="col-sm-2 col-form-label">Peso</label>
+            <label for="volume" class="col-sm-2 col-form-label">Pes</label>
         <div class="col-sm-10">
             <input type="number"  class="form-control" id="weight" placeholder="00.00" pattern="^\d+(\.\d{1,2})?$" step="0.01" required></br>
         </div>
         </div>
 
-        <label for="lotorserial" class="col-sm-2 col-form-label">Control lotes</label>
+        <div class="form-group row">
+            <label for="lotorserial" class="col-sm-2 col-form-label">Control lots</label>
+            <div class="col-sm-10">
+                <select name="lotorserial" id="lotorserial" class="form-control">
 
-        <select name="lotorserial" id="lotorserial" >
-            <option value="Lot">Lot</option>
-            <option value="Non">Non</option>
-            <option value="Serial">Serial</option>
-        </select>
+                </select>
+            </div>
+        </div>
         
         <div class="form-group row">
-            <label for="image_url" class="col-sm-2 col-form-label">URL_Imagen</label>
+            <label for="image_url" class="col-sm-2 col-form-label">URL_Image</label>
         <div class="col-sm-10">
             <input type="url"  class="form-control" id="image_url"  placeholder="https://ejemplo.com" pattern="^(http(s)?:\/\/)?(www\.)?[\w\-~]+(\.[\w\-~]+)+(\/[\w\-~]*)*(\?[\w\-~&=]*)?(#[\w\-~]*)?$" size="40" required></br>
         </div>
         </div>
 
         <h5 id="mensajeError" class="text-danger"></h5>
-        <button id="btnModificar" class="btn btn-primary"> Modificar</button>      
+        <button id="btnModificar" class="btn btn-primary">Modificar</button>      
     </form>
 </div>
 </body>

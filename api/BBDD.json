@@ -42572,30 +42572,30 @@
       "sku": "SKU12345",
       "name": "Producto uno",
       "description": "Este es el primer producto",
-      "volume": 10.5,
-      "weight": 2.75,
-      "lotorserial": "Non",
+      "volume": "10.5",
+      "weight": "2.75",
+      "lotorserial": "Serial",
       "image_url": "https://www.ejemplo.com/images/producto1.jpg"
     },
     {
-      "id": "2",
-      "sku": "SKU67890",
-      "name": "Producto dos",
-      "description": "Este es el segundo producto",
-      "volume": 20,
-      "weight": 3.5,
-      "lotorserial": "Lot",
-      "image_url": "https://www.ejemplo.com/images/producto2.jpg"
+      "id": "4",
+      "name": "Hilariano",
+      "description": "producto6222222",
+      "volume": "3",
+      "weight": "56",
+      "lotorserial": "Serial",
+      "sku": "SKU8888833",
+      "image_url": ""
     },
     {
-      "id": "3",
-      "sku": "SKU54321",
-      "name": "Producto tres",
-      "description": "Este es el tercer producto",
-      "volume": 15.75,
-      "weight": 4.1,
-      "lotorserial": "Serial",
-      "image_url": "https://www.ejemplo.com/images/producto3.jpg"
+      "id": "6",
+      "name": "Ramon Llull",
+      "description": "producto62222222222",
+      "volume": "2",
+      "weight": "2",
+      "lotorserial": "Non",
+      "sku": "SKU88888332",
+      "image_url": ""
     }
   ],
   "Lot": [

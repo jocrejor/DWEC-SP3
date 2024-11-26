@@ -3,30 +3,50 @@ window.onload = main;
 function main() {
     document.getElementById("btnModificar").addEventListener("click", validar, false);
 
-    comprovacioProducteLocalStorage();
+    cargarOpcionesLotorserial();
+    comprobacionProductoLocalStorage();
 }
 
-function comprovacioProducteLocalStorage() {
-    let product = JSON.parse(localStorage.getItem("producteModificat"));
+function cargarOpcionesLotorserial() {
+    const opciones = [
+        { value: "Empty", text: "" },
+        { value: "Non", text: "Non" },
+        { value: "Lote", text: "Lot" },
+        { value: "Serial", text: "Serial" }
+    ];
 
-    if (product) {
-        document.getElementById("name").value = product.name;
-        document.getElementById("description").value = product.description;
-        document.getElementById("volume").value = product.volume;
-        document.getElementById("weight").value = product.weight;
-        document.getElementById("lotorserial").value = product.lotorserial;
-        document.getElementById("sku").value = product.sku;
-        document.getElementById("image_url").value = product.image_url;
-    }
-    else {
+    const selectLotorserial = document.getElementById("lotorserial");
+
+    opciones.forEach(opcion => {
+        const optionElement = document.createElement("option");
+        optionElement.value = opcion.value;
+        optionElement.textContent = opcion.text;
+        selectLotorserial.appendChild(optionElement);
+    });
+}
+
+function comprobacionProductoLocalStorage() {
+    let producto = JSON.parse(localStorage.getItem("producteModificat"));
+
+    if (producto) {
+        document.getElementById("name").value = producto.name;
+        document.getElementById("description").value = producto.description;
+        document.getElementById("volume").value = producto.volume;
+        document.getElementById("weight").value = producto.weight;
+        document.getElementById("lotorserial").value = producto.lotorserial;
+        document.getElementById("sku").value = producto.sku;
+        document.getElementById("image_url").value = producto.image_url;
+    } else {
         console.error("Producto no encontrado en localStorage.");
+        alert("Producto no encontrado. Redirigiendo a la lista de productos.");
+        window.location.assign("listaProductos.html");
     }
 }
 
 function validarName() {
     let name = document.getElementById("name");
     if (!/^[A-Za-z\s]{2,50}$/.test(name.value)) {
-        error(name, "El nombre debe tener entre 2 y 30 caracteres");
+        error(name, "El nombre debe tener entre 2 y 50 caracteres");
         return false;
     }
     return true;
@@ -50,6 +70,16 @@ function validarWeight() {
     return true;
 }
 
+function validarLote() {
+    let lote = document.getElementById("lotorserial");
+
+    if (lote.value == "Empty") {
+        error(lote, "Tienes que elegir un lote");
+        return false;
+    }
+
+    return true;
+}
 
 function validarSKU() {
     let sku = document.getElementById("sku");
@@ -60,7 +90,6 @@ function validarSKU() {
     return true;
 }
 
-
 function validarImage_url() {
     let image_url = document.getElementById("image_url");
     if (!/^(http(s)?:\/\/)?(www\.)?[\w\-~]+(\.[\w\-~]+)+(\/[\w\-~]*)*(\?[\w\-~&=]*)?(#[\w\-~]*)?$/.test(image_url.value)) {
@@ -70,13 +99,46 @@ function validarImage_url() {
     return true;
 }
 
-function validar(e) {
+async function validar(e) {
     borrarError();
     e.preventDefault();
 
-    if (validarName() && validarVol() && validarWeight() && validarSKU() && validarImage_url) {
-        enviarFormulario();
-        return true;
+    if (validarName() && validarVol() && validarWeight() && validarLote() && validarSKU()) {
+
+        // Modifiquem el objecte
+        let producto = JSON.parse(localStorage.getItem("producteModificat")); 
+
+        // Si existeix el producte, actualitzem les seues dades amb els valors del formulari
+        if (producto) {
+            producto.name = document.getElementById("name").value;
+            producto.description = document.getElementById("description").value;
+            producto.volume = document.getElementById("volume").value;
+            producto.weight = document.getElementById("weight").value;
+            producto.lotorserial = document.getElementById("lotorserial").value;
+            producto.sku = document.getElementById("sku").value;
+            producto.image_url = document.getElementById("image_url").value;
+
+            try {
+                // Enviem el producte actualitzat al servidor utilitzant updateId
+                await updateId(url, 'Product', producto.id, producto);
+
+                // Netegem els camps
+                setTimeout(function () {
+                    document.getElementById("name").value = "";
+                    document.getElementById("description").value = "";
+                    document.getElementById("volume").value = "";
+                    document.getElementById("weight").value = "";
+                    document.getElementById("lotorserial").value = "";
+                    document.getElementById("sku").value = "";
+                    document.getElementById("image_url").value = "";
+                }, 1000);
+
+                // Redirigir a la página de llistat de productes
+                window.location.href = '../llistar/llistar.html';
+            } catch (error) {
+                console.error('Error al actualizar el producto:', error);
+            }
+        }
     } else {
         return false;
     }
@@ -96,31 +158,4 @@ function borrarError() {
         ele.classList.remove("error");
     }
     document.getElementById("mensajeError").replaceChildren();
-}
-
-function enviarFormulario() {
-    
-    let product = {
-        id: JSON.parse(localStorage.getItem("modProducto")).id,
-        name: document.getElementById("name").value,
-        description: document.getElementById("description").value,
-        volume: document.getElementById("volume").value,
-        weight: document.getElementById("weight").value,
-        lotorserial: document.getElementById("lotorserial").value,
-        sku: document.getElementById("sku").value,
-        image_url: document.getElementById("image_url").value
-    };
-
-     let arrProductos = JSON.parse(localStorage.getItem("products")) || [];
-     let index = arrProductos.findIndex(p => p.id == product.id);
-    
-
-
-    if (index !== -1) {
-        arrProductos[index] = product;
-        localStorage.setItem("products", JSON.stringify(arrProductos));
-    }
-
-    localStorage.removeItem("modProducto");
-    window.location.assign("listaProductos.html");
 }
