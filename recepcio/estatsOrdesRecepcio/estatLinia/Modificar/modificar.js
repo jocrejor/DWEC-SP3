@@ -8,7 +8,7 @@ const nameElement = document.getElementById("name");
 // Inicialització principal
 window.onload = function () {
     carregarDadesEstat();
-    document.getElementById("guardar").addEventListener("click", guardarCanvis);
+    document.getElementById("guardar").addEventListener("click", validarNomEstat());
     document.getElementById("cancelar").addEventListener("click", () => {
         document.location.href = "../Listar/listar.html";
     });
@@ -67,6 +67,7 @@ function mostrarMissatgeError(missatge) {
     }
     errorElement.textContent = missatge;
 }
+
 
 // Guarda els canvis a l'estat he copiat lo de crespo, perque no se com connectar-ho
 async function guardarCanvis(e) {
