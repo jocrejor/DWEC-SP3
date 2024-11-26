@@ -33,11 +33,11 @@
     },
     {
       "id": "5",
-      "title": "Provapost",
-      "photo": "C:\\fakepath\\Screenshot 2024-10-01 002110.png",
-      "creation_date": "2024-11-25T21:52:49.835Z",
-      "description": "Descripcio una altra vegada detallada",
-      "tag": "Tecnologia"
+      "title": "Provapostda",
+      "photo": "C:\\fakepath\\8_reseña.png",
+      "creation_date": "2024-11-26",
+      "description": "Descripcio una altra vegada detalladadasda",
+      "tag": "Etiquetas"
     },
     {
       "id": "6",
@@ -46,20 +46,98 @@
       "creation_date": "2024-11-25",
       "description": "Descripcio detallada amb molts de detalls incorporats",
       "tag": "Tecnologia"
+    },
+    {
+      "id": "7",
+      "title": "Intentossdsadsa",
+      "photo": "C:\\fakepath\\9_reseña.png",
+      "creation_date": "2024-11-26",
+      "description": "Aquest es un intento de provadada",
+      "tag": "Paulas"
+    },
+    {
+      "id": "4",
+      "title": "Primerpost",
+      "photo": "C:\\fakepath\\Screenshot 2024-10-02 235940.png",
+      "creation_date": "2024-11-25T21:51:59.601Z",
+      "description": "Descripcion detallada del post",
+      "tag": "Tecnologia"
+    },
+    {
+      "id": "5",
+      "title": "Provapostda",
+      "photo": "C:\\fakepath\\8_reseña.png",
+      "creation_date": "2024-11-26",
+      "description": "Descripcio una altra vegada detalladadasda",
+      "tag": "Etiquetas"
+    },
+    {
+      "id": "6",
+      "title": "BuenosDias",
+      "photo": "C:\\fakepath\\Screenshot 2024-10-01 002110.png",
+      "creation_date": "2024-11-25",
+      "description": "Descripcio detallada amb molts de detalls incorporats",
+      "tag": "Tecnologia"
+    },
+    {
+      "id": "10",
+      "title": "Intentossdsadsa",
+      "photo": "C:\\fakepath\\9_reseña.png",
+      "creation_date": "2024-11-26",
+      "description": "Aquest es un intento de provadada",
+      "tag": "Paulas"
+    },
+    {
+      "id": "8",
+      "title": "Paulassdad",
+      "photo": "C:\\fakepath\\9_reseña.png",
+      "creation_date": "2024-11-26",
+      "description": "dafasfsafsadsadsad",
+      "tag": "Etiquetas"
+    },
+    {
+      "id": "9",
+      "title": "Laura",
+      "photo": "C:\\fakepath\\icona_ma.png",
+      "creation_date": "2024-11-26",
+      "description": "dsadsafafsa",
+      "tag": "Tecnologia"
+    },
+    {
+      "id": "10",
+      "title": "Paulafmakjsfsa",
+      "photo": "C:\\fakepath\\8_reseña.png",
+      "creation_date": "2024-11-26",
+      "description": "abhfiahfijhff",
+      "tag": "Etiquetas"
+    },
+    {
+      "id": "10",
+      "title": "Quetadadasd",
+      "photo": "C:\\fakepath\\8_reseña.png",
+      "creation_date": "2024-11-26",
+      "description": "aihfiahfjdndsf",
+      "tag": "Etiquetas"
     }
   ],
   "Comment": [
     {
-      "id": "5",
-      "description": "Intentamos hacer un comentario con todo bien hecho",
-      "post_id": null,
-      "post_title": null
+      "id": "7",
+      "description": "Hola esto es una prueba",
+      "post_id": "4",
+      "post_title": "Primerpost"
+    },
+    {
+      "id": "8",
+      "description": "Que deberiamos de realizar para su funcionamiento",
+      "post_id": "6",
+      "post_title": "BuenosDias"
     }
   ],
   "Tag": [
     {
       "id": "3",
-      "name": "tag3"
+      "name": "Etiquetas"
     },
     {
       "id": "5",
@@ -71,7 +149,11 @@
     },
     {
       "id": "8",
-      "name": "Holas"
+      "name": "Holase"
+    },
+    {
+      "id": "9",
+      "name": "Paulas"
     }
   ],
   "Post_Tag": [

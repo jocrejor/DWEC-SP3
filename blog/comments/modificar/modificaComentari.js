@@ -9,13 +9,13 @@ let comentarioSeleccionado;
 function iniciar() {
     //thereIsUser();
 
-    document.getElementById("btnGravar").addEventListener("click", validar);
+    document.getElementById("btnGravar").addEventListener("click", validar, false);
 
     // Recuperar el comentario seleccionado desde localStorage
     const comentarioSeleccionado = JSON.parse(localStorage.getItem("modComentari")); 
     
     // Mostrar el comentario en el campo de texto
-    document.getElementById("descripcio").setAttribute("value", comentarioSeleccionado.description);
+    document.getElementById("descripcio").textContent =comentarioSeleccionado.description;
     
 }
 

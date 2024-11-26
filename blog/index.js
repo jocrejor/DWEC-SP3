@@ -1,6 +1,10 @@
 window.onload = iniciar;
-// Hilariano
+
+url = 'http://localhost:5002/';
+
 function iniciar() {
+
+    //thereIsUser();
     document.getElementById("login").addEventListener("click", login);
     document.getElementById("gestioUsuaris").addEventListener("click", gestioUsuaris);
     document.getElementById("tancaSessio").addEventListener("click", tancaSessio);
@@ -91,22 +95,22 @@ function tancaSessio() {
 
 //JaviManu
 // Función para mostrar las etiquetas almacenadas en localStorage
-function mostrarEtiquetas() {
-    const etiquetas = JSON.parse(localStorage.getItem("Etiquetas")) || [];
+async function mostrarEtiquetas() {
+    const etiquetas = await getData(url, "Tag");
     const etiquetasList = document.getElementById("etiquetasList");
     etiquetasList.innerHTML = ""; 
 
     // Crear un elemento de lista para cada etiqueta
     etiquetas.forEach(etiqueta => {
         const li = document.createElement("li");
-        const textNode = document.createTextNode(etiqueta.nom);
+        const textNode = document.createTextNode(etiqueta.name);
         li.appendChild(textNode);
         etiquetasList.appendChild(li);
     });
 }
 
-function mostrarPosts() {
-    const posts = JSON.parse(localStorage.getItem("Posts")) || [];
+async function mostrarPosts() {
+    const posts = await getData(url, "Post");
     const mostraPostsContainer = document.querySelector(".mostraPosts");
     mostraPostsContainer.innerHTML = "";
 
@@ -124,20 +128,20 @@ function mostrarPosts() {
         const titulo = document.createElement("p");
         titulo.id = "titol";
         titulo.style.cssText = "font-size: 1.2em; margin: 0; padding: 0.5em; font-weight: bold;";
-        titulo.appendChild(document.createTextNode(post.titol));
+        titulo.appendChild(document.createTextNode(post.title));
 
         // Etiqueta del post
         const etiqueta = document.createElement("p");
         etiqueta.id = "etiqueta";
         etiqueta.style.cssText = "font-size: 0.9em; padding-left: 0.7em;";
-        etiqueta.appendChild(document.createTextNode(post.etiqueta));
+        etiqueta.appendChild(document.createTextNode(post.tag));
 
         // Descripción del post
         const descripcion = document.createElement("p");
         descripcion.id = "descripcio";
         descripcion.style.cssText = "padding-left: 0.8em;";
         descripcion.style.fontSize = "0.8em";
-        descripcion.appendChild(document.createTextNode(post.descripcio));
+        descripcion.appendChild(document.createTextNode(post.description));
 
         // Agregar título, etiqueta y descripción al contenedor de información
         postInfoDiv.appendChild(titulo);
@@ -155,7 +159,7 @@ function mostrarPosts() {
         // Agregar evento al botón "Afegir Comentari"
         btnAfegirComentari.addEventListener("click", function() {
             sessionStorage.setItem("currentPostID", post.id);
-            sessionStorage.setItem("currentPostTitle", post.titol);
+            sessionStorage.setItem("currentPostTitle", post.title);
             window.location.href = "comments/alta/altaComentari.html";
         });
 
@@ -201,12 +205,12 @@ function mostrarPosts() {
 
 
 // Función para mostrar los comentarios relacionados con un post específico
-function mostrarComentariosPorPost(postID, comentariosDiv) {
-    const comentaris = JSON.parse(localStorage.getItem("Comentaris")) || [];
+async function mostrarComentariosPorPost(postID, comentariosDiv) {
+    const comentaris = await getData(url, "Comment");
     const user = JSON.parse(localStorage.getItem("currentUser")) || [];
 
     // Filtrar los comentarios que coinciden con el postID
-    const comentariosRelacionados = comentaris.filter(comentari => comentari.postID === postID.toString());
+    const comentariosRelacionados = comentaris.filter(comentari => comentari.post_id === postID.toString());
 
     // Agregar cada comentario al contenedor de comentarios
     comentariosRelacionados.forEach(comentario => {
@@ -221,7 +225,7 @@ function mostrarComentariosPorPost(postID, comentariosDiv) {
         usuario.appendChild(document.createTextNode(`Usuario: ${comentario.user || user.name}`));
 
         const descripcio = document.createElement("p");
-        descripcio.appendChild(document.createTextNode(comentario.descripcio));
+        descripcio.appendChild(document.createTextNode(comentario.description));
 
         comentarioDiv.appendChild(usuario);
         comentarioDiv.appendChild(descripcio);

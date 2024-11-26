@@ -5,6 +5,8 @@ url = 'http://localhost:5002/';
 let postSeleccionado;
 
 function main() {
+    //thereIsUser();
+    document.getElementById("btnGravar").addEventListener("click", validar, false);
     const postSeleccionado = JSON.parse(localStorage.getItem("modPost"));
 
     document.getElementById("titol").setAttribute("value", postSeleccionado.title);
@@ -32,8 +34,6 @@ async function cargarEtiquetas(etiquetaSeleccionada) {
         selectEtiqueta.appendChild(option);
     });
 }
-
-
 
 function validar(e) {
     e.preventDefault();
@@ -68,17 +68,25 @@ function esborrarError() {
     document.getElementById("missatgeError").textContent = "";
 }
 
+function formatDate(date) {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; 
+    const day = date.getDate();
+    return `${year}-${month}-${day}`;
+  }
+
 async function enviarFormulari() {
     const postSeleccionado = JSON.parse(localStorage.getItem("modPost"));
 
     const titolModificat = document.getElementById("titol").value;
+    const fotoModificada = document.getElementById("foto").value;
     const descripcioModificada = document.getElementById("descripcio").value;
-    const fotoModificada = document.getElementById("foto").files[0];
     const nomEtiquetaModificada = document.getElementById("nom-etiqueta").value;
 
     postSeleccionado.title = titolModificat;
-    postSeleccionado.description = descripcioModificada;
     postSeleccionado.photo = fotoModificada;
+    postSeleccionado.creation_date = formatDate(new Date);
+    postSeleccionado.description = descripcioModificada;
     postSeleccionado.tag = nomEtiquetaModificada;
 
     await updateId(url, "Post", postSeleccionado.id, postSeleccionado);
