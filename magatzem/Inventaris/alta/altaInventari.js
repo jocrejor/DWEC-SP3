@@ -59,6 +59,7 @@ async function generarInventari() {
         date: dataInventory,
         created_by: 1,
         inventory_status: "Pendent",
+        storage_id: storageSelect
     }
     
     await postData(url, "Inventory", newInventory);
@@ -81,5 +82,6 @@ async function generarInventari() {
         postData(url, "InventoryLine", newInventoryLine);
     });
 
-    alert("Inventari Generat Correctament")
+    alert("Inventari Generat Correctament");
+    window.location.assign("../llistar/llistarGeneral.html");
 }

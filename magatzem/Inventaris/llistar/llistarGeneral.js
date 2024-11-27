@@ -9,6 +9,7 @@ function nouInventari() {
 
 async function obtindreInventaris() {
     var arrInventari = await getData(url,"Inventory");
+    const storages = await getData(url, "Storage");
     var files = document.getElementById('files');
 
     arrInventari.forEach(inventari => {
@@ -49,7 +50,9 @@ async function obtindreInventaris() {
         estatInventari.appendChild(textEstatInventari);
 
         var storage = document.createElement('td');
-        var textStorage = document.createTextNode(inventari.storage);
+        const storageObj = storages.find(storage => storage.id === inventari.storage_id);
+        const storageName =storageObj.name; 
+        var textStorage = document.createTextNode(storageName);
         storage.appendChild(textStorage);
 
         linea.appendChild(esborrarTD);
@@ -84,7 +87,6 @@ async function esborrarInventari(id) {
         alert("Inventari esborrat correctament.");
     }
 }
-
 
 /*async function inventariar(id) {
     const inventory = await getData(url,"Inventory");

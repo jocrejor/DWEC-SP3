@@ -218,7 +218,7 @@
     {
       "id": "01",
       "name": "buit Recepció",
-      "product_id": 0,
+      "product_id": "1",
       "quantity": 0,
       "storage_id": "01",
       "street_id": "01",
@@ -227,7 +227,7 @@
     {
       "id": "02",
       "name": "buit Enviament",
-      "product_id": 0,
+      "product_id": "2",
       "quantity": 0,
       "maxVol": 1000,
       "maxWeight": 500,
@@ -238,7 +238,7 @@
     {
       "id": "03",
       "name": "buit Indències",
-      "product_id": 0,
+      "product_id": "3",
       "quantity": 0,
       "maxVol": 1000,
       "maxWeight": 500,
@@ -249,7 +249,7 @@
     {
       "id": "04",
       "name": "buit 01",
-      "product_id": 104,
+      "product_id": "4",
       "quantity": 60,
       "maxVol": 1000,
       "maxWeight": 500,
@@ -260,7 +260,7 @@
     {
       "id": "05",
       "name": "buit 02",
-      "product_id": 105,
+      "product_id": "5",
       "quantity": 45,
       "maxVol": 1000,
       "maxWeight": 500,
@@ -271,7 +271,7 @@
     {
       "id": "06",
       "name": "buit F1",
-      "product_id": 106,
+      "product_id": "6",
       "quantity": 120,
       "maxVol": 1000,
       "maxWeight": 500,
@@ -282,7 +282,7 @@
     {
       "id": "07",
       "name": "buit G1",
-      "product_id": 107,
+      "product_id": "7",
       "quantity": 90,
       "maxVol": 1000,
       "maxWeight": 500,
@@ -293,7 +293,7 @@
     {
       "id": "08",
       "name": "buit H1",
-      "product_id": 108,
+      "product_id": "8",
       "quantity": 55,
       "maxVol": 1000,
       "maxWeight": 500,
@@ -304,7 +304,7 @@
     {
       "id": "09",
       "name": "buit I1",
-      "product_id": 109,
+      "product_id": "9",
       "quantity": 40,
       "maxVol": 1000,
       "maxWeight": 500,
@@ -315,7 +315,7 @@
     {
       "id": "10",
       "name": "buit J1",
-      "product_id": 110,
+      "product_id": "10",
       "quantity": 80,
       "maxVol": 1000,
       "maxWeight": 500,
@@ -326,7 +326,7 @@
     {
       "id": "11",
       "name": "buit A2",
-      "product_id": 111,
+      "product_id": "11",
       "quantity": 65,
       "maxVol": 1000,
       "maxWeight": 500,
@@ -337,7 +337,7 @@
     {
       "id": "12",
       "name": "buit B2",
-      "product_id": 112,
+      "product_id": "12",
       "quantity": 70,
       "maxVol": 1000,
       "maxWeight": 500,
@@ -348,7 +348,7 @@
     {
       "id": "13",
       "name": "buit C2",
-      "product_id": 113,
+      "product_id": "13",
       "quantity": 85,
       "maxVol": 1000,
       "maxWeight": 500,
@@ -359,7 +359,7 @@
     {
       "id": "14",
       "name": "buit Slot D2",
-      "product_id": 114,
+      "product_id": "14",
       "quantity": 35,
       "maxVol": 1000,
       "maxWeight": 500,
@@ -370,7 +370,7 @@
     {
       "id": "15",
       "name": "buit E2",
-      "product_id": 115,
+      "product_id": "15",
       "quantity": 75,
       "maxVol": 1000,
       "maxWeight": 500,
@@ -381,7 +381,7 @@
     {
       "id": "16",
       "name": "buit F2",
-      "product_id": 116,
+      "product_id": "16",
       "quantity": 90,
       "maxVol": 1000,
       "maxWeight": 500,
@@ -392,7 +392,7 @@
     {
       "id": "17",
       "name": "buit G2",
-      "product_id": 117,
+      "product_id": "17",
       "quantity": 50,
       "maxVol": 1000,
       "maxWeight": 500,
@@ -403,7 +403,7 @@
     {
       "id": "18",
       "name": "buit H2",
-      "product_id": 118,
+      "product_id": "18",
       "quantity": 65,
       "maxVol": 1000,
       "maxWeight": 500,
@@ -414,7 +414,7 @@
     {
       "id": "19",
       "name": "buit I2",
-      "product_id": 119,
+      "product_id": "19",
       "quantity": 110,
       "maxVol": 1000,
       "maxWeight": 500,
@@ -425,7 +425,7 @@
     {
       "id": "20",
       "name": "buit J2",
-      "product_id": 120,
+      "product_id": "20",
       "quantity": 95,
       "maxVol": 1000,
       "maxWeight": 500,
@@ -436,7 +436,7 @@
     {
       "id": "21",
       "name": "buit A3",
-      "product_id": 121,
+      "product_id": "21",
       "quantity": 55,
       "maxVol": 1000,
       "maxWeight": 500,
@@ -447,7 +447,7 @@
     {
       "id": "22",
       "name": "buit B3",
-      "product_id": 122,
+      "product_id": "22",
       "quantity": 60,
       "maxVol": 1000,
       "maxWeight": 500,
@@ -458,7 +458,7 @@
     {
       "id": "23",
       "name": "buit C3",
-      "product_id": 123,
+      "product_id": "23",
       "quantity": 45,
       "maxVol": 1000,
       "maxWeight": 500,
@@ -469,7 +469,7 @@
     {
       "id": "24",
       "name": "buit D3",
-      "product_id": 124,
+      "product_id": "24",
       "quantity": 50,
       "maxVol": 1000,
       "maxWeight": 500,
@@ -480,7 +480,7 @@
     {
       "id": "25",
       "name": "buit E3",
-      "product_id": 125,
+      "product_id": "25",
       "quantity": 100,
       "maxVol": 1000,
       "maxWeight": 500,
@@ -491,7 +491,7 @@
     {
       "id": "26",
       "name": "buit F3",
-      "product_id": 126,
+      "product_id": "26",
       "quantity": 80,
       "maxVol": 1000,
       "maxWeight": 500,
@@ -502,7 +502,7 @@
     {
       "id": "27",
       "name": "buit G3",
-      "product_id": 127,
+      "product_id": "27",
       "quantity": 120,
       "maxVol": 1000,
       "maxWeight": 500,
@@ -513,7 +513,7 @@
     {
       "id": "28",
       "name": "buit H3",
-      "product_id": 128,
+      "product_id": "28",
       "quantity": 65,
       "maxVol": 1000,
       "maxWeight": 500,
@@ -524,7 +524,7 @@
     {
       "id": "29",
       "name": "buit I3",
-      "product_id": 129,
+      "product_id": "29",
       "quantity": 95,
       "maxVol": 1000,
       "maxWeight": 500,
@@ -535,7 +535,7 @@
     {
       "id": "30",
       "name": "buit J3",
-      "product_id": 130,
+      "product_id": "30",
       "quantity": 70,
       "maxVol": 1000,
       "maxWeight": 500,
@@ -42616,6 +42616,256 @@
       "weight": 2.95,
       "lotorserial": "Serial",
       "image_url": "https://www.ejemplo.com/images/producto5.jpg"
+    },
+    {
+      "id": "6",
+      "sku": "SKU18679",
+      "name": "Producto seis",
+      "description": "Este es el sexto producto",
+      "volume": 12.3,
+      "weight": 2.95,
+      "lotorserial": "Serial",
+      "image_url": "https://www.ejemplo.com/images/producto6.jpg"
+    },
+    {
+      "id": "7",
+      "sku": "SKU92654",
+      "name": "Producto siete",
+      "description": "Este es el séptimo producto",
+      "volume": 12.3,
+      "weight": 2.95,
+      "lotorserial": "Serial",
+      "image_url": "https://www.ejemplo.com/images/producto7.jpg"
+    },
+    {
+      "id": "8",
+      "sku": "SKU92654",
+      "name": "Producto ocho",
+      "description": "Este es el octavo producto",
+      "volume": 12.3,
+      "weight": 2.95,
+      "lotorserial": "Serial",
+      "image_url": "https://www.ejemplo.com/images/producto8.jpg"
+    },
+    {
+      "id": "9",
+      "sku": "SKU73165",
+      "name": "Producto nueve",
+      "description": "Este es el noveno producto",
+      "volume": 12.3,
+      "weight": 2.95,
+      "lotorserial": "Serial",
+      "image_url": "https://www.ejemplo.com/images/producto9.jpg"
+    },
+    {
+      "id": "10",
+      "sku": "SKU22222",
+      "name": "Producto diez",
+      "description": "Este es el décimo producto",
+      "volume": 12.3,
+      "weight": 2.95,
+      "lotorserial": "Serial",
+      "image_url": "https://www.ejemplo.com/images/producto11.jpg"
+    },
+    {
+      "id": "11",
+      "sku": "SKU22223",
+      "name": "Producto once",
+      "description": "Este es el producto número once",
+      "volume": 13.5,
+      "weight": 3.2,
+      "lotorserial": "Serial",
+      "image_url": "https://www.ejemplo.com/images/producto12.jpg"
+    },
+    {
+      "id": "12",
+      "sku": "SKU22224",
+      "name": "Producto doce",
+      "description": "Este es el producto número doce",
+      "volume": 14,
+      "weight": 3.5,
+      "lotorserial": "Serial",
+      "image_url": "https://www.ejemplo.com/images/producto13.jpg"
+    },
+    {
+      "id": "13",
+      "sku": "SKU22225",
+      "name": "Producto trece",
+      "description": "Este es el producto número trece",
+      "volume": 15.2,
+      "weight": 3.8,
+      "lotorserial": "Serial",
+      "image_url": "https://www.ejemplo.com/images/producto14.jpg"
+    },
+    {
+      "id": "14",
+      "sku": "SKU22226",
+      "name": "Producto catorce",
+      "description": "Este es el producto número catorce",
+      "volume": 16.1,
+      "weight": 4,
+      "lotorserial": "Serial",
+      "image_url": "https://www.ejemplo.com/images/producto15.jpg"
+    },
+    {
+      "id": "15",
+      "sku": "SKU22227",
+      "name": "Producto quince",
+      "description": "Este es el producto número quince",
+      "volume": 17.4,
+      "weight": 4.3,
+      "lotorserial": "Serial",
+      "image_url": "https://www.ejemplo.com/images/producto16.jpg"
+    },
+    {
+      "id": "16",
+      "sku": "SKU22228",
+      "name": "Producto dieciséis",
+      "description": "Este es el producto número dieciséis",
+      "volume": 18,
+      "weight": 4.5,
+      "lotorserial": "Serial",
+      "image_url": "https://www.ejemplo.com/images/producto17.jpg"
+    },
+    {
+      "id": "17",
+      "sku": "SKU22229",
+      "name": "Producto diecisiete",
+      "description": "Este es el producto número diecisiete",
+      "volume": 19.2,
+      "weight": 4.8,
+      "lotorserial": "Serial",
+      "image_url": "https://www.ejemplo.com/images/producto18.jpg"
+    },
+    {
+      "id": "18",
+      "sku": "SKU22230",
+      "name": "Producto dieciocho",
+      "description": "Este es el producto número dieciocho",
+      "volume": 20,
+      "weight": 5,
+      "lotorserial": "Serial",
+      "image_url": "https://www.ejemplo.com/images/producto19.jpg"
+    },
+    {
+      "id": "19",
+      "sku": "SKU22231",
+      "name": "Producto diecinueve",
+      "description": "Este es el producto número diecinueve",
+      "volume": 21.3,
+      "weight": 5.2,
+      "lotorserial": "Serial",
+      "image_url": "https://www.ejemplo.com/images/producto20.jpg"
+    },
+    {
+      "id": "20",
+      "sku": "SKU22232",
+      "name": "Producto veinte",
+      "description": "Este es el producto número veinte",
+      "volume": 22,
+      "weight": 5.5,
+      "lotorserial": "Serial",
+      "image_url": "https://www.ejemplo.com/images/producto21.jpg"
+    },
+    {
+      "id": "21",
+      "sku": "SKU22233",
+      "name": "Producto veintiuno",
+      "description": "Este es el producto número veintiuno",
+      "volume": 23.5,
+      "weight": 5.8,
+      "lotorserial": "Serial",
+      "image_url": "https://www.ejemplo.com/images/producto22.jpg"
+    },
+    {
+      "id": "22",
+      "sku": "SKU22234",
+      "name": "Producto veintidós",
+      "description": "Este es el producto número veintidós",
+      "volume": 24,
+      "weight": 6,
+      "lotorserial": "Serial",
+      "image_url": "https://www.ejemplo.com/images/producto23.jpg"
+    },
+    {
+      "id": "23",
+      "sku": "SKU22235",
+      "name": "Producto veintitrés",
+      "description": "Este es el producto número veintitrés",
+      "volume": 25,
+      "weight": 6.2,
+      "lotorserial": "Serial",
+      "image_url": "https://www.ejemplo.com/images/producto24.jpg"
+    },
+    {
+      "id": "24",
+      "sku": "SKU22236",
+      "name": "Producto veinticuatro",
+      "description": "Este es el producto número veinticuatro",
+      "volume": 26,
+      "weight": 6.5,
+      "lotorserial": "Serial",
+      "image_url": "https://www.ejemplo.com/images/producto25.jpg"
+    },
+    {
+      "id": "25",
+      "sku": "SKU22237",
+      "name": "Producto veinticinco",
+      "description": "Este es el producto número veinticinco",
+      "volume": 27.2,
+      "weight": 6.8,
+      "lotorserial": "Serial",
+      "image_url": "https://www.ejemplo.com/images/producto26.jpg"
+    },
+    {
+      "id": "26",
+      "sku": "SKU22238",
+      "name": "Producto veintiséis",
+      "description": "Este es el producto número veintiséis",
+      "volume": 28.5,
+      "weight": 7,
+      "lotorserial": "Serial",
+      "image_url": "https://www.ejemplo.com/images/producto27.jpg"
+    },
+    {
+      "id": "27",
+      "sku": "SKU22239",
+      "name": "Producto veintisiete",
+      "description": "Este es el producto número veintisiete",
+      "volume": 29,
+      "weight": 7.3,
+      "lotorserial": "Serial",
+      "image_url": "https://www.ejemplo.com/images/producto28.jpg"
+    },
+    {
+      "id": "28",
+      "sku": "SKU22240",
+      "name": "Producto veintiocho",
+      "description": "Este es el producto número veintiocho",
+      "volume": 30.1,
+      "weight": 7.6,
+      "lotorserial": "Serial",
+      "image_url": "https://www.ejemplo.com/images/producto29.jpg"
+    },
+    {
+      "id": "29",
+      "sku": "SKU22241",
+      "name": "Producto veintinueve",
+      "description": "Este es el producto número veintinueve",
+      "volume": 31.4,
+      "weight": 7.8,
+      "lotorserial": "Serial",
+      "image_url": "https://www.ejemplo.com/images/producto30.jpg"
+    },
+    {
+      "id": "30",
+      "sku": "SKU22242",
+      "name": "Producto treinta",
+      "description": "Este es el producto número treinta",
+      "volume": 32,
+      "weight": 8,
+      "lotorserial": "Serial",
+      "image_url": "https://www.ejemplo.com/images/producto31.jpg"
     }
   ],
   "Lot": [
@@ -43133,14 +43383,15 @@
       "id": "01",
       "date": "2024-02-01",
       "created_by": 1,
-      "inventory_status": "Pendent"
+      "inventory_status": "Pendent",
+      "storage_id": "01"
     }
   ],
   "InventoryLine": [
     {
       "inventory_id": "01",
       "lineInventory_id": "01",
-      "product_id": "01",
+      "product_id": "1",
       "real_quantity": "20",
       "user": 1,
       "storage_id": "01",
