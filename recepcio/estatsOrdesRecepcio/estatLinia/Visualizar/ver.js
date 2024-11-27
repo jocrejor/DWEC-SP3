@@ -2,8 +2,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     const urlBase = "http://localhost:5001/";
     const endPoint = "OrderLineReception_Status"; 
 
-    const inputId = document.getElementById("id");
-    const inputName = document.getElementById("name");
+    const id = document.getElementById("id");
+    const nom = document.getElementById("name");
 
     // Obtindre el paràmetre `id` de la URL
     const urlParams = new URLSearchParams(window.location.search);
@@ -19,8 +19,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         const recordData = await getData(urlBase, `${endPoint}/${obtindreID}`);
 
         if (recordData) {
-            inputId.value = recordData.id;
-            inputName.value = recordData.name;
+            id.value = recordData.id;
+            nom.value = recordData.name;
         } else {
             console.error("Error obtenint l'estat del servidor.");
         }
