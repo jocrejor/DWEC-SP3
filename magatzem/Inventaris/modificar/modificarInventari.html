@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Llistat Ordens de Recepció</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+    <script type="text/javascript" src="../../../apiAccess/crud.js"></script>
+    <script type="text/javascript" src="modificarInventari.js"></script>
+    <style>
+        .error {
+            border: solid 2px #FF0000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Detalls del Inventari</h1>
+
+        <table class="table" id="ordenTable">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Data</th>
+                    <th scope="col">Estat</th>
+                    <th scope="col">Magatzem</th>
+                </tr>
+            </thead>
+            <tbody id="inventariBody">
+                
+            </tbody>
+        </table>
+        <br><br><br><br><br>
+
+        <h2>Productes del Inventari</h2>
+
+        <form id="productesBody">
+
+        </form>
+
+        <button class=" btn btn-primary my-3"  id="guardarBtn">Guardar Quantitats</button>
+    </div>
+</body>
+
+</html>
+
+
+
+
+
+
+

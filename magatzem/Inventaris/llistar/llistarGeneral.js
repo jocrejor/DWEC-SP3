@@ -35,7 +35,7 @@ async function obtindreInventaris() {
         buttonInventariar.textContent = 'Inventariar';
         buttonInventariar.className = "btn btn-primary btn-lg";
         inventariarTD.appendChild(buttonInventariar);
-        //buttonInventariar.addEventListener("click", () => inventariar(inventari.id));
+        buttonInventariar.addEventListener("click", () => inventariar(inventari.id));
 
         var id = document.createElement('td');
         var textId = document.createTextNode(inventari.id);
@@ -88,16 +88,15 @@ async function esborrarInventari(id) {
     }
 }
 
-/*async function inventariar(id) {
+async function inventariar(id) {
     const inventory = await getData(url,"Inventory");
     const inventorySelected = inventory.find(inventory => inventory.id === id);
         
-    // Guardar el objeto seleccionado en el localStorage
     if (inventorySelected) {
         localStorage.setItem("inventariarInventory", JSON.stringify(inventorySelected));
-        window.location.assign("../modificar/modificarGeneral.html");
+        window.location.assign("../modificar/modificarInventari.html");
     }   
-}*/
+}
 
 async function visualitzarInventari(id) {
     const inventory = await getData(url,"Inventory");
