@@ -38,11 +38,17 @@ async function generarInventari() {
     const storageSelect = document.getElementById("storage").value;
     const streetSelect = document.getElementById("street").value;
 
-    const filteredSpaces = spaces.filter(space => 
-        space.storage_id === storageSelect && space.street_id === streetSelect
-    );
+    let filteredSpaces;
 
-    console.log(filteredSpaces);
+    if (!streetSelect) {
+        // Filtrar sols per magatzem
+        filteredSpaces = spaces.filter(space => space.storage_id === storageSelect);
+    } else {
+        // Filtrar por magatzem (storage) y carrer (street)
+        filteredSpaces = spaces.filter(space => 
+            space.storage_id === storageSelect && space.street_id === streetSelect
+        );
+    }
 
     //inventory
     let idInventory = await getNewId(url, "Inventory");
@@ -58,7 +64,7 @@ async function generarInventari() {
     await postData(url, "Inventory", newInventory);
 
     //inventoryLine
-    let idInventoryLine = await getNewId(url, "InventoryLine"); 
+    //let idInventoryLine = await getNewId(url, "InventoryLine"); 
     
     await filteredSpaces.forEach(space => {
         let newInventoryLine =  {
