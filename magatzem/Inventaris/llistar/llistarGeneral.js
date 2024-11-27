@@ -34,7 +34,7 @@ async function obtindreInventaris() {
         buttonInventariar.textContent = 'Inventariar';
         buttonInventariar.className = "btn btn-primary btn-lg";
         inventariarTD.appendChild(buttonInventariar);
-        buttonInventariar.addEventListener("click", () => inventariar(inventari.id));
+        //buttonInventariar.addEventListener("click", () => inventariar(inventari.id));
 
         var id = document.createElement('td');
         var textId = document.createTextNode(inventari.id);
@@ -65,27 +65,28 @@ async function obtindreInventaris() {
 }
 
 async function esborrarInventari(id) {
-    // fer les comprobacions si l'orden es pot esborrars. 
-    // esborrar del localstorage
-    //Esborrar de la llista de la pàgina html ( mai recargar la pàgina)
     if (confirm("¿Estàs segur de que vols esborrar aquest inventari?")) {
-        var arrInventari = await getData(url,"Inventory");
-        var arrInventariLine = await getData(url,"InventoryLine");
+        const arrInventoryLine = await getData(url, "InventoryLine");
+        const inventoryLines = arrInventoryLine.filter(linea => linea.inventory_id === id);
 
-        arrInventari = arrInventari.filter(inventari => inventari.id !== id);
-        arrInventariLine = arrInventariLine.filter(linea => linea.inventory_id !== id);
+        await inventoryLines.forEach(linea => {
+            deleteData(url, "InventoryLine", linea.id);
+        });
 
-        await deleteData(url, "Inventory",arrInventari.id);
-        
-        //esborrar linies
+        await deleteData(url, "Inventory", id);
+
+        //esborrar liniea inventari
         const filaOrden = document.querySelector(`tr[id="${id}"]`);
         if (filaOrden) {
             filaOrden.remove();
         }
+
+        alert("Inventari esborrat correctament.");
     }
 }
 
-async function inventariar(id) {
+
+/*async function inventariar(id) {
     const inventory = await getData(url,"Inventory");
     const inventorySelected = inventory.find(inventory => inventory.id === id);
         
@@ -94,7 +95,7 @@ async function inventariar(id) {
         localStorage.setItem("inventariarInventory", JSON.stringify(inventorySelected));
         window.location.assign("../modificar/modificarGeneral.html");
     }   
-}
+}*/
 
 async function visualitzarInventari(id) {
     const inventory = await getData(url,"Inventory");
