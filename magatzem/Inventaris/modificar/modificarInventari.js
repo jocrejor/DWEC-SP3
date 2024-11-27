@@ -87,11 +87,11 @@ async function actualitzarQuantitat(inventoryID) {
         const quantitatInsertada = document.getElementById(`product-${producte.product_id}`);
 
         if (quantitatInsertada) {
-            const novaQuantitat = input.value.trim();
+            const novaQuantitat = quantitatInsertada.value.trim();
 
             if (novaQuantitat !== "" && !isNaN(novaQuantitat)) {
                 const updatedData = {
-                    real_quantity: parseInt(newQuantity, 10)
+                    real_quantity: parseInt(novaQuantitat, 10)
                 };
 
                 updateId(url, "InventoryLine", producte.id, updatedData);
