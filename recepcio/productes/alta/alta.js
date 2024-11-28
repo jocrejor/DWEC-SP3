@@ -32,8 +32,9 @@ function validarSKU() {
             error2(sku, "Ha d'introduir el SKU.");
         }
         else if (sku.validity.patternMismatch) {
-            error2(sku, "El SKU té que ser en majúscules i tindre entre 6 i 12 caràcters");
+            error2(sku, "El SKU té que ser en majúscules i tindre entre 6 i 12 caràcters");         
         }
+        sku.classList.remove("valid");
         sku.classList.add("error");
         return false;
     }
@@ -52,6 +53,7 @@ function validarName() {
             error2(name, "El nom ha de tindre entre 2 i 50 caràcters");
         }
         name.classList.add("error");
+        name.classList.remove("valid");
         return false;
     }
     name.classList.remove("error");
@@ -60,25 +62,26 @@ function validarName() {
 }
 
 function validarVol() {
-    let volume = document.getElementById("volume");
-    if (!volume.checkValidity()) {
-        if (volume.validity.valueMissing) {
-            error2(volume, "Ha d'introduir un volumen.");
-        }
-        else if (volume.validity.patternMismatch) {
-            if (value.split('.')[1] && value.split('.')[1].length > 2) {
-                error2(volume, "El volumen ha de tindre 2 decimals com a màxim");
-                volume.classList.remove("valid");
-                volume.classList.add("error");
-                return false;
-            }
-        }
-        volume.classList.remove("valid");
-        volume.classList.add("error");
+    let vol = document.getElementById("volume");
+    let value = vol.value;
+
+    // Verificar si el campo está vacío
+    if (vol.validity.valueMissing) {
+        error2(vol, "Ha d'introduir un volumen.");
         return false;
     }
-    volume.classList.remove("error");
-    volume.classList.add("valid");
+
+    // Verificar si el valor tiene más de 2 decimales
+    if (value.split('.')[1] && value.split('.')[1].length > 2) {
+        error2(vol, "El volumen ha de tindre 2 decimals com a màxim");
+        vol.classList.remove("valid");
+        vol.classList.add("error");
+        return false;
+    }
+
+    // Si todo es válido
+    vol.classList.remove("error");
+    vol.classList.add("valid");
     return true;
 }
 

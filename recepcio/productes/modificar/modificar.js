@@ -39,34 +39,93 @@ function comprobacionProductoLocalStorage() {
     } else {
         console.error("Producto no encontrado en localStorage.");
         alert("Producto no encontrado. Redirigiendo a la lista de productos.");
-        window.location.assign("listaProductos.html");
+        window.location.assign("../productes.html");
     }
+}
+
+function validarSKU() {
+    let sku = document.getElementById("sku");
+    if (!sku.checkValidity()) {
+        if (sku.validity.valueMissing) {
+            error2(sku, "Ha d'introduir el SKU.");
+        }
+        else if (sku.validity.patternMismatch) {
+            error2(sku, "El SKU té que ser en majúscules i tindre entre 6 i 12 caràcters");         
+        }
+        sku.classList.remove("valid");
+        sku.classList.add("error");
+        return false;
+    }
+    sku.classList.remove("error");
+    sku.classList.add("valid");
+    return true;
 }
 
 function validarName() {
     let name = document.getElementById("name");
-    if (!/^[A-Za-z\s]{2,50}$/.test(name.value)) {
-        error(name, "El nombre debe tener entre 2 y 50 caracteres");
+    if (!name.checkValidity()) {
+        if (name.validity.valueMissing) {
+            error2(name, "Ha d'introduir el nom.");
+        }
+        else if (name.validity.patternMismatch) {
+            error2(name, "El nom ha de tindre entre 2 i 50 caràcters");
+        }
+        name.classList.add("error");
+        name.classList.remove("valid");
         return false;
     }
+    name.classList.remove("error");
+    name.classList.add("valid");
     return true;
 }
 
 function validarVol() {
-    let volume = document.getElementById("volume");
-    if (!/^\d+(\.\d{1,2})?$/.test(volume.value)) {
-        error(volume, "Volumen no válido");
+    let vol = document.getElementById("volume");
+    let value = vol.value;
+
+    // Verificar si el campo está vacío
+    if (vol.validity.valueMissing) {
+        error2(vol, "Ha d'introduir un volumen.");
         return false;
     }
+
+    // Verificar si el valor tiene más de 2 decimales
+    if (value.split('.')[1] && value.split('.')[1].length > 2) {
+        error2(vol, "El volumen ha de tindre 2 decimals com a màxim");
+        vol.classList.remove("valid");
+        vol.classList.add("error");
+        return false;
+    }
+
+    // Si todo es válido
+    vol.classList.remove("error");
+    vol.classList.add("valid");
     return true;
 }
 
 function validarWeight() {
     let weight = document.getElementById("weight");
-    if (!/^\d+(\.\d{1,2})?$/.test(weight.value)) {
-        error(weight, "Peso no válido");
+    let value = weight.value;
+
+    // Verificar si el campo está vacío
+    if (weight.validity.valueMissing) {
+        error2(weight, "Ha d'introduir un pes.");
+        weight.classList.remove("valid");
+        weight.classList.add("error");
         return false;
     }
+
+    // Verificar si el valor tiene más de 2 decimales
+    if (value.split('.')[1] && value.split('.')[1].length > 2) {
+        error2(weight, "El pes ha de tindre 2 decimals com a màxim");
+        weight.classList.remove("valid");
+        weight.classList.add("error");
+        return false;
+    }
+
+    // Si todo es válido
+    weight.classList.remove("error");
+    weight.classList.add("valid");
     return true;
 }
 
@@ -74,19 +133,14 @@ function validarLote() {
     let lote = document.getElementById("lotorserial");
 
     if (lote.value == "Empty") {
-        error(lote, "Tienes que elegir un lote");
+        error2(lote, "Tens que elegir un lot");
+        lote.classList.remove("valid");
+        lote.classList.add("error");
         return false;
     }
 
-    return true;
-}
-
-function validarSKU() {
-    let sku = document.getElementById("sku");
-    if (!/^[A-Z0-9]{8,12}$/.test(sku.value)) {
-        error(sku, "El SKU debe tener entre 8 y 12 caracteres");
-        return false;
-    }
+    lote.classList.remove("error");
+    lote.classList.add("valid");
     return true;
 }
 
@@ -144,7 +198,7 @@ async function validar(e) {
     }
 }
 
-function error(element, mensaje) {
+function error2(element, mensaje) {
     const textError = document.createTextNode(mensaje);
     const elementError = document.getElementById("mensajeError");
     elementError.appendChild(textError);

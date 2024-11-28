@@ -42590,11 +42590,31 @@
     {
       "id": "6",
       "name": "Ramon Llull",
-      "description": "producto62222222222",
+      "description": "producto6222222",
       "volume": "2",
       "weight": "2",
       "lotorserial": "Non",
       "sku": "SKU88888332",
+      "image_url": ""
+    },
+    {
+      "id": "7",
+      "name": "MigiRoig",
+      "description": "",
+      "volume": "2.44",
+      "weight": "2.66",
+      "lotorserial": "Serial",
+      "sku": "SKUPEPLU",
+      "image_url": ""
+    },
+    {
+      "id": "8",
+      "name": "Moline",
+      "description": "",
+      "volume": "22",
+      "weight": "44",
+      "lotorserial": "Lote",
+      "sku": "DDDDDDDD",
       "image_url": ""
     }
   ],
