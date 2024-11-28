@@ -21,11 +21,12 @@
         <div class="form-group row">
             <label for="nom" class="col-sm-2 col-form-label">Nom: </label>
             <div class="col-sm-10">
-                <input type="text"  class="form-control" id="nom"  pattern="^[A-ZÁÉÍÓÚÑÇ][a-zñçáéíóú\s]{1,29}$" required></br>
+                <input type="text" class="form-control" id="nom" pattern="^([A-ZÁÉÍÓÚÑÇ][a-zñçáéíóú]*)+(?:\s[A-ZÁÉÍÓÚÑÇ][a-zñçáéíóú]*)*$" maxlength="30" required></br>
             </div>
         </div>
         <h5 id="missatgeError" class="text-danger"></h5><br>
-        <button id="btnGravar" class="btn btn-primary">Modificar</button>      
+        <button id="btnGravar" class="btn btn-primary">Modificar</button>   
+        <button id="btnTornar" class="btn btn-primary">Tornar</button>   
     </form>
 </div>
 </body>

@@ -23,7 +23,7 @@
             <div class="form-group row">
                 <label for="nom" class="col-sm-2 col-form-label">Nom Etiqueta:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="nom" pattern="^[A-ZÁÉÍÓÚÑÇ][a-zñçáéíóú\s]{1,29}$" required></br>
+                    <input type="text" class="form-control" id="nom" pattern="^([A-ZÁÉÍÓÚÑÇ][a-zñçáéíóú]*)+(?:\s[A-ZÁÉÍÓÚÑÇ][a-zñçáéíóú]*)*$" maxlength="30" required></br>
                 </div>
             </div>
 
