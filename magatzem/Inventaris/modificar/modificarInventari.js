@@ -8,7 +8,7 @@ $(document).ready(function() {
     document.getElementById("guardarBtn").addEventListener("click", () => {
         actualitzarQuantitat(inventory.id);
         localStorage.removeItem("inventariarInventory");
-        window.location.assign("../llistar/llistarGeneral.html"); 
+        //window.location.assign("../llistar/llistarGeneral.html"); 
     });
 });
 
@@ -69,7 +69,7 @@ async function mostrarProductes(inventoryID) {
         const inputQuantitat = document.createElement('input');
         inputQuantitat.type = "number";
         inputQuantitat.className = "form-control";
-        inputQuantitat.id = `product-${producte.product_id}`;
+        inputQuantitat.id = producte.id;
         inputQuantitat.name = `quantitat-${producte.product_id}`;
         inputQuantitat.placeholder = "Introduïu la quantitat";
         divProducte.appendChild(inputQuantitat);
@@ -80,22 +80,29 @@ async function mostrarProductes(inventoryID) {
 }
 
 async function actualitzarQuantitat(inventoryID) {
-    const lineInventorys = await getData(url,"InventoryLine");
-    const productesInventari = lineInventorys.filter(line => line.inventory_id === inventoryID);
 
-    await productesInventari.forEach(producte => {
-        const quantitatInsertada = document.getElementById(`product-${producte.product_id}`);
 
-        if (quantitatInsertada) {
-            const novaQuantitat = quantitatInsertada.value.trim();
+     const valorsDetall = document.querySelectorAll(".form-group input");
+     
+     
+     for ( const ele of valorsDetall){
+        console.log(ele.value, ele.id)
+
+        if (ele.value) {
+            const novaQuantitat = ele.value.trim();
 
             if (novaQuantitat !== "" && !isNaN(novaQuantitat)) {
-                const updatedData = {
-                    real_quantity: parseInt(novaQuantitat, 10)
-                };
+                const updatedData =  parseInt(novaQuantitat, 10);
+                let InventoryLine = await getData(url,`InventoryLine/` + ele.id)  
 
-                updateId(url, "InventoryLine", producte.id, updatedData);
+                InventoryLine.real_quantity=updatedData
+                //Falta operador i justificació
+                await updateId(url, "InventoryLine", ele.id, InventoryLine);
             }
         }
-    });  
+
+     }
+
+   
+  
 }
