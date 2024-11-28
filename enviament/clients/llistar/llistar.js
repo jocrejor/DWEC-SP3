@@ -25,6 +25,7 @@ async function modificarCliente(index){
     const clientes = await getData(url, "Client");
     const cliente = clientes[index];        //obtiene el cliente seleccionado
 
+    // localStorage.setItem("cliente", JSON.stringify(cliente));
     localStorage.setItem("idModificar", cliente.id);
 
     window.location.assign("../modificar/modificar.html");
@@ -46,14 +47,16 @@ async function visualizarCliente(index){
     const cliente = clientes[index];        //obtiene el cliente seleccionado
 
     localStorage.setItem("idModificar", cliente.id);
+    // localStorage.setItem("clienteMod", JSON.stringify(cliente));
+
 
     window.location.assign("../visualitzar/visualitzar.html");
 }
 
 //guarda los clientes en el local storage
-function guardarClientes(clientes){
-    localStorage.setItem('Client', JSON.stringify(clientes));     //guarda en un objeto el cliente
-}
+// function guardarClientes(clientes){
+//     localStorage.setItem('Client', JSON.stringify(clientes));     //guarda en un objeto el cliente
+// }
 
 //actualiza toda la tabla con los nuevos clientes
 async function actualizarTabla(){
