@@ -28,17 +28,19 @@ function mostrarTaula() {
     
     arrayMoviments.forEach(mov => {
         const fila = document.createElement("tr");
-        
+        const dataActual = new Date();
+        const dataFormatada = `${dataActual.getDate()}/${dataActual.getMonth() + 1}/${dataActual.getFullYear()}`;
+
         fila.innerHTML = `
             <td>${getProductName( mov.product_id)}</td>
             <td>${mov.storage_id}</td>
-            <td>3</td>
-            <td>4</td>
-            <td>5</td>
-            <td>6</td>
-            <td>7</td>
-            <td>8</td>
-            <td>9</td>
+            <td>${mov.storage_id}</td>
+            <td>${mov.street_id}</td>
+            <td>${mov.space_id}</td>
+            <td>${mov.space_id}</td>
+            <td>${dataFormatada}</td>
+            <td></td>
+            <td></td>
             <td><button class="btn btn-info" id="ver">Visualitzar</button></td>
             
         `;
