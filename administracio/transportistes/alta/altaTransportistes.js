@@ -1,15 +1,17 @@
 
+
 window.onload = iniciar;
 
-
+let url = 'http://localhost:5001/';
 
 function iniciar() {
     document.getElementById("btnGravar").addEventListener("click", validar, false);
     carregarPaisos();
+    document.getElementById("state").addEventListener("change", manejarState);
 }
 
-function carregarPaisos() {
-    const stateData = JSON.parse(localStorage.getItem("State")) || [];
+async function carregarPaisos() {
+    const stateData = await getData(url, "states");
     const stateSelect = document.getElementById("state");
     stateData.forEach(state => {
         const option = document.createElement("option");
@@ -19,36 +21,52 @@ function carregarPaisos() {
     });
 }
 
-function carregarProvincies() {
+async function manejarState() {
     const stateId = document.getElementById("state").value;
-    const provinceSelect = document.getElementById("province");
-    provinceSelect.innerHTML = '<option value="">Selecciona una província</option>';
 
-    const provinceData = JSON.parse(localStorage.getItem("Province")) || [];
-    provinceData.forEach(province => {
-        if (province.state_id === stateId) {
-            const option = document.createElement("option");
-            option.value = province.id;
-            option.textContent = province.name;
-            provinceSelect.appendChild(option);
-        }
-    });
-    carregarCiutats();
+    if (stateId === "194"){
+        carregarProvincies(stateId);
+    }else{
+        convertirProvinciaCiudadEnInput();
+    }
+    
 }
 
-function carregarCiutats() {
+async function carregarProvincies(stateId) {
+    const provinceSelect = document.getElementById("province").parentElement;
+    const provinceData = await getData(url, `provinces?state_id=${stateId}`);
+
+    provinceSelect.innerHTML = '<option value="">Selecciona una província</option>';
+    provinceData.forEach(province => {
+        const option = document.createElement("option");
+        option.value = province.id;
+        option.textContent = province.name;
+        provinceSelect.appendChild(option);
+    });
+
+    provinceSelect.addEventListener("change", carregarCiutats);
+    
+}
+
+function convertirProvinciaCiudadEnInput() {
+    const provinceContainer = document.getElementById("provinceContainer");
+    const cityContainer = document.getElementById("cityContainer");
+
+    provinceContainer.innerHTML = '<input type="text" id="province" name="province" placeholder="Introduce la provincia">';
+    cityContainer.innerHTML = '<input type="text" id="city" name="city" placeholder="Introduce la ciudad">';
+}
+
+async function carregarCiutats() {
     const provinceId = document.getElementById("province").value;
     const citySelect = document.getElementById("city");
-    citySelect.innerHTML = '<option value="">Selecciona una ciutat</option>';
+    const cityData = await getData(url, `cities?province_id=${provinceId}`);
 
-    const cityData = JSON.parse(localStorage.getItem("City")) || [];
+    citySelect.innerHTML = '<option value="">Selecciona una ciutat</option>';
     cityData.forEach(city => {
-        if (city.province_id === provinceId) {
-            const option = document.createElement("option");
-            option.value = city.id;
-            option.textContent = city.name;
-            citySelect.appendChild(option);
-        }
+        const option = document.createElement("option");
+        option.value = city.id;
+        option.textContent = city.name;
+        citySelect.appendChild(option);
     });
 }
 
@@ -175,15 +193,8 @@ function validarCP() {
 function validar(e) {
     esborrarError();
     e.preventDefault();
-    if (validarNom() && 
-    validarDireccio() &&
-    validarNIF() && 
-    validarNum()&& 
-    validarCity() &&
-    validarState() &&
-    validarProvince() &&
-    validarCP() &&
-    validarEmail()) {
+    if (validarNom() && validarDireccio() && validarNIF() && validarNum() && validarEmail() &&
+        validarState() && validarProvince() && validarCity() && validarCP()) {
         enviarFormulari();
         return true;
     } else {
@@ -211,38 +222,25 @@ function esborrarError() {
 
 async function enviarFormulari() {
     const nouId = await getNewId(url, "getTransportistaId");
-
     const nouTransportista = {
-            id: nouId,
-            name: document.getElementById("name").value,
-            nif: document.getElementById("nif").value,
-            phone: document.getElementById("phone").value,
-            email: document.getElementById("email").value,
-            address: document.getElementById("address").value,
-            state: document.getElementById("state").value,
-            province: document.getElementById("province").value,
-            city: document.getElementById("city").value,
-            cp: document.getElementById("cp").value
-            
+        id: nouId,
+        name: document.getElementById("name").value,
+        nif: document.getElementById("nif").value,
+        phone: document.getElementById("phone").value,
+        email: document.getElementById("email").value,
+        address: document.getElementById("address").value,
+        state: document.getElementById("state").value,
+        province: document.getElementById("province").value,
+        city: document.getElementById("city").value,
+        cp: document.getElementById("cp").value
     };
 
     await postData(url, "saveTransportista", nouTransportista);
-
-    const carriers = JSON.parse(localStorage.getItem("Carriers")) || [];
-    carriers.push(nouTransportista);
-    localStorage.setItem("Carriers", JSON.stringify(carriers));
-
     limpiarFormulari();
-
-    
-        window.location.assign("../llistar/llistatTransportistes.html");
-    
-    
-
+    window.location.assign("../llistar/llistatTransportistes.html");
 }
 
 function limpiarFormulari() {
-    // Esborrar camps
     document.getElementById("name").value = "";
     document.getElementById("id").value = "";
     document.getElementById("nif").value = "";

@@ -49,19 +49,38 @@ function carregarPaisos() {
 
 function carregarProvincies() {
     const stateId = document.getElementById("state").value;
-    const provinceSelect = document.getElementById("province");
-    provinceSelect.innerHTML = '<option value="">Selecciona una província</option>';
+    const provinceContainer = document.getElementById("province").parentElement;
+    const cityContainer = document.getElementById("city").parentElement;
 
-    const provinceData = JSON.parse(localStorage.getItem("Province")) || [];
-    provinceData.forEach(province => {
-        if (province.state_id === stateId) {
-            const option = document.createElement("option");
-            option.value = province.id;
-            option.textContent = province.name;
-            provinceSelect.appendChild(option);
-        }
-    });
-    carregarCiutats();
+    if (stateId === "194") {
+        provinceContainer.innerHTML = `
+            <select id="province" class="form-control" onchange="carregarCiutats()" required>
+                <option value="">Selecciona una província</option>
+            </select>`;
+        cityContainer.innerHTML = `
+            <select id="city" class="form-control" required>
+                <option value="">Selecciona una ciutat</option>
+            </select>`;
+
+        const provinceSelect = document.getElementById("province");
+        const provinceData = JSON.parse(localStorage.getItem("Province")) || [];
+        provinceData.forEach(province => {
+            if (province.state_id === stateId){
+                const option = document.createElement("option");
+                option.value = province.id;
+                option.textContent = province.name;
+                provinceSelect.appendChild(option);
+
+            }
+        });
+        carregarCiutats();
+    }else {
+        provinceContainer.innerHTML = `
+            <input type="text" id="province" class="form-control" placeholder="Escriu la província" required>`;
+        cityContainer.innerHTML = `
+            <input type="text" id="city" class="form-control" placeholder="Escriu la ciutat" required>`;
+    }
+    
 }
 
 function carregarCiutats() {
