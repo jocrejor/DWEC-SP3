@@ -46,11 +46,11 @@ async function carregarIncidencies() {
 
         // Crear celdas para las demás columnas
         row.appendChild(CrearCelda(ordre.id));
-        row.appendChild(CrearCelda(getOperari(ordre.operator_id)));
         row.appendChild(CrearCelda(ordre.description));
-        row.appendChild(CrearCelda(getEstat(ordre.orderlinereception_status_id)));
-        row.appendChild(CrearCelda(getProducte(ordre.product_id)));
-        row.appendChild(CrearCelda(ordre.quantity));
+        row.appendChild(CrearCelda(ordre.status));
+        row.appendChild(CrearCelda(ordre.product));
+        row.appendChild(CrearCelda(ordre.quantity_ordered));
+        row.appendChild(CrearCelda(ordre.quantity_received));
 
         // Añadir la fila a la tabla
         tabla.appendChild(row);
@@ -65,8 +65,7 @@ function CrearCelda(contingut) {
 }
 
 function getOperari(id){
-    const operariExistent = users.find(o => o.id === id);
-    
+    const operariExistent = users.find(o => Number(o.id) === id);
     if(operariExistent){ 
         return operariExistent.name;
     }
@@ -79,7 +78,7 @@ function getEstat(id){
         return estatExistent.name;
     }
 }
-
+/** 
 function getProducte(id){
     const producteExistent = productes.find(o => o.id === id);
     
@@ -87,7 +86,7 @@ function getProducte(id){
         return producteExistent.name;
     }
 }
-
+*/
 async function modificarIncidencia(id){
     const incidencies = await getData(url,"Incident"); 
     const incidentSeleccionat = incidencies.find(o => o.id === id);
