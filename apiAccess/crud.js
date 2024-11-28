@@ -14,8 +14,6 @@ function thereIsUser() {
    }
 }
 
-
-
 ////////////////////// Alta Element /////////////////////
 
 async function postData(url,endPoint, data = {}) {
@@ -33,7 +31,7 @@ async function postData(url,endPoint, data = {}) {
     }
 
     const result = await response.json();  // Espera la conversión de la respuesta a JSON
-    console.log(result);  // Trabaja con la respuesta
+    return result;  // Trabaja con la respuesta
 
   } catch (error) {
     console.error('Error:', error);  // Manejo de errores

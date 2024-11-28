@@ -3,7 +3,12 @@ let estats;
 $(document).ready(async function () {
     estats = await getData(url,"OrderReception_Status");
     carregarOrdres();
+    $("#llistarIncidencia").click(function(){
+        window.location.assign("../incidencies.html");
+    })
 });
+
+
 
 async function carregarOrdres() {
     const ordresRecepcio = await getData(url,"OrderReception");

@@ -134,7 +134,8 @@ function validarDescripcio(){
 
 async function altaIncidencia(){
     if(validar()){
-        let incidenciaId = await getNewId(url,"Incident");
+        let ordreRecepcioSeleccionada = JSON.parse(localStorage.getItem("ordreSeleccionada"));
+        //let incidenciaId = await getNewId(url,"Incident");
         let operari = document.getElementById("operator").value;
         let estat = document.getElementById("status").value;
         let producte = document.getElementById("product").value;
@@ -144,8 +145,9 @@ async function altaIncidencia(){
         let incidencia = {
             created_at: "CURRENT_TIMESTAMP",
             description: descripcio,
-            id: incidenciaId,
+            //id:incidenciaId ,
             operator_id: operari,
+            orderReception_id:ordreRecepcioSeleccionada,
             orderlinereception_status_id: estat,
             product_id: producte,
             quantity: unitats
