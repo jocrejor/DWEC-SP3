@@ -50,10 +50,10 @@ function validarNom() {
 }
 
 function validarTipus() {
-    var tipusValidar = document.getElementById("tipus");
-    if (!tipusValidar.checkValidity()) {
-        if (tipusValidar.validity.valueMissing) {
-            error(tipusValidar, "Deus de selecionar una opció");
+    var typeValidar = document.getElementById("type");
+    if (!typeValidar.checkValidity()) {
+        if (typeValidar.validity.valueMissing) {
+            error(typeValidar, "Deus de selecionar una opció");
         }
         return false;
     }
@@ -62,13 +62,13 @@ function validarTipus() {
 }
 
 function validarAdress() {
-    var adrecaValidar = document.getElementById("adress");
-    if (!adrecaValidar.checkValidity()) {
-        if (adrecaValidar.validity.valueMissing) {
-            error(adrecaValidar, "Deus d'introduïr una adreça.");
+    var adressValidar = document.getElementById("adress");
+    if (!adressValidar.checkValidity()) {
+        if (adressValidar.validity.valueMissing) {
+            error(adressValidar, "Deus d'introduïr una adreça.");
         }
-        if (adrecaValidar.validity.patternMismatch) {
-            error(adrecaValidar, "L'adreça ha de tindre entre 2 i 40 caracters.");
+        if (adressValidar.validity.patternMismatch) {
+            error(adressValidar, "L'adreça ha de tindre entre 2 i 40 caracters.");
         }
         return false;
     }
@@ -99,7 +99,7 @@ function gravarMagatzem() {
     let nouMagatzem = {
         id: document.getElementById("id").value,
         name: document.getElementById("name").value,
-        tipus: document.getElementById("tipus").value,
+        type: document.getElementById("type").value,
         adress: document.getElementById("adress").value,
         id_pasillo: null,   
         name_: null         
