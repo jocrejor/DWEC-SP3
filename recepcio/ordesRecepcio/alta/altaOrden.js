@@ -42,9 +42,8 @@ async function cargarProductos() {
 
     products.forEach((product) => {
       const option = document.createElement("option");
-      option.value = product.name;
+      option.value = product.id;
       option.text = product.name;
-      option.setAttribute("id", product.id);
       productSelect.appendChild(option);
     });
   } catch (error) {
@@ -75,16 +74,17 @@ function llistarOrden() {
   window.location.assign("../llistar/llistatOrden.html");
 }
 
-function afegirProducte() {
+async function afegirProducte() {
   const producto = document.getElementById("product").value;
   const cantidadPedida = document.getElementById("quantity_ordered").value;
-
-  let idObj = Number(productID);
+  const productes = await getData(API, "Product");
+  const productName = productes.find(product => product.id === producto).name
 
   let productoObj = {
-    id: idObj,
-    product: producto,
-    quantity_ordered: cantidadPedida,
+    id: Number(producto),
+    product: productName,
+    quantity_ordered: Number(cantidadPedida),
+    quantity_received: 0
   };
 
   arrTemp.push(productoObj);
@@ -196,7 +196,7 @@ async function gravarOrden(e) {
 
   try {
 
-    let orderLineReception = await getData(API, orderLineReceptionEP);
+    let orderLineReception = await getData(API, orderReceptionEP);
     
     var supplier = Number(document.getElementById("supplier").value);
     var dataEstimada = document.getElementById(
@@ -215,14 +215,18 @@ async function gravarOrden(e) {
     if (arrTemp) {
       arrTemp.forEach((product) => {
         let newProduct = {
-          order_reception_id: newOrderId,
-        }
-        product.id = idOrderLineReception;
-        orderLineReception.push(newProduct);
+          id: idOrderLineReception,
+          order_reception_id: newOrderId.id,
+          orderlinereception_status_id: 1,
+          product_id: product.id,
+          quantity_ordered: product.quantity_ordered,
+          quantity_received: product.quantity_received,
+
+        };
+        postData(API, orderLineReceptionEP, newProduct);
       });
     }
 
-    await postData(API, orderLineReceptionEP, orderLineReception);
 
     alert("Guardado correctamente");
   } catch (error) {

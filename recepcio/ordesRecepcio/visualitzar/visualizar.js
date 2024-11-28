@@ -1,3 +1,7 @@
+const API = "http://localhost:3000/";
+const orderReceptionEP = "OrderReception";
+const orderLineReceptionEP = "OrderLineReception";
+
 $(document).ready(function inicio() {
     const orden = JSON.parse(localStorage.getItem("ordenVisualizar")); 
     if (orden) {
@@ -33,7 +37,7 @@ function mostrarOrden(orden) {
 
 function mostrarProductos(ordenId) {
     const productosBody = document.getElementById("productosBody");
-    const productos = JSON.parse(localStorage.getItem("orderLineReception")) || [];
+    const productos = getData(API, orderLineReceptionEP);
     const productosDeOrden = productos.filter(producto => producto.order_reception_id === ordenId);
 
     productosDeOrden.forEach(producto => {

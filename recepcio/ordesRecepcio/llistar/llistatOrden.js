@@ -80,7 +80,10 @@ async function esborrarOrdre(id) {
       )
     ) {
       await deleteData(API, orderReceptionEP, id);
-      await deleteData(API, orderLineReceptionEP, id);
+      const orderLineReception = await getData(API, orderLineReceptionEP);
+      const lineToDelete = orderLineReception.filter(product => product.order_reception_id === id);
+      lineToDelete.forEach(async product => await deleteData(API, orderLineReceptionEP, product.id));
+      ;
     }
   } catch (error) {
     console.error("ERROR: ", error);
