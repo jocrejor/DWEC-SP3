@@ -1,4 +1,3 @@
-const API = "http://localhost:3000/";
 const orderReceptionEP = "OrderReception";
 const orderLineReceptionEP = "OrderLineReception";
 

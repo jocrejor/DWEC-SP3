@@ -43048,6 +43048,13 @@
       "estimated_reception_date": "2024-10-19",
       "created_by": 3,
       "orderreception_status_id": 3
+    },
+    {
+      "id": "dc42",
+      "supplier_id": 1,
+      "estimated_reception_date": "2024-11-21",
+      "created_by": 1,
+      "orderreception_status_id": 1
     }
   ],
   "OrderLineReception": [
@@ -43114,6 +43121,22 @@
       "product_id": 10,
       "quantity_ordered": 200,
       "quantity_received": 190
+    },
+    {
+      "id": "e864",
+      "order_reception_id": "dc42",
+      "orderlinereception_status_id": 1,
+      "product_id": 1,
+      "quantity_ordered": 54,
+      "quantity_received": 0
+    },
+    {
+      "id": "9ea2",
+      "order_reception_id": "dc42",
+      "orderlinereception_status_id": 1,
+      "product_id": 3,
+      "quantity_ordered": 2,
+      "quantity_received": 0
     }
   ]
 }
