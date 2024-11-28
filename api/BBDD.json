@@ -43128,8 +43128,6 @@
       "quantity_received": 190
     }
   ],
-  "Inventori": [],
-  "InventoriLine": [],
   "Moviment": [
     {
       "id": "1",
@@ -43144,5 +43142,8 @@
       "orgin": "Reception",
       "document": "2"
     }
-  ]
+  ],
+  "Inventori": [],
+  "InventoriLine": []
+ 
 }
