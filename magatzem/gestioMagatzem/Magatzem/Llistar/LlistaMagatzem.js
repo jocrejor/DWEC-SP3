@@ -51,3 +51,4 @@ function modificar(storageId) {
 function carrers(storageId) {
     window.location.assign(`../../Carrer/Llistar/LlistatCarrer.html`);
 }
+
