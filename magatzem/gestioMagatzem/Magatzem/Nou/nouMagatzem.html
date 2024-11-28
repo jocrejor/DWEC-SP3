@@ -19,18 +19,18 @@
         <form id="magatzemForm">
             <div class="form-group">
                 <label for="id">ID Magatzem:</label>
-                <input type="text" id="id" name="id_almacen" pattern="^\d{2}$"  class="form-control" required>
+                <input type="text" id="id" name="id" pattern="^\d{2}$"  class="form-control" required>
             </div>
 
             <div class="form-group">
                 <label for="name">Nom : </label>
-                <input type="text" id="name" name="nom_almacen" class="form-control"
+                <input type="text" id="name" name="name" class="form-control"
                 pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]{2,40}$" required>
             </div>
 
             <div class="form-group">
-                <label for="tipus">Tipus:</label>
-                <select name="tipus" id="tipus">
+                <label for="type">Tipus:</label>
+                <select name="type" id="type">
                     <option value=""></option>
                     <option value="Reception">Recepció</option>
                     <option value="General">Principal</option>
@@ -41,7 +41,7 @@
 
             <div class="form-group">
                 <label for="adress">Adreça:</label>
-                <input type="text" id="adress" name="adreca" class="form-control" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d10-9\s\/]{2,40}$" required>
+                <input type="text" id="adress" name="adress" class="form-control" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d10-9\s\/]{2,40}$" required>
             </div>
 
             <button type="submit" id="btnGuardar" class="btn btn-primary">Guardar</button>
