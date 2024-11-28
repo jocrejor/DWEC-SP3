@@ -2,16 +2,16 @@ const orderReceptionEP = "OrderReception";
 const orderLineReceptionEP = "OrderLineReception";
 
 $(document).ready(function inicio() {
+    document.getElementById("btnRegresar").addEventListener("click", () => {
+        localStorage.removeItem("ordenVisualizar");
+        location.assign("../llistar/llistatOrden.html"); 
+    });
     const orden = JSON.parse(localStorage.getItem("ordenVisualizar")); 
     if (orden) {
         mostrarOrden(orden);
         mostrarProductos(orden.id);
     }
 
-    document.getElementById("btnRegresar").addEventListener("click", () => {
-        localStorage.removeItem("ordenVisualizar");
-        window.location.assign("../llistar/llistatOrden.html"); 
-    });
 });
 
 function mostrarOrden(orden) {
@@ -24,7 +24,7 @@ function mostrarOrden(orden) {
     fila.appendChild(idTD);
 
     const supplierID = document.createElement('td');
-    supplierID.textContent = orden.supplier;
+    supplierID.textContent = orden.supplier_id;
     fila.appendChild(supplierID);
 
     const fechaTD = document.createElement('td');
@@ -34,16 +34,18 @@ function mostrarOrden(orden) {
     ordenBody.appendChild(fila);
 }
 
-function mostrarProductos(ordenId) {
+async function mostrarProductos(ordenId) {
     const productosBody = document.getElementById("productosBody");
-    const productos = getData(API, orderLineReceptionEP);
-    const productosDeOrden = productos.filter(producto => producto.order_reception_id === ordenId);
+    const orderLine = await getData(API, orderLineReceptionEP);
+    const productosDeOrden = orderLine.filter(producto => producto.order_reception_id === ordenId);
+    const products = await getData(API, "Product");
 
     productosDeOrden.forEach(producto => {
         const fila = document.createElement('tr');
 
+        const productName = products.find(product => Number(product.id) === producto.product_id).name;
         const productTD = document.createElement('td');
-        productTD.textContent = producto.product; 
+        productTD.textContent = productName; 
         fila.appendChild(productTD);
 
         const cantidadTD = document.createElement('td');
