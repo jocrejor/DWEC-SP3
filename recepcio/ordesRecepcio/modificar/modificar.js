@@ -102,14 +102,18 @@ function afegirProducte() {
   document.getElementById("quantity_ordered").value = "";
 }
 
-function afegirLinea(productObj) {
+async function afegirLinea(productObj) {
+  const products = await getData(API, "Product");
   var files = document.getElementById("files");
 
   var linea = document.createElement("tr");
   linea.setAttribute("id", `fila-${productObj.id}`);
 
   var productoTD = document.createElement("td");
-  var textProducto = document.createTextNode(productObj.product);
+  const productName = products.find(
+    (product) => Number(product.id) === productObj.product_id
+  ).name;
+  var textProducto = document.createTextNode(productName);
   productoTD.appendChild(textProducto);
 
   var cantidadOrdenadaTD = document.createElement("td");
