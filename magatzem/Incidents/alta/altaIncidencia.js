@@ -65,8 +65,6 @@ async function carregarCapçalera(){
 
     let inputOrdered = document.getElementById("quantity_order");
     inputOrdered. value = orderLineReception.quantity_ordered;
-    
-
 }
 
 async function altaIncidencia(){

@@ -42983,13 +42983,13 @@
     {
       "id": "bc18",
       "created_at": "28/11/2024",
-      "description": "Menys productes dels esperats",
+      "description": "Tot correcte",
       "supplier": 2,
       "orderReception_id": "3",
       "product": 6,
-      "status": "Pendent",
+      "status": "3",
       "quantity_ordered": 120,
-      "quantity_received": "65"
+      "quantity_received": "120"
     },
     {
       "id": "18e7",

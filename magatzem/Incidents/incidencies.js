@@ -28,26 +28,26 @@ async function carregarIncidencies() {
             modificarIncidencia(ordre.id);
         });
         btnModificar.className = "btn btn-primary";
-        let textRevisar = document.createTextNode("Modificar");
+        let textRevisar = document.createTextNode("Revisar");
         btnModificar.appendChild(textRevisar);
         tdRevisar.appendChild(btnModificar);
         row.appendChild(tdRevisar);
         
-        let tdEliminar = document.createElement("td");
-        let btnEliminar = document.createElement("button");
-        $(btnEliminar).click(function(){
-            eliminarIncidencia(ordre.id);
+        let tdResol = document.createElement("td");
+        let btnResol = document.createElement("button");
+        $(btnResol).click(function(){
+            resolIncidencia(ordre.id);
         });
-        btnEliminar.className = "btn btn-primary";
-        let textEliminar = document.createTextNode("Eliminar");
-        btnEliminar.appendChild(textEliminar);
-        tdEliminar.appendChild(btnEliminar);
-        row.appendChild(tdEliminar);
+        btnResol.className = "btn btn-primary";
+        let textResol = document.createTextNode("Resol");
+        btnResol.appendChild(textResol);
+        tdResol.appendChild(btnResol);
+        row.appendChild(tdResol);
 
         // Crear celdas para las demás columnas
         row.appendChild(CrearCelda(ordre.id));
         row.appendChild(CrearCelda(ordre.description));
-        row.appendChild(CrearCelda(ordre.status));
+        row.appendChild(CrearCelda(getEstat(ordre.status)));
         row.appendChild(CrearCelda(ordre.product));
         row.appendChild(CrearCelda(ordre.quantity_ordered));
         row.appendChild(CrearCelda(ordre.quantity_received));
@@ -72,10 +72,15 @@ function getOperari(id){
 }
 
 function getEstat(id){
-    const estatExistent = estats.find(o => o.id === id);
+    if(id == "Pendent"){
+        return "Pendent";
+    }
+    else{
+        const estatExistent = estats.find(o => o.id === id);
     
-    if(estatExistent){ 
-        return estatExistent.name;
+        if(estatExistent){ 
+            return estatExistent.name;
+        }
     }
 }
 /** 
@@ -97,8 +102,14 @@ async function modificarIncidencia(id){
     }
 }
 
-async function eliminarIncidencia(id){
-    await deleteData(url,"Incident",id);
+async function resolIncidencia(id){
+    const incidencies = await getData(url,"Incident"); 
+    const incidentSeleccionat = incidencies.find(o => o.id === id);
+
+    if(incidentSeleccionat){
+        localStorage.setItem("incidentSeleccionat", JSON.stringify(incidentSeleccionat));
+        window.location.href = "resol/resolIncident.html";
+    }
 }
 
 

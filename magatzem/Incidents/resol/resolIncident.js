@@ -1,21 +1,19 @@
 let proveidors;
 $(document).ready(async function () { 
     proveidors = await getData(url,"Supplier"); 
+    replenaEstats();
     $("#btnTorna").click(function(){
         window.location.assign("../incidencies.html");
     }),
-    $("#btnRevisar").click(function(){
-        revisaIncidencia();
+    $("#btnResol").click(function(){
+        resolIncidencia();
     })
     carregarCapçalera();
 });
 
-async function revisaIncidencia(){
+async function resolIncidencia(){
     const incidentSeleccionat = JSON.parse(localStorage.getItem("incidentSeleccionat"));
-    let valorInputQuantitat = document.getElementById("quantity").value;
-    let valorInputDescripcio = document.getElementById("description").value;
-    incidentSeleccionat.description = valorInputDescripcio;
-    incidentSeleccionat.quantity_received = valorInputQuantitat;
+    incidentSeleccionat.status = document.getElementById("incidentStatus").value;
     await updateId(url,"Incident",incidentSeleccionat.id,incidentSeleccionat);
     window.location.href = "../incidencies.html";
 }
@@ -47,3 +45,14 @@ function getProveidor(id){
     }  
 }
 
+async function replenaEstats(){
+    const estatsDisponibles = await getData(url,"OrderLineReception_Status");
+    const selectStatus = document.getElementById("incidentStatus");
+
+    estatsDisponibles.forEach(status => {
+        const option = document.createElement("option");
+        option.value = status.id; 
+        option.textContent = status.name; 
+        selectStatus.appendChild(option);
+    });
+}
