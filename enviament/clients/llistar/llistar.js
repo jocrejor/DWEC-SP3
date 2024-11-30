@@ -1,10 +1,11 @@
 window.onload = main;
 
-function main() {
-    // thereIsUser();
+let clientes;
 
+async function main() {
+    // thereIsUser();
     document.getElementById("altaCliente").addEventListener("click", altaCliente);
-    cargarClientes();
+    clientes = await getData(url, "Client");
     actualizarTabla();
 }
 
@@ -12,17 +13,8 @@ function altaCliente(){
     window.location.assign("../alta/alta.html");
 }
 
-//carga y retorna el objeto clientes
-async function cargarClientes(){
-    const url = 'http://localhost:5001/';
-    const clientes = await getData(url, "Client");
-    return clientes;
-}
-
 //función para modificar un cliente en específico
 async function modificarCliente(index){
-    const url = 'http://localhost:5001/';
-    const clientes = await getData(url, "Client");
     const cliente = clientes[index];        //obtiene el cliente seleccionado
 
     // localStorage.setItem("cliente", JSON.stringify(cliente));
@@ -34,40 +26,28 @@ async function modificarCliente(index){
 /*función para eliminar el cliente seleccionado
 *se le pasa indice para indicarle el cliente en concreto
 */
-function eliminarCliente(index){
-    const clienteId = clientes[index].id;
-    
-    // await deleteData(url, "Client", clienteId);
+async function eliminarCliente(index){
+    const cliente = clientes[index];        //obtiene el cliente seleccionado
+    await deleteData(url, "Client", cliente.id);
     actualizarTabla();
 }
 
 async function visualizarCliente(index){
-    const url = 'http://localhost:5001/';
-    const clientes = await getData(url, "Client");
     const cliente = clientes[index];        //obtiene el cliente seleccionado
-
+    // localStorage.setItem("cliente", JSON.stringify(cliente));
     localStorage.setItem("idModificar", cliente.id);
-    // localStorage.setItem("clienteMod", JSON.stringify(cliente));
-
-
     window.location.assign("../visualitzar/visualitzar.html");
 }
-
-//guarda los clientes en el local storage
-// function guardarClientes(clientes){
-//     localStorage.setItem('Client', JSON.stringify(clientes));     //guarda en un objeto el cliente
-// }
 
 //actualiza toda la tabla con los nuevos clientes
 async function actualizarTabla(){
     const tabla = document.getElementById('clientesTable').getElementsByTagName('tbody')[0];
-    tabla.innerHTML = ''; //limpia toda la tabla antes de agregar todas las filas
+    // tabla.innerHTML = ''; //limpia toda la tabla antes de agregar todas las filas
 
-    // const clientes = cargarClientes();      //carga en una constante todos los clientes
+    while (tabla.firstChild) {
+        tabla.removeChild(tabla.firstChild);
+    }
 
-    const url = 'http://localhost:5001/';
-    const clientes = await getData(url, "Client");
-    
     //comprueba si hay clientes para decidir si mostrar la tabla
     if(clientes.length > 0){
         clientes.forEach((cliente, index) => {      //por cada cliente crea una linea
