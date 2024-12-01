@@ -42458,30 +42458,6 @@
       "cp": "28001"
     },
     {
-      "id": "2",
-      "name": "Jane Smith",
-      "address": "456 Oak St",
-      "nif": "987654321B",
-      "phone": "987654321",
-      "email": "jane.smith@example.com",
-      "state_id": 194,
-      "province": "Barcelona",
-      "city": "Barcelona",
-      "cp": "08001"
-    },
-    {
-      "id": "3",
-      "name": "Carlos Perez",
-      "address": "789 Pine St",
-      "nif": "456123789C",
-      "phone": "456123789",
-      "email": "carlos.perez@example.com",
-      "state_id": 194,
-      "province": "Valencia",
-      "city": "Valencia",
-      "cp": "46001"
-    },
-    {
       "id": "4",
       "name": "Laura Martinez",
       "address": "101 Maple St",

@@ -1,6 +1,6 @@
 window.onload = main;
 
-let clientes;
+let Client;
 let State;
 let Province;
 let City;
@@ -8,22 +8,18 @@ let City;
 
 async function main() {
     document.getElementById("botonModificar").addEventListener("click", validar, false);
-    clientes = await getData(url, "Client");
+    Client = await getData(url, "Client");
     State = await getData(url, "State");
     Province = await getData(url, "Province");
     City = await getData(url, "City");
-    // if(clienteMod){
-    //     alert(clienteMod.name);
-    // }
-    // // Busca el cliente en el array Client utilizando el ID
-    // // alert(clientes[4].id);
-    // if(clienteMod){
-    //     let cliente = clientes.find(c => c.id === clienteMod.id);
-    // }
     // Recupera el ID del cliente desde localStorage y asegúrate de que sea un número
+    let cliente;
     const idModificar = parseInt(localStorage.getItem('idModificar'), 10);
-    
-    const cliente = clientes[idModificar - 1];
+    for(let i = 0; i < Client.length; i++){
+        if(idModificar == Client[i].id){
+            cliente = Client[i];
+        }
+    }
 
     if (cliente) {
         cargarPaises();
@@ -63,7 +59,9 @@ async function main() {
         
 
         // Llamar a la función para configurar los campos dinámicos
-        const { provinciaID, ciudadID } = configurarCamposDinamicos(cliente, paisSeleccionado);
+        const { provinciaID, ciudadID } = crearContenedores(cliente, paisSeleccionado);
+        
+        // const { provinciaID, ciudadID } = crearContenedores();
 
         // cargarProvincias();
 
@@ -100,13 +98,26 @@ async function main() {
 }
 
 // Nueva función para configurar los campos dinámicos
-function configurarCamposDinamicos(cliente, paisSeleccionado) {
+function crearContenedores(cliente, paisSeleccionado) {
     let provinciaID = "";
     let ciudadID = "";
     const divContenedor = document.querySelector('.form-group.row:nth-of-type(7)');
     const divContenedorCiudades = document.querySelector('.form-group.row:nth-of-type(8)');
     const divContenedorCodigoPostal = document.querySelector('.form-group.row:nth-of-type(9)');
 
+    // Limpiar contenido de los contenedores de provincias, ciudades y código postal
+    while (divContenedor.firstChild) {
+        divContenedor.removeChild(divContenedor.firstChild);
+    }
+
+    while (divContenedorCiudades.firstChild) {
+        divContenedorCiudades.removeChild(divContenedorCiudades.firstChild);
+    }
+
+    while (divContenedorCodigoPostal.firstChild) {
+        divContenedorCodigoPostal.removeChild(divContenedorCodigoPostal.firstChild);
+    }
+    
     const noHayProvincias = Province.some(variable => variable.state_id === paisSeleccionado);
 
     if (!noHayProvincias) {
@@ -126,6 +137,39 @@ function configurarCamposDinamicos(cliente, paisSeleccionado) {
     }
 
     return { provinciaID, ciudadID };
+}
+
+// Nueva función para configurar los campos dinámicos
+function crearContenedoresPais() {
+    const paisSeleccionado = document.getElementById("state_id").value;
+    const divContenedor = document.querySelector('.form-group.row:nth-of-type(7)');
+    const divContenedorCiudades = document.querySelector('.form-group.row:nth-of-type(8)');
+    const divContenedorCodigoPostal = document.querySelector('.form-group.row:nth-of-type(9)');
+
+    // Limpiar contenido de los contenedores de provincias, ciudades y código postal
+    while (divContenedor.firstChild) {
+        divContenedor.removeChild(divContenedor.firstChild);
+    }
+
+    while (divContenedorCiudades.firstChild) {
+        divContenedorCiudades.removeChild(divContenedorCiudades.firstChild);
+    }
+
+    while (divContenedorCodigoPostal.firstChild) {
+        divContenedorCodigoPostal.removeChild(divContenedorCodigoPostal.firstChild);
+    }
+    
+    const noHayProvincias = Province.some(variable => variable.state_id === paisSeleccionado);
+    
+    if (noHayProvincias) {
+        crearSelectProvincias(divContenedor);
+        crearSelectCiudades(divContenedorCiudades);
+        crearInputCodigoPostal(divContenedorCodigoPostal);
+    } else {
+        crearInputProvincia(divContenedor);
+        crearInputCiudades(divContenedorCiudades);
+        crearInputCodigoPostal(divContenedorCodigoPostal);
+    }
 }
 
 function validar(e) {
@@ -334,27 +378,55 @@ function cargarPaises(){
     });
 }
 
-function cargarProvincias(selectProvincia){
+function cargarProvincias(){
+    var selectProvincia = document.getElementById('province');
+    var paisSeleccionado = document.getElementById("state_id").value;
+
     Province.forEach(function(provincia){
-        var opcion = document.createElement('option');
-        opcion.value = provincia.id;
-
-        var nombreOpcion = document.createTextNode(provincia.name);
-        opcion.appendChild(nombreOpcion);
-
-        selectProvincia.appendChild(opcion);
+        // if (provincia.state_id === paisSeleccionado) {
+            // alert(provincia.name);
+            var opcion = document.createElement('option');
+            opcion.value = provincia.id;
+    
+            var nombreOpcion = document.createTextNode(provincia.name);
+            opcion.appendChild(nombreOpcion);
+    
+            selectProvincia.appendChild(opcion);
+        // }
     });
 }
 
-function cargarCiudades(selectCiudad){
+function cargarCiudades(){
+    var selectCiudad = document.getElementById("city");
+    var provinciaSeleccionada = document.getElementById("province").value;
+    alert(provinciaSeleccionada);
+    // while (selectCiudad.options.length > 1) {
+    //     selectCiudad.remove(1);
+    // }
+
+    // var optionProvincia = document.createElement('option');   
+    // var text = document.createTextNode('Selecciona una ciutat');
+    // optionProvincia.appendChild(text);
+    // optionProvincia.selected = true;
+    // selectCiudad.appendChild(optionProvincia);
+    // provinciaID = Province.find(variable => variable.name === cliente.province)?.id || "No especificado";
+    //     ciudadID = City.find(variable => variable.name === cliente.city)?.id || "No especificado";
+    
+    
+
     City.forEach(function(ciudad){
-        var opcion = document.createElement('option');
-        opcion.value = ciudad.id;
+        // if (ciudad.province_id === provinciaSeleccionada) {
+        //     alert(ciudad.province_id);
+        //     console.log(ciudad.province_id);
 
-        var nombreOpcion = document.createTextNode(ciudad.name);
-        opcion.appendChild(nombreOpcion);
+            var opcion = document.createElement('option');
+            opcion.value = ciudad.id;
 
-        selectCiudad.appendChild(opcion);
+            var nombreOpcion = document.createTextNode(ciudad.name);
+            opcion.appendChild(nombreOpcion);
+
+            selectCiudad.appendChild(opcion);
+        // }
     });
 }
 
@@ -456,14 +528,17 @@ function crearSelectProvincias(contenedor){
     //     selectProvincia.appendChild(opcion);
     // });
 
-    cargarProvincias(selectProvincia);
+    // cargarProvincias(selectProvincia);
     var br = document.createElement('br');
 
     contenedor.appendChild(labelProvincia);
     divInput.appendChild(selectProvincia);
     divInput.appendChild(br);
     contenedor.appendChild(divInput);
-    console.log(document.getElementById('province'));
+
+
+
+    cargarProvincias();
 }
 
 function crearInputProvincia(contenedor) {
@@ -544,18 +619,15 @@ function crearSelectCiudades(contenedor){
         selectCiutats.remove(0); // Elimina la primera opción hasta que no queden más
     }
 
-    var optionProvincia = document.createElement('option');   
-    var text = document.createTextNode('Selecciona una ciutat');
-    optionProvincia.appendChild(text);
-    selectCiutats.appendChild(optionProvincia);
-
-    cargarCiudades(selectCiutats);
+    // cargarCiudades(selectCiutats);
     var br = document.createElement('br');
 
     contenedor.appendChild(labelCiutats);
     divInput.appendChild(selectCiutats);
     divInput.appendChild(br);
     contenedor.appendChild(divInput);
+
+    cargarCiudades();
 }
 
 function crearInputCodigoPostal(contenedor) {
@@ -589,7 +661,7 @@ function crearInputCodigoPostal(contenedor) {
 // enviar dades
 function enviarFormulari() {
     const idCliente = parseInt(localStorage.getItem('cliente'), 10);
-    const cliente = clientes[idCliente - 1];
+    const cliente = Client[idCliente - 1];
 
     alert(cliente.name);
     //inicializa la variable para el mensaje de error
@@ -600,19 +672,19 @@ function enviarFormulari() {
     const correo = document.getElementById('email').value;
 
     //verifica si ya existe un cliente con el mismo DNI
-    const dniExistente = clientes.some(client => client.nif === dni && idCliente != client.id);
+    const dniExistente = Client.some(client => client.nif === dni && idCliente != client.id);
     if(dniExistente) {
         mensajeError += "Ya existeix un client amb el mateix DNI.\n";
     }
     
     //verifica si ya existe un cliente con el mismo teléfono
-    const telefonoExistente = clientes.some(client => client.phone === telefono && idCliente != client.id);
+    const telefonoExistente = Client.some(client => client.phone === telefono && idCliente != client.id);
     if(telefonoExistente) {
         mensajeError += "Ya existeix un client amb el mateix teléfono.\n";
     }
 
     //verifica si ya existe un cliente con el mismo correo
-    const correoExistente = clientes.some(client => client.email === correo && idCliente != client.id);
+    const correoExistente = Client.some(client => client.email === correo && idCliente != client.id);
     if(correoExistente) {
         mensajeError += "Ya existeix un client amb el mateix correo.\n";
     }
@@ -648,7 +720,7 @@ function enviarFormulari() {
     cliente.city = document.getElementById('city').value;
     cliente.cp = document.getElementById('cp').value;
 
-    updateId(url, clientes, clientes[idCliente], cliente);
+    updateId(url, Client, Client[idCliente], cliente);
 
     setTimeout(function (){
         listarCliente();
