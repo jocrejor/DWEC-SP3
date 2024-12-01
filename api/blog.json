@@ -26,7 +26,7 @@
       "name": "Maria Gonzalez",
       "email": "maria.gonzalez@hotmail.com",
       "password": "P3r1od!st@2024",
-      "user_profile": "Moderador"
+      "user_profile": "Editor"
     },
     {
       "id": "5",
@@ -53,8 +53,8 @@
       "id": "8",
       "name": "David Sánchez",
       "email": "david.sanchez@gmail.com",
-      "password": "P3r!od!sm0#2024",
-      "user_profile": "Moderador"
+      "password": "Periodismo2024!",
+      "user_profile": "Editor"
     },
     {
       "id": "9",
@@ -71,7 +71,7 @@
       "user_profile": "Publicador"
     },
     {
-      "id": 11,
+      "id": "11",
       "name": "Sofia Navarro",
       "email": "sofia.navarro@gmail.com",
       "password": "Contenidos!2024",

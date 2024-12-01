@@ -20,7 +20,7 @@ function login() {
 }
 
 function gestioUsuaris() {
-    window.location.href = 'users/gestioUsuaris.html';
+    window.location.href = 'users/llistat/gestioUsuaris.html';
 }
 
 function verifyUser() {
@@ -49,19 +49,19 @@ function verifyUser() {
         btnCrearComentari.forEach(btn => btn.style.display = "inline-block"); // Muestra todos los botones
         iniciarSessio.style.display = "none";
     }
-    if (currentUser && currentUser.role === "Administrador") {
+    if (currentUser && currentUser.user_profile === "Administrador") {
         gestioUsuarisBtn.style.display  = "inline-block";
         tancarSessio.style.display      = "inline-block";
         btnCrearEtiqueta.style.display  = "inline-block";
         btnCrearPost.style.display      = "inline-block";
     }
-    else if (currentUser && currentUser.role === "Editor") {
+    else if (currentUser && currentUser.user_profile === "Editor") {
         gestioUsuarisBtn.style.display  = "none";
         tancarSessio.style.display      = "inline-block";
         btnCrearEtiqueta.style.display  = "none";
         btnCrearPost.style.display      = "inline-block";
     }
-    else if (currentUser && currentUser.role === "Publicador") {
+    else if (currentUser && currentUser.user_profile === "Publicador") {
         gestioUsuarisBtn.style.display  = "none";
         tancarSessio.style.display      = "inline-block";
         btnCrearEtiqueta.style.display  = "none";

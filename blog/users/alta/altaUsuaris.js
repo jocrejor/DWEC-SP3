@@ -5,7 +5,7 @@ async function iniciar() {
     document.getElementById("signup").addEventListener("click", validar);
     document.getElementById("tornar-arrere").addEventListener("click", tornarArrere);
     let newId   = await getNewId(url, 'Users') ?? "0";
-    let users = await getData(url, 'Users');
+    let users   = await getData(url, 'Users');
     console.log(users);
     console.log(newId);
 }
