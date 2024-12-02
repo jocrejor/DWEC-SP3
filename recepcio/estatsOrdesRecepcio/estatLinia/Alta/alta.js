@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         try {
             await postData(url, "OrderLineReception_Status", nouEstat);
             alert("Estat guardat correctament!");
-            document.getElementById("altaForm").reset();
+            window.location.href="../Listar/listar.html";
         } catch (error) {
             console.error("Error al guardar l'estat:", error);
             missatgeError.textContent = "Error al guardar l'estat al servidor.";

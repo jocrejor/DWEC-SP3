@@ -1,11 +1,4 @@
 document.addEventListener("DOMContentLoaded", async function () {
-    const urlBase = "http://localhost:5001/";
-    const endPoint = "OrderReception_Status";
-
-    // Incrementa ID
-    const idElement = document.getElementById("id");
-    const idIncrementat = await getNewId(urlBase, endPoint);
-    idElement.value = idIncrementat;
 
     document.getElementById("cancelar").addEventListener("click", function () {
         window.location.href = "../Listar/listar.html";
@@ -14,8 +7,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     // Validar i guardar dades en fer submit
     document.getElementById("altaForm").addEventListener("submit", async function (e) {
         e.preventDefault();
-
-        const id = parseInt(idElement.value.trim());
+        
         const nom = document.getElementById("name").value.trim();
         const missatgeError = document.getElementById("missatgeError");
         missatgeError.textContent = "";
@@ -27,13 +19,12 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
 
         // Crear l'objecte nou 
-        const nouEstat = { id:id.toString(), name: nom };
+        const nouEstat = { name: nom };
 
         try {
-            await postData(urlBase, endPoint, nouEstat);
+            await postData(url, "OrderReception_Status", nouEstat);
             alert("Estat guardat correctament!");
-            document.getElementById("altaForm").reset();
-            idElement.value = await getNewId(urlBase, endPoint);
+            window.location.href="../Listar/listar.html";
         } catch (error) {
             console.error("Error al guardar l'estat:", error);
             missatgeError.textContent = "Error al guardar l'estat al servidor.";

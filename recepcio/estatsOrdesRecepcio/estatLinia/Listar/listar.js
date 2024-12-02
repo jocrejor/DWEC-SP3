@@ -1,13 +1,11 @@
-// URL base i endpoint del servidor
-
 window.onload = main;
-
+const endPoint="OrderLineReception_Status";
 /**
  * Funció principal que s'executa en carregar la pàgina.
  * Configura els events dels botons i crida a les funcions per a crear la taula i llistar els estats.
  */
 function main() {
-    getEstats(); // obtindre les dades de la base de dades
+    getEstats();
 
     document.getElementById("crear").addEventListener("click", () => {
         document.location.href = "../Alta/alta.html";
@@ -19,7 +17,7 @@ function main() {
  */
 async function getEstats() {
     try {
-        const data = await getData(url,"OrderLineReception_Status");
+        const data = await getData(url,endPoint);
         
         // Comprovació
         if (data && Array.isArray(data)) {
@@ -55,9 +53,7 @@ function mostrarTaula(estats) {
         tablaContenido.appendChild(fila);
 
         // Afegir addEventListeners als botons
-        fila.querySelector("#eliminar").addEventListener("click",() => {deleteData(url,"OrderLineReception_Status",estat.id)
-            mostrarTaula(estats);
-        });
+        fila.querySelector("#eliminar").addEventListener("click",() => deleteData(url,endPoint,estat.id));
         fila.querySelector("#modificar").addEventListener("click",() => modificarEstado(estat.id));
         fila.querySelector("#ver").addEventListener("click",() => verEstado(estat.id));
     });
