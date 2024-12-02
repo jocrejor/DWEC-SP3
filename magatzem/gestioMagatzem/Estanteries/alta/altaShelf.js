@@ -27,27 +27,27 @@ function validarID() {
 }
 
 function validarNom() {
-    const nom = document.getElementById("nom");
-    if (nom.value.trim() === "" || !nom.checkValidity()) {
-        error(nom, "El nom ha de tindre entre 2 i 30 caràcters.");
+    const name = document.getElementById("name");
+    if (name.value.trim() === "" || !name.checkValidity()) {
+        error(name, "El nom ha de tindre entre 2 i 30 caràcters.");
         return false;
     }
     return true;
 }
 
 function validarCarrer() {
-    const id_carrer = document.getElementById("id_carrer");
-    if (id_carrer.value.trim() === "" || isNaN(id_carrer.value) || id_carrer.value < 1 || id_carrer.value > 99) {
-        error(id_carrer, "L'ID del carrer ha de ser un número entre 1 i 99.");
+    const steet_id = document.getElementById("steet_id");
+    if (steet_id.value.trim() === "" || isNaN(steet_id.value) || steet_id.value < 1 || steet_id.value > 99) {
+        error(steet_id, "L'ID del carrer ha de ser un número entre 1 i 99.");
         return false;
     }
     return true;
 }
 
 function validarStorage() {
-    const id_magatzem = document.getElementById("id_magatzem");
-    if (id_magatzem.value.trim() === "" || isNaN(id_magatzem.value) || id_magatzem.value < 1 || id_magatzem.value > 99) {
-        error(id_magatzem, "L'ID del storage ha de ser un número entre 1 i 99.");
+    const storage_id = document.getElementById("storage_id");
+    if (storage_id.value.trim() === "" || isNaN(storage_id.value) || storage_id.value < 1 || storage_id.value > 99) {
+        error(storage_id, "L'ID del storage ha de ser un número entre 1 i 99.");
         return false;
     }
     return true;
@@ -62,20 +62,24 @@ function error(element, missatge) {
     element.classList.add("error");
     element.focus();
 }
-
-function enviarFormulari() {
+async function enviarFormulari() {
     const id = document.getElementById("id").value;
-    const nom = document.getElementById("nom").value;
-    const id_carrer = document.getElementById("id_carrer").value;
-    const id_magatzem = document.getElementById("id_magatzem").value;
+    const name = document.getElementById("name").value;
+    const steet_id = document.getElementById("steet_id").value;
+    const storage_id = document.getElementById("storage_id").value;
     
-
-    const novaEstanteria = { id, nom, id_carrer, id_magatzem };
+    const novaEstanteria = { id, name, steet_id, storage_id };
 
     let arrShelfs = JSON.parse(localStorage.getItem("shelfs")) || [];
     arrShelfs.push(novaEstanteria);
     localStorage.setItem("shelfs", JSON.stringify(arrShelfs));
 
+    // Verificar que los datos están en localStorage
+    console.log("Datos guardados en localStorage:", JSON.parse(localStorage.getItem("shelfs")));
+
+    await postData(url, 'Shelf', novaEstanteria);
+
     alert("Estanteria gravada correctament.");
-    window.location.assign("../llista/llistatShelf.html");
+    window.location.assign("../../llista/llistatShelf.html");
 }
+
