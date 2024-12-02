@@ -7,11 +7,10 @@ $(document).ready(function() {
 
     document.getElementById("btnRegresar").addEventListener("click", () => {
         localStorage.removeItem("inventoryVisualizar");
-        window.location.assign("../llistar/llistarGeneral.html"); 
+        window.location.assign("../processarInventari/processarInventari.html"); 
     });
 });
 
-//millorar posar noms magatzem
 async function mostrarInventari(inventory) {
     const inventoryBody = document.getElementById("inventariBody");
     const storages = await getData(url, "Storage");
@@ -68,25 +67,25 @@ async function mostrarProductes(inventoryID) {
         const space = spaces.filter(s => s.id === producte.space_id)[0];
         const spaceName = space.name;
 
+        const carrerTD = document.createElement('td');
+        carrerTD.textContent = producte.street_id; 
+        fila.appendChild(carrerTD);
+
+        const estanteriaTD = document.createElement('td');
+        estanteriaTD.textContent = producte.selft_id; 
+        fila.appendChild(estanteriaTD);
+
+        const spaceTD = document.createElement('td');
+        spaceTD.textContent = producte.space_id; 
+        fila.appendChild(spaceTD);
+        
         const productTD = document.createElement('td');
         productTD.textContent = productName; 
         fila.appendChild(productTD);
 
         const quantitatTD = document.createElement('td');
-        quantitatTD.textContent = producte.real_quantity; 
+        quantitatTD.textContent = producte.quantity_estimated; 
         fila.appendChild(quantitatTD);
-
-        const carrerTD = document.createElement('td');
-        carrerTD.textContent = streetName; 
-        fila.appendChild(carrerTD);
-
-        const estanteriaTD = document.createElement('td');
-        estanteriaTD.textContent = shelfName; 
-        fila.appendChild(estanteriaTD);
-
-        const spaceTD = document.createElement('td');
-        spaceTD.textContent = spaceName; 
-        fila.appendChild(spaceTD);
 
         productesBody.appendChild(fila);
     });

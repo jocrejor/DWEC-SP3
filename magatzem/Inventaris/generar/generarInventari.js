@@ -51,28 +51,25 @@ async function generarInventari() {
     }
 
     //inventory
-    let idInventory = await getNewId(url, "Inventory");
     let dataInventory = new Date().toISOString();
     
     let newInventory = {
-        id: idInventory,
         date: dataInventory,
         created_by: 1,
         inventory_status: "Pendent",
         storage_id: storageSelect
     }
     
-    await postData(url, "Inventory", newInventory);
+    let nouInventari = await postData(url, "Inventory", newInventory);
 
     //inventoryLine
     //let idInventoryLine = await getNewId(url, "InventoryLine"); 
     
     await filteredSpaces.forEach(space => {
         let newInventoryLine =  {
-            inventory_id: idInventory,
+            inventory_id: nouInventari.id,
             product_id: space.product_id,
-            real_quantity: space.quantity,
-            user: 1,
+            quantity_estimated: space.quantity,
             storage_id: space.storage_id,
             street_id: space.street_id,
             selft_id: space.selft_id,
@@ -83,5 +80,5 @@ async function generarInventari() {
     });
 
     alert("Inventari Generat Correctament");
-    window.location.assign("../llistar/llistarGeneral.html");
+    window.location.assign("../processarInventari/processarInventari.html");
 }

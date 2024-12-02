@@ -4,7 +4,7 @@ $(document).ready(function() {
 });
 
 function nouInventari() {
-    window.location.assign("../alta/altaInventari.html");
+    window.location.assign("../generar/generarInventari.html");
 }
 
 async function obtindreInventaris() {
@@ -94,7 +94,7 @@ async function inventariar(id) {
         
     if (inventorySelected) {
         localStorage.setItem("inventariarInventory", JSON.stringify(inventorySelected));
-        window.location.assign("../modificar/modificarInventari.html");
+        window.location.assign("../inventariar/inventariar.html");
     }   
 }
 
