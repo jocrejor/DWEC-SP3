@@ -44,9 +44,10 @@ async function postData(url,endPoint, data = {}) {
 
 ////////////////////// Obtindre nou ID de la taula /////////////////////
 
+/*
 async function getNewId(url,endPoint) {
   try {
-    const response = await fetch(url + endPoint );  // Reemplaza 'data.json' con la ruta de tu archivo
+    const response = await fetch(url + endPoint );
 
     if (!response.ok) {
       throw new Error('Error al obtener el archivo JSON');
@@ -59,9 +60,10 @@ async function getNewId(url,endPoint) {
     return newId + '' ;
 
   } catch (error) {
-    console.error('Error:', error);  // Manejo de errores
+    console.error('Error:', error);
   }
 }
+*/
 
 ////////////////////// Otindre tota la taula /////////////////////
 
