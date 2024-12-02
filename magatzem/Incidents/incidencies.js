@@ -7,6 +7,7 @@ $(document).ready(async function () {
     estats = await getData(url,"OrderLineReception_Status");
     productes = await getData(url,"Product");
     carregarIncidencies();
+    autocompletarProductes();
     $("#novaIncidencia").click(function()
         {
             window.location.href = "llistarOrdres/llistarOrdres.html";
@@ -14,46 +15,55 @@ $(document).ready(async function () {
     )
 });
 
+function autocompletarProductes(){
+    var nomsProductes = productes.map(producte => producte.name);
+    $( "#tags" ).autocomplete({
+        source: nomsProductes
+    });
+}
+
 async function carregarIncidencies() {
     const incidencies = await getData(url,"Incident");
     const tabla = document.getElementById("files");
 
     incidencies.forEach((ordre) => {
-        const row = document.createElement("tr");
-
-        // Crear celda para el botón "Revisar"
-        let tdRevisar = document.createElement("td");
-        let btnModificar = document.createElement("button");
-        $(btnModificar).click(function(){
-            modificarIncidencia(ordre.id);
-        });
-        btnModificar.className = "btn btn-primary";
-        let textRevisar = document.createTextNode("Revisar");
-        btnModificar.appendChild(textRevisar);
-        tdRevisar.appendChild(btnModificar);
-        row.appendChild(tdRevisar);
         
-        let tdResol = document.createElement("td");
-        let btnResol = document.createElement("button");
-        $(btnResol).click(function(){
-            resolIncidencia(ordre.id);
-        });
-        btnResol.className = "btn btn-primary";
-        let textResol = document.createTextNode("Resol");
-        btnResol.appendChild(textResol);
-        tdResol.appendChild(btnResol);
-        row.appendChild(tdResol);
+            const row = document.createElement("tr");
 
-        // Crear celdas para las demás columnas
-        row.appendChild(CrearCelda(ordre.id));
-        row.appendChild(CrearCelda(ordre.description));
-        row.appendChild(CrearCelda(getEstat(ordre.status)));
-        row.appendChild(CrearCelda(ordre.product));
-        row.appendChild(CrearCelda(ordre.quantity_ordered));
-        row.appendChild(CrearCelda(ordre.quantity_received));
+            // Crear celda para el botón "Revisar"
+            let tdRevisar = document.createElement("td");
+            let btnModificar = document.createElement("button");
+            $(btnModificar).click(function(){
+                modificarIncidencia(ordre.id);
+            });
+            btnModificar.className = "btn btn-primary";
+            let textRevisar = document.createTextNode("Revisar");
+            btnModificar.appendChild(textRevisar);
+            tdRevisar.appendChild(btnModificar);
+            row.appendChild(tdRevisar);
+            
+            let tdResol = document.createElement("td");
+            let btnResol = document.createElement("button");
+            $(btnResol).click(function(){
+                resolIncidencia(ordre.id);
+            });
+            btnResol.className = "btn btn-primary";
+            let textResol = document.createTextNode("Resol");
+            btnResol.appendChild(textResol);
+            tdResol.appendChild(btnResol);
+            row.appendChild(tdResol);
 
-        // Añadir la fila a la tabla
-        tabla.appendChild(row);
+            // Crear celdas para las demás columnas
+            row.appendChild(CrearCelda(ordre.id));
+            row.appendChild(CrearCelda(ordre.description));
+            row.appendChild(CrearCelda(getEstat(ordre.status)));
+            row.appendChild(CrearCelda(getProducte(ordre.product)));
+            row.appendChild(CrearCelda(ordre.quantity_ordered));
+            row.appendChild(CrearCelda(ordre.quantity_received));
+
+            // Añadir la fila a la tabla
+            tabla.appendChild(row);
+          
     });
 }
 
@@ -83,15 +93,15 @@ function getEstat(id){
         }
     }
 }
-/** 
+
 function getProducte(id){
-    const producteExistent = productes.find(o => o.id === id);
+    const producteExistent = productes.find(o => Number(o.id) === id);
     
     if(producteExistent){ 
         return producteExistent.name;
     }
 }
-*/
+
 async function modificarIncidencia(id){
     const incidencies = await getData(url,"Incident"); 
     const incidentSeleccionat = incidencies.find(o => o.id === id);

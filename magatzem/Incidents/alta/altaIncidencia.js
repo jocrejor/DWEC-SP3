@@ -54,7 +54,7 @@ async function carregarCapçalera(){
     suppliers = await getData(url,"Supplier");
     const ordreRecepcioSeleccionada = JSON.parse(localStorage.getItem("ordreSeleccionada"));
     const orderLine = await getData(url,"OrderLineReception");
-    const orderLineReception = orderLine.find(o => o.order_reception_id === Number(ordreRecepcioSeleccionada.id));
+    const orderLineReception = orderLine.find(o => o.order_reception_id === ordreRecepcioSeleccionada.id);
 
     let inputID = document.getElementById("orderReceptiod_ID");
     inputID.value = ordreRecepcioSeleccionada.id;
@@ -71,13 +71,13 @@ async function altaIncidencia(){
     if(validar()){ 
         const ordreRecepcioSeleccionada = JSON.parse(localStorage.getItem("ordreSeleccionada"));
         const orderLine = await getData(url,"OrderLineReception");
-        const orderLineReception = orderLine.find(o => o.order_reception_id === Number(ordreRecepcioSeleccionada.id));
+        const orderLineReception = orderLine.find(o => o.order_reception_id === ordreRecepcioSeleccionada.id);
 
         const unitats = document. getElementById("quantity").value;
         const descripcio = document.getElementById("description").value;
         const data = new Date().toLocaleDateString();
 
-        
+        alert("hola");
         const incidencia = {
             created_at: data,
             description: descripcio,
@@ -95,8 +95,7 @@ async function altaIncidencia(){
     }
 }
 
-function getProveidor(id){
-    
+function getProveidor(id){ 
     const proveidorExistent = suppliers.find(o => Number(o.id) === id);
     if(proveidorExistent){ 
         return proveidorExistent.name;         

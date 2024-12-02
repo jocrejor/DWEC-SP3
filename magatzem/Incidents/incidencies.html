@@ -5,12 +5,19 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     <script src="incidencies.js"></script>
     <script src="../../apiAccess/crud.js"></script>
     <title>Proces Revisió</title>
 </head>
 <body>
     <div class="container">
+        <div class="ui-widget">
+            <label for="tags">Producte: </label>
+            <input id="tags" class="form-control">
+        </div>
         <button class="btn btn-primary my-3" id="novaIncidencia">Crear Nova Incidencia</button>
         <table class="table">
             <thead class="thead-light">
