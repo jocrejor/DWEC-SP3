@@ -1,14 +1,34 @@
-window.onload = main;
+let profilesList = [];
+$(document).ready(function() {
 
-
-function main() { 
-  
   thereIsUser();
 
   obtindreUserProfile();  
  
   document.getElementById("nouProfile").addEventListener("click", nouProfile);
+
+  $( "#filtres" ).hide();
+  $("#controlFiltre").click(controlFiltre);
+
+})
+
+
+function controlFiltre () {
+  console.log($("#filtres").css("display"))
+    if ($("#filtres").css("display") === "none"){
+    $( "#filtres" ).fadeIn( "slow", function() {
+      $( "#filtreNom" ).autocomplete({
+        source: profilesList 
+      });
+      
+    }).show();
+    }else{
+      $( "#filtres" ).fadeOut( "slow", function() {
+      }).hide();
+    }
+      
 }
+
 
 
 function nouProfile() {
@@ -18,7 +38,7 @@ function nouProfile() {
 // Obtindre les dades
 async function obtindreUserProfile() {
 
-  const profilesList = await getData(url,"UserProfile")
+  profilesList = await getData(url,"UserProfile")
   
   // recorrer l'arrray i mostar en pantalla els elements.
   profilesList.forEach((profile) => {
