@@ -15,7 +15,7 @@ function main() {
 
 
 function home() {
-  location.assign("../index.html");
+  location.assign("../../../index.html");
 }
 
 function validarNom() {
@@ -80,5 +80,5 @@ async function enviarFormulari() {
   localStorage.removeItem("modProfile");
 
   // tornar al llistat
-  window.location.assign("../listat/llistatUserProfile.html");
+  window.location.assign("../llistat/llistatUserProfile.html");
 }

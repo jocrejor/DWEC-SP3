@@ -71,7 +71,7 @@ async function enviarFormulari() {
   
   const nom = document.getElementById("nom").value;
 
-  const newProfile = new Profile( await  getNewId(url,"UserProfile"), nom);
+  const newProfile = {"name": nom}
 
    const resultat = await  postData(url,"UserProfile",newProfile);
 
@@ -83,5 +83,5 @@ async function enviarFormulari() {
     }
   }, 1000);
 
-  location.assign("../llistat/llistat/UserProfile.html");
+  location.assign("../llistat/llistatUserProfile.html");
 }

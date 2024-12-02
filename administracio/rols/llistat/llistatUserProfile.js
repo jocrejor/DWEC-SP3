@@ -29,6 +29,7 @@ function controlFiltre () {
       
     }).show();
     }else{
+      $("#filtreNom").val('')
       $( "#filtres" ).fadeOut( "slow", function() {
       }).hide();
     }
