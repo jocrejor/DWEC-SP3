@@ -1,17 +1,26 @@
+let url = 'http://node.daw.iesevalorpego.es:3001/';
 
+let state = [];
+let province= [];
+let city= [];
 
 window.onload = iniciar;
 
-let url = 'http://localhost:5001/';
 
-function iniciar() {
+
+async function iniciar() {
     document.getElementById("btnGravar").addEventListener("click", validar, false);
     carregarPaisos();
     document.getElementById("state").addEventListener("change", manejarState);
+    state = await getData(url, "state");
+    province = await getData(url, "province");
+    city = await getData(url, "city");
+
 }
 
 async function carregarPaisos() {
-    const stateData = await getData(url, "states");
+    const stateData = await getData(url, "state");
+    console.log("Datos de países recibidos:", stateData);
     const stateSelect = document.getElementById("state");
     stateData.forEach(state => {
         const option = document.createElement("option");
@@ -235,9 +244,14 @@ async function enviarFormulari() {
         cp: document.getElementById("cp").value
     };
 
-    await postData(url, "saveTransportista", nouTransportista);
-    limpiarFormulari();
-    window.location.assign("../llistar/llistatTransportistes.html");
+    try {
+        await postData(url, "saveTransportista", nouTransportista);
+        alert("Transportista guardado con éxito.");
+        location.href = "../llistar/llistatTransportistes.html";
+    } catch (error) {
+        console.error("Error al guardar el transportista:", error);
+        alert("Ocurrió un error al guardar el transportista.");
+    }
 }
 
 function limpiarFormulari() {
