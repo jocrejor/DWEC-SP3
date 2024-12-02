@@ -1,5 +1,5 @@
 window.onload = iniciar;
-url = 'http://localhost:5002/';
+//url = 'http://localhost:5002/';
 
 async function iniciar() {
     document.getElementById("signup").addEventListener("click", validar);
