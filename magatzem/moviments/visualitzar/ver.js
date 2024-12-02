@@ -1,10 +1,5 @@
-/**document.addEventListener("DOMContentLoaded", async function () {
-    const endPoint = "OrderReception_Status"; 
-
-    const inputId = document.getElementById("id");
-    const inputName = document.getElementById("name");
-
-    // Obtindre el paràmetre `id` de la URL
+document.addEventListener("DOMContentLoaded", async function () {
+    // Llegir l'ID de la URL
     const urlParams = new URLSearchParams(window.location.search);
     const obtindreID = urlParams.get("id");
 
@@ -15,26 +10,30 @@
     }
 
     try {
-        const recordData = await getData(urlBase, `${endPoint}/${obtindreID}`);
-
+        // Obtenir el moviment específic
+        const mov = await getData(url, "Moviment",obtindreID);
+        if (!mov) {
+            alert("No s'ha trobat el moviment especificat.");
+            window.location.href = "../moviments.html";
+            return;
+        }
         if (recordData) {
-            inputId.value = recordData.id;
-            inputName.value = recordData.name;
+            id.value = recordData.id;
+            producte.value = recordData.name;
+            magatzem.value= recordData.magatzem;
+            
         } else {
             console.error("Error obtenint l'estat del servidor.");
         }
+       
     } catch (error) {
-        console.error("Error carregant l'estat:", error);
-        alert("No s'han pogut obtenir les dades de l'estat.");
+        console.error("Error carregant el moviment:", error);
+        alert("Hi ha hagut un problema carregant les dades.");
         window.location.href = "../moviments.html";
     }
 
-    // Acción del botón "Tornar"
+    // Botó "Tornar"
     document.getElementById("tornar").addEventListener("click", function () {
         window.location.href = "../moviments.html";
     });
-});*/
-// Acción del botón "Tornar"
-document.getElementById("tornar").addEventListener("click", function () {
-    window.location.href = "../moviments.html";
 });
