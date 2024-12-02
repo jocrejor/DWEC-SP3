@@ -1,7 +1,5 @@
 window.onload = iniciar;
 
-url = 'http://localhost:5002/';
-
 function iniciar() {
   //thereIsUser();
 
@@ -96,7 +94,6 @@ async function enviarFormulari() {
   const nom = document.getElementById("nom").value;
 
   const newEtiqueta = {
-    id: await getNewId(url, "Tag"),
     name: nom,
   };
 

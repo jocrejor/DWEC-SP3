@@ -2,7 +2,6 @@ window.onload = function () {
     iniciar();
 };
 
-url = 'http://localhost:5002/';
 
 function iniciar() {
     //thereIsUser();
@@ -83,7 +82,6 @@ async function enviarFormulari() {
 
     // Crear un nuevo comentario con el ID y título del post
     const comentari = {
-        id: await getNewId(url, "Comment"),
         description: descripcio,
         post_id: postID,
         post_title: postTitle

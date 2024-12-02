@@ -1,7 +1,5 @@
 window.onload = main;
 
-url = 'http://localhost:5002/';
-
 let postSeleccionado;
 
 function main() {

@@ -2,8 +2,6 @@ window.onload = function () {
     iniciar();
 };
 
-url = 'http://localhost:5002/';
-
 let comentarioSeleccionado;
 
 function iniciar() {

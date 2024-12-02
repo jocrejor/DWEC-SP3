@@ -1,6 +1,5 @@
 window.onload = iniciar;
 
-url = 'http://localhost:5002/';
 
 function iniciar() {
   //thereIsUser();
@@ -134,7 +133,6 @@ async function cargarEtiquetas() {
     //const currentUser = localStorage.getItem("currentUser").value;
 
     const post = {
-        id: await getNewId(url, "Post"),
         title: nomPost,
         photo: foto,
         creation_date: formatDate(new Date()),

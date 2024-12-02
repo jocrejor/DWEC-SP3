@@ -16,8 +16,6 @@ function thereIsUser() {
    }
 }
 
-
-
 ////////////////////// Alta Element /////////////////////
 
 async function postData(url,endPoint, data = {}) {

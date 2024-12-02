@@ -122,16 +122,10 @@
   ],
   "Comment": [
     {
-      "id": "7",
-      "description": "Hola esto es una prueba",
+      "id": "00d2",
+      "description": "Prueba Comentario URL LINK",
       "post_id": "4",
       "post_title": "Primerpost"
-    },
-    {
-      "id": "8",
-      "description": "Que deberiamos de realizar para su funcionamiento",
-      "post_id": "6",
-      "post_title": "BuenosDias"
     }
   ],
   "Tag": [

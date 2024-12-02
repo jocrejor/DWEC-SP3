@@ -3,14 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
     <script src="llistarEtiquetes.js" defer></script>
     <script type="text/javascript" src="../../../apiAccess/crud.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
     <title>Llistat Etiquetes</title>
 </head>
 <body>
     <div class="container">
         <h1>Llistat Etiquetes</h1>
+        
+        <div class="input-group">
+            <button id="filter" class="btn bg-white text-primary">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel" viewBox="0 0 16 16">
+                <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2z"/>
+              </svg>
+            </button>
+        </div>
+        <div class="input-group" id="search-group" style="display: none; padding-top: 0.5em;" >
+            <div class="input-group-prepend">
+                <span class="input-group-text">Nom Etiqueta:</span>
+            </div>
+            <input id="nom" type="search" placeholder="Filtra por Nombre Etiqueta." class="form-control" id="search"/>
+        </div>
+        <div id="search-button" style="display: none;">
+            <button class="btn btn-primary my-3" id="filtrarFuncion">Filtrar</button>
+        </div>
         
         <button class="btn btn-primary my-3" id="mainBlog">Main Blog</button></br>
         <button class="btn btn-primary my-3" id="novaEtiqueta">Nova Etiqueta</button>
