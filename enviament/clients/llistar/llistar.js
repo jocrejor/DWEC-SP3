@@ -1,7 +1,7 @@
 $(document).ready(function () {
     main();
 
-    // Mostrar/ocultar la sección de filtros
+    //mostrar/ocultar la sección de filtros
     $('#filterIcon').on('click', function () {
         $('.filterSection').slideToggle();
         const $filterSection = $('.filterSection');
