@@ -1,24 +1,30 @@
 let profilesList = [];
-$(document).ready(function() {
+$(document).ready( async function() {
 
   thereIsUser();
 
-  obtindreUserProfile();  
- 
+
+  profilesList = await getData(url,"UserProfile")
+  // recorrer l'arrray i mostar en pantalla els elements.
+   profilesList.forEach((profile) => {
+    crearFila(profile);
+  });
   document.getElementById("nouProfile").addEventListener("click", nouProfile);
 
   $( "#filtres" ).hide();
   $("#controlFiltre").click(controlFiltre);
-
+  $("#filtreNom").on("keyup",filtrarRol);
+  
 })
 
 
 function controlFiltre () {
-  console.log($("#filtres").css("display"))
     if ($("#filtres").css("display") === "none"){
     $( "#filtres" ).fadeIn( "slow", function() {
-      $( "#filtreNom" ).autocomplete({
-        source: profilesList 
+      const  arrFilterRol =[];
+      profilesList.forEach(rol => arrFilterRol.push(rol.name)) 
+      $( "#filtreNom" ).autocomplete({   
+        source: arrFilterRol 
       });
       
     }).show();
@@ -26,25 +32,23 @@ function controlFiltre () {
       $( "#filtres" ).fadeOut( "slow", function() {
       }).hide();
     }
-      
 }
 
-
+function filtrarRol(){
+ 
+  $( "tr" ).remove();
+  const filteredData = profilesList.filter(item => item.name.includes($("#filtreNom").val()));
+  filteredData.forEach((profile) => {
+    
+    crearFila(profile);
+  });
+    
+}
 
 function nouProfile() {
   window.location.assign("../alta/altaUserProfile.html");
 }
 
-// Obtindre les dades
-async function obtindreUserProfile() {
-
-  profilesList = await getData(url,"UserProfile")
-  
-  // recorrer l'arrray i mostar en pantalla els elements.
-  profilesList.forEach((profile) => {
-    crearFila(profile);
-  });
-}
 
 function crearFila(profile) {
   
