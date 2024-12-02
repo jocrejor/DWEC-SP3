@@ -61,7 +61,7 @@ function crearFila(user) {
   const tdEmail = document.createElement("td");
   const tdRol = document.createElement("td");
   tdEmail.textContent = user.email;
-  tdRol.textContent = user.rol; // MIRAR AÇOO
+  tdRol.textContent = user.role; // MIRAR AÇOO
 
   // Afegir les cel·les a la fila
   newRow.appendChild(tdDeleteButton);
