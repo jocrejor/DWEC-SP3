@@ -11,10 +11,9 @@ window.onload = async function () {
 
     // Temporal per a creaer Moviments de prova 
     document.getElementById("crearMovProva").addEventListener("click", async ()=>{
-      newMoviment(prova.storage_id,prova.street_id,prova.shelf_id,prova.space_id,prova.product_id,prova.quantity,prova.operator_id,prova.origin,prova.document);
+     newMoviment(prova.storage_id,prova.street_id,prova.shelf_id,prova.space_id,prova.product_id,prova.quantity,prova.operator_id,prova.origin,prova.document);
      await carregarDades();
-    construirTaula(); 
-
+     construirTaula(); 
     })
 
   } catch (error) {

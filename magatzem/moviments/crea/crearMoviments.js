@@ -15,7 +15,7 @@
 
 async function  newMoviment (storage, street, shelf, space, product, quantity, operator, origin,document ) {
         try {
-
+            const ara= new Date();
             const objMoviment= {
                 "product_id": product,
                 "storage_id": storage,
@@ -23,7 +23,7 @@ async function  newMoviment (storage, street, shelf, space, product, quantity, o
                 "shelf_id": shelf,
                 "space_id": space,
                 "quantity": quantity,
-                "date": Date.now(),
+                "date": ara.toLocaleString('es-ES'),
                 "operator_id": operator,
                 "orgin": origin,
                 "document": document
