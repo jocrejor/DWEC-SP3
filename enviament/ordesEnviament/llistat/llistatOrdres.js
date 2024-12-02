@@ -15,12 +15,12 @@ function obtindreordres() {
     const ordres = JSON.parse(localStorage.getItem("orderLineShipping")) || [];
     const ordresShipping = JSON.parse(localStorage.getItem("orderShipping")) || [];
     const tabla = document.getElementById("files");
+
     tabla.innerHTML = "";
 
     ordres.forEach((ordre) => {
         const row = document.createElement("tr");
 
-        // Boto de borrar
         let tdEsborrar = document.createElement("td");
         let btnEsborrar = document.createElement("button");
         btnEsborrar.className = "btn btn-danger";
@@ -29,8 +29,7 @@ function obtindreordres() {
          btnEsborrar.addEventListener("click", function () { esborrar(ordre.id); });
         tdEsborrar.appendChild(btnEsborrar);
         row.appendChild(tdEsborrar);
-
-        // Boto de modificar  
+ 
         let tdModificar = document.createElement("td");
         let btnModificar = document.createElement("button");
         btnModificar.className = "btn btn-warning";
@@ -62,28 +61,42 @@ function CrearCelda(contingut) {
     return cell;
 }
 
-// Funció per esborrar una ordre
-function esborrar(id) {
-    let ordres = JSON.parse(localStorage.getItem("orderShipping")) || [];
-    let ordresLine = JSON.parse(localStorage.getItem("orderLineShipping")) || [];
-    const idEliminar = ordres.findIndex(order => order.id === id);
-    if (idEliminar !== -1) {
-        ordres.splice(idEliminar, 1);
-        ordresLine.splice(idEliminar,1);
+async function esborrar(id) {
+    try {
+        let ordres = JSON.parse(localStorage.getItem("orderShipping")) || [];
+        let ordresLine = JSON.parse(localStorage.getItem("orderLineShipping")) || [];
 
-        localStorage.setItem("orderShipping", JSON.stringify(ordres));
-        localStorage.setItem("orderLineShipping", JSON.stringify(ordresLine));
-        obtindreordres();
+        const idEliminar = ordres.findIndex(order => order.id === id);
+
+        if (idEliminar !== -1) {
+            ordres.splice(idEliminar, 1);
+            ordresLine.splice(idEliminar, 1);
+
+            localStorage.setItem("orderShipping", JSON.stringify(ordres));
+            localStorage.setItem("orderLineShipping", JSON.stringify(ordresLine));
+            obtindreordres();
+            alert("L'ordre ha estat esborrada correctament.");
+        } else {
+            alert("No s'ha trobat l'ordre amb l'ID especificat.");
+        }
+    } catch (error) {
+        alert("No s'ha pogut eliminar l'ordre.");
     }
 }
 
-// Funció per modificar una ordre 
 function modificar(id) {
-    const ordresShipping = JSON.parse(localStorage.getItem("orderShipping")) || [];
-    const ordreSeleccionada = ordresShipping.find(o => o.id === id);
+    let ordresShipping = JSON.parse(localStorage.getItem("orderShipping")) || [];
+    let ordreSeleccionada = ordresShipping.find(o => o.id === id);
+
     if (ordreSeleccionada) {
         localStorage.setItem("ordreSeleccionada", JSON.stringify(ordreSeleccionada));
-        window.location.href = "../alta/altaOrdre.html"; 
+        window.location.href = "../modificar/modificarOrdres.html"; 
+    }
+     else {
+        alert("No s'ha trobat l'ordre seleccionada.");
     }
 }
+
+
+
 

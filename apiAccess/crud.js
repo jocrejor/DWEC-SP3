@@ -1,8 +1,10 @@
-///// 
+//// 
+///// Modificació del CRUD per a no pasar id i que l'ID el pose el json-server
 /////
-/////
+//domini temporal
+let url = 'http://node.daw.iesevalorpego.es:3001/';
 // Local
-let url = 'http://localhost:5001/'
+//let url = 'http://localhost:5001/'
 // Servidor
 //let url = 'http://10.2.218.254:5001/'
 
@@ -13,8 +15,6 @@ function thereIsUser() {
     window.location.href = "/access/login.html";
    }
 }
-
-
 
 ////////////////////// Alta Element /////////////////////
 
@@ -31,9 +31,7 @@ async function postData(url,endPoint, data = {}) {
     if (!response.ok) {
       throw new Error('Error en la solicitud POST');
     }
-
-    const result = await response.json();  // Espera la conversión de la respuesta a JSON
-    console.log(result);  // Trabaja con la respuesta
+    return  await response.json();
 
   } catch (error) {
     console.error('Error:', error);  // Manejo de errores
@@ -41,7 +39,7 @@ async function postData(url,endPoint, data = {}) {
 }
 
 ////////////////////// Obtindre nou ID de la taula /////////////////////
-
+/*
 async function getNewId(url,endPoint) {
   try {
     const response = await fetch(url + endPoint );  // Reemplaza 'data.json' con la ruta de tu archivo
@@ -60,7 +58,7 @@ async function getNewId(url,endPoint) {
     console.error('Error:', error);  // Manejo de errores
   }
 }
-
+*/
 ////////////////////// Otindre tota la taula /////////////////////
 
 async function getData(url, endPoint) {
@@ -92,7 +90,8 @@ async function deleteData(url, endPoint, id) {
     const result = await response.json();  // Si el servidor devuelve JSON en la respuesta
     console.log('Recurso eliminado:', result);
 
-  } catch (error) {
+  } 
+  catch (error) {
     console.error('Error:', error);  // Manejo de errores
   }
 }
@@ -123,4 +122,3 @@ async function updateId(url, endPoint, id,data) {
 //////
 //////
 //////
-

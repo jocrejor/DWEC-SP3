@@ -10,12 +10,14 @@ function iniciar () {
     document.getElementById("btnGuardar").addEventListener("click", guardarModificacio);
     document.getElementById("btnLlistat").addEventListener("click", llistarOrdres);
     carregarDadesOrdre();
+    thereIsUser();
 }
 
 /* llistarOrdres: Funció que redirigeix a la página llistatOrdres.html */
 function llistarOrdres () {
-    window.location.href = "llistatOrdres.html";
+    window.location.href = "../llistat/llistatOrdres.html";
 }
+
 
 /* Funció que valida si esta tot correcte per donar d'alta una nova ordre */
 function validar (e) {
@@ -77,11 +79,10 @@ function validarTransportista () {
 */
 function replenaSelectClients () {
     var clientSeleccionat = document.getElementById("client");
-
+    
     Client.forEach(clients => {
         var option   = document.createElement("option");
         var text     = document.createTextNode(clients.name);
-
         option.value = clients.name;
         option.appendChild(text);
         clientSeleccionat.appendChild(option);       
@@ -275,6 +276,7 @@ function eliminar (id) {
 
 /** error: Funció que mostrara el missatge de error corresponent y marcara en un focus on esta el camp erroni
  */
+
 function error (element, missatge) {
     const textError    = document.createTextNode(missatge);
     const elementError = document.getElementById("missatgeError")
@@ -319,7 +321,6 @@ function enviarFormulari() {
             orderLineShipping[idExistente].product  = producte;
             orderLineShipping[idExistente].quantity = quantitat;
         }
-
         idAEditar = null; 
     }
 
@@ -356,6 +357,7 @@ function enviarFormulari() {
 }
 
 /*carregarDadesOrdre: Funció per carregar les dades de la ordreSeleccionada en llistarOrdres en els inputs*/
+
 function carregarDadesOrdre() {
     const ordreSeleccionada  = JSON.parse(localStorage.getItem("ordreSeleccionada"));
     const ordresLineShipping = JSON.parse(localStorage.getItem("orderLineShipping")) || [];

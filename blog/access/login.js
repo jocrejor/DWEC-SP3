@@ -27,7 +27,7 @@ function verificarUser(e) {
         if (users[i].email === email && users[i].password === contrassenya) {
             localStorage.setItem("currentUser", JSON.stringify(users[i]));
             alert("Login exitoso"); // Mensaje de éxito
-            window.location.href = '../index.html';
+            window.location.href = '../../index.html';
             return true;
         }
     }
