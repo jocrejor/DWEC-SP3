@@ -1,14 +1,10 @@
-// URL base i endpoint del servidor
-const urlBase = "http://localhost:5001/";
-const endPoint = "OrderLineReception_Status";
-
 const idElement = document.getElementById("id");
 const nameElement = document.getElementById("name");
 
 // Inicialització principal
 window.onload = function () {
     carregarDadesEstat();
-    document.getElementById("guardar").addEventListener("click", validarNomEstat());
+    document.getElementById("guardar").addEventListener("click", guardarCanvis());
     document.getElementById("cancelar").addEventListener("click", () => {
         document.location.href = "../Listar/listar.html";
     });
@@ -19,11 +15,15 @@ function carregarDadesEstat() {
     const urlParams = new URLSearchParams(window.location.search);
     const id = parseInt(urlParams.get("id"));
 
-    fetch(`${urlBase}${endPoint}/${id}`)
-        .then((res) => res.json())
-        .then((estat) => {
-            document.getElementById("id").value = estat.id;
-            document.getElementById("name").value = estat.name;
+    getData(url, "OrderLineReception_Status")
+        .then((data) => {
+            const estat = data.find((item) => item.id === id);
+            if (estat) {
+                document.getElementById("id").value = estat.id;
+                document.getElementById("name").value = estat.name;
+            } else {
+                throw new Error("Estat no trobat.");
+            }
         })
         .catch((error) => {
             console.error("Error carregant l'estat:", error);
@@ -71,22 +71,18 @@ function mostrarMissatgeError(missatge) {
 
 // Guarda els canvis a l'estat he copiat lo de crespo, perque no se com connectar-ho
 async function guardarCanvis(e) {
-    e.preventDefault(); 
+    e.preventDefault();
 
     if (validarNomEstat()) {
         try {
             const id = parseInt(document.getElementById("id").value);
             const name = document.getElementById("name").value.trim();
 
-            const estatModificat = { id, name };
+            const estatModificat = { name };
 
-            const resposta = await fetch(`${urlBase}${endPoint}/${id}`, {
-                method: "PATCH",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(estatModificat),
-            });
+            const resposta = await updateId(url, "OrderLineReception_Status", id, estatModificat);
 
-            if (!resposta.ok) throw new Error("Error en modificar l'estat");
+            if (!resposta) throw new Error("Error en modificar l'estat");
 
             alert("Estat modificat correctament.");
             document.location.href = "../Listar/listar.html";
@@ -95,4 +91,5 @@ async function guardarCanvis(e) {
             alert("No s'ha pogut modificar l'estat.");
         }
     }
-} // He eliminat coses que no eren necessàries i he fet alguns canvis per fer que el codi funcione mel
+}
+

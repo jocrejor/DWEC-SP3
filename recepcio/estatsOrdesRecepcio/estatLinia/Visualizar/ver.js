@@ -1,7 +1,4 @@
 document.addEventListener("DOMContentLoaded", async function () {
-    const urlBase = "http://localhost:5001/";
-    const endPoint = "OrderLineReception_Status"; 
-
     const id = document.getElementById("id");
     const nom = document.getElementById("name");
 
@@ -16,7 +13,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     try {
-        const recordData = await getData(urlBase, `${endPoint}/${obtindreID}`);
+        const recordData = await getData(url, "OrdrerLineReception_Status", obtindreID);
 
         if (recordData) {
             id.value = recordData.id;

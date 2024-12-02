@@ -1,6 +1,4 @@
 // URL base i endpoint del servidor
-const urlBase = "http://localhost:5001/";
-const endPoint = "OrderLineReception_Status";
 
 window.onload = main;
 
@@ -21,7 +19,7 @@ function main() {
  */
 async function getEstats() {
     try {
-        const data = await getData(urlBase,endPoint);
+        const data = await getData(url,"OrderLineReception_Status");
         
         // Comprovació
         if (data && Array.isArray(data)) {

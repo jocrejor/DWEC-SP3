@@ -1,5 +1,4 @@
-document.addEventListener("DOMContentLoaded", async function () {
-    const urlBase = "http://localhost:5001/";  // URL base pero s'ha de canviar depenent del npm start
+/**document.addEventListener("DOMContentLoaded", async function () {
     const endPoint = "OrderReception_Status"; 
 
     const inputId = document.getElementById("id");
@@ -11,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     if (!obtindreID) {
         alert("No s'ha trobat cap ID a la URL.");
-        window.location.href = "../Listar/listar.html";
+        window.location.href = "../moviments.html";
         return;
     }
 
@@ -27,11 +26,11 @@ document.addEventListener("DOMContentLoaded", async function () {
     } catch (error) {
         console.error("Error carregant l'estat:", error);
         alert("No s'han pogut obtenir les dades de l'estat.");
-        window.location.href = "../Listar/listar.html";
+        window.location.href = "../moviments.html";
     }
 
     // Acción del botón "Tornar"
     document.getElementById("tornar").addEventListener("click", function () {
-        window.location.href = "../Listar/listar.html";
+        window.location.href = "../moviments.html";
     });
 });

@@ -1,10 +1,9 @@
 document.addEventListener("DOMContentLoaded", async function () {
-    const urlBase = "http://localhost:5001/";
-    const endPoint = "OrderLineReception_Status";
+    
 
     // Incrementa ID
     const idElement = document.getElementById("id");
-    const idIncrementat = await getNewId(urlBase, endPoint);
+    const idIncrementat = await getNewId(url, "OrderLineReception_Status");
     idElement.value = idIncrementat;
 
     document.getElementById("cancelar").addEventListener("click", function () {
@@ -30,10 +29,10 @@ document.addEventListener("DOMContentLoaded", async function () {
         const nouEstat = { id:id.toString(), name: nom };
 
         try {
-            await postData(urlBase, endPoint, nouEstat);
+            await postData(url, "OrderLineReception_Status", nouEstat);
             alert("Estat guardat correctament!");
             document.getElementById("altaForm").reset();
-            idElement.value = await getNewId(urlBase, endPoint);
+            idElement.value = await getNewId(url, "OrderLineReception_Status");
         } catch (error) {
             console.error("Error al guardar l'estat:", error);
             missatgeError.textContent = "Error al guardar l'estat al servidor.";
