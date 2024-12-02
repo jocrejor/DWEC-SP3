@@ -59,15 +59,15 @@ function crearFila(user) {
 
   // Creació dels camps
   const tdEmail = document.createElement("td");
-  const tdRol = document.createElement("td");
+  const tdRole = document.createElement("td");
   tdEmail.textContent = user.email;
-  tdRol.textContent = user.role; // MIRAR AÇOO
+  tdRole.textContent = user.role; // MIRAR AÇOO
 
   // Afegir les cel·les a la fila
   newRow.appendChild(tdDeleteButton);
   newRow.appendChild(tdModifyButton);
   newRow.appendChild(tdEmail);
-  newRow.appendChild(tdRol);
+  newRow.appendChild(tdRole);
 
   // Afegir la fila a la taula
   tableBody.appendChild(newRow);

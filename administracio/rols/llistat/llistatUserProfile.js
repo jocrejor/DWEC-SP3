@@ -73,17 +73,17 @@ function crearFila(profile) {
 
   // Creació camps
   const tdEmail = document.createElement("td");
-  const tdRol = document.createElement("td");
+  const tdRole = document.createElement("td");
   const innerTdEmail = document.createTextNode(profile.id);
-  const innerTdRol = document.createTextNode(profile.name);
+  const innerTdRole = document.createTextNode(profile.name);
   tdEmail.appendChild(innerTdEmail);
-  tdRol.appendChild(innerTdRol);
+  tdRole.appendChild(innerTdRole);
 
   // Afegir a la taula
   newRow.appendChild(tdDeleteButton);
   newRow.appendChild(tdModifyButton);
   newRow.appendChild(tdEmail);
-  newRow.appendChild(tdRol);
+  newRow.appendChild(tdRole);
   tableBody.appendChild(newRow);
 }
 

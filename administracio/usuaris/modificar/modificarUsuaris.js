@@ -15,7 +15,7 @@ function main() {
 }
 
 function home() {
-  location.assign("../index.html");
+  history.back();
 }
 
 // Validació del nom
@@ -118,14 +118,14 @@ async function enviarFormulari() {
   const nom = document.getElementById("nom").value;
   const email = document.getElementById("email").value;
   const password = document.getElementById("pw").value;
-  const select = document.getElementById("rol");
-  const rol = select.options[select.selectedIndex] ? select.options[select.selectedIndex].id : "0";
+  const select = document.getElementById("role");
+  const role = select.options[select.selectedIndex] ? select.options[select.selectedIndex].id : "0";
 
   // Actualitzar el perfil de l'usuari amb les noves dades
   modUser.name = nom;
   modUser.email = email;
   modUser.password = password;
-  modUser.user_profile_id = rol;
+  modUser.user_profile_id = role;
 
   await updateId(url, "users", modUser.id, modUser);
 

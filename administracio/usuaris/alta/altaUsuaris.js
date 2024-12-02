@@ -9,18 +9,18 @@ function iniciar() {
 }
 
 class User {
-  constructor(id, nom, correu, pw, rol, imatge) {
+  constructor(id, nom, correu, pw, role, imatge) {
     this.id = id;
     this.name = nom;
     this.email = correu;
     this.password = pw;
-    this.rol = rol;
+    this.role = role;
     this.image = imatge;
   }
 }
 
 function home() {
-  location.assign("../llistat/llistatUsuaris.html");
+  history.back();
 }
 
 // Funció per llistar els tipus d'usuaris des del servidor
@@ -29,7 +29,7 @@ async function listTipus() {
     // Carregar els rols des del servidor
     const userProfileData = await getData(url, "UserProfile");
 
-    const select = document.getElementById("rol");
+    const select = document.getElementById("role");
     select.innerHTML = "";
 
     // Opció per defecte
@@ -127,14 +127,14 @@ async function enviarFormulari() {
   const nom = document.getElementById("nom").value;
   const email = document.getElementById("email").value;
   const pw = document.getElementById("pw").value;
-  const select = document.getElementById("rol");
-  const rol = select.options[select.selectedIndex] ? select.options[select.selectedIndex].id : "0";
+  const select = document.getElementById("role");
+  const role = select.options[select.selectedIndex] ? select.options[select.selectedIndex].id : "0";
   const imatge = "img/face.png";
 
   // Obtenir un nou ID de forma asíncrona
   const newId = await getNewId(url, "users");
 
-  const newUser = new User(newId, nom, email, pw, rol, imatge);
+  const newUser = new User(newId, nom, email, pw, role, imatge);
 
   const resultat = await postData(url, "users", newUser);
 

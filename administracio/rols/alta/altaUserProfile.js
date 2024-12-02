@@ -16,7 +16,7 @@ class Profile {
 }
 
 function home() {
-  location.assign("../index.html");
+  history.back();
 }
 
 function validarNom() {
