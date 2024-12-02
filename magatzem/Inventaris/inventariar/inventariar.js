@@ -7,7 +7,7 @@ $(document).ready(function() {
 
     document.getElementById("tornarBtn").addEventListener("click",tornar,false)
     document.getElementById("guardarBtn").addEventListener("click", () => {
-        actualitzarQuantitat();
+        actualitzarQuantitat(inventory.id);
         localStorage.removeItem("inventariarInventory");
     });
 });
@@ -110,8 +110,18 @@ async function mostrarProductes(inventoryID) {
     });
 }
 
-async function actualitzarQuantitat() {
-     const valorsDetall = document.querySelectorAll("table input");
+async function actualitzarQuantitat(inventoryID) {
+    //actualitzar inventari
+    const inventari = await getData(url,"Inventory");
+    const inventariObj = inventari.find(inventari => inventari.id === inventoryID);
+
+    if (inventariObj) {
+        inventariObj.inventory_status = "Completat";
+        await updateId(url, "Inventory", inventoryID, inventariObj);
+    }
+
+    //actualitzar InventoryLine
+    const valorsDetall = document.querySelectorAll("table input");
      
     for (const ele of valorsDetall){
         if (ele.value) {
@@ -127,7 +137,7 @@ async function actualitzarQuantitat() {
 
                     if (inventoryLine) {
                         inventoryLine.real_quantity = updatedData;
-                        inventoryLine.inventory_season = justificacioValue; // Actualiza el campo
+                        inventoryLine.inventory_season = justificacioValue; 
 
                         await updateId(url, "InventoryLine", ele.id, inventoryLine);
                     }
