@@ -1,72 +1,61 @@
 window.onload = iniciar;
+let shelfs;
 
 function iniciar () {
-    // Obtendre magatzem i carrer
-    let storages = JSON.parse(localStorage.getItem('storage')) || {};
-    let elementMagatzem = document.getElementById('magatzem');
-    if (storages && storages.storage) {
-        let textMagatzem = document.createTextNode(storages.storage.id + ", " + storages.storage.name + ", " + storages.storage.type);
-        elementMagatzem.appendChild(textMagatzem);
-    }
-
-    let streets = JSON.parse(localStorage.getItem('street')) || {};
-    let elementCarrer = document.getElementById('carrer');
-    if (streets && streets.street) {
-        let textCarrer = document.createTextNode(streets.street.id + ", " + streets.street.name);
-        elementCarrer.appendChild(textCarrer);
-    }
-
     document.getElementById("nouShelf").addEventListener("click", nouShelf);
+    carregarInformacio() 
+}
+async function carregarInformacio() {
+    shelfs = await getData(url, "Shelf");
     obtindreShelf();
 }
 
-function nouShelf () {
-    window.location.assign("../alta/altaShelf.html"); 
+ function nouShelf () {
+    window.location.assign("../alta/altaShelf.html");
 }
 
 
 function obtindreShelf () {
-    let arrShelfs = JSON.parse(localStorage.getItem("shelfs")) || []; 
-    const tbody = document.getElementById("files");
+    let tbody = document.getElementById("files");
+    tbody.innerHTML = "";
 
-   
-    if (arrShelfs.length === 0) {
-        const row = document.createElement("tr");
-        row.innerHTML = "";
-        tbody.appendChild(row);
-    } else {
+        shelfs.forEach((shelf) => {
+            let row = `
+            <tr id="${shelf.id}">
+                <td><button class="btn btn-danger" onclick="esborrar(${shelf.id})">Esborrar</button></td>
+                <td><button class="btn btn-primary" onclick="modificar(${shelf.id})">Modificar</button></td>
+                <td><button class="btn btn-primary" onclick="espai(${shelf.id})">Espai</button></td>
        
-        arrShelfs.forEach(shelf => {
-            let row = document.createElement("tr");
-            row.innerHTML = `
-                <td><button type="button" class="btn btn-danger btn-lg" onclick="esborrar('${shelf.id}')">Esborrar</button></td>
-                <td><button type="button" class="btn btn-primary btn-lg" onclick="modificar('${shelf.id}', '${shelf.nom}', '${shelf.id_carrer}', '${shelf.id_magatzem}')">Modificar</button></td>
-                <td>${shelf.id}</td>
-                <td>${shelf.nom}</td>
-                <td>${shelf.id_carrer}</td>
-                <td>${shelf.id_magatzem}</td>
-            `;
-            tbody.appendChild(row);
+                <td>${shelf.id || ""}</td>
+                <td>${shelf.name || ""}</td>
+                <td>${shelf.storage_id || ""}</td>
+                <td>${shelf.steet_id || ""}</td>
+            </tr>
+       `;
+            tbody.innerHTML += row;
         });
     }
-}
-
-
-function esborrar(id) {
-  
-    let arrShelfs = JSON.parse(localStorage.getItem("shelfs")) || [];
-    arrShelfs = arrShelfs.filter(shelf => shelf.id !== id);
-    localStorage.setItem("shelfs", JSON.stringify(arrShelfs));
-
-    const row = document.querySelector(`button[onclick="esborrar('${id}')"]`).parentNode.parentNode;
-    row.parentNode.removeChild(row);
-}
-
-
-function modificar(id, nom, id_carrer, id_magatzem) {
-    const modShelf = { id: id, nom: nom, id_carrer: id_carrer, id_magatzem: id_magatzem };
-   
-    localStorage.setItem("modShelf", JSON.stringify(modShelf));
     
-    window.location.assign("../modificar/modificarShelf.html");  
-}
+
+    async function esborrar(id) {
+   
+        await deleteData(url, "Storage", id);
+        document.getElementById(id).remove();
+    }
+    
+    async function modificar(storageId) {
+              
+            
+        const estanteria = await getData(url,"Shelf");
+
+        window.localStorage.setItem('Estanteria', JSON.stringify(storageId));
+
+        window.location.assign("../modificar/modificarShelf.html")
+
+
+    }
+    
+    function espai(storageId) {
+        window.location.assign("../../Espais/llista/llistatSpace.html");
+    }
+    
