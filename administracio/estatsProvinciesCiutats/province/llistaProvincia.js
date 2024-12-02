@@ -11,19 +11,40 @@ function loadProvinces() {
 function displayProvinces(provinces) {
     const provinceList = document.getElementById('provinceList');
     provinceList.innerHTML = ''; 
+
     provinces.forEach((province, index) => {
         const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${province.name}</td>
-            <td>
-                <a href="../city/llistaCiutat.html?provinceId=${province.id}&provinceName=${encodeURIComponent(province.name)}" 
-                   class="btn btn-info btn-sm mr-2">Llista Ciutats</a>
-                <button class="btn btn-warning btn-sm mr-2" onclick="editProvince(${index})">Editar</button>
-                <button class="btn btn-danger btn-sm" onclick="deleteProvince(${index})">Eliminar</button>
-            </td>
-        `;
-        provinceList.appendChild(row); 
+        const tdIndex = document.createElement('td');
+        tdIndex.textContent = index + 1;
+        
+        const tdName = document.createElement('td');
+        tdName.textContent = province.name;
+
+        const tdActions = document.createElement('td');
+        const cityLink = document.createElement('a');
+        cityLink.href = `../city/llistaCiutat.html?provinceId=${province.id}&provinceName=${encodeURIComponent(province.name)}`;
+        cityLink.classList.add('btn', 'btn-info', 'btn-sm', 'mr-2');
+        cityLink.textContent = 'Llista Ciutats';
+        
+        const editButton = document.createElement('button');
+        editButton.classList.add('btn', 'btn-warning', 'btn-sm', 'mr-2');
+        editButton.textContent = 'Editar';
+        editButton.onclick = () => editProvince(index);
+        
+        const deleteButton = document.createElement('button');
+        deleteButton.classList.add('btn', 'btn-danger', 'btn-sm');
+        deleteButton.textContent = 'Eliminar';
+        deleteButton.onclick = () => deleteProvince(index);
+
+        tdActions.appendChild(cityLink);
+        tdActions.appendChild(editButton);
+        tdActions.appendChild(deleteButton);
+
+        row.appendChild(tdIndex);
+        row.appendChild(tdName);
+        row.appendChild(tdActions);
+
+        provinceList.appendChild(row);
     });
 }
 

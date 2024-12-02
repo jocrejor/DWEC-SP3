@@ -19,59 +19,50 @@ function loadCities() {
 
 function displayCities(cities) {
     const cityList = document.getElementById('cityList');
-    cityList.innerHTML = '';
+    cityList.innerHTML = ''; 
+
     cities.forEach((city, index) => {
         const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${city.name}</td>
-            <td>
-                <a href="modificar.html?provinceId=${city.province_id}&index=${index}" class="btn btn-warning btn-sm mr-2">Editar</a>
-                <button class="btn btn-danger btn-sm" onclick="deleteCity(${index})">Eliminar</button>
-            </td>
-        `;
+
+        const indexCell = document.createElement('td');
+        indexCell.textContent = index + 1;
+
+        const nameCell = document.createElement('td');
+        nameCell.textContent = city.name;
+
+        const actionCell = document.createElement('td');
+
+        const editButton = document.createElement('a');
+        editButton.className = 'btn btn-warning btn-sm mr-2';
+        editButton.textContent = 'Editar';
+        editButton.href = `modificar.html?provinceId=${city.province_id}&index=${index}`;
+
+        const deleteButton = document.createElement('button');
+        deleteButton.className = 'btn btn-danger btn-sm';
+        deleteButton.textContent = 'Eliminar';
+        deleteButton.onclick = () => deleteCity(index);
+
+        actionCell.appendChild(editButton);
+        actionCell.appendChild(deleteButton);
+
+        row.appendChild(indexCell);
+        row.appendChild(nameCell);
+        row.appendChild(actionCell);
+
         cityList.appendChild(row);
     });
 }
 
-function validarNom() {
-    const pattern = /^[A-Za-záéíóúÁÉÍÓÚñÑ\s]{2,25}$/;
-    const nom = document.getElementById("newCityName");
-
-    if (!nom.value) {
-        error(nom, "Ompli el camp!"); 
-        return false;
-    }
-
-    if (!pattern.test(nom.value)) {
-        error(nom, "El nom no pot contenir números ni caràcters especials, ha de tenir entre 2 i 25 caràcters.");
-        return false;
-    }
-
-    return true; 
-}
-
-function error(input, message) {
-    esborrarError();
-    const errorElement = document.createElement('div');
-    errorElement.classList.add('error-message', 'text-danger', 'mt-2');
-    errorElement.innerText = message;
-    input.parentNode.appendChild(errorElement);
-}
-
-function esborrarError() {
-    const errorMessages = document.querySelectorAll('.error-message');
-    errorMessages.forEach((message) => message.remove());
-}
-
 function addCity() {
+    const cityNameInput = document.getElementById('newCityName');
+
+    if (!validateInput(cityNameInput)) {
+        return;
+    }
+
     const urlParams = new URLSearchParams(window.location.search);
     const provinceId = urlParams.get('provinceId');
-    const cityName = document.getElementById('newCityName').value.trim();
-
-    if (!validarNom()) {
-        return; 
-    }
+    const cityName = cityNameInput.value.trim();
 
     const cities = JSON.parse(localStorage.getItem('City')) || [];
     const newCity = {
@@ -82,7 +73,7 @@ function addCity() {
 
     cities.push(newCity);
     localStorage.setItem('City', JSON.stringify(cities));
-    document.getElementById('newCityName').value = '';
+    cityNameInput.value = '';
     loadCities();
 }
 
@@ -96,5 +87,41 @@ function deleteCity(index) {
         const updatedCities = cities.filter(city => city.id !== citiesOfProvince[index].id);
         localStorage.setItem('City', JSON.stringify(updatedCities));
         loadCities();
+    }
+}
+
+function validateInput(input) {
+    if (!input.value.trim()) {
+        input.setCustomValidity("Ompli el camp!");
+        showValidationMessage(input, input.validationMessage);
+        return false;
+    }
+
+    const pattern = /^[A-Za-záéíóúÁÉÍÓÚñÑ\s]{2,25}$/;
+    if (!pattern.test(input.value.trim())) {
+        input.setCustomValidity("El nom no pot contenir números ni caràcters especials, ha de tenir entre 2 i 25 caràcters.");
+        showValidationMessage(input, input.validationMessage);
+        return false;
+    }
+
+    input.setCustomValidity("");
+    clearValidationMessage(input);
+    return true;
+}
+
+function showValidationMessage(input, message) {
+    clearValidationMessage(input); 
+
+    const errorElement = document.createElement('div');
+    errorElement.className = 'error-message text-danger mt-2';
+    errorElement.textContent = message;
+
+    input.parentNode.appendChild(errorElement);
+}
+
+function clearValidationMessage(input) {
+    const errorElement = input.parentNode.querySelector('.error-message');
+    if (errorElement) {
+        errorElement.remove();
     }
 }

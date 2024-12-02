@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,18 +10,10 @@
 <body>
     <div class="container mt-5">
         <h1 class="text-center">Llistat de Ciutats</h1>
-        <a href="../province/llistaProvincia.html" class="btn btn-secondary">Torna a provincies</a>
+        <a href="../province/llistaProvincia.html" class="btn btn-secondary">Torna a Provincies</a>
         <h2 id="provinceTitle" class="mt-4"></h2>
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" id="newCityName" placeholder="Nova ciutat" />
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" onclick="addCity()">Agregar Ciutat</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <a href="alta.html?provinceId=<%= provinceId %>" class="btn btn-success mb-3">Afegir Nova Ciutat</a>
+
 
         <table class="table table-striped mt-3">
             <tr>

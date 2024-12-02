@@ -50,18 +50,34 @@ function validar(e) {
 
 function displayStates(states) {
     const stateList = document.getElementById('stateList');
-    stateList.innerHTML = ''; // Limpiar la tabla
+    stateList.innerHTML = ''; 
 
     states.forEach((state, index) => {
         const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${state.name}</td>
-            <td>
-                <button class="btn btn-warning btn-sm mr-2" onclick="editState(${index})">Editar</button>
-                <button class="btn btn-danger btn-sm" onclick="deleteState(${index})">Eliminar</button>
-            </td>
-        `;
+        
+        const tdIndex = document.createElement('td');
+        tdIndex.textContent = index + 1;
+
+        const tdName = document.createElement('td');
+        tdName.textContent = state.name;
+
+        const tdActions = document.createElement('td');
+        const editButton = document.createElement('button');
+        editButton.classList.add('btn', 'btn-warning', 'btn-sm', 'mr-2');
+        editButton.textContent = 'Editar';
+        editButton.onclick = () => editState(index);
+        
+        const deleteButton = document.createElement('button');
+        deleteButton.classList.add('btn', 'btn-danger', 'btn-sm');
+        deleteButton.textContent = 'Eliminar';
+        deleteButton.onclick = () => deleteState(index);
+
+        tdActions.appendChild(editButton);
+        tdActions.appendChild(deleteButton);
+        row.appendChild(tdIndex);
+        row.appendChild(tdName);
+        row.appendChild(tdActions);
+
         stateList.appendChild(row);
     });
 }
@@ -95,8 +111,8 @@ function editState(index) {
 function deleteState(index) {
     if (confirm("Estas segur que vols eliminar l'estat?")) {
         const states = JSON.parse(localStorage.getItem('State')) || [];
-        states.splice(index, 1);
-        localStorage.setItem('State', JSON.stringify(states));
-        loadStates();
+        states.splice(index, 1); 
+        localStorage.setItem('State', JSON.stringify(states));  
+        loadStates();  
     }
 }

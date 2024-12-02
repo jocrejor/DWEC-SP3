@@ -10,25 +10,20 @@
 <body>
     <div class="container mt-5">
         <h1 class="text-center">Gestió d'estats</h1>
-        <a href="../province/llistaProvincia.html" class="btn btn-success">Mostrar Provincies de Espanya</a>
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" id="newStateName" placeholder="Nuevo estado" />
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" onclick="addState()">Agregar Estat</button>
-                    </div>
-                </div>
-            </div>
+        <div class="text-center mb-4">
+            <a href="../province/llistaProvincia.html" class="btn btn-success">Mostrar Provincies de Espanya</a>
+            <a href="./alta.html" class="btn btn-primary">Nou Estat</a>
         </div>
 
         <h2 class="mt-4">Estados en el LocalStorage</h2>
         <table class="table table-striped mt-3">
-            <tr>
-                <th>#</th>
-                <th>Nom del Estat</th>
-                <th>Accions</th>
-            </tr>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nom del Estat</th>
+                    <th>Accions</th>
+                </tr>
+            </thead>
             <tbody id="stateList"></tbody>
         </table>
     </div>
