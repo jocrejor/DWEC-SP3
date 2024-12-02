@@ -8,6 +8,15 @@ window.onload = async function () {
   try {
     await carregarDades();
     construirTaula(); 
+
+    // Temporal per a creaer Moviments de prova 
+    document.getElementById("crearMovProva").addEventListener("click", async ()=>{
+      newMoviment(prova.storage_id,prova.street_id,prova.shelf_id,prova.space_id,prova.product_id,prova.quantity,prova.operator_id,prova.origin,prova.document);
+     await carregarDades();
+    construirTaula(); 
+
+    })
+
   } catch (error) {
     console.error("Error inicialitzant l'aplicació:", error);
   }
