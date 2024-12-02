@@ -1,14 +1,29 @@
-window.onload = main;
+$(document).ready(function() {
 
-
-function main() { 
-  
   thereIsUser();
 
   obtindreUserProfile();  
  
   document.getElementById("nouProfile").addEventListener("click", nouProfile);
+
+  $( "#filtres" ).hide();
+
+  $("#controlFiltre").click(controlFiltre);
+
+
+function controlFiltre () {
+
+  
+  $( "#filtres" ).fadeIn( "slow", function() {
+    
+  //  $( "#filtres" ).fadeOut( "slow", function() {
+    
+  // })
+  })
+
 }
+
+
 
 
 function nouProfile() {
