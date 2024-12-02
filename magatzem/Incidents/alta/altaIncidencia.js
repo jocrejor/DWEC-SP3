@@ -88,8 +88,6 @@ async function altaIncidencia(){
             quantity_ordered: orderLineReception.quantity_ordered,
             quantity_received: unitats
         };
-        
-
         await postData(url,"Incident",incidencia);
         window.location.href = "../incidencies.html";
     }
@@ -120,5 +118,4 @@ function esborrarError() {
             ele.classList.remove("error")
         }    
     document.getElementById("missatgeError").replaceChildren(); 
-
 }
