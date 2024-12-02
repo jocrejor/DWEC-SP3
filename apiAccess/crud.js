@@ -1,8 +1,9 @@
 ///// 
 /////
 /////
+let url = 'http://node.daw.iesevalorpego.es:3001/';
 // Local
-let url = 'http://localhost:5001/'
+// let url = 'http://localhost:5001/'
 // Servidor
 //let url = 'http://10.2.218.254:5001/'
 
