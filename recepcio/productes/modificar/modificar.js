@@ -164,13 +164,13 @@ async function validar(e) {
 
         // Si existeix el producte, actualitzem les seues dades amb els valors del formulari
         if (producto) {
-            producto.name = document.getElementById("name").value;
-            producto.description = document.getElementById("description").value;
-            producto.volume = document.getElementById("volume").value;
-            producto.weight = document.getElementById("weight").value;
-            producto.lotorserial = document.getElementById("lotorserial").value;
-            producto.sku = document.getElementById("sku").value;
-            producto.image_url = document.getElementById("image_url").value;
+            producto.name           = document.getElementById("name").value;
+            producto.description    = document.getElementById("description").value;
+            producto.volume         = document.getElementById("volume").value;
+            producto.weight         = document.getElementById("weight").value;
+            producto.lotorserial    = document.getElementById("lotorserial").value;
+            producto.sku            = document.getElementById("sku").value;
+            producto.image_url      = document.getElementById("image_url").value;
 
             try {
                 // Enviem el producte actualitzat al servidor utilitzant updateId

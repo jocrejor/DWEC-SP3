@@ -1,5 +1,3 @@
-let ultimoId = localStorage.getItem("ultimoId") ? parseInt(localStorage.getItem("ultimoId")) : 0;
-
 window.onload = iniciar;
 
 function iniciar() {
@@ -154,11 +152,6 @@ async function validar(e) {
 
         // Obtindre el nou ID per al producto
         try {
-            const newId = await getNewId(url, 'Product');
-
-            // Añadim el nou ID al producte utilitzant el getNewId del crud.js
-            product.id = newId;
-
             // Utilitzem postData per enviar el producte al server
             await postData(url, 'Product', product);
 

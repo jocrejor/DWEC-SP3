@@ -7,7 +7,19 @@ function main() {
     document.getElementById('altaProducte').addEventListener('click', altaProducte);
     document.getElementById('btnEliminar').addEventListener('click', eliminarProducte);
     document.getElementById('btnModificar').addEventListener('click', modificarProducte);
+    document.getElementById('filters').addEventListener('click', showFilters);
     obtenerProductos();
+}
+
+function showFilters() {
+    const filters = document.getElementById('filters');
+
+    if (filters.style.display == 'block') {
+        filters.style.display = 'none';
+    }
+    else {
+        filters.style.display = 'block';
+    }
 }
 
 function altaProducte() {
@@ -58,36 +70,36 @@ function mostrarProductes(arrProductes) {
     arrProductes.forEach(function (product) {
         let row = document.createElement('tr');
 
-        let eliminarCell = document.createElement('td');
-        let eliminarBtn = document.createElement('button');
+        let eliminarCell        = document.createElement('td');
+        let eliminarBtn         = document.createElement('button');
         eliminarBtn.appendChild(document.createTextNode('Eliminar'));
-        eliminarBtn.className = 'btn btn-primary btn-lg';
-        eliminarBtn.onclick = function () { eliminarProducte(product.id); };
+        eliminarBtn.className   = 'btn btn-primary btn-lg';
+        eliminarBtn.onclick     = function () { eliminarProducte(product.id); };
         eliminarCell.appendChild(eliminarBtn);
 
-        let modificarCell = document.createElement('td');
-        let modificarBtn = document.createElement('button');
+        let modificarCell       = document.createElement('td');
+        let modificarBtn        = document.createElement('button');
         modificarBtn.appendChild(document.createTextNode('Modificar'));
-        modificarBtn.className = 'btn btn-primary btn-lg';
-        modificarBtn.onclick = function () { modificarProducte(product.id); };
+        modificarBtn.className  = 'btn btn-primary btn-lg';
+        modificarBtn.onclick    = function () { modificarProducte(product.id); };
         modificarCell.appendChild(modificarBtn);
 
-        let nameCell = document.createElement('td');
+        let nameCell            = document.createElement('td');
         nameCell.appendChild(document.createTextNode(product.name));
 
-        let descriptionCell = document.createElement('td');
+        let descriptionCell     = document.createElement('td');
         descriptionCell.appendChild(document.createTextNode(product.description));
 
-        let volumeCell = document.createElement('td');
+        let volumeCell          = document.createElement('td');
         volumeCell.appendChild(document.createTextNode(product.volume));
 
-        let weightCell = document.createElement('td');
+        let weightCell          = document.createElement('td');
         weightCell.appendChild(document.createTextNode(product.weight));
 
-        let skuCell = document.createElement('td');
+        let skuCell             = document.createElement('td');
         skuCell.appendChild(document.createTextNode(product.sku));
 
-        let image_urlCell = document.createElement('td');
+        let image_urlCell       = document.createElement('td');
         image_urlCell.appendChild(document.createTextNode(product.image_url));
 
         // Añadir celdas a la fila
