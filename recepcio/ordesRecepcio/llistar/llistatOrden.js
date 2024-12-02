@@ -3,8 +3,7 @@ const orderLineReceptionEP = "OrderLineReception";
 
 $(document).ready(async function () {
   document.getElementById("nuevaOrden").addEventListener("click", nuevaOrden);
-  const ordes = await obtindreOrdens();
-  llistarOrdes(ordes);
+  obtindreOrdens();
   activarFiltros();
 });
 
@@ -15,14 +14,11 @@ function nuevaOrden() {
 async function obtindreOrdens() {
   try {
     const data = await getData(url, orderReceptionEP);
-    return data;
+    $("#files").empty();
+    data.forEach((order) => crearLinea(order));
   } catch (error) {
     console.log("Error:", error);
   }
-}
-
-function llistarOrdes(ordes) {
-  ordes.forEach((order) => crearLinea(order));
 }
 
 async function crearLinea(order) {
@@ -106,7 +102,7 @@ async function esborrarOrdre(id) {
       const orderLineReception = await getData(url, orderLineReceptionEP);
       const lineToDelete = orderLineReception.filter(product => product.order_reception_id === id);
       lineToDelete.forEach(async product => await deleteData(url, orderLineReceptionEP, product.id));
-      ;
+      obtindreOrdens();
     }
   } catch (error) {
     console.error("ERROR: ", error);
