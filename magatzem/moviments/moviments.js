@@ -7,7 +7,6 @@ let arrayUser = [];
 window.onload = async function () {
   try {
     await carregarDades();
-    inicialitzarEsdeveniments(); 
     construirTaula(); 
   } catch (error) {
     console.error("Error inicialitzant l'aplicació:", error);
@@ -28,18 +27,6 @@ async function carregarDades() {
 }
 
 /**
- * Configura els esdeveniments dels botons i altres elements interactius.
- */
-function inicialitzarEsdeveniments() {
-  const botoCrear = document.getElementById("crear");
-  if (botoCrear) {
-    botoCrear.addEventListener("click", () => {
-      window.location.href = "./alta/alta.html";
-    });
-  }
-}
-
-/**
  * Construeix i mostra la taula amb els moviments carregats.
  */
 function construirTaula() {
@@ -54,47 +41,47 @@ function construirTaula() {
     const fila = document.createElement("tr");
 
     // ID
-    fila.appendChild(crearCelda(mov.id));
+    fila.appendChild(creaCela(mov.id));
 
     // Nom del producte
-    fila.appendChild(crearCelda(obtenirNomProducte(mov.product_id)));
+    fila.appendChild(creaCela(obtenirNomProducte(mov.product_id)));
 
     // Magatzem
-    fila.appendChild(crearCelda(mov.storage_id));
+    fila.appendChild(creaCela(mov.storage_id));
 
     // Carrer
-    fila.appendChild(crearCelda(mov.street_id));
+    fila.appendChild(creaCela(mov.street_id));
     
     // Estanteria
-    fila.appendChild(crearCelda(mov.shelf_id));
+    fila.appendChild(creaCela(mov.shelf_id));
     
     // Espai
-    fila.appendChild(crearCelda(mov.space_id));
+    fila.appendChild(creaCela(mov.space_id));
 
     // Quantitat
-    fila.appendChild(crearCelda(mov.quantity));
+    fila.appendChild(creaCela(mov.quantity));
 
     // Data
-    fila.appendChild(crearCelda(mov.date));
+    fila.appendChild(creaCela(mov.date));
 
     // Operari
-    fila.appendChild(crearCelda(mov.operator_id));
+    fila.appendChild(creaCela(mov.operator_id));
 
     // Origen
-    fila.appendChild(crearCelda(mov.orgin)); // el pobre Crespo enganyant-se amb origin mal escrit
+    fila.appendChild(creaCela(mov.orgin)); // el pobre Crespo s'ha enganyat amb origin mal escrit
 
     // Document
-    fila.appendChild(crearCelda(mov.document));
+    fila.appendChild(creaCela(mov.document));
 
 
     // Botó "Visualitzar"
-    const actionsCell = document.createElement("td");
+    const accionsCela = document.createElement("td");
     const visualitzarButton = document.createElement("button");
     visualitzarButton.textContent = "Visualitzar";
     visualitzarButton.className = "btn btn-info";
     visualitzarButton.addEventListener("click", () => visualitzarMoviment(mov.id));
-    actionsCell.appendChild(visualitzarButton);
-    fila.appendChild(actionsCell);
+    accionsCela.appendChild(visualitzarButton);
+    fila.appendChild(accionsCela);
 
     tablaContenido.appendChild(fila);
   });
@@ -102,10 +89,8 @@ function construirTaula() {
 
 /**
  * Crea una cel·la de taula amb un text donat.
- * @param {string} text - Text a inserir.
- * @returns {HTMLTableCellElement} La cel·la creada.
  */
-function crearCelda(text) {
+function creaCela(text) {
   const celda = document.createElement("td");
   celda.textContent = text;
   return celda;
@@ -113,8 +98,6 @@ function crearCelda(text) {
 
 /**
  * Obté el nom d'un producte a partir del seu ID.
- * @param {number} id - ID del producte.
- * @returns {string} Nom del producte.
  */
 function obtenirNomProducte(id) {
   const producte = arrayProduct.find((prod) => prod.id === id);
@@ -142,6 +125,9 @@ async function esborrarMoviment(id) {
  * @param {number} id - ID del moviment a visualitzar.
  */
 
+/* 
+* Redirigeix a la pàgina de visualització per a un moviment
+*/
 function visualitzarMoviment(id) {
   window.location.href = `./visualitzar/ver.html?id=${id}`;
 }
