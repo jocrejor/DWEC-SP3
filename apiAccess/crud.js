@@ -2,7 +2,7 @@
 /////
 /////
 // Local
-let url = 'http://localhost:5001/';
+let url = 'http://node.daw.iesevalorpego.es:3001/';
 // Servidor
 //let url = 'http://10.2.218.254:5001/'
 
@@ -34,7 +34,7 @@ async function postData(url,endPoint, data = {}) {
 
     const result = await response.json();  // Espera la conversión de la respuesta a JSON
     console.log(result);  // Trabaja con la respuesta
-
+    
   } catch (error) {
     console.error('Error:', error);  // Manejo de errores
   }
