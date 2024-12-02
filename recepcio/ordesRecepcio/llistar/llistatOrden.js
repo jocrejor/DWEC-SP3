@@ -5,7 +5,7 @@ $(document).ready(async function () {
   document.getElementById("nuevaOrden").addEventListener("click", nuevaOrden);
   const ordes = await obtindreOrdens();
   llistarOrdes(ordes);
-  activarFiltros(ordes);
+  activarFiltros();
 });
 
 function nuevaOrden() {
@@ -77,15 +77,18 @@ async function crearLinea(order) {
   files.appendChild(linea);
 }
 
-async function activarFiltros(ordes) {
+async function activarFiltros() {
   const proveidors = await getData(url, "Supplier");
   const availableTags = [];
   proveidors.forEach(proveidor => availableTags.push(proveidor.name));
-  console.log(availableTags);
   
 
   $("#search").autocomplete({
     source: availableTags,
+  });
+
+  $("#filter").click(function() {
+    $("#search-group").fadeToggle(300);
   });
 }
 
