@@ -55,7 +55,9 @@ function mostrarTaula(estats) {
         tablaContenido.appendChild(fila);
 
         // Afegir addEventListeners als botons
-        fila.querySelector("#eliminar").addEventListener("click",() => deleteData(urlBase,endPoint,estat.id));
+        fila.querySelector("#eliminar").addEventListener("click",() => {deleteData(url,"OrderLineReception_Status",estat.id)
+            mostrarTaula(estats);
+        });
         fila.querySelector("#modificar").addEventListener("click",() => modificarEstado(estat.id));
         fila.querySelector("#ver").addEventListener("click",() => verEstado(estat.id));
     });
