@@ -1,17 +1,5 @@
 
-      // Objecte de prova (no se aon cridar-lo)
-        const prova = {
-            product_id: "2",
-            storage_id: "03",
-            street_id: "02",
-            shelf_id: "03",
-            space_id: "02",
-            quantity: -5,
-            operator_id: "3",
-            origin: "Inventary",
-            document: "2"
-        };
-
+      
 
 async function  newMoviment (storage, street, shelf, space, product, quantity, operator, origin,document ) {
         try {

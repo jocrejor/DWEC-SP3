@@ -11,6 +11,20 @@ window.onload = async function () {
 
     // Temporal per a creaer Moviments de prova 
     document.getElementById("crearMovProva").addEventListener("click", async ()=>{
+      // Objecte de prova (no se aon cridar-lo)
+      const prova = {
+        product_id: "3",
+        storage_id: "03",
+        street_id: "04",
+        shelf_id: "02",
+        space_id: "01",
+        quantity: 9,
+        operator_id: "2",
+        origin: "OrderReception",
+        document: "erft"
+    };
+
+
      newMoviment(prova.storage_id,prova.street_id,prova.shelf_id,prova.space_id,prova.product_id,prova.quantity,prova.operator_id,prova.origin,prova.document);
      await carregarDades();
      construirTaula(); 
