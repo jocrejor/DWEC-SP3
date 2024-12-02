@@ -1,11 +1,21 @@
 window.onload = iniciar;
 
 //url = 'http://localhost:5002/';
-
-function iniciar() {
+let users;
+async function iniciar() {
+    listUsers();
+    
+    console.log(users);
     document.getElementById("nouUsuari").addEventListener("click", altaUsuari);
     document.getElementById("backToBlog").addEventListener("click", backToBlog);
-    listUsers();
+    $('#funnel').click(() => {
+        if($('#panel').css('display') === 'none')
+            $('#panel').fadeIn(500);
+        else{
+            $('#panel').fadeOut(500); 
+        }
+    })
+    autocompleteFilters();
 }
 
 function gestioUsuaris() {
@@ -33,6 +43,7 @@ async function listUsers() {
         btnDelete.addEventListener("click", function() {
             console.log(user.id);
             deleteData(url, 'Users', user.id); // Función para borrar el usuario
+            tbody.removeChild(tr);
         });
         tdDelete.appendChild(btnDelete);
 
@@ -77,7 +88,7 @@ function altaUsuari() {
 
 
 async function modifyUser(id) {
-    let users = await getData(url, 'Users');
+    
     for (let i = 0; i < users.length; i++) {
         let user = users[i];
         if (user.id === id) {
@@ -91,4 +102,33 @@ async function modifyUser(id) {
 
 function backToBlog() {
     window.location.href = "../../index.html";
+}
+
+
+
+async function autocompleteFilters () {
+    let users = users = await getData(url, 'Users');
+    let names = [];
+    let email = [];
+    let role = ['Administrador', 'Editor', 'Publicador'];
+    
+    users.forEach(user => {
+        names.push(user.name);
+        email.push(user.email);   
+    });
+    
+    console.log(names);
+    console.log(email);
+    $('#name').autocomplete ({
+        source: names
+    });
+
+    $('#email').autocomplete({
+        source:email
+    });
+
+    $('#role').autocomplete({
+        source:role
+    })
+    
 }
