@@ -8,6 +8,15 @@
     <script src="llistar.js" defer></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK" crossorigin="anonymous"></script> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
 </head>
 <style>
     .error {
@@ -18,7 +27,38 @@
     <div class="container">
         <h1>Llistat de clients</h1>
 
-        <button class=" btn btn-primary my-3" id="altaCliente">Nou client</button>
+        <i class="bi bi-funnel" id="filterIcon" style="cursor: pointer;"></i>
+
+        <div style="display: none;" class="form-group row filterSection">
+            <label for="address" class="col-sm-1 col-form-label">Nombre:</label>
+            <div class="col-sm-5" style="display: flex; align-items: center;">
+                <input id="nombreFilter" type="text"  class="form-control" placeholder="Filtra"></br>
+            </div>
+
+            <label for="address" class="col-sm-1 col-form-label">DNI/NIF:</label>
+            <div class="col-sm-5" style="display: flex; align-items: center;">
+                <input id="dniFilter" type="text" class="form-control" placeholder="Filtra">
+            </div>
+
+        </div>
+
+        <div style="display: none;" class="form-group row filterSection">
+            <label for="address" class="col-sm-1 col-form-label">Teléfon:</label>
+            <div class="col-sm-5" style="display: flex; align-items: center;">
+                <input id="telefonoFilter" type="text" class="form-control" placeholder="Filtra">
+            </div>
+
+            <label for="address" class="col-sm-1 col-form-label">Correu:</label>
+            <div class="col-sm-5" style="display: flex; align-items: center;">
+                <input id="correuFilter" type="text" class="form-control" placeholder="Filtra">
+            </div>
+        </div>
+
+        <div style="display: none;" class="form-group row filterSection">
+            <button id="applyFilter" class=" col-sm-1 col-form-label btn btn-primary my-3">Filtra</button>
+        </div>
+
+        <button class="btn btn-primary my-3" id="altaCliente">Nou client</button>
 
         <table id="clientesTable" class="table">
             <thead class="thead-light">
@@ -37,6 +77,9 @@
                 <!--los clientes se van agregando aqui-->
             </tbody>
         </table>
+        <div id="noClientesMessage" style="display: none; text-align: center; font-size: 18px; color: #ff0000;">
+            No hay clientes disponibles.
+        </div>
     </div>
 </body>
 </html>

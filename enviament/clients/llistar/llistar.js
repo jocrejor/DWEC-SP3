@@ -1,12 +1,70 @@
-window.onload = main;
+$(document).ready(function () {
+    main();
 
-let clientes;
+    // Mostrar/ocultar la sección de filtros
+    $('#filterIcon').on('click', function () {
+        $('.filterSection').slideToggle();
+        const $filterSection = $('.filterSection');
+        
+        if ($filterSection.css('display') != 'none') {
+            $filterSection.css('display', 'flex'); // Muestra como flex
+        } else {
+            $filterSection.css('display', 'none'); // Oculta
+        }
+    });
+
+    //evento para los filtros
+    $('#applyFilter').on('click', function() {
+        const filterNombre = $('#nombreFilter').val().toLowerCase();
+        const filterDni = $('#dniFilter').val().toLowerCase();
+        const filterTelefono = $('#telefonoFilter').val().toLowerCase();
+        const filterCorreu = $('#correuFilter').val().toLowerCase();
+        
+        
+        actualizarTabla(filterNombre, filterDni, filterTelefono, filterCorreu); // Pasamos el valor del filtro directamente a actualizarTabla
+    });
+});
+
+let clientes = [];
 
 async function main() {
     // thereIsUser();
     document.getElementById("altaCliente").addEventListener("click", altaCliente);
     clientes = await getData(url, "Client");
-    actualizarTabla();
+    if(clientes){
+        actualizarTabla();
+        autocompletarFiltros();
+    }
+    else {
+        console.error("No se han encontrado clientes.");
+    }
+}
+
+function autocompletarFiltros() {
+    if (clientes.length > 0) {
+        var clienteNames = clientes.map(cliente => cliente.name); // Obtener solo los nombres de los clientes
+        $('#nombreFilter').autocomplete({
+            source: clienteNames
+        });
+
+        var clienteDnis = clientes.map(cliente => cliente.nif); // Obtener solo los nombres de los clientes
+        $('#dniFilter').autocomplete({
+            source: clienteDnis
+        });
+
+        var clienteTelefonos = clientes.map(cliente => cliente.phone); // Obtener solo los nombres de los clientes
+        $('#telefonoFilter').autocomplete({
+            source: clienteTelefonos
+        });
+
+        var clienteCorreos = clientes.map(cliente => cliente.email); // Obtener solo los nombres de los clientes
+        $('#correuFilter').autocomplete({
+            source: clienteCorreos
+        });
+    }
+    else {
+        console.error('No se han cargado los clientes');
+    }
 }
 
 function altaCliente(){
@@ -39,98 +97,71 @@ async function visualizarCliente(index){
     window.location.assign("../visualitzar/visualitzar.html");
 }
 
-//actualiza toda la tabla con los nuevos clientes
-async function actualizarTabla(){
-    const tabla = document.getElementById('clientesTable').getElementsByTagName('tbody')[0];
-    // tabla.innerHTML = ''; //limpia toda la tabla antes de agregar todas las filas
+function actualizarTabla(filterNombre = '', filterDni = '', filterTelefono = '', filterCorreu = '') {
+    const tabla = $('#clientesTable').find('tbody');
+    tabla.empty(); //limpia la tabla
 
-    while (tabla.firstChild) {
-        tabla.removeChild(tabla.firstChild);
-    }
+    // Filtra los clientes según los filtros proporcionados
+    const clientesFiltrados = clientes.filter(cliente => {
+        return (
+            (filterNombre === '' || cliente.name.toLowerCase().includes(filterNombre)) &&
+            (filterDni === '' || cliente.nif.toLowerCase().includes(filterDni)) &&
+            (filterTelefono === '' || cliente.phone.toLowerCase().includes(filterTelefono)) &&
+            (filterCorreu === '' || cliente.email.toLowerCase().includes(filterCorreu))
+        );
+    });
 
-    //comprueba si hay clientes para decidir si mostrar la tabla
-    if(clientes.length > 0){
-        clientes.forEach((cliente, index) => {      //por cada cliente crea una linea
-            let tabla = document.getElementById("files");
-            let tr = document.createElement("tr");
-            //crea el botón para modificar el cliente
-            const botonModificar = document.createElement("button");
-            const textoModificar = document.createTextNode("Modificar");
-            botonModificar.appendChild(textoModificar);
-            botonModificar.className = "btn btn-primary btn-lg";
-            botonModificar.id =  "modificar";
-            botonModificar.addEventListener("click", function() {
+    // Comprueba si hay clientes filtrados para decidir si mostrar la tabla
+    if (clientesFiltrados.length > 0) {
+        clientesFiltrados.forEach((cliente, index) => {
+            let tr = $('<tr></tr>'); // Crear una nueva fila usando jQuery
+
+            // Crear el botón para modificar el cliente
+            let botonModificar = $('<button class="btn btn-primary btn-lg">Modificar</button>');
+            botonModificar.on('click', function() {
                 modificarCliente(index);
             });
-            let tdModificar = document.createElement("td");
-            tdModificar.appendChild(botonModificar);
-            tr.appendChild(tdModificar);
-            tabla.appendChild(tr);
-            
-            //crea el botón para eliminar el cliente
-            const botonEliminar = document.createElement("button");
-            const textoEliminar = document.createTextNode("Esborrar");
-            botonEliminar.appendChild(textoEliminar);
-            botonEliminar.className = "btn btn-primary btn-lg";
-            botonEliminar.onclick = function() {
+            tr.append($('<td></td>').append(botonModificar)); // Agregar la celda a la fila
+
+            // Crear el botón para eliminar el cliente
+            let botonEliminar = $('<button class="btn btn-primary btn-lg">Esborrar</button>');
+            botonEliminar.on('click', function() {
                 eliminarCliente(index);
-            };
-            let tdEliminar = document.createElement("td");
-            tdEliminar.appendChild(botonEliminar);
-            tr.appendChild(tdEliminar);
-            tabla.appendChild(tr);
+            });
+            tr.append($('<td></td>').append(botonEliminar)); // Agregar la celda a la fila
 
-            //crea el botón para visualitzar el cliente
-            const botonVisualizar = document.createElement("button");
-            const textoVisualizar = document.createTextNode("Visualitzar");
-            botonVisualizar.appendChild(textoVisualizar);
-            botonVisualizar.className = "btn btn-primary btn-lg";
-            botonVisualizar.onclick = function() {
+            // Crear el botón para visualizar el cliente
+            let botonVisualizar = $('<button class="btn btn-primary btn-lg">Visualitzar</button>');
+            botonVisualizar.on('click', function() {
                 visualizarCliente(index);
-            };
-            let tdVisualizar = document.createElement("td");
-            tdVisualizar.appendChild(botonVisualizar);
-            tr.appendChild(tdVisualizar);
-            tabla.appendChild(tr);           
+            });
+            tr.append($('<td></td>').append(botonVisualizar)); // Agregar la celda a la fila
 
-            //crea y añade el número de ID
-            const textoId = document.createTextNode(cliente.id);
-            let tdId = document.createElement("td");
-            tdId.appendChild(textoId);
-            tr.appendChild(tdId);
-            tabla.appendChild(tr);
+            // Crear y agregar el ID del cliente
+            tr.append($('<td></td>').text(cliente.id));
 
-            //crea y añade el nombre del cliente
-            const textoNombre = document.createTextNode(cliente.name);
-            let tdNombre = document.createElement("td");
-            tdNombre.appendChild(textoNombre);
-            tr.appendChild(tdNombre);
-            tabla.appendChild(tr);
+            // Crear y agregar el nombre del cliente
+            tr.append($('<td></td>').text(cliente.name));
 
-            //crea y añade el dni del cliente
-            const textoDni = document.createTextNode(cliente.nif);
-            let tdDni = document.createElement("td");
-            tdDni.appendChild(textoDni);
-            tr.appendChild(tdDni);
-            tabla.appendChild(tr);
+            // Crear y agregar el DNI/NIF del cliente
+            tr.append($('<td></td>').text(cliente.nif));
 
-            //crea y añade el teléfono del cliente
-            const textoTelefono = document.createTextNode(cliente.phone);
-            let tdTelefono = document.createElement("td");
-            tdTelefono.appendChild(textoTelefono);
-            tr.appendChild(tdTelefono);
-            tabla.appendChild(tr);
+            // Crear y agregar el teléfono del cliente
+            tr.append($('<td></td>').text(cliente.phone));
 
-            //crea y añade el correo del cliente
-            const textoCorreo = document.createTextNode(cliente.email);
-            let tdCorreo = document.createElement("td");
-            tdCorreo.appendChild(textoCorreo);
-            tr.appendChild(tdCorreo);
-            tabla.appendChild(tr);
+            // Crear y agregar el correo del cliente
+            tr.append($('<td></td>').text(cliente.email));
+
+            // Agregar la fila al cuerpo de la tabla
+            tabla.append(tr);
         });
-        document.getElementById('clientesTable').style.display = ''; //muestra la tabla
-    }
-    else{
-        document.getElementById('clientesTable').style.display = 'none'; //oculta la tabla si no hay clientes
+
+        // Mostrar la tabla con una animación suave (fadeIn)
+        $('#clientesTable').fadeIn();
+        $('#noClientesMessage').fadeOut();
+    } else {
+        // Ocultar la tabla si no hay clientes filtrados (fadeOut)
+        $('#clientesTable').fadeOut();
+        $('#noClientesMessage').fadeIn();
     }
 }
