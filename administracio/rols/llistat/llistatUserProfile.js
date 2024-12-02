@@ -1,3 +1,4 @@
+let profilesList = [];
 $(document).ready(function() {
 
   thereIsUser();
@@ -7,22 +8,26 @@ $(document).ready(function() {
   document.getElementById("nouProfile").addEventListener("click", nouProfile);
 
   $( "#filtres" ).hide();
-
   $("#controlFiltre").click(controlFiltre);
+
+})
 
 
 function controlFiltre () {
-
-  
-  $( "#filtres" ).fadeIn( "slow", function() {
-    
-  //  $( "#filtres" ).fadeOut( "slow", function() {
-    
-  // })
-  })
-
+  console.log($("#filtres").css("display"))
+    if ($("#filtres").css("display") === "none"){
+    $( "#filtres" ).fadeIn( "slow", function() {
+      $( "#filtreNom" ).autocomplete({
+        source: profilesList 
+      });
+      
+    }).show();
+    }else{
+      $( "#filtres" ).fadeOut( "slow", function() {
+      }).hide();
+    }
+      
 }
-
 
 
 
@@ -33,7 +38,7 @@ function nouProfile() {
 // Obtindre les dades
 async function obtindreUserProfile() {
 
-  const profilesList = await getData(url,"UserProfile")
+  profilesList = await getData(url,"UserProfile")
   
   // recorrer l'arrray i mostar en pantalla els elements.
   profilesList.forEach((profile) => {
