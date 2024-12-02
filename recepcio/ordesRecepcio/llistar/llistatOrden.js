@@ -52,8 +52,10 @@ async function crearLinea(order) {
   id.appendChild(textId);
 
   const proveidorTD = document.createElement("td");
-  const proveidor = proveidors.find(proveidor => proveidor.id === order.supplier_id.toString()).name;
-  
+  const proveidor = proveidors.find(
+    (proveidor) => proveidor.id === order.supplier_id.toString()
+  ).name;
+
   const textProveidor = document.createTextNode(proveidor);
   proveidorTD.appendChild(textProveidor);
 
@@ -76,15 +78,14 @@ async function crearLinea(order) {
 async function activarFiltros() {
   const proveidors = await getData(url, "Supplier");
   const availableTags = [];
-  proveidors.forEach(proveidor => availableTags.push(proveidor.name));
-  
+  proveidors.forEach((proveidor) => availableTags.push(proveidor.name));
 
   $("#search").autocomplete({
     source: availableTags,
   });
 
-  $("#filter").click(function() {
-    $("#search-group").fadeToggle(300);
+  $("#filter").click(function () {
+    $("#search-group").slideToggle(300);
   });
 }
 
@@ -100,8 +101,13 @@ async function esborrarOrdre(id) {
     ) {
       await deleteData(url, orderReceptionEP, id);
       const orderLineReception = await getData(url, orderLineReceptionEP);
-      const lineToDelete = orderLineReception.filter(product => product.order_reception_id === id);
-      lineToDelete.forEach(async product => await deleteData(url, orderLineReceptionEP, product.id));
+      const lineToDelete = orderLineReception.filter(
+        (product) => product.order_reception_id === id
+      );
+      lineToDelete.forEach(
+        async (product) =>
+          await deleteData(url, orderLineReceptionEP, product.id)
+      );
       obtindreOrdens();
     }
   } catch (error) {
@@ -109,35 +115,34 @@ async function esborrarOrdre(id) {
   }
 }
 
-function modificarOrdre(id) {
-  fetch(url + orderReceptionEP)
-    .then((res) => res.json())
-    .then((data) => {
-      const orderReceptionSelected = data.find((order) => order.id === id);
+async function modificarOrdre(id) {
+  try {
+    const data = await getData(url, orderReceptionEP);
+    const orderReceptionSelected = data.find((order) => order.id === id);
 
-      // Guardar el objeto seleccionado en el localStorage
-      if (orderReceptionSelected) {
-        localStorage.setItem(
-          "modOrden",
-          JSON.stringify(orderReceptionSelected)
-        );
-        window.location.assign("../modificar/modificar.html");
-      }
-    });
+    // Guardar el objeto seleccionado en el localStorage
+    if (orderReceptionSelected) {
+      localStorage.setItem("modOrden", JSON.stringify(orderReceptionSelected));
+      window.location.assign("../modificar/modificar.html");
+    }
+  } catch (e) {
+    console.error("ERROR: ", e);
+  }
 }
 
-function visualizarOrdre(id) {
-  fetch(url + orderReceptionEP)
-    .then((res) => res.json())
-    .then((data) => {
-      const ordenSeleccionada = data.find((order) => order.id === id);
+async function visualizarOrdre(id) {
+  try {
+    const data = await getData(url, orderReceptionEP);
+    const ordenSeleccionada = data.find((order) => order.id === id);
 
-      if (ordenSeleccionada) {
-        localStorage.setItem(
-          "ordenVisualizar",
-          JSON.stringify(ordenSeleccionada)
-        );
-        window.location.assign("../visualitzar/visualizar.html");
-      }
-    });
+    if (ordenSeleccionada) {
+      localStorage.setItem(
+        "ordenVisualizar",
+        JSON.stringify(ordenSeleccionada)
+      );
+      window.location.assign("../visualitzar/visualizar.html");
+    }
+  } catch (e) {
+    console.error("ERROR: ", e);
+  }
 }
