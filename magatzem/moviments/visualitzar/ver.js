@@ -33,4 +33,8 @@
     document.getElementById("tornar").addEventListener("click", function () {
         window.location.href = "../moviments.html";
     });
+});*/
+// Acción del botón "Tornar"
+document.getElementById("tornar").addEventListener("click", function () {
+    window.location.href = "../moviments.html";
 });
