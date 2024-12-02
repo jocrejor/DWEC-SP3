@@ -1,13 +1,13 @@
 window.onload = iniciar;
 //url = 'http://localhost:5002/';
 
-async function iniciar() {
+function iniciar() {
     document.getElementById("signup").addEventListener("click", validar);
     document.getElementById("tornar-arrere").addEventListener("click", tornarArrere);
-    let newId   = await getNewId(url, 'Users') ?? "0";
-    let users   = await getData(url, 'Users');
-    console.log(users);
-    console.log(newId);
+
+    document.getElementById("name").addEventListener('blur', validarName, false);
+    document.getElementById("email").addEventListener('blur', validarEmail, false);
+    document.getElementById("password").addEventListener('blur', validarPassword, false);
 }
 
 function validarName() {
@@ -22,10 +22,12 @@ function validarName() {
         error(element);
         return false;
     }
+    valid();
+    element.className = 'form-control valid';
     return true;
 }
 
-function validarEmail() {
+async function validarEmail() {
     var element = document.getElementById("email");
     if (!element.checkValidity()) {
         if (element.validity.valueMissing) {
@@ -34,9 +36,20 @@ function validarEmail() {
         if (element.validity.patternMismatch) {
             error2(element, "El cognom ha de tindre el format xxx@xxx.com");
         }
+        
         error(element);
         return false;
     }
+
+    let users = await getData(url, 'Users');
+    let email_taken = users.some(e => e.email === element.value);
+
+    if (email_taken){
+        error2(element, "Este correo está en uso.");
+        return false;
+    } 
+    valid();
+    element.className = 'form-control valid';
     return true;
 }
 
@@ -52,6 +65,8 @@ function validarPassword() {
         error(element);
         return false;
     }
+    valid();
+    element.className = 'form-control valid';
     return true;
 }
 
@@ -98,6 +113,14 @@ function borrarError() {
     document.getElementById("missatgeError").replaceChildren();
 }
 
+function valid () {
+    let valid  = document.getElementById("missatgeError");
+    if(valid){
+        while(valid.firstChild){
+            valid.replaceChildren();
+        }
+    }
+}
 
 async function enviarFormulari () {
     let name        = document.getElementById("name").value;
@@ -116,9 +139,22 @@ async function enviarFormulari () {
     };
     await postData(url, 'Users', user);
 
-   // window.location.href = '../../access/login.html';
+    let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+    if(!currentUser){
+        window.location.href = '../../access/login.html';
+    } else {
+        window.location.href = '../llistat/gestioUsuaris.html';
+    }
 }
 
 function tornarArrere() {
-    window.location.href = "../../access/login.html";
+    let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+    if(!currentUser.user_profile){
+        window.location.href = '../../access/login.html';
+    } else if(currentUser.user_profile === 'Administador') {
+
+        window.location.href = '../llistat/gestioUsuaris.html';
+    }
 }

@@ -1,0 +1,9 @@
+ #panel{
+    display: none;
+ }
+
+ #funnel{
+    background-color:white ;
+    border: none;
+    cursor: pointer;
+ }
