@@ -7,7 +7,7 @@ function main() {
     document.getElementById('altaProducte').addEventListener('click', altaProducte);
     document.getElementById('btnEliminar').addEventListener('click', eliminarProducte);
     document.getElementById('btnModificar').addEventListener('click', modificarProducte);
-    document.getElementById('filters').addEventListener('click', showFilters);
+    document.getElementById('icon-filter').addEventListener('click', showFilters);
     obtenerProductos();
 }
 
@@ -51,7 +51,9 @@ async function obtenerProductos() {
     try {
         // Cridem a la funció getData() del script crud.js
         const arrProductes = await getData(url, endPoint);
+        console.log(arrProductes);
         mostrarProductes(arrProductes);
+        activateAutocomplete(arrProductes);
     } catch (error) {
         console.error('Error al obtener los productos:', error);
     }
@@ -115,4 +117,30 @@ function mostrarProductes(arrProductes) {
         // Añadir la fila a la tabla
         tbody.appendChild(row);
     });
+}
+
+function activateAutocomplete(arrProductes) {
+    const sku = arrProductes.map(product => product.sku);
+
+    $("#volumen").autocomplete({
+        source: sku,
+        minLength: 3, //Autcompletem después de 3 caràcters
+        select: function (event, sku) {
+            console.log("Volumen:", sku.item.value);
+            // Filtra els productes per nom
+            filterProducts(sku.item.value, arrProductes);
+        }
+    });
+    $('#volumen').on('input', function() {
+        const query = $(this).val().trim();
+        if (query === '') {
+            mostrarProductes(arrProductes); // Mostrar todos los productos
+        }
+    });
+}
+
+//Funció per filtrar els productes
+function filterProducts(query, arrProductes) {
+    const filteredProducts = arrProductes.filter(product => product.sku.toLowerCase().includes(query.toLowerCase()));
+    mostrarProductes(filteredProducts);
 }
