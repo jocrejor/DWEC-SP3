@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         window.location.href = "../Listar/listar.html";
     }
 
-    // Acción del botón "Tornar"
+    // Botó "Tornar"
     document.getElementById("tornar").addEventListener("click", function () {
         window.location.href = "../Listar/listar.html";
     });
