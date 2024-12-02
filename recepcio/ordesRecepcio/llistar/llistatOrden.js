@@ -1,9 +1,11 @@
 const orderReceptionEP = "OrderReception";
 const orderLineReceptionEP = "OrderLineReception";
 
-$(document).ready(function () {
+$(document).ready(async function () {
   document.getElementById("nuevaOrden").addEventListener("click", nuevaOrden);
-  obtindreOrdens();
+  const ordes = await obtindreOrdens();
+  llistarOrdes(ordes);
+  activarFiltros(ordes);
 });
 
 function nuevaOrden() {
@@ -13,34 +15,39 @@ function nuevaOrden() {
 async function obtindreOrdens() {
   try {
     const data = await getData(url, orderReceptionEP);
-    data.forEach((order) => crearLinea(order));
+    return data;
   } catch (error) {
     console.log("Error:", error);
   }
 }
 
-function crearLinea(order) {
+function llistarOrdes(ordes) {
+  ordes.forEach((order) => crearLinea(order));
+}
+
+async function crearLinea(order) {
+  const proveidors = await getData(url, "Supplier");
   const linea = document.createElement("tr");
   linea.setAttribute("id", order.id);
 
   const esborrarTD = document.createElement("td");
   const buttonEsborrar = document.createElement("button");
   buttonEsborrar.textContent = "Esborrar";
-  buttonEsborrar.className = "botoRoig text-blanc";
+  buttonEsborrar.className = "btn btn-danger";
   esborrarTD.appendChild(buttonEsborrar);
   buttonEsborrar.addEventListener("click", () => esborrarOrdre(order.id));
 
   const modificarTD = document.createElement("td");
   const buttonModificar = document.createElement("button");
   buttonModificar.textContent = "Modificar";
-  buttonModificar.className = "botoBlau text-blanc";
+  buttonModificar.className = "btn btn-primary";
   buttonModificar.addEventListener("click", () => modificarOrdre(order.id));
   modificarTD.appendChild(buttonModificar);
 
   const visualizarTD = document.createElement("td");
   const buttonVisualizar = document.createElement("button");
   buttonVisualizar.textContent = "Visualitzar";
-  buttonVisualizar.className = "botoBlau text-blanc";
+  buttonVisualizar.className = "btn btn-primary";
   visualizarTD.appendChild(buttonVisualizar);
   buttonVisualizar.addEventListener("click", () => visualizarOrdre(order.id));
 
@@ -48,9 +55,11 @@ function crearLinea(order) {
   const textId = document.createTextNode(order.id);
   id.appendChild(textId);
 
-  const proveidor = document.createElement("td");
-  const textProveidor = document.createTextNode(order.supplier_id);
-  proveidor.appendChild(textProveidor);
+  const proveidorTD = document.createElement("td");
+  const proveidor = proveidors.find(proveidor => proveidor.id === order.supplier_id.toString()).name;
+  
+  const textProveidor = document.createTextNode(proveidor);
+  proveidorTD.appendChild(textProveidor);
 
   const dataEstimada = document.createElement("td");
   const textDataEstimada = document.createTextNode(
@@ -62,10 +71,22 @@ function crearLinea(order) {
   linea.appendChild(modificarTD);
   linea.appendChild(visualizarTD);
   linea.appendChild(id);
-  linea.appendChild(proveidor);
+  linea.appendChild(proveidorTD);
   linea.appendChild(dataEstimada);
 
   files.appendChild(linea);
+}
+
+async function activarFiltros(ordes) {
+  const proveidors = await getData(url, "Supplier");
+  const availableTags = [];
+  proveidors.forEach(proveidor => availableTags.push(proveidor.name));
+  console.log(availableTags);
+  
+
+  $("#search").autocomplete({
+    source: availableTags,
+  });
 }
 
 async function esborrarOrdre(id) {
