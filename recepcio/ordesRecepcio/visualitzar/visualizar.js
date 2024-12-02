@@ -36,9 +36,9 @@ function mostrarOrden(orden) {
 
 async function mostrarProductos(ordenId) {
     const productosBody = document.getElementById("productosBody");
-    const orderLine = await getData(API, orderLineReceptionEP);
+    const orderLine = await getData(url, orderLineReceptionEP);
     const productosDeOrden = orderLine.filter(producto => producto.order_reception_id === ordenId);
-    const products = await getData(API, "Product");
+    const products = await getData(url, "Product");
 
     productosDeOrden.forEach(producto => {
         const fila = document.createElement('tr');

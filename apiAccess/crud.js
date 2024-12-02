@@ -7,7 +7,6 @@ let url = 'http://node.daw.iesevalorpego.es:3001/';
 //let url = 'http://localhost:5001/'
 // Servidor
 //let url = 'http://10.2.218.254:5001/'
-const API = "http://node.daw.iesevalorpego.es:3001/";
 
 
 ////////////////////// Hi ha usuari registrat /////////////////////

@@ -37,7 +37,7 @@ async function cargarProductos() {
   const productSelect = document.getElementById("product");
 
   try {
-    const products = await getData(API, productEP);
+    const products = await getData(url, productEP);
 
     products.forEach((product) => {
       const option = document.createElement("option");
@@ -55,7 +55,7 @@ async function cargarProveidor() {
   const supplierEP = "Supplier";
 
   try {
-    const suppliers = await getData(API, supplierEP);
+    const suppliers = await getData(url, supplierEP);
 
     suppliers.forEach((supplier) => {
       const option = document.createElement("option");
@@ -76,7 +76,7 @@ function llistarOrden() {
 async function afegirProducte() {
   const producto = document.getElementById("product").value;
   const cantidadPedida = document.getElementById("quantity_ordered").value;
-  const productes = await getData(API, "Product");
+  const productes = await getData(url, "Product");
   const productName = productes.find(product => product.id === producto).name
 
   let productoObj = {
@@ -195,7 +195,7 @@ async function gravarOrden(e) {
 
   try {
 
-    let orderLineReception = await getData(API, orderReceptionEP);
+    let orderLineReception = await getData(url, orderReceptionEP);
     
     var supplier = Number(document.getElementById("supplier").value);
     var dataEstimada = document.getElementById(
@@ -209,7 +209,7 @@ async function gravarOrden(e) {
       orderreception_status_id: 1,
     };
 
-    let newOrderId = await postData(API, orderReceptionEP, order);
+    let newOrderId = await postData(url, orderReceptionEP, order);
 
     if (arrTemp) {
       arrTemp.forEach((product) => {
@@ -222,7 +222,7 @@ async function gravarOrden(e) {
           quantity_received: product.quantity_received,
 
         };
-        postData(API, orderLineReceptionEP, newProduct);
+        postData(url, orderLineReceptionEP, newProduct);
       });
     }
 

@@ -10,7 +10,7 @@ $(document).ready(async function () {
   cargarProveidor();
 
   let ordenMod = JSON.parse(localStorage.getItem("modOrden"));
-  orderLineReception = await getData(API, orderLineReceptionEP);
+  orderLineReception = await getData(url, orderLineReceptionEP);
 
   if (ordenMod) {
     document.getElementById("supplier").value = ordenMod.supplier_id;
@@ -41,7 +41,7 @@ async function cargarProveidor() {
   const supplierEP = "Supplier";
 
   try {
-    const suppliers = await getData(API, supplierEP);
+    const suppliers = await getData(url, supplierEP);
 
     suppliers.forEach((supplier) => {
       const option = document.createElement("option");
@@ -60,7 +60,7 @@ async function cargarProductos() {
   const productSelect = document.getElementById("product");
 
   try {
-    const products = await getData(API, productEP);
+    const products = await getData(url, productEP);
 
     products.forEach((product) => {
       const option = document.createElement("option");
@@ -103,7 +103,7 @@ function afegirProducte() {
 }
 
 async function afegirLinea(productObj) {
-  const products = await getData(API, "Product");
+  const products = await getData(url, "Product");
   var files = document.getElementById("files");
 
   var linea = document.createElement("tr");
@@ -210,14 +210,14 @@ async function guardarCambios() {
       "estimated_reception_date"
     ).value;
 
-    let orderReception = await getData(API, orderReceptionEP);
+    let orderReception = await getData(url, orderReceptionEP);
     if (orderReception.length > 0) {
       orderReception = orderReception.map((order) =>
         order.id === ordenMod.id ? ordenMod : order
       );
     }
 
-    let orderLineReception = await getData(API, orderLineReceptionEP);
+    let orderLineReception = await getData(url, orderLineReceptionEP);
     orderLineReception = orderLineReception.filter(
       (line) => line.order_reception_id !== ordenMod.id
     );
@@ -228,9 +228,9 @@ async function guardarCambios() {
     });
 
     if (orderReception.length > 0) {
-      await postData(API, orderReceptionEP, ordenMod);
+      await postData(url, orderReceptionEP, ordenMod);
     }
-    await postData(API, orderLineReceptionEP, orderLineReception);
+    await postData(url, orderLineReceptionEP, orderLineReception);
     localStorage.removeItem("modOrden");
 
     alert("Cambios guardados correctamente");

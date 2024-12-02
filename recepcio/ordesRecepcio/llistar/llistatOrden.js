@@ -12,7 +12,7 @@ function nuevaOrden() {
 
 async function obtindreOrdens() {
   try {
-    const data = await getData(API, orderReceptionEP);
+    const data = await getData(url, orderReceptionEP);
     data.forEach((order) => crearLinea(order));
   } catch (error) {
     console.log("Error:", error);
@@ -78,10 +78,10 @@ async function esborrarOrdre(id) {
         "¿Estás seguro de que quieres eliminar esta orden y sus productos asociados?"
       )
     ) {
-      await deleteData(API, orderReceptionEP, id);
-      const orderLineReception = await getData(API, orderLineReceptionEP);
+      await deleteData(url, orderReceptionEP, id);
+      const orderLineReception = await getData(url, orderLineReceptionEP);
       const lineToDelete = orderLineReception.filter(product => product.order_reception_id === id);
-      lineToDelete.forEach(async product => await deleteData(API, orderLineReceptionEP, product.id));
+      lineToDelete.forEach(async product => await deleteData(url, orderLineReceptionEP, product.id));
       ;
     }
   } catch (error) {
@@ -90,7 +90,7 @@ async function esborrarOrdre(id) {
 }
 
 function modificarOrdre(id) {
-  fetch(API + orderReceptionEP)
+  fetch(url + orderReceptionEP)
     .then((res) => res.json())
     .then((data) => {
       const orderReceptionSelected = data.find((order) => order.id === id);
@@ -107,7 +107,7 @@ function modificarOrdre(id) {
 }
 
 function visualizarOrdre(id) {
-  fetch(API + orderReceptionEP)
+  fetch(url + orderReceptionEP)
     .then((res) => res.json())
     .then((data) => {
       const ordenSeleccionada = data.find((order) => order.id === id);
