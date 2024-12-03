@@ -1,16 +1,12 @@
-// URL base i endpoint del servidor
-const urlBase = "http://localhost:5001/";
-const endPoint = "OrderReception_Status";
-
 window.onload = main;
-
+const endPoint="OrderReception_Status";
 /**
  * Funció principal que s'executa en carregar la pàgina.
  * Configura els events dels botons i crida a les funcions per a crear la taula i llistar els estats.
  */
 function main() {
-    getEstats(); // obtindre les dades de la base de dades
-    
+    getEstats();
+
     document.getElementById("crear").addEventListener("click", () => {
         document.location.href = "../Alta/alta.html";
     });
@@ -21,8 +17,8 @@ function main() {
  */
 async function getEstats() {
     try {
-        const data = await getData(urlBase,endPoint);
-
+        const data = await getData(url,endPoint);
+        
         // Comprovació
         if (data && Array.isArray(data)) {
             mostrarTaula(data);
@@ -45,6 +41,7 @@ function mostrarTaula(estats) {
     
     estats.forEach(estat => {
         const fila = document.createElement("tr");
+        fila.setAttribute("id", estat.id);
         
         fila.innerHTML = `
             <td><button class="btn btn-danger" id="eliminar">Esborrar</button></td>
@@ -57,7 +54,7 @@ function mostrarTaula(estats) {
         tablaContenido.appendChild(fila);
 
         // Afegir addEventListeners als botons
-        fila.querySelector("#eliminar").addEventListener("click",() => deleteData(urlBase,endPoint,estat.id));
+        fila.querySelector("#eliminar").addEventListener("click",async () => await esborrar(estat.id));
         fila.querySelector("#modificar").addEventListener("click",() => modificarEstado(estat.id));
         fila.querySelector("#ver").addEventListener("click",() => verEstado(estat.id));
     });
@@ -79,3 +76,7 @@ function modificarEstado(id) {
     window.location.href = `../Modificar/modificar.html?id=${id}`;
 }
 
+async function esborrar(id){
+    await deleteData(url,"OrderReception_Status",id);
+    $(`#${id}`).remove();
+}

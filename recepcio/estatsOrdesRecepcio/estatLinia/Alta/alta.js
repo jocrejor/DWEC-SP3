@@ -23,7 +23,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         try {
             await postData(url, "OrderLineReception_Status", nouEstat);
-            alert("Estat guardat correctament!");
             window.location.href="../Listar/listar.html";
         } catch (error) {
             console.error("Error al guardar l'estat:", error);

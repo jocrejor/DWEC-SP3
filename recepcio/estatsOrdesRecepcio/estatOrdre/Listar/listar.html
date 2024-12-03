@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estat de Línia d'Orde de Recepció</title>
+    <title>Estat d'Orde de Recepció</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="listar.js" defer></script>
     <script src="../../../../apiAccess/crud.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" 
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous" defer>
+    </script>
     <style>
         .error {
             color: red;
@@ -19,6 +22,7 @@
 <body>
     <div class="container my-4">
         <h2>Estat de Línia d'Orde de Recepció</h2>
+        
         <button class="btn btn-primary" id="crear">Crear Estat</button>
         <div id="tablaEstadoOrdenes" class="table-responsive">
             <table class="table">
@@ -31,8 +35,7 @@
                         <th>Nom</th>
                     </tr>
                 </thead>
-                <tbody id="tablaContenido">
-                </tbody>
+                <tbody id="tablaContenido"></tbody>
             </table>
         </div>
     </div>

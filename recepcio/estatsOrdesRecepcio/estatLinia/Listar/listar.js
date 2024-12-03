@@ -41,6 +41,7 @@ function mostrarTaula(estats) {
     
     estats.forEach(estat => {
         const fila = document.createElement("tr");
+        fila.setAttribute("id", estat.id);
         
         fila.innerHTML = `
             <td><button class="btn btn-danger" id="eliminar">Esborrar</button></td>
@@ -53,7 +54,7 @@ function mostrarTaula(estats) {
         tablaContenido.appendChild(fila);
 
         // Afegir addEventListeners als botons
-        fila.querySelector("#eliminar").addEventListener("click",() => deleteData(url,endPoint,estat.id));
+        fila.querySelector("#eliminar").addEventListener("click",async () => await esborrar(estat.id));
         fila.querySelector("#modificar").addEventListener("click",() => modificarEstado(estat.id));
         fila.querySelector("#ver").addEventListener("click",() => verEstado(estat.id));
     });
@@ -75,4 +76,7 @@ function modificarEstado(id) {
     window.location.href = `../Modificar/modificar.html?id=${id}`;
 }
 
-
+async function esborrar(id){
+    await deleteData(url,"OrderLineReception_Status",id);
+    $(`#${id}`).remove();
+}
