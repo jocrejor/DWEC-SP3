@@ -6,22 +6,18 @@
     <title>Alta Estat</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="./alta.js" defer></script>
+    <script src="../../../apiAccess/crud.js"></script>
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="text-center">Alta Estat</h1>
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <form id="addForm" onsubmit="return validar(event)">
-                    <div class="form-group">
-                        <label for="newStateName">Nom de l'Estat</label>
-                        <input type="text" class="form-control" id="newStateName" placeholder="Escriu el nom de l'estat" />
-                    </div>
-                    <button type="submit" class="btn btn-primary">Afegir</button>
-                    <a href="./llistaEstat.html" class="btn btn-secondary">Cancel·lar</a>
-                </form>
+        <h1 class="text-center">Alta d'un Nou Estat</h1>
+        <form id="newStateForm" class="mt-4">
+            <div class="form-group">
+                <label for="stateName">Nom del Estat</label>
+                <input type="text" id="stateName" class="form-control" required>
             </div>
-        </div>
+            <button type="submit" class="btn btn-primary">Afegir Estat</button>
+        </form>
     </div>
 </body>
 </html>

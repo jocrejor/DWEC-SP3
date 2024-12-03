@@ -1,44 +1,56 @@
+const ENDPOINT = 'State';
+
 window.onload = function () {
-    loadStateData();
-    document.getElementById("modifyForm").addEventListener("submit", modificarEstat);
+    const urlParams = new URLSearchParams(window.location.search);
+    const stateId = urlParams.get('id');
+    
+    if (stateId) {
+        loadStateForEditing(stateId);
+    }
 };
 
-function loadStateData() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const index = parseInt(urlParams.get("index"), 10);
+async function loadStateForEditing(id) {
+    try {
+        const states = await getData(url, ENDPOINT);
+        const stateToEdit = states.find(s => s.id == id);
 
-    if (isNaN(index)) {
-        window.location.href = "./llistaEstat.html";
-        return;
+        if (stateToEdit) {
+            document.getElementById('stateName').value = stateToEdit.name;
+        } 
+    } catch (error) {
+        console.error('Error carregant l\'estat:', error);
     }
-
-    const states = JSON.parse(localStorage.getItem("State")) || [];
-
-    if (!states[index]) {
-        window.location.href = "./llistaEstat.html";
-        return;
-    }
-
-    const state = states[index];
-    document.getElementById("stateName").value = state.name;
-    localStorage.setItem("selectedStateIndex", index); 
 }
 
-function validarNom() {
+document.getElementById('editForm').addEventListener('submit', async function(event) {
+    event.preventDefault();
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const stateId = urlParams.get('id');
+    const newName = document.getElementById('stateName').value;
+
+    if (!validarNom(newName)) {
+        error(document.getElementById('stateName'), 'El nom ha de tenir entre 2 i 25 caràcters i només permet lletres (amb accents i ñ)');
+        return;
+    }
+
+    if (stateId) {
+        const updatedState = {
+            name: newName
+        };
+
+        try {
+            await updateId(url, ENDPOINT, stateId, updatedState);
+            window.location.href = 'llistaEstat.html';  
+        } catch (error) {
+            console.error('Error actualitzant l\'estat:', error);
+        }
+    }
+});
+
+function validarNom(name) {
     const pattern = /^[A-Za-záéíóúÁÉÍÓÚñÑ\s]{2,25}$/;
-    const nom = document.getElementById("stateName");
-
-    if (!nom.value) {
-        error(nom, "Ompli el camp!");
-        return false;
-    }
-
-    if (!pattern.test(nom.value)) {
-        error(nom, "El nom no pot contenir números ni caràcters especials, ha de tenir entre 2 i 25 caràcters.");
-        return false;
-    }
-
-    return true;
+    return pattern.test(name);
 }
 
 function error(input, message) {
@@ -52,26 +64,4 @@ function error(input, message) {
 function esborrarError() {
     const errorMessages = document.querySelectorAll('.error-message');
     errorMessages.forEach((message) => message.remove());
-}
-
-function modificarEstat(e) {
-    e.preventDefault();
-
-    const newName = document.getElementById("stateName").value.trim();
-    if (!validarNom(newName)) {
-        return;
-    }
-
-    const states = JSON.parse(localStorage.getItem("State")) || [];
-    const index = parseInt(localStorage.getItem("selectedStateIndex"), 10);
-
-    if (isNaN(index) || !states[index]) {
-        window.location.href = "./llistaEstat.html";
-        return;
-    }
-
-    states[index].name = newName;
-
-    localStorage.setItem("State", JSON.stringify(states));
-    window.location.href = "./llistaEstat.html";
 }

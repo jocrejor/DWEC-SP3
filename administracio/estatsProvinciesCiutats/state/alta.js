@@ -1,17 +1,34 @@
-document.getElementById('addForm').addEventListener('submit', function (event) {
-    event.preventDefault(); // Prevenir el envío por defecto
-    esborrarError();
+const ENDPOINT = 'State';
 
-    const newStateName = document.getElementById('newStateName');
-    const stateNameValue = newStateName.value.trim();
+document.getElementById('newStateForm').addEventListener('submit', async function(event) {
+    event.preventDefault();
 
-    if (!validarNom(stateNameValue)) {
-        error(newStateName, "El nom no pot contenir números ni caràcters especials, ha de tenir entre 2 i 25 caràcters.");
-        return false;
+    const newName = document.getElementById('stateName').value;
+
+    if (!validarNom(newName)) {
+        error(document.getElementById('stateName'), 'El nom ha de tenir entre 2 i 25 caràcters i només permet lletres (amb accents i ñ)');
+        return;
     }
 
-    addState(stateNameValue); 
-    window.location.href = "./llistaEstat.html"; 
+    try {
+        const states = await getData(url, ENDPOINT);
+
+        const maxId = states.reduce((max, state) => (state.id > max ? state.id : max), 0);
+
+        const newId = maxId + 1;
+
+        const newState = {
+            id: newId,  
+            name: newName
+        };
+
+        await postData(url, ENDPOINT, newState);
+
+        alert('Estat afegit correctament');
+        window.location.href = 'llistaEstat.html'; 
+    } catch (error) {
+        console.error('Error afegint l\'estat:', error);
+    }
 });
 
 function validarNom(name) {
@@ -30,15 +47,4 @@ function error(input, message) {
 function esborrarError() {
     const errorMessages = document.querySelectorAll('.error-message');
     errorMessages.forEach((message) => message.remove());
-}
-
-function addState(stateName) {
-    const states = JSON.parse(localStorage.getItem('State')) || [];
-    const newState = {
-        id: (states.length + 1).toString(),
-        name: stateName,
-    };
-
-    states.push(newState);
-    localStorage.setItem('State', JSON.stringify(states));
 }

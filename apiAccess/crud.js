@@ -1,4 +1,4 @@
-//// 
+ //// 
 ///// Modificació del CRUD per a no pasar id i que l'ID el pose el json-server
 /////
 //domini temporal

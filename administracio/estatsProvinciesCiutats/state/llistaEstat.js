@@ -1,60 +1,25 @@
+const ENDPOINT = 'State';
+
 window.onload = function () {
-    loadStates();     
+    loadStates();
 };
 
-function loadStates() {
-    const states = JSON.parse(localStorage.getItem('State')) || [];
-    displayStates(states);
-}
-
-function validarNom() {
-    const pattern = /^[A-Za-záéíóúÁÉÍÓÚñÑ\s]{2,25}$/;
-    const nom = document.getElementById("newStateName"); 
-    
-    if (!nom.value) {
-        error(nom, "Ompli el camp!"); 
-        return false;
-    }
-    
-    if (!pattern.test(nom.value)) {
-        error(nom, "El nom no pot contenir números ni caràcters especials, ha de tenir entre 2 i 25 caràcters.");
-        return false;
-    }
-
-    return true; 
-}
-
-function error(input, message) {
-    esborrarError();
-    const errorElement = document.createElement('div');
-    errorElement.classList.add('error-message', 'text-danger', 'mt-2');
-    errorElement.innerText = message;
-    input.parentNode.appendChild(errorElement);
-}
-
-function esborrarError() {
-    const errorMessages = document.querySelectorAll('.error-message');
-    errorMessages.forEach((message) => message.remove());
-}
-
-function validar(e) {
-    esborrarError();
-    e.preventDefault();
-    if (validarNom()) {
-        enviarFormulari();
-        return true;
-    } else {
-        return false;
+async function loadStates() {
+    try {
+        const states = await getData(url, ENDPOINT); 
+        displayStates(states);
+    } catch (error) {
+        console.error('Error cargando los estados:', error);
     }
 }
 
 function displayStates(states) {
     const stateList = document.getElementById('stateList');
-    stateList.innerHTML = ''; 
+    stateList.innerHTML = '';
 
     states.forEach((state, index) => {
         const row = document.createElement('tr');
-        
+
         const tdIndex = document.createElement('td');
         tdIndex.textContent = index + 1;
 
@@ -65,15 +30,32 @@ function displayStates(states) {
         const editButton = document.createElement('button');
         editButton.classList.add('btn', 'btn-warning', 'btn-sm', 'mr-2');
         editButton.textContent = 'Editar';
-        editButton.onclick = () => editState(index);
-        
+
+        editButton.addEventListener('click', function() {
+            window.location.href = `modificar.html?id=${state.id}`;
+        });
+
         const deleteButton = document.createElement('button');
         deleteButton.classList.add('btn', 'btn-danger', 'btn-sm');
         deleteButton.textContent = 'Eliminar';
-        deleteButton.onclick = () => deleteState(index);
+        deleteButton.onclick = () => deleteState(state.id);
+
+
+        const provincesButton = document.createElement('button');
+        provincesButton.classList.add('btn', 'btn-info', 'btn-sm');
+        provincesButton.textContent = 'Mostrar Provincias';
+
+        provincesButton.addEventListener('click', function() {
+            if (state.name === "Spain") {
+                window.location.href = '../province/llistaProvincia.html'; 
+            } else {
+                window.location.href = '../province/llistaProvincia.html';
+            }
+        });
 
         tdActions.appendChild(editButton);
         tdActions.appendChild(deleteButton);
+        tdActions.appendChild(provincesButton); 
         row.appendChild(tdIndex);
         row.appendChild(tdName);
         row.appendChild(tdActions);
@@ -82,37 +64,13 @@ function displayStates(states) {
     });
 }
 
-function addState() {
-    esborrarError(); 
-
-    const stateName = document.getElementById('newStateName').value.trim();
-
-    if (!validarNom()) {
-        return; 
-    }
-
-    const states = JSON.parse(localStorage.getItem('State')) || [];
-    const newState = {
-        id: (states.length + 1).toString(),
-        name: stateName
-    };
-
-    states.push(newState);
-    localStorage.setItem('State', JSON.stringify(states));
-
-    document.getElementById('newStateName').value = ''; 
-    loadStates(); 
-}
-
-function editState(index) {
-    window.location.href = `modificar.html?index=${index}`;
-}
-
-function deleteState(index) {
+async function deleteState(id) {
     if (confirm("Estas segur que vols eliminar l'estat?")) {
-        const states = JSON.parse(localStorage.getItem('State')) || [];
-        states.splice(index, 1); 
-        localStorage.setItem('State', JSON.stringify(states));  
-        loadStates();  
+        try {
+            await deleteData(url, ENDPOINT, id);
+            loadStates();
+        } catch (error) {
+            console.error('Error eliminando el estado:', error);
+        }
     }
 }

@@ -6,22 +6,18 @@
     <title>Modificar Estat</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="./modificar.js" defer></script>
+    <script src="../../../apiAccess/crud.js"></script>
 </head>
 <body>
     <div class="container mt-5">
         <h1 class="text-center">Modificar Estat</h1>
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <form id="modifyForm" onsubmit="return validar(event)">
-                    <div class="form-group">
-                        <label for="stateName">Nom de l'Estat</label>
-                        <input type="text" class="form-control" id="stateName" />
-                    </div>
-                    <button type="submit" class="btn btn-primary">Modificar</button>
-                    <a href="./llistaEstat.html" class="btn btn-secondary">Cancel·lar</a>
-                </form>
+        <form id="editForm" class="mt-4">
+            <div class="form-group">
+                <label for="stateName">Nom del Estat</label>
+                <input type="text" id="stateName" class="form-control" required>
             </div>
-        </div>
+            <button type="submit" class="btn btn-primary">Guardar canvis</button>
+        </form>
     </div>
 </body>
 </html>
