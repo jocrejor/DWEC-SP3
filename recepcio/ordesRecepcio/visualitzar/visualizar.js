@@ -49,6 +49,7 @@ async function mostrarProductos(ordenId) {
 
   productosDeOrden.forEach((producto) => {
     const fila = document.createElement("tr");
+    fila.setAttribute("id", producto.id);
 
     const productName = products.find(
       (product) => Number(product.id) === producto.product_id

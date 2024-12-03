@@ -83,10 +83,47 @@ async function activarFiltros() {
   $("#search").autocomplete({
     source: availableTags,
   });
+  $("#search").on("input", filtraProveidor);
+
+  $("#fromDate").on("input", filtraFromDate);
+  $("#toDate").on("input", filtraToDate);
 
   $("#filter").click(function () {
     $("#filter-group").slideToggle(300);
   });
+}
+
+function filtraProveidor() {
+  const filtro = $("#search").val().toLowerCase();
+  $("#files tr").filter(function () {
+    $(this).toggle($(this).find("td:nth-child(5)").text().toLowerCase().indexOf(filtro) > -1);
+  });
+}
+
+function filtraFromDate() {
+  const filtro = new Date($("#fromDate").val());
+
+  if(!isNaN(filtro)){
+    $("#files tr").each(function() {
+      const fecha = new Date($(this).find("td:nth-child(6)").text());
+      if(fecha < filtro) {
+        $(this).hide();
+      }
+    });
+  }
+}
+
+function filtraToDate() {
+  const filtro = new Date($("#toDate").val());
+
+  if(!isNaN(filtro)){
+    $("#files tr").each(function() {
+      const fecha = new Date($(this).find("td:nth-child(6)").text());
+      if(fecha > filtro) {
+        $(this).hide();
+      }
+    });
+  }
 }
 
 async function esborrarOrdre(id) {
