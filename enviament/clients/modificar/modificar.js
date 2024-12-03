@@ -5,7 +5,6 @@ let State;
 let Province;
 let City;
 
-
 async function main() {
     document.getElementById("botonModificar").addEventListener("click", validar, false);
     Client = await getData(url, "Client");
@@ -106,7 +105,6 @@ function crearContenedores() {
         crearInputCiudades(divContenedorCiudades);
     }
 }
-
 
 function validar(e) {
     esborrarError();
@@ -557,19 +555,19 @@ async function enviarFormulari() {
         return;  //detiene la función si hay algun duplicado
     }
     
-    var paisSeleccionado = document.getElementById("state_id").value;
-    var provincia, ciudad;
-    provincia = document.getElementById('province').value;
-    ciudad = document.getElementById('city').value;
+    var paisSeleccionado = parseInt(document.getElementById("state_id").value, 10);
+    var provinciaId, ciudadId;
+    provinciaId = document.getElementById('province').value;
+    ciudadId = document.getElementById('city').value;
     let noHayProvincias = Province.some(variable => variable.state_id === paisSeleccionado);
 
     if (!noHayProvincias) {
         //busca el nombre de la provincia y la ciudad usando los IDs de `cliente`
-        const provinciaNombre = Province.find(variable => variable.id === provincia)?.name || "No especificado";
-        const ciudadNombre = City.find(variable => variable.id === ciudad)?.name || "No especificado";
+        const provinciaNombre = Province.find(variable => variable.id === provinciaId)?.name || "No especificado";
+        const ciudadNombre = City.find(variable => variable.id === ciudadId)?.name || "No especificado";
     
-        provincia = provinciaNombre;
-        ciudad = ciudadNombre;
+        provinciaId = provinciaNombre;      //convierte el id de la provincia a nombre
+        ciudadId = ciudadNombre;
     }
 
     let clienteModificar = {
@@ -578,9 +576,9 @@ async function enviarFormulari() {
         nif: document.getElementById('nif').value,
         phone: document.getElementById('phone').value,
         email: document.getElementById('email').value,
-        state_id: document.getElementById('state_id').value,
-        province: provincia,
-        city: ciudad,
+        state_id: paisSeleccionado,
+        province: provinciaId,
+        city: ciudadId,
         cp: document.getElementById('cp').value
     };
 

@@ -42459,14 +42459,14 @@
     },
     {
       "id": "2",
-      "name": "Jane Smithhhhh",
+      "name": "Jane Smith",
       "address": "456 Oak St",
       "nif": "987654321B",
       "phone": "987654321",
       "email": "jane.smith@example.com",
-      "state_id": "194",
-      "province": "31",
-      "city": "5039",
+      "state_id": 194,
+      "province": "Valencia/València",
+      "city": "València",
       "cp": "08001"
     },
     {
@@ -42477,8 +42477,8 @@
       "phone": "456123789",
       "email": "carlos.perez@example.com",
       "state_id": 194,
-      "province": "Valencia",
-      "city": "Valencia",
+      "province": "Valencia/València",
+      "city": "València",
       "cp": "46001"
     },
     {
@@ -42537,7 +42537,7 @@
       "phone": "456987123",
       "email": "isabel.fernandez@example.com",
       "state_id": 194,
-      "province": "Bilbao",
+      "province": "Bizkaia",
       "city": "Bilbao",
       "cp": "48001"
     },
@@ -42549,8 +42549,8 @@
       "phone": "789654123",
       "email": "ricardo.lopez@example.com",
       "state_id": 194,
-      "province": "Alicante",
-      "city": "Alicante",
+      "province": "Alicante/Alacant",
+      "city": "Alicante/Alacant",
       "cp": "03001"
     },
     {
