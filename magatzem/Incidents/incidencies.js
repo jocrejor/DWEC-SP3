@@ -12,12 +12,15 @@ $(document).ready(async function () {
         {
             window.location.href = "llistarOrdres/llistarOrdres.html";
         }
-    )
+    ),
+    $("#filter").on("click", function () {
+        $("#search-group ,#search-button").slideToggle(400);
+    });
 });
 
 function autocompletarProductes(){
     var nomsProductes = productes.map(producte => producte.name);
-    $( "#tags" ).autocomplete({
+    $( "#producte" ).autocomplete({
         source: nomsProductes
     });
 }
