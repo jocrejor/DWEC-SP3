@@ -41,14 +41,12 @@ async function main() {
         const noHayProvincias = Province.some(variable => variable.state_id === paisSeleccionado);
 
         if (!noHayProvincias) {
-            console.log("crea select");
             crearSelectProvincias(divContenedor);
             crearSelectCiudades(divContenedorCiudades);
             
             provinciaID = Province.find(variable => variable.name === cliente.province)?.id || "No especificado";
             ciudadID = City.find(variable => variable.name === cliente.city)?.id || "No especificado";
         } else {
-            console.log("crea input");
             crearInputProvincia(divContenedor);
             crearInputCiudades(divContenedorCiudades);
 
