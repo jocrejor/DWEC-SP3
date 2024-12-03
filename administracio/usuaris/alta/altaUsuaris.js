@@ -9,13 +9,13 @@ function iniciar() {
 }
 
 class User {
-  constructor(id, nom, correu, pw, role, imatge) {
+  constructor(id, nom, correu, pw, role) {
     this.id = id;
     this.name = nom;
     this.email = correu;
     this.password = pw;
     this.role = role;
-    this.image = imatge;
+  //  this.image = imatge;
   }
 }
 
@@ -129,12 +129,11 @@ async function enviarFormulari() {
   const pw = document.getElementById("pw").value;
   const select = document.getElementById("role");
   const role = select.options[select.selectedIndex] ? select.options[select.selectedIndex].id : "0";
-  const imatge = "img/face.png";
 
   // Obtenir un nou ID de forma asíncrona
   const newId = await getNewId(url, "users");
 
-  const newUser = new User(newId, nom, email, pw, role, imatge);
+  const newUser = new User(newId, nom, email, pw, role);
 
   const resultat = await postData(url, "users", newUser);
 

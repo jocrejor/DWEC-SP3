@@ -564,7 +564,7 @@
       "name": "administrador",
       "email": "admin@gmail.com",
       "password": "123456",
-      "rol": "1",
+      "role": "1",
       "image": "img/face.png"
     },
     {
@@ -572,7 +572,7 @@
       "name": "encarregat",
       "email": "encarregat@gmail.com",
       "password": "123456",
-      "rol": "2",
+      "role": "2",
       "image": "img/face.png"
     },
     {
@@ -580,7 +580,7 @@
       "name": "ivan",
       "email": "ivanlloret@gmail.com",
       "password": "Ivan9900!",
-      "rol": "2",
+      "role": "2",
       "image": "img/face.png"
     },
     {
@@ -588,7 +588,7 @@
       "name": "operari",
       "email": "operari@gmail.com",
       "password": "1234",
-      "rol": "3",
+      "role": "3",
       "image": "img/face.png"
     },
     {
@@ -596,7 +596,7 @@
       "name": "lorena",
       "email": "lorenasiscar@gmail.com",
       "password": "Lorena222!",
-      "rol": "3",
+      "role": "3",
       "image": "img/face.png"
     }
   ],

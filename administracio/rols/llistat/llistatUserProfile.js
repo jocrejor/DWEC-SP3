@@ -30,7 +30,6 @@ function controlFiltre () {
 }
 
 
-
 function nouProfile() {
   window.location.assign("../alta/altaUserProfile.html");
 }
