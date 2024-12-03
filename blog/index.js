@@ -1,6 +1,5 @@
 window.onload = iniciar;
 
-url = 'http://localhost:5002/';
 
 function iniciar() {
 

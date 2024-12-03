@@ -65,8 +65,8 @@ async function obtindreEtiquetes(filtro = "") {
 
 // Función para filtrar las etiquetas
 function filtrarEtiquetes() {
-  const filtro = document.getElementById("nom").value;  // Obtener el texto del campo de búsqueda
-  obtindreEtiquetes(filtro);  // Volver a obtener las etiquetas con el filtro aplicado
+  const filtro = document.getElementById("nom").value;  
+  obtindreEtiquetes(filtro);  
 }
 
 async function esborrar(id) {

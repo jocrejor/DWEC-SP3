@@ -79,3 +79,18 @@ function modificar(comentari) {
 }
 
 
+$(document).ready(function () {
+    $("#filter").on("click", function () {
+      $("#search-group ,#search-button").slideToggle(400);
+    });
+  });
+  
+  function autocompletado(llistaEtiquetes) {
+    // Autocompletado Filtro
+    const etiquetasNames = llistaEtiquetes.map(etiqueta => etiqueta.name);
+    $("#nom").autocomplete({
+      source: etiquetasNames
+    });
+  }
+
+
