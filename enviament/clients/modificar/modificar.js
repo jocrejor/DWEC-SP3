@@ -514,13 +514,7 @@ function crearInputCodigoPostal(contenedor) {
 
 // enviar dades
 async function enviarFormulari() {
-    let cliente;
     const idModificar = parseInt(localStorage.getItem('idModificar'), 10);
-    for(let i = 0; i < Client.length; i++){
-        if(idModificar == Client[i].id){
-            cliente = Client[i];
-        }
-    }
 
     //inicializa la variable para el mensaje de error
     let mensajeError = "";
