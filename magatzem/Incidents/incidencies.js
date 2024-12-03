@@ -8,9 +8,9 @@ $(document).ready(async function () {
     productes = await getData(url,"Product");
     carregarIncidencies();
     autocompletarProductes();
-    $("#novaIncidencia").click(function()
+    $("#llistatOrdres").click(function()
         {
-            window.location.href = "llistarOrdres/llistarOrdres.html";
+            window.location.href = "../../../recepcio/ordesRecepcio/llistar/llistatOrden.html";
         }
     ),
     $("#filter").on("click", function () {

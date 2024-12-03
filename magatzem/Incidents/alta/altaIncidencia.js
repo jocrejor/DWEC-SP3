@@ -52,7 +52,7 @@ function validarDescripcio(){
 
 async function carregarCapçalera(){
     suppliers = await getData(url,"Supplier");
-    const ordreRecepcioSeleccionada = JSON.parse(localStorage.getItem("ordreSeleccionada"));
+    const ordreRecepcioSeleccionada = JSON.parse(localStorage.getItem("ordenVisualizar"));
     const orderLine = await getData(url,"OrderLineReception");
     const orderLineReception = orderLine.find(o => o.order_reception_id === ordreRecepcioSeleccionada.id);
 
