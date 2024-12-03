@@ -1,61 +1,57 @@
 window.onload = main;
 
-async function main() {    
-    // Recupera el ID del cliente desde localStorage y asegúrate de que sea un número
-    const idCliente = parseInt(localStorage.getItem('idModificar'), 10);
-    // Busca el cliente en el array Client utilizando el ID
-    const url = 'http://localhost:5001/';
-    const clientes = await getData(url, "Client");
-    const Province = await getData(url, "Province");
-    const City = await getData(url, "City");
-    // const cliente = clientes.find(c => c.id === idCliente);
+let Client;
+let State;
+let Province;
+let City;
 
-    const cliente = clientes[idCliente - 1];
+async function main() {
+    Client = await getData(url, "Client");
+    State = await getData(url, "State");
+    Province = await getData(url, "Province");
+    City = await getData(url, "City");
+    // Recupera el ID del cliente desde localStorage y asegúrate de que sea un número
+    let cliente;
+    const idModificar = parseInt(localStorage.getItem('idModificar'), 10);
+    for(let i = 0; i < Client.length; i++){
+        if(idModificar == Client[i].id){
+            cliente = Client[i];
+        }
+    }
+
     if (cliente) {
-        // Asegúrate de que cargarPaises esté bien definida para llenar el select de países
         cargarPaises();
         
-        // Carga el país seleccionado
-        var paisSeleccionado = cliente.state_id; // Asumiendo que state_id es el ID del país
+        const paisSeleccionado = cliente.state_id;
 
-        // Define los contenedores para las provincias, ciudades y código postal
-        var divContenedor = document.querySelector('.form-group.row:nth-of-type(7)');
-        var divContenedorCiudades = document.querySelector('.form-group.row:nth-of-type(8)');
-        var divContenedorCodigoPostal = document.querySelector('.form-group.row:nth-of-type(9)');
+        const divContenedor = document.querySelector('.form-group.row:nth-of-type(7)');
+        const divContenedorCiudades = document.querySelector('.form-group.row:nth-of-type(8)');
 
-        var provinciaID = "";
-        var ciudadID = "";
-        // Crea los selects o inputs dependiendo del país seleccionado
-        if (paisSeleccionado == 194) { 
-            crearSelectProvincias(divContenedor); 
+        // Limpiar contenido de los contenedores de provincias, ciudades y código postal
+        while (divContenedor.firstChild) {
+            divContenedor.removeChild(divContenedor.firstChild);
+        }
+
+        while (divContenedorCiudades.firstChild) {
+            divContenedorCiudades.removeChild(divContenedorCiudades.firstChild);
+        }
+        
+        let provinciaID, ciudadID;
+        const noHayProvincias = Province.some(variable => variable.state_id === paisSeleccionado);
+
+        if (!noHayProvincias) {
+            crearSelectProvincias(divContenedor);
             crearSelectCiudades(divContenedorCiudades);
-            crearInputCodigoPostal(divContenedorCodigoPostal); 
             
             provinciaID = Province.find(variable => variable.name === cliente.province)?.id || "No especificado";
             ciudadID = City.find(variable => variable.name === cliente.city)?.id || "No especificado";
-        }
-        else{
-            // Crear inputs alternativos si no es España
-            crearInputProvincia(divContenedor); 
-            crearInputCiudades(divContenedorCiudades); 
-            crearInputCodigoPostal(divContenedorCodigoPostal); 
+        } else {
+            crearInputProvincia(divContenedor);
+            crearInputCiudades(divContenedorCiudades);
 
             provinciaID = cliente.province;
             ciudadID = cliente.city;
         }
-        
-        var provinciaSeleccionada = provinciaID;
-        var selectCiudad = document.getElementById('city');
-        
-        // agregar las ciudades correspondientes a la provincia seleccionada
-        City.forEach(function(ciudad) {
-            if (ciudad.province_id === provinciaSeleccionada) {
-                var opcion = document.createElement('option');
-                opcion.value = ciudad.id; // asigna el id de la ciudad como valor
-                opcion.textContent = ciudad.name; // asigna el nombre de la ciudad como texto
-                selectCiudad.appendChild(opcion); // añade la opción al select de ciudades
-            }
-        }); 
 
         // Carga los datos en los campos del formulario
         document.getElementById('name').value = cliente.name;
@@ -64,35 +60,119 @@ async function main() {
         document.getElementById('phone').value = cliente.phone;
         document.getElementById('email').value = cliente.email;
         document.getElementById('state_id').value = paisSeleccionado;
-        document.getElementById('province').value = provinciaID; 
-        document.getElementById('city').value = ciudadID; 
-        document.getElementById('cp').value = cliente.cp; 
+        document.getElementById('cp').value = cliente.cp;
+
+        cargarProvincias();
+        document.getElementById('province').value = provinciaID;
+        cargarCiudades();
+        document.getElementById('city').value = ciudadID;
+
     }
     else{
         console.log("Cliente no encontrado");
     }
 }
 
-//función que carga comunidades autónomas en el select
-async function cargarPaises() {
-    const url = 'http://localhost:5001/';
-    const State = await getData(url, "State"); // Llamamos a la API para obtener los estados
-    
-    var selectPais = document.getElementById('state_id');
+// Nueva función para configurar los campos dinámicos
+function crearContenedores() {
+    // const paisSeleccionado = cliente.state_id;
+    let paisSeleccionado = document.getElementById("state_id").value;
 
-    // Iteramos sobre los estados y creamos las opciones
-    State.forEach(function(pais) {
-        // alert(pais.name);
+    const divContenedor = document.querySelector('.form-group.row:nth-of-type(7)');
+    const divContenedorCiudades = document.querySelector('.form-group.row:nth-of-type(8)');
+
+    // Limpiar contenido de los contenedores de provincias, ciudades y código postal
+    while (divContenedor.firstChild) {
+        divContenedor.removeChild(divContenedor.firstChild);
+    }
+
+    while (divContenedorCiudades.firstChild) {
+        divContenedorCiudades.removeChild(divContenedorCiudades.firstChild);
+    }
+    
+    const noHayProvincias = Province.find(variable => variable.state_id === paisSeleccionado);
+
+    if (noHayProvincias) {
+        crearSelectProvincias(divContenedor);
+        crearSelectCiudades(divContenedorCiudades);
+        
+        cargarProvincias();
+    } else {
+        crearInputProvincia(divContenedor);
+        crearInputCiudades(divContenedorCiudades);
+    }
+}
+
+//función que carga comunidades autónomas en el select
+function cargarPaises(){
+    var selectPais = document.getElementById('state_id');
+    State.forEach(function(pais){
         var opcion = document.createElement('option');
-        opcion.value = pais.id; // Asignamos el ID como valor de la opción
-        var optionText = document.createTextNode(pais.name);
-        opcion.appendChild(optionText);
-        selectPais.appendChild(opcion); // Añadimos la opción al select
+        opcion.value = pais.id;
+
+        var nombreOpcion = document.createTextNode(pais.name);
+        opcion.appendChild(nombreOpcion);
+
+        selectPais.appendChild(opcion);
+    });
+}
+
+function cargarProvincias(){
+    var selectProvincia = document.getElementById('province');
+    var paisSeleccionado = document.getElementById("state_id").value;
+
+    var opcion = document.createElement('option');
+    opcion.value = 0;
+    var nombreOpcion = document.createTextNode('Seleccione una provincia');
+    opcion.appendChild(nombreOpcion);
+    selectProvincia.appendChild(opcion);
+
+    while (selectProvincia.options.length > 1) {
+        selectProvincia.remove(1);
+    }
+
+    Province.forEach(function(provincia){
+        if (provincia.state_id === paisSeleccionado) {
+            var opcion = document.createElement('option');
+            opcion.value = provincia.id;
+    
+            var nombreOpcion = document.createTextNode(provincia.name);
+            opcion.appendChild(nombreOpcion);
+    
+            selectProvincia.appendChild(opcion);
+        }
+    });
+}
+
+function cargarCiudades(){
+    var selectCiudad = document.getElementById("city");
+    var provinciaSeleccionada = document.getElementById("province").value;
+
+    var opcion = document.createElement('option');
+    opcion.value = 0;
+    var nombreOpcion = document.createTextNode("Seleccione una ciudad");
+    opcion.appendChild(nombreOpcion);
+    selectCiudad.appendChild(opcion);
+
+    while (selectCiudad.options.length > 1) {
+        selectCiudad.remove(1);
+    }
+
+    City.forEach(function(ciudad){
+        if (ciudad.province_id === provinciaSeleccionada) {
+            var opcion = document.createElement('option');
+            opcion.value = ciudad.id;
+
+            var nombreOpcion = document.createTextNode(ciudad.name);
+            opcion.appendChild(nombreOpcion);
+
+            selectCiudad.appendChild(opcion);
+        }
     });
 }
 
 // Función para crear el select de provincias
-async function crearSelectProvincias(contenedor){
+function crearSelectProvincias(contenedor){
     // Crear el label para el input de provincia
     var labelProvincia = document.createElement('label');
     labelProvincia.setAttribute('for', 'province'); // Asegúrate de que el 'for' coincida con el ID del input
@@ -115,22 +195,6 @@ async function crearSelectProvincias(contenedor){
         selectProvincia.remove(0); // Elimina la primera opción hasta que no queden más
     }
 
-    var optionProvincia =  document.createElement('option');   
-    var text = document.createTextNode('Selecciona una provincia');
-    optionProvincia.appendChild(text);
-    selectProvincia.appendChild(optionProvincia);
-    
-
-    const url = 'http://localhost:5001/';
-    const Province = await getData(url, "Province"); // Llamamos a la API para obtener las provincias
-    //Cargar las provincias
-    Province.forEach(function(provincia) {
-        var opcion = document.createElement('option');
-        opcion.value = provincia.id; // Asegúrate de que 'id' esté disponible
-        var optionText = document.createTextNode(provincia.name);
-        opcion.appendChild(optionText);
-        selectProvincia.appendChild(opcion);
-    });
     var br = document.createElement('br');
 
     contenedor.appendChild(labelProvincia);
@@ -158,7 +222,6 @@ function crearInputProvincia(contenedor) {
     inputProvincia.placeholder = 'Teruel'; // Placeholder
     inputProvincia.pattern = '[A-ZÁÉÍÓÚÑ][a-záéíóúñ\s]{0,19}'; // Patrón de validación
     inputProvincia.required = true; // Campo requerido
-    inputProvincia.disabled = true;
     var br = document.createElement('br');
 
     // Agregar el label y el input al div de provincia
@@ -187,7 +250,6 @@ function crearInputCiudades(contenedor) {
     inputCiudades.placeholder = 'Gandia'; // Placeholder
     inputCiudades.pattern = '[A-ZÁÉÍÓÚÑ][a-záéíóúñ\s]{0,39}'; // Patrón de validación
     inputCiudades.required = true; // Campo requerido
-    inputCiudades.disabled = true;
     var br = document.createElement('br');
 
     // Agregar el label y el input al div de provincia
@@ -216,52 +278,17 @@ function crearSelectCiudades(contenedor){
     selectCiutats.required = true;
     selectCiutats.disabled = true;
 
-    while (selectCiutats.options.length > 0) {
-        selectCiutats.remove(0); // Elimina la primera opción hasta que no queden más
+    while (selectCiutats.options.length > 1) {
+        selectCiutats.remove(1); // Elimina la primera opción hasta que no queden más
     }
 
-    var optionProvincia = document.createElement('option');   
-    var text = document.createTextNode('Selecciona una ciutat');
-    optionProvincia.appendChild(text);
-    selectCiutats.appendChild(optionProvincia);
+    // cargarCiudades(selectCiutats);
     var br = document.createElement('br');
 
     contenedor.appendChild(labelCiutats);
     divInput.appendChild(selectCiutats);
     divInput.appendChild(br);
     contenedor.appendChild(divInput);
-}
 
-function crearInputCodigoPostal(contenedor) {
-    // Crear la etiqueta
-    var label = document.createElement('label');
-    label.setAttribute('for', 'cp');
-    label.classList.add('col-sm-3', 'col-form-label');
-    label.textContent = 'Codi postal:';
-
-    // Crear el contenedor para el input
-    var divColSm9 = document.createElement('div');
-    divColSm9.classList.add('col-sm-9');
-
-    // Crear el input
-    var input = document.createElement('input');
-    input.type = 'text';
-    input.classList.add('form-control');
-    input.id = 'cp';
-    input.placeholder = '46770';
-    input.pattern = '{1,20}$'; // Pattern para un código postal de 5 dígitos
-    input.required = true;
-    input.disabled = true;
-
-    // Añadir el input al contenedor col-sm-9
-    divColSm9.appendChild(input);
-
-    // Añadir la etiqueta y el input al contenedor principal
-    contenedor.appendChild(label);
-    contenedor.appendChild(divColSm9);
-}
-
-//función que vacía todos los campos del formulario
-function listarCliente(){
-    window.location.assign("../llistar/llistar.html");
+    cargarCiudades();
 }

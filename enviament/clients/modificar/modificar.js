@@ -484,34 +484,6 @@ function crearSelectCiudades(contenedor){
     cargarCiudades();
 }
 
-function crearInputCodigoPostal(contenedor) {
-    // Crear la etiqueta
-    var label = document.createElement('label');
-    label.setAttribute('for', 'cp');
-    label.classList.add('col-sm-3', 'col-form-label');
-    label.textContent = 'Codi postal:';
-
-    // Crear el contenedor para el input
-    var divColSm9 = document.createElement('div');
-    divColSm9.classList.add('col-sm-9');
-
-    // Crear el input
-    var input = document.createElement('input');
-    input.type = 'text';
-    input.classList.add('form-control');
-    input.id = 'cp';
-    input.placeholder = '46770';
-    input.pattern = '{1,20}$'; // Pattern para un código postal de 5 dígitos
-    input.required = true;
-
-    // Añadir el input al contenedor col-sm-9
-    divColSm9.appendChild(input);
-
-    // Añadir la etiqueta y el input al contenedor principal
-    contenedor.appendChild(label);
-    contenedor.appendChild(divColSm9);
-}
-
 // enviar dades
 async function enviarFormulari() {
     const idModificar = parseInt(localStorage.getItem('idModificar'), 10);
