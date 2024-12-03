@@ -101,8 +101,14 @@ function mostrarProductes(arrProductes) {
         let skuCell             = document.createElement('td');
         skuCell.appendChild(document.createTextNode(product.sku));
 
-        let image_urlCell       = document.createElement('td');
-        image_urlCell.appendChild(document.createTextNode(product.image_url));
+        let image_urlCell           = document.createElement('td');
+        let imageElement            = document.createElement('img');
+        let URLImage                = 'testImage.jpg';
+        imageElement.src            = URLImage;
+        imageElement.alt            = 'Imagen del producto';
+        imageElement.style.width    = '50px';
+        imageElement.style.height   = '50px';
+        image_urlCell.appendChild(imageElement);
 
         // Añadir celdas a la fila
         row.appendChild(eliminarCell);
@@ -120,18 +126,52 @@ function mostrarProductes(arrProductes) {
 }
 
 function activateAutocomplete(arrProductes) {
-    const sku = arrProductes.map(product => product.sku);
+    const sku           = arrProductes.map(product => product.sku);
+    const description   = arrProductes.map(product => product.description);
+    const name          = arrProductes.map(product => product.name);
 
-    $("#volumen").autocomplete({
+    $("#sku").autocomplete({
         source: sku,
         minLength: 3, //Autcompletem después de 3 caràcters
         select: function (event, sku) {
-            console.log("Volumen:", sku.item.value);
+            console.log("Sku:", sku.item.value);
             // Filtra els productes per nom
-            filterProducts(sku.item.value, arrProductes);
+            filterSKUProducts(sku.item.value, arrProductes);
         }
     });
-    $('#volumen').on('input', function() {
+    $('#sku').on('input', function() {
+        const query = $(this).val().trim();
+        if (query === '') {
+            mostrarProductes(arrProductes); // Mostrar todos los productos
+        }
+    });
+
+    $("#name").autocomplete({
+        source: name,
+        minLength: 3, //Autcompletem después de 3 caràcters
+        select: function (event, name) {
+            console.log("Name:", name.item.value);
+            // Filtra els productes per nom
+            filterNameProducts(name.item.value, arrProductes);
+        }
+    });
+    $('#name').on('input', function() {
+        const query = $(this).val().trim();
+        if (query === '') {
+            mostrarProductes(arrProductes); // Mostrar todos los productos
+        }
+    });
+
+    $("#description").autocomplete({
+        source: description,
+        minLength: 3, //Autcompletem después de 3 caràcters
+        select: function (event, description) {
+            console.log("Sku:", description.item.value);
+            // Filtra els productes per nom
+            filterDescriptionProducts(description.item.value, arrProductes);
+        }
+    });
+    $('#description').on('input', function() {
         const query = $(this).val().trim();
         if (query === '') {
             mostrarProductes(arrProductes); // Mostrar todos los productos
@@ -139,8 +179,20 @@ function activateAutocomplete(arrProductes) {
     });
 }
 
-//Funció per filtrar els productes
-function filterProducts(query, arrProductes) {
+//Funció per filtrar els productes per SKU
+function filterSKUProducts(query, arrProductes) {
     const filteredProducts = arrProductes.filter(product => product.sku.toLowerCase().includes(query.toLowerCase()));
+    mostrarProductes(filteredProducts);
+}
+
+//Funció per filtrar els productes per SKU
+function filterNameProducts(query, arrProductes) {
+    const filteredProducts = arrProductes.filter(product => product.name.toLowerCase().includes(query.toLowerCase()));
+    mostrarProductes(filteredProducts);
+}
+
+//Funció per filtrar els productes per SKU
+function filterDescriptionProducts(query, arrProductes) {
+    const filteredProducts = arrProductes.filter(product => product.description.toLowerCase().includes(query.toLowerCase()));
     mostrarProductes(filteredProducts);
 }

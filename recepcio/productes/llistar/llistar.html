@@ -30,8 +30,34 @@
         <i class="bi bi-funnel" id="icon-filter"></i>
         <div>
             <div class="ui-widget" id="filters" style="display: none">
-                <label for="volumen">Volumen:</label>
-                <input id="volumen">
+                <!--Filter Nom-->
+                <div class="form-group row">
+                    <label for="name" class="col-sm-2 col-form-label">Nom:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="name"></br>
+                    </div>
+                </div>
+                <!--Filter Description-->
+                <div class="form-group row">
+                    <label for="description" class="col-sm-2 col-form-label">Descripció:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="description"></br>
+                    </div>
+                </div>
+                <!--Filter Lot-->
+                <div class="form-group row">
+                    <label for="lot" class="col-sm-2 col-form-label">Lot:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="lot"></br>
+                    </div>
+                </div>
+                <!--Filter SKU-->
+                <div class="form-group row">
+                    <label for="sku" class="col-sm-2 col-form-label">SKU:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="sku"></br>
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -47,7 +73,7 @@
                     <th scope="col">Volumen</th>
                     <th scope="col">Pes</th>
                     <th scope="col">SKU</th>
-                    <th scope="col">URL_Imagen</th>
+                    <th scope="col">Imagen</th>
                 </tr>
             </thead>
             <tbody id="files">
