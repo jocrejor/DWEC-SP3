@@ -42981,6 +42981,7 @@
   ],
   "Incident": [
     {
+<<<<<<< HEAD
       "id": "bc18",
       "created_at": "28/11/2024",
       "description": "Tot correcte",
@@ -43001,6 +43002,24 @@
       "status": "Pendent",
       "quantity_ordered": 75,
       "quantity_received": "32"
+=======
+      "id": "1c4c",
+      "created_at": "CURRENT_TIMESTAMP",
+      "description": "Menys productes dels esperats",
+      "operator_id": "2",
+      "orderlinereception_status_id": "1",
+      "product_id": "3",
+      "quantity": "433"
+    },
+    {
+      "id": "NaN",
+      "created_at": "CURRENT_TIMESTAMP",
+      "description": "Menys productes dels esperats",
+      "operator_id": "2",
+      "orderlinereception_status_id": "2",
+      "product_id": "2",
+      "quantity": "4333"
+>>>>>>> Lorenzo-v2
     }
   ],
   "OrderReception": [
@@ -43066,6 +43085,13 @@
       "estimated_reception_date": "2024-10-19",
       "created_by": 3,
       "orderreception_status_id": 3
+    },
+    {
+      "id": "dc42",
+      "supplier_id": 1,
+      "estimated_reception_date": "2024-11-21",
+      "created_by": 1,
+      "orderreception_status_id": 1
     }
   ],
   "OrderLineReception": [
@@ -43075,14 +43101,6 @@
       "orderlinereception_status_id": 1,
       "product_id": 2,
       "quantity_ordered": 100,
-      "quantity_received": 0
-    },
-    {
-      "id": "3",
-      "order_reception_id": 1,
-      "orderlinereception_status_id": 1,
-      "product_id": 3,
-      "quantity_ordered": 30,
       "quantity_received": 25
     },
     {
@@ -43132,6 +43150,42 @@
       "product_id": 10,
       "quantity_ordered": 200,
       "quantity_received": 190
+    },
+    {
+      "id": "e864",
+      "order_reception_id": "dc42",
+      "orderlinereception_status_id": 1,
+      "product_id": 1,
+      "quantity_ordered": 54,
+      "quantity_received": 0
+    },
+    {
+      "id": "9ea2",
+      "order_reception_id": "dc42",
+      "orderlinereception_status_id": 1,
+      "product_id": 3,
+      "quantity_ordered": 2,
+      "quantity_received": 0
     }
   ]
+  ,
+  "Inventori": []
+  ,
+  "InventoriLine": []
+  ,
+  "Moviment":[
+    {"id":1,
+     "product_id":"1",
+     "storage_id": "03",
+     "street_id":  "01",
+     "shelf_id": "02",
+     "space_id": "03",
+     "quantity": 100,
+     "date": "2024-02-01",
+     "operator_id": "3",
+     "orgin" : "Reception",
+     "document": "2"
+    }
+  ]
+
 }

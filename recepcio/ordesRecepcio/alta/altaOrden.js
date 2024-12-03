@@ -1,6 +1,5 @@
-const API = "http://localhost:3000/";
-const orderReceptionEP = "OrderReception/";
-const orderLineReceptionEP = "OrderLineReception/";
+const orderReceptionEP = "OrderReception";
+const orderLineReceptionEP = "OrderLineReception";
 
 let orderRception;
 let orderLineReception;
@@ -33,53 +32,58 @@ $(document).ready(function () {
     .addEventListener("click", llistarOrden, false);
 });
 
-function cargarProductos() {
+async function cargarProductos() {
   const productEP = "Product";
   const productSelect = document.getElementById("product");
 
-  fetch(API + productEP)
-    .then((res) => res.json())
-    .then((data) => {
-      data.forEach((product) => {
-        const option = document.createElement("option");
-        option.value = product.name;
-        option.text = product.name;
-        option.setAttribute("id", product.id);
-        productSelect.appendChild(option);
-      });
+  try {
+    const products = await getData(url, productEP);
+
+    products.forEach((product) => {
+      const option = document.createElement("option");
+      option.value = product.id;
+      option.text = product.name;
+      productSelect.appendChild(option);
     });
+  } catch (error) {
+    console.error("Error:", error);
+  }
 }
 
-function cargarProveidor() {
+async function cargarProveidor() {
   const supplierSelect = document.getElementById("supplier");
   const supplierEP = "Supplier";
 
-  fetch(API + supplierEP)
-    .then((res) => res.json())
-    .then((data) => {
-      data.forEach((supplier) => {
-        const option = document.createElement("option");
-        option.value = supplier.id;
-        option.text = supplier.name;
-        supplierSelect.appendChild(option);
-      });
+  try {
+    const suppliers = await getData(url, supplierEP);
+
+    suppliers.forEach((supplier) => {
+      const option = document.createElement("option");
+      option.value = supplier.id;
+      option.text = supplier.name;
+      option.setAttribute("id", supplier.id);
+      supplierSelect.appendChild(option);
     });
+  } catch (error) {
+    console.error("Error:", error);
+  }
 }
 
 function llistarOrden() {
   window.location.assign("../llistar/llistatOrden.html");
 }
 
-function afegirProducte() {
+async function afegirProducte() {
   const producto = document.getElementById("product").value;
   const cantidadPedida = document.getElementById("quantity_ordered").value;
-
-  let idObj = Number(productID);
+  const productes = await getData(url, "Product");
+  const productName = productes.find(product => product.id === producto).name
 
   let productoObj = {
-    id: idObj,
-    product: producto,
-    quantity_ordered: cantidadPedida,
+    id: Number(producto),
+    product: productName,
+    quantity_ordered: Number(cantidadPedida),
+    quantity_received: 0
   };
 
   arrTemp.push(productoObj);
@@ -108,8 +112,6 @@ function afegirLinea(productObj) {
   var esborrarTD = document.createElement("td");
   var checkbox = document.createElement("input");
   checkbox.type = "checkbox";
-  checkbox.value = "opcio";
-  checkbox.addEventListener("click", () => borrarLineReception(productObj.id));
   esborrarTD.appendChild(checkbox);
 
   var modificarTD = document.createElement("td");
@@ -186,66 +188,41 @@ function guardarModificacion() {
   productoEditadoID = null;
 }
 
-async function gravarOrden() {
-  try {
-    let idorderRception;
-    let idOrderLineReception;
+async function gravarOrden(e) {
+  if(e) {
+    e.preventDefault();
+  }
 
-    const [response1, response2] = await Promise.all([
-      fetch(API + orderReceptionEP),
-      fetch(API + orderLineReceptionEP),
-    ]);
-
-    let orderReception = await response1.json();
-    let orderLineReception = await response2.json();
-
-    if (orderReception.length == 0) {
-      idorderRception = 1;
-    } else {
-      const maxObj = orderRception.reduce(
-        (max, obj) => (obj.id > max.id ? obj : max),
-        orderReception[0]
-      );
-      idorderRception = ++maxObj.id;
-    }
-
-    var supplier = document.getElementById("supplier").value;
+  try { 
+    var supplier = Number(document.getElementById("supplier").value);
     var dataEstimada = document.getElementById(
       "estimated_reception_date"
     ).value;
 
     let order = {
-      id: idorderRception,
-      supplier: supplier,
+      supplier_id: supplier,
       estimated_reception_date: dataEstimada,
       created_by: 1,
       orderreception_status_id: 1,
     };
 
-    orderRception.push(order);
+    let newOrderId = await postData(url, orderReceptionEP, order);
 
-    localStorage.setItem("orderRception", JSON.stringify(orderRception));
+    if (arrTemp) {
+      arrTemp.forEach((product) => {
+        let newProduct = {
+          id: idOrderLineReception,
+          order_reception_id: newOrderId.id,
+          orderlinereception_status_id: 1,
+          product_id: product.id,
+          quantity_ordered: product.quantity_ordered,
+          quantity_received: product.quantity_received,
 
-    if (orderLineReception.length == 0) {
-      idOrderLineReception = 0;
-    } else {
-      const maxObj = orderLineReception.reduce(
-        (max, obj) => (obj.id > max.id ? obj : max),
-        orderLineReception[0]
-      );
-      idOrderLineReception = maxObj.id;
+        };
+        postData(url, orderLineReceptionEP, newProduct);
+      });
     }
 
-    arrTemp.forEach((product) => {
-      product.id = Number(idOrderLineReception);
-      product.order_reception_id = idorderRception;
-      orderLineReception.push(product);
-    });
-
-    localStorage.setItem(
-      "orderLineReception",
-      JSON.stringify(orderLineReception)
-    );
 
     alert("Guardado correctamente");
   } catch (error) {

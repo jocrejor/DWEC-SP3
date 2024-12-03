@@ -4,8 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Llistat Ordens de Recepció</title>
-    <link rel="stylesheet" href="llistatOrden.css" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css"
+    />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+    <script src="/apiAccess/crud.js"></script>
     <script type="text/javascript" src="llistatOrden.js"></script>
     <style>
       .error {
@@ -19,11 +30,54 @@
       <h1>Llistat Orden de Recepció</h1>
 
       <div class="input-group">
-        <input type="search" class="form-control" />
-        <button class="botoBlau text-blanc">Cerca</button>
+        <button id="filter" class="btn bg-white text-primary">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-funnel"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2z"
+            />
+          </svg>
+        </button>
+      </div>
+      <div class="input-group" id="filter-group" style="display: none">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Proveïdor</span>
+        </div>
+        <input
+          type="search"
+          placeholder="Ex.: Componentes Electrónicos Avanzados S.A."
+          class="form-control"
+          id="search"
+        />
+        <div class="input-group-prepend">
+          <span class="input-group-text">Desde</span>
+        </div>
+        <input
+          type="date"
+          placeholder="Ex.: Componentes Electrónicos Avanzados S.A."
+          class="form-control"
+          id="fromDate"
+        />
+        <div class="input-group-prepend">
+          <span class="input-group-text">Fins</span>
+        </div>
+        <input
+          type="date"
+          placeholder="Ex.: Componentes Electrónicos Avanzados S.A."
+          class="form-control"
+          id="toDate"
+        />
       </div>
 
-      <button class="botoTaronja text-blanc" id="nuevaOrden">Nova Ordre</button>
+      <button class="btn btn-primary mt-3 mb-3" id="nuevaOrden">
+        Nova Ordre
+      </button>
       <br />
 
       <table class="table centrat" id="table">
