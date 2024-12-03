@@ -85,7 +85,7 @@ async function activarFiltros() {
   });
 
   $("#filter").click(function () {
-    $("#search-group").slideToggle(300);
+    $("#filter-group").slideToggle(300);
   });
 }
 
@@ -108,7 +108,7 @@ async function esborrarOrdre(id) {
         async (product) =>
           await deleteData(url, orderLineReceptionEP, product.id)
       );
-      obtindreOrdens();
+      $(`#${id}`).remove();
     }
   } catch (error) {
     console.error("ERROR: ", error);

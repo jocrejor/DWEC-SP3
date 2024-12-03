@@ -193,10 +193,7 @@ async function gravarOrden(e) {
     e.preventDefault();
   }
 
-  try {
-
-    let orderLineReception = await getData(url, orderReceptionEP);
-    
+  try { 
     var supplier = Number(document.getElementById("supplier").value);
     var dataEstimada = document.getElementById(
       "estimated_reception_date"
