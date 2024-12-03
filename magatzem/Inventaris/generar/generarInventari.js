@@ -51,7 +51,7 @@ async function generarInventari() {
     }
 
     //inventory
-    let dataInventory = new Date().toISOString();
+    let dataInventory = new Date().toLocaleString('es-ES');
     
     let newInventory = {
         date: dataInventory,

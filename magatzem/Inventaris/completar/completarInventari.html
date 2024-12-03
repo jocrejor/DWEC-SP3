@@ -9,7 +9,7 @@
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     
     <script type="text/javascript" src="../../../apiAccess/crud.js"></script>
-    <script type="text/javascript" src="inventariar.js"></script>
+    <script type="text/javascript" src="completarInventari.js"></script>
     <style>
         .error {
             border: solid 2px #FF0000;
@@ -41,20 +41,18 @@
         <table class="table" id="ordenTable">
             <thead class="thead-light">
                 <tr>
-                    <th scope="col">Carrer</th>
-                    <th scope="col">Estanteria</th>
-                    <th scope="col">Espacio</th>
                     <th scope="col">Producte</th>
+                    <th scope="col">Quantitat Estimada</th>
                     <th scope="col">Quantitat Real</th>
+                    <th scope="col">Justificació</th>
                 </tr>
             </thead>
             <tbody id="productesBody">
                 
             </tbody>
         </table>
-
-        <button class=" btn btn-primary my-3"  id="guardarBtn">Inventariar</button>
-        <button class=" btn btn-primary my-3"  id="tornarBtn">Tornar</button>
+        <button class=" btn btn-primary my-3"  id="btnCompletar">Completar</button>
+        <button class=" btn btn-primary my-3"  id="btnRegresar">Tornar</button>
     </div>
 </body>
 

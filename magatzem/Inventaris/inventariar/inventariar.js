@@ -87,25 +87,7 @@ async function mostrarProductes(inventoryID) {
         quantitatTD.appendChild(inputQuantitat);
         fila.appendChild(quantitatTD);
 
-        const justificacioTD = document.createElement('td');
-        const selectJustificacio = document.createElement('select');
-        selectJustificacio.className = "form-select";
-        selectJustificacio.id = `justificacio-${producte.id}`;
-
-        const opciones = [
-            'Defectuós', 'Trencat', 'Robatori', 
-            'Desaparegut', 'Error administratiu', 'Recompte cíclic'
-        ];
-    
-        opciones.forEach(opcio => {
-            const optionElement = document.createElement('option');
-            optionElement.value = opcio;
-            optionElement.textContent = opcio;
-            selectJustificacio.appendChild(optionElement);
-        });
-        justificacioTD.appendChild(selectJustificacio);
-        fila.appendChild(justificacioTD);
-
+        
         productesBody.appendChild(fila);
     });
 }
@@ -129,23 +111,15 @@ async function actualitzarQuantitat(inventoryID) {
 
             if (novaQuantitat !== "" && !isNaN(novaQuantitat)) {
                 const updatedData =  parseInt(novaQuantitat, 10);
-                const selectJustificacio = document.getElementById(`justificacio-${ele.id}`);
-                const justificacioValue = selectJustificacio.value;
+                let inventoryLine = await getData(url, `InventoryLine/${ele.id}`);
 
-                if (justificacioValue) {
-                    let inventoryLine = await getData(url, `InventoryLine/${ele.id}`);
-
-                    if (inventoryLine) {
-                        inventoryLine.real_quantity = updatedData;
-                        inventoryLine.inventory_season = justificacioValue; 
-
-                        await updateId(url, "InventoryLine", ele.id, inventoryLine);
-                    }
-                    alert('Inventari correctament inventariat');
+                if (inventoryLine) {
+                    inventoryLine.real_quantity = updatedData;
+                    await updateId(url, "InventoryLine", ele.id, inventoryLine);
                 }
-
                 //Falta operador
             }
         }
     }
+    alert('Inventari correctament inventariat');
 }
