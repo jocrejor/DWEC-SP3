@@ -1,10 +1,9 @@
 //// 
 ///// Modificació del CRUD per a no pasar id i que l'ID el pose el json-server
 /////
-<<<<<<< HEAD
-=======
+
 //domini temporal
->>>>>>> Lorenzo-v2
+
 let url = 'http://node.daw.iesevalorpego.es:3001/';
 // Local
 //let url = 'http://localhost:5001/'
@@ -35,13 +34,11 @@ async function postData(url,endPoint, data = {}) {
     if (!response.ok) {
       throw new Error('Error en la solicitud POST');
     }
-<<<<<<< HEAD
+
 
     const result = await response.json();  // Espera la conversión de la respuesta a JSON
     return result;  // Trabaja con la respuesta
-=======
-    return  await response.json();
->>>>>>> Lorenzo-v2
+
 
   } catch (error) {
     console.error('Error:', error);  // Manejo de errores
