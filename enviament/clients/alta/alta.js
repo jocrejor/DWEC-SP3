@@ -3,19 +3,51 @@ window.onload = iniciar;
 // let State = JSON.parse(localStorage.getItem('State')) || [];
 // let Province = JSON.parse(localStorage.getItem('Province')) || [];
 // let City = JSON.parse(localStorage.getItem('City')) || [];
-const url = 'http://localhost:5001/';
+let Client;
+let State;
+let Province;
+let City;
 
-const State = await getData(url, 'State');
-const Province = await getData(url, 'Province');
-const City = await getData(url, 'City');
-
-function iniciar() {
+async function iniciar() {
     // thereIsUser();
+    Client = await getData(url, "Client");
+    State = await getData(url, "State");
+    Province = await getData(url, "Province");
+    City = await getData(url, "City");
 
     document.getElementById("botonAlta").addEventListener("click", validar, false);
     cargarPaises();
-    cargarProvincias();
+    // cargarProvincias();
     vaciarCampos();
+}
+
+function crearContenedores() {
+    // const paisSeleccionado = cliente.state_id;
+    let paisSeleccionado = document.getElementById("state_id").value;
+
+    const divContenedor = document.querySelector('.form-group.row:nth-of-type(7)');
+    const divContenedorCiudades = document.querySelector('.form-group.row:nth-of-type(8)');
+
+    // Limpiar contenido de los contenedores de provincias, ciudades y código postal
+    while (divContenedor.firstChild) {
+        divContenedor.removeChild(divContenedor.firstChild);
+    }
+
+    while (divContenedorCiudades.firstChild) {
+        divContenedorCiudades.removeChild(divContenedorCiudades.firstChild);
+    }
+    
+    const noHayProvincias = Province.find(variable => variable.state_id === paisSeleccionado);
+
+    if (noHayProvincias) {
+        crearSelectProvincias(divContenedor);
+        crearSelectCiudades(divContenedorCiudades);
+        
+        cargarProvincias();
+    } else {
+        crearInputProvincia(divContenedor);
+        crearInputCiudades(divContenedorCiudades);
+    }
 }
 
 function validar(e) {
@@ -39,23 +71,6 @@ function validar(e) {
         return false;
     }
 }
-
-function obtenerNuevoIdCliente() {
-    const clientes = JSON.parse(localStorage.getItem('Client')) || [];
-    let nuevoId;
-    
-    if(clientes.length === 0){
-        nuevoId = 1;
-    }
-    else{
-        let ultimoCliente = clientes[clientes.length - 1];
-        let ultimoId = ultimoCliente.id;
-        nuevoId = ultimoId + 1;
-    }
-
-    return nuevoId;
-}
-
 
 //valida el nombre o razon social
 function validarNombre(){
@@ -228,16 +243,14 @@ function esborrarError() {
 }
 
 // enviar dades
-function enviarFormulari() {
+async function enviarFormulari() {
     // Grabar al localStorage
     const nombre = document.getElementById('name').value;
     const domicilio = document.getElementById('address').value;
     const dni = document.getElementById('nif').value;
     const telefono = document.getElementById('phone').value;
     const correo = document.getElementById('email').value;
-    var pais = document.getElementById('state_id').value;
-    var provincia = document.getElementById('province').value;
-    var ciudad = document.getElementById('city').value;
+    //aqui iria el pais, provincia y ciudad (se cogen los valores luego)
     const cp = document.getElementById('cp').value;
 
     const clientes = JSON.parse(localStorage.getItem('Client')) || [];
@@ -246,19 +259,19 @@ function enviarFormulari() {
     let mensajeError = "";
 
     //verifica si ya existe un cliente con el mismo DNI
-    const dniExistente = clientes.some(cliente => cliente.nif === dni);
+    const dniExistente = Client.some(cliente => cliente.nif === dni);
     if(dniExistente) {
         mensajeError += "Ya existeix un client amb el mateix DNI.\n";
     }
 
     //verifica si ya existe un cliente con el mismo teléfono
-    const telefonoExistente = clientes.some(cliente => cliente.phone === telefono);
+    const telefonoExistente = Client.some(cliente => cliente.phone === telefono);
     if(telefonoExistente) {
         mensajeError += "Ya existeix un client amb el mateix teléfono.\n";
     }
 
     //verifica si ya existe un cliente con el mismo correo
-    const correoExistente = clientes.some(cliente => cliente.email === correo);
+    const correoExistente = Client.some(cliente => cliente.email === correo);
     if(correoExistente) {
         mensajeError += "Ya existeix un client amb el mateix correo.\n";
     }
@@ -269,59 +282,61 @@ function enviarFormulari() {
         return;  //detiene la función si hay algun duplicado
     }
 
-    if(parseInt(pais) === 194){
-        const provinciaNombre = Province.find(variable => variable.id === provincia)?.name || "No especificado";
-        const ciudadNombre = City.find(variable => variable.id === ciudad)?.name || "No especificado";
+    // if(parseInt(pais) === 194){
+    //     const provinciaNombre = Province.find(variable => variable.id === provincia)?.name || "No especificado";
+    //     const ciudadNombre = City.find(variable => variable.id === ciudad)?.name || "No especificado";
     
-        provincia = provinciaNombre;
-        ciudad = ciudadNombre;
+    //     provincia = provinciaNombre;
+    //     ciudad = ciudadNombre;
+    // }
+
+    var paisSeleccionado = parseInt(document.getElementById("state_id").value, 10);
+    var provinciaId, ciudadId;
+    provinciaId = document.getElementById('province').value;
+    ciudadId = document.getElementById('city').value;
+    let noHayProvincias = Province.some(variable => variable.state_id === paisSeleccionado);
+
+    if (!noHayProvincias) {
+        //busca el nombre de la provincia y la ciudad usando los IDs de `cliente`
+        const provinciaNombre = Province.find(variable => variable.id === provinciaId)?.name || "No especificado";
+        const ciudadNombre = City.find(variable => variable.id === ciudadId)?.name || "No especificado";
+    
+        provinciaId = provinciaNombre;      //convierte el id de la provincia a nombre
+        ciudadId = ciudadNombre;
     }
 
+    const idCliente = await getNewId(url, Client);
+    alert(idCliente);
     const cliente = { 
-        id:obtenerNuevoIdCliente(),
+        id:idCliente,
         name:nombre, 
         address:domicilio, 
         nif:dni, 
         phone:telefono, 
         email:correo,
-        state_id:pais,
-        province:provincia,
-        city:ciudad,
+        state_id:paisSeleccionado,
+        province:provinciaId,
+        city:ciudadId,
         cp:cp
     };
 
-    clientes.push(cliente);                                         //agrega un nuevo cliente al array
-    localStorage.setItem('Client', JSON.stringify(clientes));     //guarda en localStorage
+    // clientes.push(cliente);                                         //agrega un nuevo cliente al array
+    // localStorage.setItem('Client', JSON.stringify(clientes));     //guarda en localStorage
     
+    await postData(url, Client, cliente);
+
     setTimeout(function (){
         vaciarCampos();
     },1000);
 }
 
-//carga y retorna el objeto clientes
-function cargarClientes(){
-    const clientes = JSON.parse(localStorage.getItem('Client')) || [];    //coge los clientes almacenados en el local storage y los devuelve
-    return clientes;
-}
-
 //función que vacía todos los campos del formulario
 function vaciarCampos(){        
-    document.getElementById('name').value = '';
-    document.getElementById('address').value = '';
-    document.getElementById('nif').value = '';
-    document.getElementById('phone').value = '';
-    document.getElementById('email').value = '';
-    document.getElementById('state_id').value = '';
-    document.getElementById('province').value = '';
-    document.getElementById('city').value = '';
-    document.getElementById('cp').value = '';
+    // $('#name, #address, #nif, #phone, #email, #state_id, #province, #city, #cp').val('');
 }
 
 //función que carga comunidades autónomas en el select
 async function cargarPaises(){
-    const url = 'http://localhost:5001/';
-    const State = await getData(url, "State");
-
     var selectPais = document.getElementById('state_id');
     State.forEach(function(pais){
         const opcion = document.createElement('option');
@@ -335,41 +350,70 @@ async function cargarPaises(){
 }
 
 function cargarProvincias() {
-    var paisSeleccionado = document.getElementById('state_id').value;
-    var divContenedor = document.querySelector('.form-group.row:nth-of-type(7)');
-    var divContenedorCiudades = document.querySelector('.form-group.row:nth-of-type(8)');
-    var divContenedorCodigoPostal = document.querySelector('.form-group.row:nth-of-type(9)');
+    // var paisSeleccionado = document.getElementById('state_id').value;
+    // var divContenedor = document.querySelector('.form-group.row:nth-of-type(7)');
+    // var divContenedorCiudades = document.querySelector('.form-group.row:nth-of-type(8)');
+    // var divContenedorCodigoPostal = document.querySelector('.form-group.row:nth-of-type(9)');
 
-    // Limpiar contenido de los contenedores de provincias, ciudades y código postal
-    while (divContenedor.firstChild) {
-        divContenedor.removeChild(divContenedor.firstChild);
+    // // Limpiar contenido de los contenedores de provincias, ciudades y código postal
+    // while (divContenedor.firstChild) {
+    //     divContenedor.removeChild(divContenedor.firstChild);
+    // }
+
+    // while (divContenedorCiudades.firstChild) {
+    //     divContenedorCiudades.removeChild(divContenedorCiudades.firstChild);
+    // }
+
+    // while (divContenedorCodigoPostal.firstChild) {
+    //     divContenedorCodigoPostal.removeChild(divContenedorCodigoPostal.firstChild);
+    // }
+
+    // if (paisSeleccionado == 194) { // Si se selecciona España
+    //     crearSelectProvincias(divContenedor); // Crear el select de provincias
+    //     crearSelectCiudades(divContenedorCiudades); // Crear el select de ciudades
+    //     crearInputCodigoPostal(divContenedorCodigoPostal);
+    // } else if (paisSeleccionado && paisSeleccionado != 194) {
+    //     // Crear inputs alternativos si no es España
+    //     crearInputProvincia(divContenedor);
+    //     crearInputCiudades(divContenedorCiudades);
+    //     crearInputCodigoPostal(divContenedorCodigoPostal);
+    // }
+    var selectProvincia = document.getElementById('province');
+    var paisSeleccionado = document.getElementById("state_id").value;
+
+    var opcion = document.createElement('option');
+    opcion.value = 0;
+    var nombreOpcion = document.createTextNode('Seleccione una provincia');
+    opcion.appendChild(nombreOpcion);
+    selectProvincia.appendChild(opcion);
+
+    while (selectProvincia.options.length > 1) {
+        selectProvincia.remove(1);
     }
 
-    while (divContenedorCiudades.firstChild) {
-        divContenedorCiudades.removeChild(divContenedorCiudades.firstChild);
-    }
-
-    while (divContenedorCodigoPostal.firstChild) {
-        divContenedorCodigoPostal.removeChild(divContenedorCodigoPostal.firstChild);
-    }
-
-    if (paisSeleccionado == 194) { // Si se selecciona España
-        crearSelectProvincias(divContenedor); // Crear el select de provincias
-        crearSelectCiudades(divContenedorCiudades); // Crear el select de ciudades
-        crearInputCodigoPostal(divContenedorCodigoPostal);
-    } else if (paisSeleccionado && paisSeleccionado != 194) {
-        // Crear inputs alternativos si no es España
-        crearInputProvincia(divContenedor);
-        crearInputCiudades(divContenedorCiudades);
-        crearInputCodigoPostal(divContenedorCodigoPostal);
-    }
+    Province.forEach(function(provincia){
+        if (provincia.state_id === paisSeleccionado) {
+            var opcion = document.createElement('option');
+            opcion.value = provincia.id;
+    
+            var nombreOpcion = document.createTextNode(provincia.name);
+            opcion.appendChild(nombreOpcion);
+    
+            selectProvincia.appendChild(opcion);
+        }
+    });
 }
-
 
 function cargarCiudades() {
     var provinciaSeleccionada = document.getElementById('province').value;
     var selectCiudad = document.getElementById('city');
-    // limpiar el select de ciudades, manteniendo solo la opción inicial
+
+    var opcion = document.createElement('option');
+    opcion.value = 0;
+    var nombreOpcion = document.createTextNode("Seleccione una ciudad");
+    opcion.appendChild(nombreOpcion);
+    selectCiudad.appendChild(opcion);
+
     while (selectCiudad.options.length > 1) {
         selectCiudad.remove(1);
     }
