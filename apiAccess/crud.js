@@ -124,4 +124,9 @@ async function updateId(url, endPoint, id,data) {
 //////
 //////
 
+////////////////////// Tancar Sessió /////////////////////
 
+function tancarSessio (){
+  localStorage.remove("currentUser");
+  document.location.href=("/index.html");
+}
