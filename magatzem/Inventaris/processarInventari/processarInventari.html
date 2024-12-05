@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Llistat Inventari</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Inventari - Llistat</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     
-    <script type="text/javascript" src="../../../apiAccess/crud.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
+
+    <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.min.js"
+            integrity="sha256-Fb0zP4jE3JHqu+IBB9YktLcSjI1Zc6J2b6gTjB0LpoM="
+            crossorigin="anonymous">
+    </script>
     <script type="text/javascript" src="processarInventari.js"></script>
-    
-    <style>
+    <script type="text/javascript"src="../../../apiAccess/crud.js" ></script>
+  <style>
         .error {
             border: solid 2px #FF0000;
         }
@@ -20,6 +27,26 @@
 <body>
     <div class="container">
         <h1>Llistat Inventari General</h1>
+
+        <div ><a href="#" id="controlFiltre"> <i class="bi bi-funnel"></i></a>
+            <div id="filtres" class="input-group mb-3" >
+                <span class="input-group-text" id="filtrarEstat">Estat</span>
+                    <select name="estat" id="estat">
+                        <option value="Pendent">Pendent</option>
+                        <option value="Completat">Completat</option>
+                    </select>
+            </div>
+
+            <div id="filtres" class="input-group mb-3" >
+                <span class="input-group-text">Magatzem</span>
+                    <select name="magatzem" id="filtrarMagatzem">
+                        <option value="recepció">Magatzem de Recepció</option>
+                        <option value="enviament">Magatzem d'Enviament</option>
+                        <option value="principal">Magatzem Principal</option>
+                        <option value="incidencies">Magatzem d'Incidencies</option>
+                    </select>
+            </div>
+        </div>
         
         <button class=" btn btn-primary my-3" id="nouInventari">Nou Inventari</button></br>
         <table class="table" id="table">
