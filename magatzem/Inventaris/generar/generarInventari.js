@@ -2,6 +2,12 @@ let inventoryLine;
 
 $(document).ready(function() {
     thereIsUser();
+    let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (currentUser.role==="3"){
+        alert("no tens permisos per generar un nou invetari")
+        history.back();
+    }
+
     carregarMagatzem();
 
     document.getElementById("btnGenerar").addEventListener("click", generarInventari, false);
