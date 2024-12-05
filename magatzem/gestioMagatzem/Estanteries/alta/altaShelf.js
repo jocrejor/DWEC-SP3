@@ -80,6 +80,6 @@ async function enviarFormulari() {
     await postData(url, 'Shelf', novaEstanteria);
 
     alert("Estanteria gravada correctament.");
-    window.location.assign("../../llista/llistatShelf.html");
+    window.location.assign("../llista/llistatShelf.html");
 }
 
