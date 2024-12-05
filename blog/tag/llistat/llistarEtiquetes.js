@@ -4,8 +4,8 @@ function main() {
   // Llamada a las funciones necesarias al cargar la página
   document.getElementById("novaEtiqueta").addEventListener("click", novaEtiqueta);
   document.getElementById("mainBlog").addEventListener("click", mainBlog);
-  document.getElementById("filtrarFuncion").addEventListener("click", filtrarEtiquetes);  // Agregar el evento de filtrado
-  obtindreEtiquetes();  // Obtener las etiquetas al cargar la página
+  document.getElementById("filtrarFuncion").addEventListener("click", activarFiltros);  // Cambiar a activarFiltros
+  obtindreEtiquetes();  // Obtener todas las etiquetas al cargar la página
 }
 
 function mainBlog() {
@@ -16,7 +16,7 @@ function novaEtiqueta() {
   window.location.assign("../alta/altaEtiqueta.html");
 }
 
-async function obtindreEtiquetes(filtro = "") {
+async function obtindreEtiquetes(filtro = null) {
   // Obtiene las etiquetas del backend o localStorage
   const llistaEtiquetes = await getData(url, "Tag");
   const tbody = document.getElementById("files");
@@ -24,8 +24,10 @@ async function obtindreEtiquetes(filtro = "") {
   // Limpiar el contenido de la tabla antes de añadir nuevas filas
   tbody.innerHTML = "";
 
-  // Filtrar las etiquetas si es necesario
-  const etiquetasFiltradas = llistaEtiquetes.filter(etiqueta => etiqueta.name.toLowerCase().includes(filtro.toLowerCase()));
+  // Si se pasa un filtro, aplicar, si no, mostrar todas las etiquetas
+  const etiquetasFiltradas = filtro 
+    ? llistaEtiquetes.filter(filtro) 
+    : llistaEtiquetes;  // Si no hay filtro, no se filtra nada
 
   // Recorrer las etiquetas filtradas y agregarlas a la tabla
   etiquetasFiltradas.forEach((etiqueta) => {
@@ -36,7 +38,7 @@ async function obtindreEtiquetes(filtro = "") {
     const btnEsborrar = document.createElement("button");
     btnEsborrar.className = "btn btn-primary btn-lg";
     btnEsborrar.appendChild(document.createTextNode("Esborrar"));
-    btnEsborrar.onclick = () => esborrar(etiqueta.id);
+    btnEsborrar.onclick = () => esborrar(etiqueta.id, etiqueta.name);
     tdEsborrar.appendChild(btnEsborrar);
 
     // Botón para modificar la etiqueta
@@ -63,18 +65,36 @@ async function obtindreEtiquetes(filtro = "") {
   autocompletado(etiquetasFiltradas);
 }
 
-// Función para filtrar las etiquetas
-function filtrarEtiquetes() {
+// Función para activar los filtros y pasarlos a la función de obtención
+function activarFiltros() {
   const filtro = document.getElementById("nom").value;  
-  obtindreEtiquetes(filtro);  
+  const filtroFunc = filtroEspecifico(filtro);  // Crear la función de filtro específica
+  obtindreEtiquetes(filtroFunc);  // Pasar la función de filtro a obtindreEtiquetes
 }
 
-async function esborrar(id) {
-  // Llamar a la función deleteData para eliminar la etiqueta del backend
-  await deleteData(url, "Tag", id);
+// Función para crear un filtro específico según el criterio
+function filtroEspecifico(filtro) {
+  return (etiqueta) => etiqueta.name.toLowerCase().includes(filtro.toLowerCase());
+}
 
-  // Actualizar la tabla sin recargar la página
-  obtindreEtiquetes();
+function esborrar(id, nomEtiqueta) {
+  // Obtener los posts para verificar si la etiqueta está referenciada
+  getData(url, "Post").then(llistaPosts => {
+    // Buscar si algún post tiene el nombre de la etiqueta referenciado
+    const etiquetaAsociada = llistaPosts.some(post => post.tag === nomEtiqueta); 
+
+    if (etiquetaAsociada) {
+      // Mostrar un mensaje al usuario indicando que la etiqueta no puede ser eliminada
+      alert(`No se puede eliminar la etiqueta "${nomEtiqueta}" porque está asociada a uno o más posts.`);
+      return; 
+    }
+
+    // Llamar a la función deleteData para eliminar la etiqueta del backend
+    deleteData(url, "Tag", id).then(() => {
+      // Actualizar la tabla sin recargar la página
+      obtindreEtiquetes();
+    });
+  });
 }
 
 function modificar(etiqueta) {
