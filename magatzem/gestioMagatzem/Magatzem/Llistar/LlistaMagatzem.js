@@ -12,12 +12,12 @@ async function carregarInformacio() {
 }
 
 function nou() {
-    window.location.assign("../Nou/nouMagatzem.html");
+    window.location.assign("../Alta/altaStorage.html");
 }
 
 function obtindreMagatzem() {
     let tbody = document.getElementById("files");
-    tbody.innerHTML = ""; 
+    tbody.innerHTML = "";
 
     storages.forEach((storage) => {
         let row = `
@@ -34,21 +34,21 @@ function obtindreMagatzem() {
    `;
         tbody.innerHTML += row;
     });
+
 }
 
 async function esborrar(id) {
-   
     await deleteData(url, "Storage", id);
-    document.getElementById(id).remove();
+    document.getElementById{id}.remove();   
 }
 
+
 function modificar(storageId) {
- 
-        localStorage.setItem("modificaMagatzem", JSON.stringify(storageId));
-        window.location.assign("../Modificar/modificarMagatzem.html");
+    localStorage.setItem("modificaMagatzem", JSON.stringify(storageId));
+    window.location.assign("../Modificar/modificarMagatzem.html");
 }
 
 function carrers(storageId) {
+    localStorage.setItem("magatzemId", storageId);
     window.location.assign(`../../Carrer/Llistar/LlistatCarrer.html`);
 }
-

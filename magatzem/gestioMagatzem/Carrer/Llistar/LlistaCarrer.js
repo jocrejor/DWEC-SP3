@@ -8,12 +8,12 @@ function main() {
 
 async function carregarInformacio() {
     streets = await getData(url, "Street");
-    obtindreMagatzem();
+    obtindreCarrer();
 }
 
 
 function nou() {
-    window.location.assign("../Nou/nouCarrer.html");
+    window.location.assign("../Alta/altaStreet.html");
 }
 
 function obtindreCarrer() {

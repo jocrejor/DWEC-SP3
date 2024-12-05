@@ -1,21 +1,30 @@
-
-document.addEventListener("DOMContentLoaded", function () {
-    iniciar();
-});
+window.onload = iniciar;
 
 function iniciar() {
-    document.getElementById("btnGrabar").addEventListener("click", validar, false);
+    document.getElementById("btnGravar").addEventListener("click", validar, false);
+    document.getElementById("btnCancelar").addEventListener("click", cancelar);
+}
 
+function cancelar() {
+    window.location.assign("../Llistar/LlistaMagatzem.html");
 }
 
 function validar(e) {
     e.preventDefault();
     esborrarError();
-    if (validarId() && validarNom() && validarTipus() && validarAdress() && confirm("Confirma si vols enviar el formulari")) {
-        gravarMagatzem();
 
+    if (
+        validarId() &&
+        validarNom() &&
+        validarTipus() &&
+        validarAdress() &&
+        confirm("Confirma si vols enviar el formulari")
+    ) {
+        enviarFormulari().catch((error) =>
+            console.error('Error en enviarFormulari:', error)
+        );
     } else {
-
+        console.log("Formulari no vàlid");
         return false;
     }
 }
@@ -25,9 +34,6 @@ function validarId() {
     if (!idValidar.checkValidity()) {
         if (idValidar.validity.valueMissing) {
             error(idValidar, "Deus d'introduïr dos numeros.");
-        }
-        if (idValidar.validity.patternMismatch) {
-            error(idValidar, "El id ha de tindre entre 2 numeros");
         }
         return false;
     }
@@ -46,75 +52,63 @@ function validarNom() {
         return false;
     }
     return true;
-
 }
 
 function validarTipus() {
-    var typeValidar = document.getElementById("type");
-    if (!typeValidar.checkValidity()) {
-        if (typeValidar.validity.valueMissing) {
-            error(typeValidar, "Deus de selecionar una opció");
+    var tipusValidar = document.getElementById("type");
+    if (!tipusValidar.checkValidity()) {
+        if (tipusValidar.validity.valueMissing) {
+            error(tipusValidar, "Deus de selecionar una opció");
         }
         return false;
     }
     return true;
-
 }
 
 function validarAdress() {
-    var adressValidar = document.getElementById("adress");
-    if (!adressValidar.checkValidity()) {
-        if (adressValidar.validity.valueMissing) {
-            error(adressValidar, "Deus d'introduïr una adreça.");
+    var addressValidar = document.getElementById("address");
+    if (!addressValidar.checkValidity()) {
+        if (addressValidar.validity.valueMissing) {
+            error(addressValidar, "Deus d'introduïr una adreça.");
         }
-        if (adressValidar.validity.patternMismatch) {
-            error(adressValidar, "L'adreça ha de tindre entre 2 i 40 caracters.");
+        if (addressValidar.validity.patternMismatch) {
+            error(addressValidar, "L'adreça ha de tindre entre 2 i 40 caracters.");
         }
         return false;
     }
     return true;
-
 }
 
 function error(element, missatge) {
     const textError = document.createTextNode(missatge);
     const elementError = document.getElementById("missatgeError");
-    elementError.innerHTML = "";  
+    elementError.textContent = ""; 
     elementError.appendChild(textError);
     element.classList.add("error");
     element.focus();
 }
 
-function esborrarError() {
-    let formulari = document.forms[0].elements;
-    for (let ele of formulari) {
-        ele.classList.remove("error");
-    }
-    document.getElementById("missatgeError").innerHTML = "";
-}
+async function enviarFormulari() {
+    const id = document.getElementById("id").value;
+    const name = document.getElementById("name").value;
+    const type = document.getElementById("type").value;
+    const address = document.getElementById("address").value;
 
-function gravarMagatzem() {
-    let magatzems = JSON.parse(localStorage.getItem("magatzems")) || [];
+    const nouMagatzem = { id, name, type, address };
 
-    let nouMagatzem = {
-        id: document.getElementById("id").value,
-        name: document.getElementById("name").value,
-        type: document.getElementById("type").value,
-        adress: document.getElementById("adress").value,
-        id_pasillo: null,   
-        name_: null         
-    };
+    let arrShelfs = JSON.parse(localStorage.getItem("storages")) || [];
+    arrShelfs.push(nouMagatzem);
+    localStorage.setItem("storages", JSON.stringify(arrShelfs));
 
-    magatzems.push(nouMagatzem);
-    localStorage.setItem("magatzems", JSON.stringify(magatzems));
+    await postData(url, 'Storage', nouMagatzem);
 
-    alert("Informació emmagatzemada correctament!");
-    neteja();
+    alert("Estanteria gravada correctament.");
+    document.getElementById("formulariMagatzem").reset(); 
     window.location.assign("../Llistar/LlistaMagatzem.html");
 }
 
-function neteja() {
-    const formulari = document.forms[0];
-    formulari.reset();
-    esborrarError();
+function esborrarError() {
+    document.getElementById("missatgeError").textContent = "";
+    const elements = document.querySelectorAll(".error");
+    elements.forEach((el) => el.classList.remove("error"));
 }

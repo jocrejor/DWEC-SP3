@@ -1,52 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Magatzem</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="altaStorage.js" defer></script>
+    <title>Alta Magatzem</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous">
+    <script defer src="altaStorage.js"></script>
     <script type="text/javascript" src="../../../../apiAccess/crud.js"></script>
 
+    <style>
+        .error {
+            border: solid 2px #FF0000;
+        }
+    </style>
 </head>
-
 <body>
     <div class="container">
-        <h2>Magatzem</h2>
+        <h1>Alta Magatzem</h1>
         <form id="formulariMagatzem">
             <div class="form-group">
-                <label for="id">ID Magatzem:</label>
-                <input type="text" id="id" name="id" pattern="^\d{2}$"  class="form-control" required>
+                <label for="id">ID Magatzem</label>
+                <input type="number" class="form-control" id="id" min="1" max="99" required>
             </div>
             <div class="form-group">
-                <label for="name">Nom : </label>
-                <input type="text" id="name" name="name" class="form-control"
-                pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]{2,40}$" required>
+                <label for="name">Nom</label>
+                <input type="text" class="form-control" id="name" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]{2,40}$" required>
             </div>
             <div class="form-group">
-                <label for="type">Tipus:</label>
-                <select name="type" id="type">
-                    <option value=""></option>
-                    <option value="Recepcion">Recepció</option>
-                    <option value="General">Principal</option>
-                    <option value="incidents">Incidències</option>
-                    <option value="shipping">Enviament</option>
+                <label for="type">Tipus</label>
+                <select class="form-control" id="type" required>
+                    <option value="">Selecciona un tipus</option>
+                    <option value="Recepció">Recepció</option>
+                    <option value="Principal">Principal</option>
+                    <option value="Incidències">Incidències</option>
+                    <option value="Enviament">Enviament</option>
                 </select>
             </div>
-
             <div class="form-group">
-                <label for="adress">Adreça:</label>
-                <input type="text" id="adress" name="adress" class="form-control" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d10-9\s\/]{2,40}$" required>
+                <label for="address">Adreça</label>
+                <input type="text" class="form-control" id="address" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1\s\/\d]{2,40}$" required>
             </div>
-
-            <button type="submit" id="btnGrabar" class="btn btn-primary">Grabar</button>
-            <button type="reset" id="btnNeteja" class="btn btn-secondary">Neteja</button>
+            <h5 id="missatgeError" class="text-danger"></h5>
+            <button type="submit" id="btnGravar" class="btn btn-primary">Gravar</button>
+            <button type="button" id="btnCancelar" class="btn btn-secondary">Cancelar</button>
 
         </form>
-        <div id="missatgeError" class="text-danger"></div>
     </div>
 </body>
-
 </html>

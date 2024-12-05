@@ -23,6 +23,12 @@
       "name": "Magatzem Incidencies",
       "type": "Incident",
       "address": "1011 Elm St, City, Country"
+    },
+    {
+      "id": "09",
+      "name": "General",
+      "type": "Recepcion",
+      "adress": "C/ Duanes 14"
     }
   ],
   "Street": [
