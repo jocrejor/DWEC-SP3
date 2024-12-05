@@ -1,85 +1,163 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockFlow</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../common/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../common/css/grid.css">
+    <link rel="stylesheet" type="text/css" href="../../../common/css/common.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="resolIncident.js" defer></script>
-    <script src="../../../apiAccess/crud.js" defer></script>
-    <title>Modificar</title>
-
-    <style> 
-        .error {
-            border:solid 2px #FF0000; 
-        }
-    </style>
+    <script src="resolIncident.js"></script>
+    <script src="../../../apiAccess/crud.js"></script>
+    <script src="../../../common/js/common.js" defer></script> 
+    <link rel="stylesheet" href="alta.css">
+    <script src="alta.js" defer></script>
 </head>
 <body>
-    <div class="container">
-        <h1>Resol Incident</h1>
-
-        <h3>Capçalera</h3>
-
-            <div class="form-group row"> 
-                <label for="orderReceptiod_ID" class="col-sm-2 col-form-label">ID Ordre de Recepció</label>
-                <div class="col-sm-4">
-                    <input type="text" value="" id="orderReceptiod_ID" disabled class="form-control">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2">
+                <div id="menu" class="fondo-azul">
+                    <div class="centrat separacio">
+                        <img src="../../../img/logo_footer2.png" alt="Logo Stockflow" id="logo">
+                    </div>
+                    <nav class="fondo-azul">
+                        <ul id="opciones" class="padding-izq-zero">
+                            <li>
+                                <a><i class="fa-solid fa-warehouse"></i>Administració</a>
+                                <ul class="padding-izq-zero">
+                                    <li><a href="../../../administracio/usuaris/llistat/llistatUsuaris.html"><i
+                                                class="fa-solid fa-circle-chevron-right"></i>Usuaris</a></li>
+                                    <li><a href="../../../administracio/rols/llistat/llistatUserProfile.html"><i
+                                                class="fa-solid fa-circle-chevron-right"></i>Rols</a></li>
+                                    <li><a href="../../../administracio/estatsProvinciesCiutats/state/llistaEstat.html"><i
+                                                class="fa-solid fa-circle-chevron-right"></i>Dades geogràfiques</a></li>
+                                    <li><a
+                                            href="../../../administracio/transportistes/llistar/llistatTransportistes.html"><i
+                                                class="fa-solid fa-circle-chevron-right"></i>Transportistes</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a><i class="fa-solid fa-file-invoice-dollar"></i>Enviament</a>
+                                <ul class="padding-izq-zero">
+                                    <li><a href="../../../enviament/clients/llistar/llistar.html"><i
+                                                class="fa-solid fa-circle-chevron-right"></i>Clients</a></li>
+                                    <li><a href="../../../enviament/ordesEnviament/llistat/llistatOrdre.html"><i
+                                                class="fa-solid fa-circle-chevron-right"></i>Ordres d'enviament</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a><i class="fa-solid fa-boxes-stacked"></i>Recepció</a>
+                                <ul class="padding-izq-zero">
+                                    <li><a href="../../../recepcio/proveidors/proveidors.html"><i
+                                                class="fa-solid fa-circle-chevron-right"></i>Proveidors</a></li>
+                                    <li><a href="../../../recepcio/ordesRecepcio/llistar/llistar.html"><i
+                                                class="fa-solid fa-circle-chevron-right"></i>Ordres de
+                                            recepció</a></li>
+                                    <li><a href="../../../recepcio/estatsOrdesRecepcio/estatsOrdesRecepcio.html"><i
+                                                class="fa-solid fa-circle-chevron-right"></i>Estats ordres de
+                                            recepció</a></li>
+                                    <li><a href="../../../recepcio/productes/productes.html"><i
+                                                class="fa-solid fa-circle-chevron-right"></i>Productes</a></li>
+                                    <li><a href="../../../recepcio/lots/lots.html"><i
+                                                class="fa-solid fa-circle-chevron-right"></i>Lots</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a><i class="fa-solid fa-box-open"></i>Magatzem</a>
+                                <ul class="padding-izq-zero">
+                                    <li><a href="../../gestioMagatzem/gestioMagatzem.html"><i
+                                                class="fa-solid fa-circle-chevron-right"></i>Gestió del magatzem</a>
+                                    </li>
+                                    <li><a href="../../inventari/llistar/llistarInventari.html"><i
+                                                class="fa-solid fa-circle-chevron-right"></i>Inventaris</a></li>
+                                    <li><a href="../../../magatzem/incidents/incidencies.html"><i
+                                                class="fa-solid fa-circle-chevron-right"></i>Incidències</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="../../../index.html" id="sesion"><i
+                                        class="fa-solid fa-right-from-bracket"></i>Tancar sessió</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <button id="dropdown" class="fondo-azul"><i class="fa-solid fa-bars text-blanc"></i></button>
                 </div>
             </div>
+            <div class="col-10 padding-zero">
+                <div>
+                    <h2>Modificar</h2>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="boxTaula">
+                                    <form class="formulari">
+                                        <div class="row">
+                                            <label for="name" class="col-3">ID Ordre de Recepció:</label>
+                                            <div class="col-9">
+                                                <input type="text" class="inputVisualitzar inputSolsVisualitzar" value="" id="orderReceptiod_ID" disabled>
+                                            </div>
+                                        </div>
 
-            <div class="form-group row"> 
-                <label for="supplier" class="col-sm-2 col-form-label">Proveidor</label>
-                <div class="col-sm-4">
-                    <input type="text" value="" id="supplier" disabled class="form-control">
+                                        <div class="row">
+                                            <label for="supplier" class="col-3">Proveidor:</label>
+                                            <div class="col-9">
+                                                <input type="text" class="inputVisualitzar inputSolsVisualitzar" value="" id="supplier" disabled>
+                                            </div>
+                                        </div>
+                            
+                                        <div class="row">
+                                            <label for="address" class="col-3">Quantitat demanada:</label>
+                                            <div class="col-9">
+                                                <input type="text" class="inputVisualitzar inputSolsVisualitzar" value="" id="quantity_order" disabled>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <label for="quantity" class="col-3">Quantitat rebuda:</label>
+                                            <div class="col-9">
+                                                <input type="quantity" class="inputVisualitzar inputSolsVisualitzar" id="quantity" placeholder="Insereix les unitats rebudes" required>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <label for="descripction" class="col-3">Descripcio:</label>
+                                            <div class="col-9">
+                                                <input type="text" class="inputVisualitzar inputSolsVisualitzar" id="description" placeholder="Insereix una descripció" maxlength="30" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <label for="incidentStatus" class="col-3" >Estat</label>
+                                            <div class="col-9">
+                                                <select class="inputVisualitzar" name="incidentStatus" id="incidentStatus">
+                                                    <option value="" disabled selected>Selecciona un estat d'incidencia</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                    <h5 id="missatgeError"></h5>
+                                    <button id="btnResol">
+										Resol
+    								</button>
+                                    <button id="btnTorna">
+										Tornar
+    								</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <div class="form-group row"> 
-                <label for="quantity_order" class="col-sm-2 col-form-label">Quantitat Demanada</label>
-                <div class="col-sm-4">
-                    <input type="text" value="" id="quantity_order" disabled class="form-control">
-                </div>
-            </div>
-
-            <div class="form-group row">      
-
-                <label for="quantity" class="col-sm-2 col-form-label" >Quantidad Rebuda</label>
-                <div class="col-sm-4">
-                    <input type="number" id="quantity" class="form-control" disabled>
-                </div>
-            </div>
-        
-            <div class="form-group row">      
-                <label for="description" class="col-sm-2 col-form-label" >Descripció</label>
-                <div class="col-sm-10">
-                    <input type="text" id="description" class="form-control" required disabled>
-                </div>
-            </div>
-        <form action=""> 
-            <h3>Detall</h3>
-
-            
-            <div class="form-group row">      
-                <label for="incidentStatus" class="col-sm-2 col-form-label" >Estat</label>
-                <div class="col-sm-4">
-                    <select class="form-control" name="incidentStatus" id="incidentStatus">
-                        <option value="" disabled selected>Selecciona un estat d'incidencia</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <div class="col-sm-1">
-                    <button id="btnResol" type="button" class="btn btn-primary">Resol</button>
-                </div>
-
-                <div class="col-sm-1">
-                    <button id="btnTorna" type="button" class="btn btn-primary">Torna</button>
-                </div>
-            </div>
-        </form>
-        <h5 id="missatgeError" class="text-danger"></h5>
+        </div>
     </div>
 </body>
 </html>
