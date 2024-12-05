@@ -6,22 +6,18 @@
     <title>Estanteries</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script type="text/javascript" src="../../../../apiAccess/crud.js"></script> <!-- Manteniendo la ruta -->
     <script type="text/javascript" src="llistatShelf.js"></script>
-    <script type="text/javascript" src="../../../../apiAccess/crud.js"></script>
     <style>
         .error {
             border: solid 2px #FF0000;
         }
     </style>
 </head>
-
 <body>
     <div class="container">
-     <h1>Estanteries</h1>
- 
-        <button class=" btn btn-primary my-3" id="nouShelf">Nou estanteria</button>
-
-
+        <h1>Estanteries</h1>
+        <button class="btn btn-primary my-3" id="nouShelf">Nou estanteria</button>
         <table class="table">
             <thead class="thead-light">
                 <tr>
@@ -29,13 +25,13 @@
                     <th scope="col">Modificar</th>
                     <th scope="col">Espais</th>
                     <th scope="col">ID</th>
-                    <th scope="col">Nom </th>
-                    <th scope="col">ID Carrer </th>
-                    <th scope="col">ID Magatzem </th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">ID Carrer</th>
+                    <th scope="col">ID Magatzem</th>
                 </tr>
             </thead>
-            <tbody id="files">
-             
-            </tbody>
+            <tbody id="files"></tbody> 
         </table>
     </div>
+</body>
+</html>
