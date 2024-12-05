@@ -101,10 +101,18 @@ async function completarInventari() {
 
         if (justificacioValue) {
             let inventoryLine = await getData(url, `InventoryLine/${inventoryLineId}`);
+            let spaces = await getData(url, `Space`);
+            
 
             if (inventoryLine) {
                 inventoryLine.justification = justificacioValue; 
                 await updateId(url, "InventoryLine", inventoryLineId, inventoryLine);
+
+                const space = spaces.filter(s => s.id === inventoryLine.space_id)[0];
+                if(space) {
+                    space.quantity = inventoryLine.real_quantity;
+                    await updateId(url, "Space", space.id, space);
+                }
             }
         }
     }
