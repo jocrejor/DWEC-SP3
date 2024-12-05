@@ -3,7 +3,7 @@ window.onload = function () {
     carregarDadesEstat();
 
     document.getElementById("tornar").addEventListener("click", () => {
-        window.location.href = "../moviments.html"
+        window.location.href = "../moviments.html";
     });
 };
 
@@ -13,12 +13,11 @@ function carregarDadesEstat() {
     const id = urlParams.get("id"); 
     console.log("ID obtingut de la URL:", id);
 
-    getData(url,"Moviment")
+    getData(url, "Moviment")
         .then((data) => {
-            console.log("Datos recibidos:", data); 
+            console.log("Dades rebudes:", data); 
             const estat = data.find((item) => item.id === id);
             if (estat) {
-                document.getElementById("id").value = estat.id;
                 document.getElementById("product_id").value = estat.product_id;
                 document.getElementById("storage_id").value = estat.storage_id;
                 document.getElementById("street_id").value = estat.street_id;
@@ -27,14 +26,13 @@ function carregarDadesEstat() {
                 document.getElementById("quantity").value = estat.quantity;
                 document.getElementById("date").value = estat.date;
                 document.getElementById("operator_id").value = estat.operator_id;
-                document.getElementById("origin").value = estat.origin;
+                document.getElementById("origin").value = estat.orgin;
                 document.getElementById("document").value = estat.document;
             } else {
-                throw new Error("Estat no trobat.");
+                console.error("Estat no trobat.");
             }
         })
         .catch((error) => {
             console.error("Error carregant l'estat:", error);
         });
 }
-
