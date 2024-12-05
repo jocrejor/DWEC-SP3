@@ -3,7 +3,7 @@ let suppliers;
 $(document).ready(function () {
     carregarCapçalera();  
     $("#btnTorna").click(function(){
-        window.location.href = "../incidencies.html";
+        window.location.href = "../../../recepcio/ordesRecepcio/visualitzar/visualizar.html";
     }),
     $("#btnGravar").click(function(){
         altaIncidencia();
@@ -52,19 +52,19 @@ function validarDescripcio(){
 
 async function carregarCapçalera(){
     suppliers = await getData(url,"Supplier");
-    const ordreRecepcioSeleccionada = JSON.parse(localStorage.getItem("ordenVisualizar"));
-    const orderLine = await getData(url,"OrderLineReception");
-    const orderLineReception = orderLine.find(o => o.order_reception_id === ordreRecepcioSeleccionada.id);
+    const ordreRecepcioSeleccionada = JSON.parse(localStorage.getItem("ordreLineSeleccionada"));
+    const orderReception = await getData(url,"OrderReception");
 
+    const orderReceptionTrobada = orderReception.find(o => o.id === ordreRecepcioSeleccionada.order_reception_id);
     let inputID = document.getElementById("orderReceptiod_ID");
     inputID.value = ordreRecepcioSeleccionada.id;
 
     let inputProveidor = document.getElementById("supplier");
-    let nomProveidor = getProveidor(ordreRecepcioSeleccionada.supplier_id);
+    let nomProveidor = getProveidor(orderReceptionTrobada.supplier_id);
     inputProveidor.value = nomProveidor;
 
     let inputOrdered = document.getElementById("quantity_order");
-    inputOrdered. value = orderLineReception.quantity_ordered;
+    inputOrdered. value = ordreRecepcioSeleccionada.quantity_ordered;
 }
 
 async function altaIncidencia(){
