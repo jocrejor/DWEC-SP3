@@ -110,6 +110,12 @@ function validarDomicilio(){
 function validarDNI(){
     const dniField = document.getElementById('nif');
 
+    const dniExistente = Client.some(cliente => cliente.nif === dniField.value);
+    if(dniExistente) {
+        alert("Ya existeix un client amb el mateix DNI.");
+        return false;
+    }
+
     if(!dniField.checkValidity()){
         if(dniField.validity.valueMissing){
             error(dniField,"El dni es obligatori.");
@@ -127,6 +133,12 @@ function validarDNI(){
 function validarTelefono(){
     const telefonoField = document.getElementById('phone');
 
+    const telefonoExistente = Client.some(cliente => cliente.phone === telefonoField.value);
+    if(telefonoExistente) {
+        alert("Ya existeix un client amb el mateix teléfon.");
+        return false;
+    }
+
     if(!telefonoField.checkValidity()){
         if(telefonoField.validity.valueMissing){
             error(telefonoField,"El teléfon es obligatori.");
@@ -143,6 +155,12 @@ function validarTelefono(){
 //valida el correo
 function validarCorreo(){
     const correoField = document.getElementById('email');
+
+    const correoExistente = Client.some(cliente => cliente.email === correoField.value);
+    if(correoExistente) {
+        alert("Ya existeix un client amb el mateix correu.");
+        return false;
+    }
 
     if(!correoField.checkValidity()){
         if(correoField.validity.valueMissing){
@@ -250,52 +268,12 @@ async function enviarFormulari() {
     const dni = document.getElementById('nif').value;
     const telefono = document.getElementById('phone').value;
     const correo = document.getElementById('email').value;
-    //aqui iria el pais, provincia y ciudad (se cogen los valores luego)
+    var paisSeleccionado = parseInt(document.getElementById("state_id").value, 10);
+    var provinciaId = document.getElementById('province').value;
+    var ciudadId = document.getElementById('city').value;
     const cp = document.getElementById('cp').value;
 
-    const clientes = JSON.parse(localStorage.getItem('Client')) || [];
-
-    //inicializa la variable para el mensaje de error
-    let mensajeError = "";
-
-    //verifica si ya existe un cliente con el mismo DNI
-    const dniExistente = Client.some(cliente => cliente.nif === dni);
-    if(dniExistente) {
-        mensajeError += "Ya existeix un client amb el mateix DNI.\n";
-    }
-
-    //verifica si ya existe un cliente con el mismo teléfono
-    const telefonoExistente = Client.some(cliente => cliente.phone === telefono);
-    if(telefonoExistente) {
-        mensajeError += "Ya existeix un client amb el mateix teléfono.\n";
-    }
-
-    //verifica si ya existe un cliente con el mismo correo
-    const correoExistente = Client.some(cliente => cliente.email === correo);
-    if(correoExistente) {
-        mensajeError += "Ya existeix un client amb el mateix correo.\n";
-    }
-
-    //si hay algún error, muestra el mensaje y evita que se guarde el cliente
-    if(mensajeError) {
-        alert(mensajeError);
-        return;  //detiene la función si hay algun duplicado
-    }
-
-    // if(parseInt(pais) === 194){
-    //     const provinciaNombre = Province.find(variable => variable.id === provincia)?.name || "No especificado";
-    //     const ciudadNombre = City.find(variable => variable.id === ciudad)?.name || "No especificado";
-    
-    //     provincia = provinciaNombre;
-    //     ciudad = ciudadNombre;
-    // }
-
-    var paisSeleccionado = parseInt(document.getElementById("state_id").value, 10);
-    var provinciaId, ciudadId;
-    provinciaId = document.getElementById('province').value;
-    ciudadId = document.getElementById('city').value;
     let noHayProvincias = Province.some(variable => variable.state_id === paisSeleccionado);
-
     if (!noHayProvincias) {
         //busca el nombre de la provincia y la ciudad usando los IDs de `cliente`
         const provinciaNombre = Province.find(variable => variable.id === provinciaId)?.name || "No especificado";
@@ -305,10 +283,7 @@ async function enviarFormulari() {
         ciudadId = ciudadNombre;
     }
 
-    const idCliente = await getNewId(url, Client);
-    alert(idCliente);
     const cliente = { 
-        id:idCliente,
         name:nombre, 
         address:domicilio, 
         nif:dni, 
@@ -323,16 +298,16 @@ async function enviarFormulari() {
     // clientes.push(cliente);                                         //agrega un nuevo cliente al array
     // localStorage.setItem('Client', JSON.stringify(clientes));     //guarda en localStorage
     
-    await postData(url, Client, cliente);
+    await postData(url, "Client", cliente);
 
-    setTimeout(function (){
-        vaciarCampos();
-    },1000);
+    // setTimeout(function (){
+        iniciar();
+    // },1000);
 }
 
 //función que vacía todos los campos del formulario
 function vaciarCampos(){        
-    // $('#name, #address, #nif, #phone, #email, #state_id, #province, #city, #cp').val('');
+    $('#name, #address, #nif, #phone, #email, #state_id, #province, #city, #cp').val('');
 }
 
 //función que carga comunidades autónomas en el select

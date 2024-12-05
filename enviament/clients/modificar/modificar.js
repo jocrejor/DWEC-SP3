@@ -13,7 +13,7 @@ async function main() {
     City = await getData(url, "City");
     // Recupera el ID del cliente desde localStorage y asegúrate de que sea un número
     let cliente;
-    const idModificar = parseInt(localStorage.getItem('idModificar'), 10);
+    const idModificar = localStorage.getItem('idModificar');
     for(let i = 0; i < Client.length; i++){
         if(idModificar == Client[i].id){
             cliente = Client[i];
@@ -38,15 +38,17 @@ async function main() {
         }
         
         let provinciaID, ciudadID;
-        const noHayProvincias = Province.some(variable => variable.state_id === paisSeleccionado);
+        const hayProvincias = Province.some(variable => variable.state_id === String(paisSeleccionado));
 
-        if (!noHayProvincias) {
+        if (hayProvincias) {
+            console.log("Hay provincias");
             crearSelectProvincias(divContenedor);
             crearSelectCiudades(divContenedorCiudades);
             
             provinciaID = Province.find(variable => variable.name === cliente.province)?.id || "No especificado";
             ciudadID = City.find(variable => variable.name === cliente.city)?.id || "No especificado";
         } else {
+            console.log("No hay provincias");
             crearInputProvincia(divContenedor);
             crearInputCiudades(divContenedorCiudades);
 
@@ -63,11 +65,14 @@ async function main() {
         document.getElementById('state_id').value = paisSeleccionado;
         document.getElementById('cp').value = cliente.cp;
 
-        cargarProvincias();
+        if (hayProvincias) {cargarProvincias();}
         document.getElementById('province').value = provinciaID;
-        cargarCiudades();
+        if (hayProvincias) {cargarCiudades();}
         document.getElementById('city').value = ciudadID;
 
+        console.log(paisSeleccionado);
+        console.log(provinciaID);
+        console.log(ciudadID);
     }
     else{
         console.log("Cliente no encontrado");
@@ -91,9 +96,9 @@ function crearContenedores() {
         divContenedorCiudades.removeChild(divContenedorCiudades.firstChild);
     }
     
-    const noHayProvincias = Province.find(variable => variable.state_id === paisSeleccionado);
+    const hayProvincias = Province.find(variable => variable.state_id === String(paisSeleccionado));
 
-    if (noHayProvincias) {
+    if (hayProvincias) {
         crearSelectProvincias(divContenedor);
         crearSelectCiudades(divContenedorCiudades);
         
@@ -486,7 +491,7 @@ function crearSelectCiudades(contenedor){
 
 // enviar dades
 async function enviarFormulari() {
-    const idModificar = parseInt(localStorage.getItem('idModificar'), 10);
+    const idModificar = localStorage.getItem('idModificar');
 
     //inicializa la variable para el mensaje de error
     let mensajeError = "";
@@ -519,13 +524,14 @@ async function enviarFormulari() {
         return;  //detiene la función si hay algun duplicado
     }
     
-    var paisSeleccionado = parseInt(document.getElementById("state_id").value, 10);
+    var paisSeleccionado = String(document.getElementById("state_id").value);
     var provinciaId, ciudadId;
     provinciaId = document.getElementById('province').value;
     ciudadId = document.getElementById('city').value;
-    let noHayProvincias = Province.some(variable => variable.state_id === paisSeleccionado);
 
-    if (!noHayProvincias) {
+    const hayProvincias = Province.some(variable => variable.state_id === paisSeleccionado);
+
+    if (hayProvincias) {
         //busca el nombre de la provincia y la ciudad usando los IDs de `cliente`
         const provinciaNombre = Province.find(variable => variable.id === provinciaId)?.name || "No especificado";
         const ciudadNombre = City.find(variable => variable.id === ciudadId)?.name || "No especificado";

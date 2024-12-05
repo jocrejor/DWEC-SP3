@@ -72,28 +72,24 @@ function altaCliente(){
 }
 
 //función para modificar un cliente en específico
-async function modificarCliente(index){
-    const cliente = clientes[index];        //obtiene el cliente seleccionado
-
-    // localStorage.setItem("cliente", JSON.stringify(cliente));
-    localStorage.setItem("idModificar", cliente.id);
-
+async function modificarCliente(idCliente){
+    localStorage.setItem("idModificar",idCliente);
     window.location.assign("../modificar/modificar.html");
 }
 
 /*función para eliminar el cliente seleccionado
 *se le pasa indice para indicarle el cliente en concreto
 */
-async function eliminarCliente(index){
-    const cliente = clientes[index];        //obtiene el cliente seleccionado
-    await deleteData(url, "Client", cliente.id);
-    actualizarTabla();
+async function eliminarCliente(idCliente){
+    await deleteData(url, "Client", idCliente);
+    let tr = document.getElementById(idCliente);
+    if(tr){
+        tr.remove();
+    }
 }
 
-async function visualizarCliente(index){
-    const cliente = clientes[index];        //obtiene el cliente seleccionado
-    // localStorage.setItem("cliente", JSON.stringify(cliente));
-    localStorage.setItem("idModificar", cliente.id);
+async function visualizarCliente(idCliente){
+    localStorage.setItem("idModificar", idCliente);
     window.location.assign("../visualitzar/visualitzar.html");
 }
 
@@ -113,27 +109,27 @@ function actualizarTabla(filterNombre = '', filterDni = '', filterTelefono = '',
 
     // Comprueba si hay clientes filtrados para decidir si mostrar la tabla
     if (clientesFiltrados.length > 0) {
-        clientesFiltrados.forEach((cliente, index) => {
-            let tr = $('<tr></tr>'); // Crear una nueva fila usando jQuery
+        clientesFiltrados.forEach((cliente) => {
+            let tr = $(`<tr id="${cliente.id}"></tr>`); // Crear una nueva fila usando jQuery
 
             // Crear el botón para modificar el cliente
             let botonModificar = $('<button class="btn btn-primary btn-lg">Modificar</button>');
             botonModificar.on('click', function() {
-                modificarCliente(index);
+                modificarCliente(cliente.id);
             });
             tr.append($('<td></td>').append(botonModificar)); // Agregar la celda a la fila
 
             // Crear el botón para eliminar el cliente
             let botonEliminar = $('<button class="btn btn-primary btn-lg">Esborrar</button>');
             botonEliminar.on('click', function() {
-                eliminarCliente(index);
+                eliminarCliente(cliente.id);
             });
             tr.append($('<td></td>').append(botonEliminar)); // Agregar la celda a la fila
 
             // Crear el botón para visualizar el cliente
             let botonVisualizar = $('<button class="btn btn-primary btn-lg">Visualitzar</button>');
             botonVisualizar.on('click', function() {
-                visualizarCliente(index);
+                visualizarCliente(cliente.id);
             });
             tr.append($('<td></td>').append(botonVisualizar)); // Agregar la celda a la fila
 
