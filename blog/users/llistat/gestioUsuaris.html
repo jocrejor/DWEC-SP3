@@ -28,7 +28,7 @@
                         <label for="name">Nombre:</label>
                     </td>
                     <td>
-                        <input id="name">
+                        <input id="name" class="form-control">
                     </td>
                 </tr>
                 <tr>
@@ -36,7 +36,7 @@
                         <label for="email">Correo electrónico:</label>
                     </td>
                     <td>
-                        <input id="email">
+                        <input id="email" class="form-control">
                     </td>
                 </tr>
                 <tr>
@@ -44,7 +44,12 @@
                         <label for="role">Rol:</label>
                     </td>
                     <td>
-                        <input id="role">
+                        <select name="roles" id="roles" class="form-control">
+                            <option value="" selected="selected">Seleccione el rol</option>
+                            <option value="Administrador">Administrador</option>
+                            <option value="Editor">Editor</option>
+                            <option value="Publicador">Publicador</option>
+                        </select>
                     </td>
                 </tr>
                 <tr>
@@ -57,16 +62,15 @@
 
         </div>
         
-        <button class=" btn btn-primary my-3" id="nouUsuari">Nou Autor</button>
-        <button class=" btn btn-primary my-3" id="backToBlog">Tornar al blog</button></br>
+        <button class=" btn btn-primary my-3" id="nouUsuari">Nuevo usuario</button>
+        <button class=" btn btn-primary my-3" id="backToBlog">Blog</button></br>
         <table class="table">
             <thead class="thead-light">
                 <tr>
-                    <th scope="col">Esborrar</th>
+                    <th scope="col">Borrar</th>
                     <th scope="col">Modificar</th>
-                    <th scope="col">Nom</th>
+                    <th scope="col">Nombre</th>
                     <th scope="col">Email</th>
-                    <th scope="col">Contrassenya</th>
                     <th scope="col">Rol</th>
                 </tr>
             </thead>

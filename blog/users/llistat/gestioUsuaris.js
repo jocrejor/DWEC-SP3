@@ -42,7 +42,10 @@ async function listUsers() {
         btnDelete.appendChild(document.createTextNode("Esborrar"));
         btnDelete.addEventListener("click", function() {
             console.log(user.id);
-            deleteData(url, 'Users', user.id); // Función para borrar el usuario
+            if(confirm('¿Desea eliminar a ' + user.name + '?')){
+                deleteData(url, 'Users', user.id); // Función para borrar el usuario
+            }
+            
             tbody.removeChild(tr);
         });
         tdDelete.appendChild(btnDelete);
@@ -63,9 +66,6 @@ async function listUsers() {
         var tdEmail = document.createElement("td");
         tdEmail.appendChild(document.createTextNode(user.email));
 
-        var tdPassword = document.createElement("td");
-        tdPassword.appendChild(document.createTextNode(user.password));
-
         var tdRole = document.createElement("td");
         tdRole.appendChild(document.createTextNode(user.user_profile));
 
@@ -74,7 +74,6 @@ async function listUsers() {
         tr.appendChild(tdEdit);
         tr.appendChild(tdName);
         tr.appendChild(tdEmail);
-        tr.appendChild(tdPassword);
         tr.appendChild(tdRole);
 
         // Añadir la fila al tbody
@@ -88,7 +87,7 @@ function altaUsuari() {
 
 
 async function modifyUser(id) {
-    
+    let users = await getData(url, 'Users');
     for (let i = 0; i < users.length; i++) {
         let user = users[i];
         if (user.id === id) {
@@ -107,7 +106,7 @@ function backToBlog() {
 
 
 async function autocompleteFilters () {
-    let users = users = await getData(url, 'Users');
+    let users = await getData(url, 'Users');
     let names = [];
     let email = [];
     let role = ['Administrador', 'Editor', 'Publicador'];
