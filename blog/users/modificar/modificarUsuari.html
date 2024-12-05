@@ -23,7 +23,12 @@
             <input type="password" id="password" class="form-control" required />
     
             <label>Rol:</label>
-            <input type="text" id="role" class="form-control" required />
+            <select name="user_role" id="user_role" class="form-control">
+                <option value="" selected="selected">Seleccione el rol</option>
+                <option value="Administrador">Administrador</option>
+                <option value="Editor">Editor</option>
+                <option value="Publicador">Publicador</option>
+            </select>
     
             <button id="saveChanges" class="btn btn-primary mt-3">Guardar canvis</button>
         </form>

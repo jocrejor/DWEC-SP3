@@ -48,6 +48,8 @@ async function validarEmail() {
         error2(element, "Este correo está en uso.");
         return false;
     } 
+
+
     valid();
     element.className = 'form-control valid';
     return true;
@@ -127,15 +129,13 @@ async function enviarFormulari () {
     let email       = document.getElementById("email").value;
     let password    = document.getElementById("password").value;
 
-    let newId   = await getNewId(url, 'Users') ?? "0";
-    console.log(newId);
-
-    let user = {
-        id: newId,
+    let users = await getData(url, 'Users');
+    console.log(user.lenght);
+    let user = {    
         name: name,
         email: email,
         password: password,
-        user_profile: newId == 0 ? "Administrador" : "Publicador",
+        user_profile: users.lenght == 0 ? "Administrador" : "Publicador"
     };
     await postData(url, 'Users', user);
 
