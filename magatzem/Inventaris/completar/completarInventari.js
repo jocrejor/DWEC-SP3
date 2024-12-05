@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    thereIsUser();
     const inventory = JSON.parse(localStorage.getItem("inventoryCompletar")); 
     if (inventory) {
         mostrarInventari(inventory);
@@ -113,6 +114,8 @@ async function completarInventari() {
                 if(space) {
                     space.quantity = inventoryLine.real_quantity;
                     await updateId(url, "Space", space.id, space);
+
+                    newMoviment (inventoryLine.storage_id, inventoryLine.street_id, inventoryLine.selft_id, inventoryLine.space_id, inventoryLine.product_id, diferenciaQuantitat, 1, "Inventory",inventoryLine.inventory_id);
                 }
             }
         }

@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    thereIsUser();
     document.getElementById("nouInventari").addEventListener("click", nouInventari);
     obtindreInventaris();
 });

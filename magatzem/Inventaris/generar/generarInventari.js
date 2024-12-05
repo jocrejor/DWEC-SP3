@@ -1,6 +1,7 @@
 let inventoryLine;
 
 $(document).ready(function() {
+    thereIsUser();
     carregarMagatzem();
 
     document.getElementById("btnGenerar").addEventListener("click", generarInventari, false);

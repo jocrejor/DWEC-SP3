@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    thereIsUser();
     const inventory = JSON.parse(localStorage.getItem("inventoryVisualizar")); 
     if (inventory) {
         mostrarInventari(inventory);

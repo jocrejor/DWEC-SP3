@@ -1,6 +1,5 @@
 
       
-
 async function  newMoviment (storage, street, shelf, space, product, quantity, operator, origin,document ) {
         try {
             const ara= new Date();
