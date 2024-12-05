@@ -57,12 +57,12 @@ async function carregarIncidencies() {
             row.appendChild(tdResol);
 
             // Crear celdas para las demás columnas
-            row.appendChild(CrearCelda(ordre.id));
+            row.appendChild(CrearCelda(ordre.created_at));
             row.appendChild(CrearCelda(ordre.description));
-            row.appendChild(CrearCelda(getEstat(ordre.status)));
             row.appendChild(CrearCelda(getProducte(ordre.product)));
             row.appendChild(CrearCelda(ordre.quantity_ordered));
             row.appendChild(CrearCelda(ordre.quantity_received));
+            row.appendChild(CrearCelda(getEstat(ordre.status)));
 
             // Añadir la fila a la tabla
             tabla.appendChild(row);

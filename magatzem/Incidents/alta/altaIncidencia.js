@@ -69,7 +69,7 @@ async function carregarCapçalera(){
 
 async function altaIncidencia(){
     if(validar()){ 
-        const ordreRecepcioSeleccionada = JSON.parse(localStorage.getItem("ordreSeleccionada"));
+        const ordreRecepcioSeleccionada = JSON.parse(localStorage.getItem("ordenVisualizar"));
         const orderLine = await getData(url,"OrderLineReception");
         const orderLineReception = orderLine.find(o => o.order_reception_id === ordreRecepcioSeleccionada.id);
 
@@ -77,7 +77,6 @@ async function altaIncidencia(){
         const descripcio = document.getElementById("description").value;
         const data = new Date().toLocaleDateString();
 
-        alert("hola");
         const incidencia = {
             created_at: data,
             description: descripcio,
