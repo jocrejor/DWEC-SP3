@@ -49,11 +49,7 @@ async function mostrarProductos(ordenId) {
 
   productosDeOrden.forEach((producto) => {
     const fila = document.createElement("tr");
-<<<<<<< HEAD
-    fila.setAttribute("id", producto.id);
-=======
     fila.setAttribute("id",producto.id);
->>>>>>> origin/MiguelAngel-v2
 
     const productName = products.find(
       (product) => Number(product.id) === producto.product_id
