@@ -49,9 +49,16 @@ function replenarEstats() {
     });
 }
 
+function convertirAFecha(fecha) {
+    const [dia, mes, anio] = fecha.split("/").map(Number);
+    return new Date(anio, mes - 1, dia); 
+}
+
 function filtrar() {
     const producto = document.getElementById("producte").value;
     const estatSeleccionat = document.getElementById("status").value;
+    const dataDesde = document.getElementById("dataDesde").value;
+    const dataFins = document.getElementById("dataFins").value;
 
     const tabla = document.getElementById("files");
     tabla.innerHTML = ""; 
@@ -72,6 +79,20 @@ function filtrar() {
     if (estatSeleccionat) {
         incidenciesFiltrades = incidenciesFiltrades.filter(
             incident => incident.status === estatSeleccionat
+        );
+    }
+
+    if (dataDesde) {
+        const desdeDate = new Date(dataDesde).setHours(0, 0, 0, 0);
+        incidenciesFiltrades = incidenciesFiltrades.filter(
+            incident => convertirAFecha(incident.created_at) >= desdeDate
+        );
+    }
+    
+    if (dataFins) {
+        const finsDate = new Date(dataFins);
+        incidenciesFiltrades = incidenciesFiltrades.filter(
+            incident => convertirAFecha(incident.created_at) <= finsDate
         );
     }
 
