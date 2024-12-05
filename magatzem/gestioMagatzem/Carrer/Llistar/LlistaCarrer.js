@@ -2,18 +2,29 @@ window.onload = main;
 let streets;
 
 function main() {
-    document.getElementById("producte").addEventListener("click", nou);
-    carregarInformacio();
+   /* document.getElementById("producte").addEventListener("click", nou);
+    carregarInformacio();*/
+
+        const magatzemId = localStorage.getItem("magatzemId");
+        if (magatzemId) {
+            document.getElementById("magatzem").innerText = ` ${magatzemId}`;
+        } else {
+            document.getElementById("magatzem").innerText = "No seleccionat";
+        }
+        document.getElementById("producte").addEventListener("click", nou);
+        carregarInformacio();
 }
+    
+
 
 async function carregarInformacio() {
     streets = await getData(url, "Street");
-    obtindreCarrer();
+    obtindreMagatzem();
 }
 
 
 function nou() {
-    window.location.assign("../Alta/altaStreet.html");
+    window.location.assign("../Nou/nouCarrer.html");
 }
 
 function obtindreCarrer() {
