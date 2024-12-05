@@ -8,6 +8,7 @@ window.onload = async function () {
   try {
     await carregarDades();
     construirTaula(); 
+    await autocompleta();
 
     // Temporal per a creaer Moviments de prova 
     document.getElementById("crearMovProva").addEventListener("click", async ()=>{
@@ -29,7 +30,7 @@ window.onload = async function () {
      await carregarDades();
      construirTaula(); 
     })
-
+    document.getElementById("filtrar").addEventListener("click", filtrar)
   } catch (error) {
     console.error("Error inicialitzant l'aplicació:", error);
   }
@@ -112,4 +113,30 @@ function obtenirNomProducte(id) {
  */
 function visualitzarMoviment(id) {
   window.location.href = `./visualitzar/ver.html?id=${id}`;
+}
+
+async function autocompleta(){
+  const prod = await getData(url,"Product");
+  let arrayProduct = [];
+
+  prod.forEach(p => arrayProduct.push(p.name));
+
+  $("#buscaProducte").autocomplete({
+    source: arrayProduct,
+  });
+
+  const mag = await getData(url,"Storage");
+  let arrayMaga = [];
+
+  mag.forEach(p => arrayMaga.push(p.id));
+
+  $("#buscaMagatzem").autocomplete({
+    source: arrayMaga,
+  });
+
+}
+
+
+function filtrar(){
+  
 }
