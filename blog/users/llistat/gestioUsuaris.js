@@ -89,6 +89,7 @@ async function listUsers() {
 
 function altaUsuari() {
     window.location.href = "../alta/altaUsuaris.html";
+    window.location.href = "../alta/altaUsuaris.html";
 }
 
 

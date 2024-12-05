@@ -69,7 +69,6 @@ function crearFila(profile) {
 
 async function esborrarProfile(id) {
 
-
    await deleteData(url,"UserProfile",id);
 
   //Esborrar de la llista de la pàgina html ( mai recargar la pàgina)

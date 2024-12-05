@@ -1,8 +1,9 @@
-///// 
+//// 
+///// Modificació del CRUD per a no pasar id i que l'ID el pose el json-server
 /////
-/////
-// Local
+//domini temporal
 let url = 'http://node.daw.iesevalorpego.es:3001/';
+// Local
 // Servidor
 //let url = 'http://10.2.218.254:5001/'
 
@@ -13,8 +14,6 @@ function thereIsUser() {
     window.location.href = "/access/login.html";
    }
 }
-
-
 
 ////////////////////// Alta Element /////////////////////
 
@@ -41,7 +40,7 @@ async function postData(url,endPoint, data = {}) {
 }
 
 ////////////////////// Obtindre nou ID de la taula /////////////////////
-
+/*
 async function getNewId(url,endPoint) {
   try {
     const response = await fetch(url + endPoint );  // Reemplaza 'data.json' con la ruta de tu archivo
@@ -61,7 +60,7 @@ async function getNewId(url,endPoint) {
     console.error('Error:', error);  // Manejo de errores
   }
 }
-
+*/
 ////////////////////// Otindre tota la taula /////////////////////
 
 async function getData(url, endPoint) {
@@ -124,4 +123,5 @@ async function updateId(url, endPoint, id,data) {
 //////
 //////
 //////
+
 

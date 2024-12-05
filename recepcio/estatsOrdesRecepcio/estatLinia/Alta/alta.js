@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+    // Assignar automàticament l'ID
     const idIncrementat = seguentID();
     document.getElementById("id").value = idIncrementat;
 
@@ -6,11 +7,14 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("cancelar").addEventListener("click", function() {
         window.location.href = "../Listar/listar.html"; 
     });
+
+    // Event listener per al formulari
     document.getElementById("altaForm").addEventListener("submit", validar);
 });
 
 // Funció per obtenir el següent ID
 function seguentID() {
+    // Obtenim els estats existents del localStorage
     const estados = JSON.parse(localStorage.getItem("OrderLineReception_Status")) || [];
     
     // Si no hi ha estats, comencem amb 1
@@ -24,7 +28,7 @@ function seguentID() {
 }
 
 function validar(e) {
-    e.preventDefault(); 
+    e.preventDefault(); // Evita que el formulari es tanqui
 
     // Obtenim els valors dels camps
     const id = document.getElementById("id").value.trim();
@@ -39,6 +43,8 @@ function validar(e) {
         missatgeError.textContent = "Tots els camps són obligatoris.";
         return;
     }
+
+    // Aquí pots afegir la lògica per guardar les dades en localStorage o enviar-les al servidor
     guardarEstat(id, nom);
 
     // Reiniciar el formulari

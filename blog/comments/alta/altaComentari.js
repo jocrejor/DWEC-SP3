@@ -2,7 +2,9 @@ window.onload = function () {
     iniciar();
 };
 
+
 function iniciar() {
+    //thereIsUser();
     document.getElementById("btnGravar").addEventListener("click", validar);
     document.getElementById("btnTornarArrere").addEventListener("click", tornarArrere);
 }
@@ -58,7 +60,7 @@ function esborrarError() {
     document.getElementById("missatgeError").replaceChildren();
 }
 
-function enviarFormulari() {
+async function enviarFormulari() {
     const descripcio = document.getElementById("descripcio").value.trim();
     const postID = sessionStorage.getItem("currentPostID");
     const postTitle = sessionStorage.getItem("currentPostTitle");
@@ -78,33 +80,21 @@ function enviarFormulari() {
         return;
     }
 
-    // Obtener los comentarios existentes o inicializar un array vacío
-    let comentaris = JSON.parse(localStorage.getItem("Comentaris")) || [];
-
-    // Generar un nuevo ID único basado en la longitud del array
-    const newId = comentaris.length > 0 ? comentaris[comentaris.length - 1].id + 1 : 1;
-
     // Crear un nuevo comentario con el ID y título del post
     const comentari = {
-        id: newId, 
-        postID: postID,
-        postTitle: postTitle,
-        descripcio: descripcio,
+        description: descripcio,
+        post_id: postID,
+        post_title: postTitle
     };
 
-    // Agregar el nuevo comentario al array
-    comentaris.push(comentari);
-    localStorage.setItem("Comentaris", JSON.stringify(comentaris));
-
-    // Limpiar el campo de descripción
-    document.getElementById("descripcio").value = "";
+    const resultat = await postData(url, "Comment", comentari);
 
     // Redirigir a la página llistatComentaris.html
     setTimeout(function () {
-        window.location.href = "index.html"; // Cambia la ruta si es necesario
+        window.location.href = "../llistat/llistarComentaris.html"; // Cambia la ruta si es necesario
     }, 0);
 }
 
 function tornarArrere() {
-    window.location.href = "index.html";
+    window.location.href = "../llistat/llistarComentaris.html";
 }

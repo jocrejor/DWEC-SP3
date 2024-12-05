@@ -120,56 +120,113 @@
       "user_profile": "Publicador"
     }
   ],
-  "Posts": [
+  "Post": [
     {
-      "id_post": "1",
-      "title": "title1",
-      "photo": "photo1.png",
-      "creation_date": "2024-04-23",
-      "description": "descriptionPost1",
-      "id_user": "1",
-      "id": "8094"
+      "id": "4",
+      "title": "Primerpost",
+      "photo": "C:\\fakepath\\Screenshot 2024-10-02 235940.png",
+      "creation_date": "2024-11-25T21:51:59.601Z",
+      "description": "Descripcion detallada del post",
+      "tag": "Tecnologia"
     },
     {
-      "id_post": "2",
-      "title": "title2",
-      "photo": "photo2.png",
-      "creation_date": "2024-05-10",
-      "description": "descriptionPost2",
-      "id_user": "2",
-      "id": "f7c7"
+      "id": "5",
+      "title": "Provapostda",
+      "photo": "C:\\fakepath\\8_reseña.png",
+      "creation_date": "2024-11-26",
+      "description": "Descripcio una altra vegada detalladadasda",
+      "tag": "Etiquetas"
     },
     {
-      "id_post": "3",
-      "title": "title3",
-      "photo": "photo3.png",
-      "creation_date": "2024-06-15",
-      "description": "descriptionPost3",
-      "id_user": "3",
-      "id": "c5a7"
+      "id": "6",
+      "title": "BuenosDias",
+      "photo": "C:\\fakepath\\Screenshot 2024-10-01 002110.png",
+      "creation_date": "2024-11-25",
+      "description": "Descripcio detallada amb molts de detalls incorporats",
+      "tag": "Tecnologia"
+    },
+    {
+      "id": "7",
+      "title": "Intentossdsadsa",
+      "photo": "C:\\fakepath\\9_reseña.png",
+      "creation_date": "2024-11-26",
+      "description": "Aquest es un intento de provadada",
+      "tag": "Paulas"
+    },
+    {
+      "id": "4",
+      "title": "Primerpost",
+      "photo": "C:\\fakepath\\Screenshot 2024-10-02 235940.png",
+      "creation_date": "2024-11-25T21:51:59.601Z",
+      "description": "Descripcion detallada del post",
+      "tag": "Tecnologia"
+    },
+    {
+      "id": "5",
+      "title": "Provapostda",
+      "photo": "C:\\fakepath\\8_reseña.png",
+      "creation_date": "2024-11-26",
+      "description": "Descripcio una altra vegada detalladadasda",
+      "tag": "Etiquetas"
+    },
+    {
+      "id": "6",
+      "title": "BuenosDias",
+      "photo": "C:\\fakepath\\Screenshot 2024-10-01 002110.png",
+      "creation_date": "2024-11-25",
+      "description": "Descripcio detallada amb molts de detalls incorporats",
+      "tag": "Tecnologia"
+    },
+    {
+      "id": "10",
+      "title": "Intentossdsadsa",
+      "photo": "C:\\fakepath\\9_reseña.png",
+      "creation_date": "2024-11-26",
+      "description": "Aquest es un intento de provadada",
+      "tag": "Paulas"
+    },
+    {
+      "id": "8",
+      "title": "Paulassdad",
+      "photo": "C:\\fakepath\\9_reseña.png",
+      "creation_date": "2024-11-26",
+      "description": "dafasfsafsadsadsad",
+      "tag": "Etiquetas"
+    },
+    {
+      "id": "9",
+      "title": "Laura",
+      "photo": "C:\\fakepath\\icona_ma.png",
+      "creation_date": "2024-11-26",
+      "description": "dsadsafafsa",
+      "tag": "Tecnologia"
+    },
+    {
+      "id": "10",
+      "title": "Paulafmakjsfsa",
+      "photo": "C:\\fakepath\\8_reseña.png",
+      "creation_date": "2024-11-26",
+      "description": "abhfiahfijhff",
+      "tag": "Etiquetas"
+    },
+    {
+      "id": "10",
+      "title": "Quetadadasd",
+      "photo": "C:\\fakepath\\8_reseña.png",
+      "creation_date": "2024-11-26",
+      "description": "aihfiahfjdndsf",
+      "tag": "Etiquetas"
     }
   ],
-  "Comments": [
+  "Comment": [
     {
-      "id_comment": "1",
-      "description": "descriptionComment1",
-      "id_post": "1",
-      "id": "25d7"
-    },
-    {
-      "id_comment": "2",
-      "description": "descriptionComment2",
-      "id_post": "2",
-      "id": "1bec"
-    },
-    {
-      "id_comment": "3",
-      "description": "descriptionComment3",
-      "id_post": "3",
-      "id": "9eb5"
+      "id": "00d2",
+      "description": "Prueba Comentario URL LINK",
+      "post_id": "4",
+      "post_title": "Primerpost"
     }
   ],
-  "Tags": [
+  "Tag": [
     {
       "id_tag": "1",
       "name": "tag1",
@@ -186,21 +243,21 @@
       "id": "967e"
     }
   ],
-  "Post_Tags": [
+  "Post_Tag": [
     {
       "id": "1",
-      "id_post": "1",
-      "id_tag": "1"
+      "post_id": "1",
+      "tag_id": "1"
     },
     {
       "id": "2",
-      "id_post": "2",
-      "id_tag": "2"
+      "post_id": "2",
+      "tag_id": "2"
     },
     {
       "id": "3",
-      "id_post": "3",
-      "id_tag": "3"
+      "post_id": "3",
+      "tag_id": "3"
     }
   ]
 }
