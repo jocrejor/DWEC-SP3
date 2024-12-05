@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moviments</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="moviments.js" defer></script>
+    <script src="../../apiAccess/crud.js" defer></script>
+    <script src="crearMoviments.js" defer></script>
+    <style>
+        .error {
+            color: red;
+        }
+        .valid {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <h2 class="mt-3">Moviments</h2>
+      
+        <button id="crearMovProva" class="btn btn-primary" >Crear Mov Prova</button>
+        <div id="tablaEstadoOrdenes" class="table-responsive my-3">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Producte</th>
+                        <th>Magatzem</th>
+                        <th>Carrer</th>
+                        <th>Estanteria</th>
+                        <th>Espai</th>
+                        <th>Quantitat</th> 
+                        <th>Data</th> 
+                        <th>Operari</th>
+                        <th>Origen</th> 
+                        <th>Document</th>
+                        <th>Accions</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaContenido"></tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

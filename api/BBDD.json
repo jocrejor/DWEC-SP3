@@ -546,16 +546,20 @@
   ],
   "UserProfile": [
     {
-      "id": "1",
-      "name": "Administrador"
-    },
-    {
       "id": "2",
       "name": "Encarregat"
     },
     {
       "id": "3",
       "name": "Operari"
+    },
+    {
+      "id": "4",
+      "name": "Administrador"
+    },
+    {
+      "id": "5",
+      "name": "Administrador"
     }
   ],
   "User": [
@@ -43146,6 +43150,10 @@
     {
       "id": "4",
       "name": "Almacenada"
+    },
+    {
+      "id": "5",
+      "name": "Purgada"
     }
   ],
   "OrderLineReception_Status": [
@@ -43319,14 +43327,6 @@
       "orderlinereception_status_id": 1,
       "product_id": 2,
       "quantity_ordered": 100,
-      "quantity_received": 0
-    },
-    {
-      "id": "3",
-      "order_reception_id": 1,
-      "orderlinereception_status_id": 1,
-      "product_id": 3,
-      "quantity_ordered": 30,
       "quantity_received": 25
     },
     {
