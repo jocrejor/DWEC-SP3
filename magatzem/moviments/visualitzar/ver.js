@@ -1,39 +1,40 @@
-document.addEventListener("DOMContentLoaded", async function () {
-    // Llegir l'ID de la URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const obtindreID = urlParams.get("id");
+// Inicialització principal
+window.onload = function () {
+    carregarDadesEstat();
 
-    if (!obtindreID) {
-        alert("No s'ha trobat cap ID a la URL.");
-        window.location.href = "../moviments.html";
-        return;
-    }
-
-    try {
-        // Obtenir el moviment específic
-        const mov = await getData(url, "Moviment",obtindreID);
-        if (!mov) {
-            alert("No s'ha trobat el moviment especificat.");
-            window.location.href = "../moviments.html";
-            return;
-        }
-        if (recordData) {
-            id.value = recordData.id;
-            producte.value = recordData.name;
-            magatzem.value= recordData.magatzem;
-            
-        } else {
-            console.error("Error obtenint l'estat del servidor.");
-        }
-       
-    } catch (error) {
-        console.error("Error carregant el moviment:", error);
-        alert("Hi ha hagut un problema carregant les dades.");
-        window.location.href = "../moviments.html";
-    }
-
-    // Botó "Tornar"
-    document.getElementById("tornar").addEventListener("click", function () {
-        window.location.href = "../moviments.html";
+    document.getElementById("tornar").addEventListener("click", () => {
+        window.location.href = "../moviments.html"
     });
-});
+};
+
+// Carrega les dades de l'estat al formulari
+function carregarDadesEstat() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get("id"); 
+    console.log("ID obtingut de la URL:", id);
+
+    getData(url,"Moviment")
+        .then((data) => {
+            console.log("Datos recibidos:", data); 
+            const estat = data.find((item) => item.id === id);
+            if (estat) {
+                document.getElementById("id").value = estat.id;
+                document.getElementById("product_id").value = estat.product_id;
+                document.getElementById("storage_id").value = estat.storage_id;
+                document.getElementById("street_id").value = estat.street_id;
+                document.getElementById("shelf_id").value = estat.shelf_id;
+                document.getElementById("space_id").value = estat.space_id;
+                document.getElementById("quantity").value = estat.quantity;
+                document.getElementById("date").value = estat.date;
+                document.getElementById("operator_id").value = estat.operator_id;
+                document.getElementById("origin").value = estat.origin;
+                document.getElementById("document").value = estat.document;
+            } else {
+                throw new Error("Estat no trobat.");
+            }
+        })
+        .catch((error) => {
+            console.error("Error carregant l'estat:", error);
+        });
+}
+

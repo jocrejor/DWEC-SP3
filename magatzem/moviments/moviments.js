@@ -62,41 +62,21 @@ function construirTaula() {
   arrayMoviments.forEach((mov) => {
     const fila = document.createElement("tr");
 
-    // ID
+    // Afegir les columnes a la fila
     fila.appendChild(creaCela(mov.id));
-
-    // Nom del producte
     fila.appendChild(creaCela(obtenirNomProducte(mov.product_id)));
-
-    // Magatzem
     fila.appendChild(creaCela(mov.storage_id));
-
-    // Carrer
     fila.appendChild(creaCela(mov.street_id));
-    
-    // Estanteria
     fila.appendChild(creaCela(mov.shelf_id));
-    
-    // Espai
     fila.appendChild(creaCela(mov.space_id));
-
-    // Quantitat
     fila.appendChild(creaCela(mov.quantity));
-
-    // Data
     fila.appendChild(creaCela(mov.date));
-
-    // Operari
     fila.appendChild(creaCela(mov.operator_id));
-
-    // Origen
     fila.appendChild(creaCela(mov.orgin)); // el pobre Crespo s'ha enganyat amb origin mal escrit
-
-    // Document
     fila.appendChild(creaCela(mov.document));
 
 
-    // Botó "Visualitzar"
+    // Botó Visualitzar
     const accionsCela = document.createElement("td");
     const visualitzarButton = document.createElement("button");
     visualitzarButton.textContent = "Visualitzar";
@@ -127,29 +107,9 @@ function obtenirNomProducte(id) {
 }
 
 /**
- * Esborra un moviment i actualitza la taula.
- * @param {number} id - ID del moviment a esborrar.
- *
-async function esborrarMoviment(id) {
-  if (confirm("Vols esborrar aquest moviment?")) {
-    try {
-      await deleteData(url, "Moviment", id);
-      arrayMoviments = arrayMoviments.filter((mov) => mov.id !== id);
-      construirTaula();
-    } catch (error) {
-      console.error("Error esborrant el moviment:", error);
-    }
-  }
-}
-/
-/**
  * Redirigeix a la pàgina de visualització per a un moviment.
  * @param {number} id - ID del moviment a visualitzar.
  */
-
-/* 
-* Redirigeix a la pàgina de visualització per a un moviment
-*/
 function visualitzarMoviment(id) {
   window.location.href = `./visualitzar/ver.html?id=${id}`;
 }

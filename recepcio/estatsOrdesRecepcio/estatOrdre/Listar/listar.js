@@ -19,7 +19,6 @@ async function getEstats() {
     try {
         const data = await getData(url,endPoint);
         
-        // Comprovació
         if (data && Array.isArray(data)) {
             mostrarTaula(data);
         } else{
@@ -37,26 +36,54 @@ async function getEstats() {
  */
 function mostrarTaula(estats) {
     const tablaContenido = document.getElementById("tablaContenido");
-    tablaContenido.innerHTML = "";
-    
+    tablaContenido.innerHTML = ""; 
+
     estats.forEach(estat => {
+        // Crear una nova fila
         const fila = document.createElement("tr");
         fila.setAttribute("id", estat.id);
-        
-        fila.innerHTML = `
-            <td><button class="btn btn-danger" id="eliminar">Esborrar</button></td>
-            <td><button class="btn btn-warning" id="modificar">Modificar</button></td>
-            <td><button class="btn btn-info" id="ver">Visualitzar</button></td>
-            <td>${estat.id}</td>
-            <td>${estat.name}</td>
-        `;
-        
-        tablaContenido.appendChild(fila);
 
-        // Afegir addEventListeners als botons
-        fila.querySelector("#eliminar").addEventListener("click",async () => await esborrar(estat.id));
-        fila.querySelector("#modificar").addEventListener("click",() => modificarEstado(estat.id));
-        fila.querySelector("#ver").addEventListener("click",() => verEstado(estat.id));
+        // Botó Esborrar
+        const tdEsborrar = document.createElement("td");
+        const btnEsborrar = document.createElement("button");
+        btnEsborrar.textContent = "Esborrar";
+        btnEsborrar.className = "btn btn-danger";
+        btnEsborrar.addEventListener("click", async () => await esborrar(estat.id));
+        tdEsborrar.appendChild(btnEsborrar);
+
+        // Botó Modificar
+        const tdModificar = document.createElement("td");
+        const btnModificar = document.createElement("button");
+        btnModificar.textContent = "Modificar";
+        btnModificar.className = "btn btn-warning";
+        btnModificar.addEventListener("click", () => modificaEstat(estat.id));
+        tdModificar.appendChild(btnModificar);
+
+        // Botó Visualitzar
+        const tdVisualitzar = document.createElement("td");
+        const btnVisualitzar = document.createElement("button");
+        btnVisualitzar.textContent = "Visualitzar";
+        btnVisualitzar.className = "btn btn-info";
+        btnVisualitzar.addEventListener("click", () => visualitzaEstat(estat.id));
+        tdVisualitzar.appendChild(btnVisualitzar);
+
+        // Columna ID
+        const tdId = document.createElement("td");
+        tdId.textContent = estat.id;
+
+        // Columna Name
+        const tdName = document.createElement("td");
+        tdName.textContent = estat.name;
+
+        // Afegir les columnes a la fila
+        fila.appendChild(tdEsborrar);
+        fila.appendChild(tdModificar);
+        fila.appendChild(tdVisualitzar);
+        fila.appendChild(tdId);
+        fila.appendChild(tdName);
+
+        // Afegir la fila a la taula
+        tablaContenido.appendChild(fila);
     });
 }
 
@@ -64,7 +91,7 @@ function mostrarTaula(estats) {
  * Redirigeix a la pàgina de visualització d'un estat, passant l'ID per la URL.
  * @param {number} id - ID de l'estat a visualitzar.
  */
-function verEstado(id) {
+function visualitzaEstat(id) {
     window.location.href = `../Visualizar/ver.html?id=${id}`;
 }
 
@@ -72,7 +99,7 @@ function verEstado(id) {
  * Redirigeix a la pàgina de modificació d'un estat, passant l'ID per la URL.
  * @param {number} id - ID de l'estat a modificar.
  */
-function modificarEstado(id) {
+function modificaEstat(id) {
     window.location.href = `../Modificar/modificar.html?id=${id}`;
 }
 
