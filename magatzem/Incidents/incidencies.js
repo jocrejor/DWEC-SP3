@@ -1,6 +1,7 @@
 let users;
 let estats;
 let productes;
+let incidencies;
 
 $(document).ready(async function () {
     users = await getData(url,"User");
@@ -13,8 +14,8 @@ $(document).ready(async function () {
             window.location.href = "../../../recepcio/ordesRecepcio/llistar/llistatOrden.html";
         }
     ),
-    $("#filter").on("click", function () {
-        $("#search-group ,#search-button").slideToggle(400);
+    $("#filtre").on("click", function () {
+        filtrar();
     });
 });
 
@@ -25,8 +26,64 @@ function autocompletarProductes(){
     });
 }
 
+function filtrar() {
+    const producto = document.getElementById("producte").value;
+    if(producto == ""){
+        carregarIncidencies();
+    }
+    else{
+        // Limpiar la tabla actual
+        const tabla = document.getElementById("files");
+        tabla.innerHTML = "";
+
+        // Buscar producto en la lista
+        const producteSeleccionat = productes.find(p => p.name === producto);
+        const incidenciesFiltrades = incidencies.filter(
+            incident => Number(incident.product) === Number(producteSeleccionat.id)
+        );
+
+        // Actualizar la tabla con las incidencias filtradas
+        incidenciesFiltrades.forEach((ordre) => {
+
+            const row = document.createElement("tr");
+
+            let tdRevisar = document.createElement("td");
+            let btnModificar = document.createElement("button");
+            $(btnModificar).click(function () {
+                modificarIncidencia(ordre.id);
+            });
+            btnModificar.className = "btn btn-primary";
+            let textRevisar = document.createTextNode("Revisar");
+            btnModificar.appendChild(textRevisar);
+            tdRevisar.appendChild(btnModificar);
+            row.appendChild(tdRevisar);
+
+            let tdResol = document.createElement("td");
+            let btnResol = document.createElement("button");
+            $(btnResol).click(function () {
+                resolIncidencia(ordre.id);
+            });
+            btnResol.className = "btn btn-primary";
+            let textResol = document.createTextNode("Resol");
+            btnResol.appendChild(textResol);
+            tdResol.appendChild(btnResol);
+            row.appendChild(tdResol);
+
+            row.appendChild(CrearCelda(ordre.created_at));
+            row.appendChild(CrearCelda(ordre.description));
+            row.appendChild(CrearCelda(getProducte(ordre.product)));
+            row.appendChild(CrearCelda(ordre.quantity_ordered));
+            row.appendChild(CrearCelda(ordre.quantity_received));
+            row.appendChild(CrearCelda(getEstat(ordre.status)));
+
+            tabla.appendChild(row);
+        });
+    }
+}
+
+
 async function carregarIncidencies() {
-    const incidencies = await getData(url,"Incident");
+    incidencies = await getData(url, "Incident");
     const tabla = document.getElementById("files");
 
     incidencies.forEach((ordre) => {
