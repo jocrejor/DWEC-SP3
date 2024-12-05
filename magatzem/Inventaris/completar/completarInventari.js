@@ -109,6 +109,7 @@ async function completarInventari() {
                 await updateId(url, "InventoryLine", inventoryLineId, inventoryLine);
 
                 const space = spaces.filter(s => s.id === inventoryLine.space_id)[0];
+                let diferenciaQuantitat = inventoryLine.quantity_estimated - inventoryLine.real_quantity;
                 if(space) {
                     space.quantity = inventoryLine.real_quantity;
                     await updateId(url, "Space", space.id, space);
