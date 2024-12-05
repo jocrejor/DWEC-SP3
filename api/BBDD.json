@@ -42981,6 +42981,28 @@
   ],
   "Incident": [
     {
+<<<<<<< HEAD
+      "id": "bc18",
+      "created_at": "28/11/2024",
+      "description": "Tot correcte",
+      "supplier": 2,
+      "orderReception_id": "3",
+      "product": 6,
+      "status": "3",
+      "quantity_ordered": 120,
+      "quantity_received": "120"
+    },
+    {
+      "id": "18e7",
+      "created_at": "28/11/2024",
+      "description": "Menys productes dels esperats",
+      "supplier": 2,
+      "orderReception_id": "2",
+      "product": 4,
+      "status": "Pendent",
+      "quantity_ordered": 75,
+      "quantity_received": "32"
+=======
       "id": "1c4c",
       "created_at": "CURRENT_TIMESTAMP",
       "description": "Menys productes dels esperats",
@@ -42997,6 +43019,7 @@
       "orderlinereception_status_id": "2",
       "product_id": "2",
       "quantity": "4333"
+>>>>>>> Lorenzo-v2
     }
   ],
   "OrderReception": [
@@ -43008,11 +43031,25 @@
       "orderreception_status_id": 2
     },
     {
+      "id": "3",
+      "supplier_id": 2,
+      "estimated_reception_date": "2024-10-03",
+      "created_by": 3,
+      "orderreception_status_id": 2
+    },
+    {
       "id": "4",
       "supplier_id": 4,
       "estimated_reception_date": "2024-10-07",
       "created_by": 4,
       "orderreception_status_id": 3
+    },
+    {
+      "id": "5",
+      "supplier_id": 4,
+      "estimated_reception_date": "2024-10-03",
+      "created_by": 3,
+      "orderreception_status_id": 2
     },
     {
       "id": "6",

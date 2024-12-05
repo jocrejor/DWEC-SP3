@@ -5,36 +5,34 @@ $(document).ready(async function () {
     carregarOrdres();
     $("#llistarIncidencies").click(function(){
         window.location.assign("../incidencies.html");
-    })
+    })   
 });
 
-
-
 async function carregarOrdres() {
-    const ordresRecepcio = await getData(url,"OrderReception");
+    
+    const ordreLineRecepcio = await getData(url,"OrderLineReception"); 
+    const ordreRecepcioSeleccionada = JSON.parse(localStorage.getItem("ordreSeleccionada"));  
+    const ordreFinal = ordreLineRecepcio.filter(o => o.order_reception_id === ordreRecepcioSeleccionada.id); 
     const tabla = document.getElementById("files");
-
-    ordresRecepcio.forEach((ordre) => {
+    ordreFinal.forEach((ordre) => {
         const row = document.createElement("tr");
-
         // Crear celda para el botón "Revisar"
         let tdRevisar = document.createElement("td");
         let btnRevisar = document.createElement("button");
         $(btnRevisar).click(function(){
-            revisarOrdre(ordre.id);
+            revisarOrdre(ordre.order_reception_id);
         });
-
         btnRevisar.className = "btn btn-primary";
         let textRevisar = document.createTextNode("Crear Incidencia");
         btnRevisar.appendChild(textRevisar);
         tdRevisar.appendChild(btnRevisar);
         row.appendChild(tdRevisar);
-
-        // Crear celdas para las demás columnas
+        
         row.appendChild(CrearCelda(ordre.id));
-        row.appendChild(CrearCelda(ordre.supplier_id));
-        row.appendChild(CrearCelda(ordre.estimated_reception_date));
-        row.appendChild(CrearCelda(getOrderStatus(ordre.orderreception_status_id)));
+        row.appendChild(CrearCelda(ordre.product_id));
+        row.appendChild(CrearCelda(ordre.quantity_ordered));
+        row.appendChild(CrearCelda(ordre.quantity_received));
+        row.appendChild(CrearCelda(getOrderStatus(ordre.orderlinereception_status_id)));
 
         // Añadir la fila a la tabla
         tabla.appendChild(row);
@@ -51,18 +49,16 @@ function CrearCelda(contingut) {
 // Función para obtener el estado por ID
 function getOrderStatus(estatID) {
     const estatIncidencia = estats.find(o => o.id == estatID);
-
     if(estatIncidencia){
         return estatIncidencia.name;
     }
 }
 
 async function revisarOrdre(id){
-    const ordresRecepcio = await getData(url,"OrderReception");
-    const ordreSeleccionada = ordresRecepcio.find(o => o.id === id);
-
+    const ordreLineRecepcio = await getData(url,"OrderLineReception"); 
+    const ordreSeleccionada = ordreLineRecepcio.find(o => o.order_reception_id === id);
     if(ordreSeleccionada){
-        localStorage.setItem("ordreSeleccionada", JSON.stringify(ordreSeleccionada));
-        window.location.href = "../llistarOrderLine/llistarOrderLine.html";
+        localStorage.setItem("ordreLineSeleccionada", JSON.stringify(ordreSeleccionada));
+        window.location.href = "../alta/altaIncidencia.html";
     }
 }

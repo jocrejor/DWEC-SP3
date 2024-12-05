@@ -1,7 +1,9 @@
 //// 
 ///// Modificació del CRUD per a no pasar id i que l'ID el pose el json-server
 /////
+
 //domini temporal
+
 let url = 'http://node.daw.iesevalorpego.es:3001/';
 // Local
 //let url = 'http://localhost:5001/'
@@ -16,8 +18,6 @@ function thereIsUser() {
     window.location.href = "/access/login.html";
    }
 }
-
-
 
 ////////////////////// Alta Element /////////////////////
 
@@ -34,7 +34,11 @@ async function postData(url,endPoint, data = {}) {
     if (!response.ok) {
       throw new Error('Error en la solicitud POST');
     }
-    return  await response.json();
+
+
+    const result = await response.json();  // Espera la conversión de la respuesta a JSON
+    return result;  // Trabaja con la respuesta
+
 
   } catch (error) {
     console.error('Error:', error);  // Manejo de errores

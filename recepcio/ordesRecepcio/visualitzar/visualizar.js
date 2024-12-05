@@ -32,7 +32,7 @@ async function mostrarOrden(orden) {
   supplierID.textContent = proveidor;
   fila.appendChild(supplierID);
 
-  const fechaTD = document.createElement("td");
+  const fechaTD = document.createElemeasync nt("td");
   fechaTD.textContent = orden.estimated_reception_date;
   fila.appendChild(fechaTD);
 
@@ -49,19 +49,47 @@ async function mostrarProductos(ordenId) {
 
   productosDeOrden.forEach((producto) => {
     const fila = document.createElement("tr");
+<<<<<<< HEAD
     fila.setAttribute("id", producto.id);
+=======
+    fila.setAttribute("id",producto.id);
+>>>>>>> origin/MiguelAngel-v2
 
     const productName = products.find(
       (product) => Number(product.id) === producto.product_id
-    ).name;
+    ).name;async 
     const productTD = document.createElement("td");
-    productTD.textContent = productName;
+    const textProducto = document.createTextNode(productName);
+    productTD.appendChild(textProducto);
     fila.appendChild(productTD);
 
     const cantidadTD = document.createElement("td");
-    cantidadTD.textContent = producto.quantity_ordered;
+    const textCantidad = document.createTextNode(producto.quantity_ordered);
+    cantidadTDasync .appendChild(textCantidad);
     fila.appendChild(cantidadTD);
+    async 
+    const btnIncidenciaTD = document.createElement("td");
+    const btnIncidencia = document.createElement("button");
+    btnIncidencia.className = "btn btn-primary";
+    $(btnIncidencia).click(function(){
+      crearIncidencia(producto.id);
+    });async 
+    const textBtn = document.createTextNode("Crear Incidencia");
+    btnIncidencia.appendChild(textBtn);
+    btnIncidenasync ciaTD.appendChild(btnIncidencia);
+    fila.appendChild(btnIncidenciaTD);
 
     productosBody.appendChild(fila);
   });
+}async 
+
+async function crearIncidencia(id){
+  const ordreLineRecepcio = await getData(url,orderLineReceptionEP); 
+  const ordreSeleccionada = ordreLineRecepcio.find(o => o.id === id);
+    if(ordreSeleccionada){
+      localStorage.setItem("ordreLineSeleccionada", JSON.stringify(ordreSeleccionada));
+      window.location.href = "../../../magatzem/Incidents/alta/altaIncidencia.html";
+    }
 }
+
+
