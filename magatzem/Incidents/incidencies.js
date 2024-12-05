@@ -99,34 +99,36 @@ function filtrar() {
     incidenciesFiltrades.forEach((ordre) => {
         const row = document.createElement("tr");
 
-        let tdRevisar = document.createElement("td");
-        let btnModificar = document.createElement("button");
-        $(btnModificar).click(function () {
-            modificarIncidencia(ordre.id);
-        });
-        btnModificar.className = "btn btn-primary";
-        let textRevisar = document.createTextNode("Revisar");
-        btnModificar.appendChild(textRevisar);
-        tdRevisar.appendChild(btnModificar);
-        row.appendChild(tdRevisar);
+        row.appendChild(CrearCelda(ordre.created_at,"Data de creació"));
+        row.appendChild(CrearCelda(ordre.description, "Descripció"));
+        row.appendChild(CrearCelda(getProducte(ordre.product,"Producte")));
+        row.appendChild(CrearCelda(ordre.quantity_ordered,"Quantitat demanada"));
+        row.appendChild(CrearCelda(ordre.quantity_received,"Quantitat rebuda"));
+        row.appendChild(CrearCelda(getEstat(ordre.status,"Estat")));
 
-        let tdResol = document.createElement("td");
-        let btnResol = document.createElement("button");
-        $(btnResol).click(function () {
+         let tdAccions = document.createElement("td");
+         let divAccions = document.createElement("div");
+         divAccions.className = "divAccions";
+
+         let accioRevisar = document.createElement("a");
+         let iModificar = document.createElement("i");
+         iModificar.className = "fas fa-edit";
+         accioRevisar.appendChild(iModificar)     
+         $(accioRevisar).click(function(){
+             modificarIncidencia(ordre.id);
+         });
+         divAccions.appendChild(accioRevisar);
+
+        let accioResoldre = document.createElement("a");
+        let iResoldre = document.createElement("i");
+        iResoldre.className = "fas fa-check";
+        accioResoldre.appendChild(iResoldre);
+        $(accioResoldre).click(function(){
             resolIncidencia(ordre.id);
         });
-        btnResol.className = "btn btn-primary";
-        let textResol = document.createTextNode("Resol");
-        btnResol.appendChild(textResol);
-        tdResol.appendChild(btnResol);
-        row.appendChild(tdResol);
-
-        row.appendChild(CrearCelda(ordre.created_at));
-        row.appendChild(CrearCelda(ordre.description));
-        row.appendChild(CrearCelda(getProducte(ordre.product)));
-        row.appendChild(CrearCelda(ordre.quantity_ordered));
-        row.appendChild(CrearCelda(ordre.quantity_received));
-        row.appendChild(CrearCelda(getEstat(ordre.status)));
+        divAccions.appendChild(accioResoldre);
+        tdAccions.appendChild(divAccions);
+        row.appendChild(tdAccions);
 
         tabla.appendChild(row);
     });
@@ -142,45 +144,46 @@ async function carregarIncidencies() {
         
             const row = document.createElement("tr");
 
-            // Crear celda para el botón "Revisar"
-            let tdRevisar = document.createElement("td");
-            let btnModificar = document.createElement("button");
-            $(btnModificar).click(function(){
-                modificarIncidencia(ordre.id);
-            });
-            btnModificar.className = "btn btn-primary";
-            let textRevisar = document.createTextNode("Revisar");
-            btnModificar.appendChild(textRevisar);
-            tdRevisar.appendChild(btnModificar);
-            row.appendChild(tdRevisar);
-            
-            let tdResol = document.createElement("td");
-            let btnResol = document.createElement("button");
-            $(btnResol).click(function(){
+            row.appendChild(CrearCelda(ordre.created_at,"Data creació"));
+            row.appendChild(CrearCelda(ordre.description, "Descripció"));
+            row.appendChild(CrearCelda(getProducte(ordre.product),"Producte"));
+            row.appendChild(CrearCelda(ordre.quantity_ordered,"Quantitat demanada"));
+            row.appendChild(CrearCelda(ordre.quantity_received,"Quantitat rebuda"));
+            row.appendChild(CrearCelda(getEstat(ordre.status),"Estat"));
+
+             let tdAccions = document.createElement("td");
+             tdAccions.setAttribute("data-no-colon","true");
+             let divAccions = document.createElement("div");
+             divAccions.className = "divAccions";
+
+             let accioRevisar = document.createElement("a");
+             let iModificar = document.createElement("i");
+             iModificar.className = "fas fa-edit";
+             accioRevisar.appendChild(iModificar)     
+             $(accioRevisar).click(function(){
+                 modificarIncidencia(ordre.id);
+             });
+             divAccions.appendChild(accioRevisar);
+
+            let accioResoldre = document.createElement("a");
+            let iResoldre = document.createElement("i");
+            iResoldre.className = "fas fa-check";
+            accioResoldre.appendChild(iResoldre);
+            $(accioResoldre).click(function(){
                 resolIncidencia(ordre.id);
             });
-            btnResol.className = "btn btn-primary";
-            let textResol = document.createTextNode("Resol");
-            btnResol.appendChild(textResol);
-            tdResol.appendChild(btnResol);
-            row.appendChild(tdResol);
+            divAccions.appendChild(accioResoldre);
+            tdAccions.appendChild(divAccions);
+            row.appendChild(tdAccions);
 
-            // Crear celdas para las demás columnas
-            row.appendChild(CrearCelda(ordre.created_at));
-            row.appendChild(CrearCelda(ordre.description));
-            row.appendChild(CrearCelda(getProducte(ordre.product)));
-            row.appendChild(CrearCelda(ordre.quantity_ordered));
-            row.appendChild(CrearCelda(ordre.quantity_received));
-            row.appendChild(CrearCelda(getEstat(ordre.status)));
-
-            // Añadir la fila a la tabla
             tabla.appendChild(row);
           
     });
 }
 
-function CrearCelda(contingut) {
+function CrearCelda(contingut,clase) {
     const cell = document.createElement("td");
+    cell.setAttribute("data-cell",clase);
     let dom = document.createTextNode(contingut);
     cell.appendChild(dom);
     return cell;
