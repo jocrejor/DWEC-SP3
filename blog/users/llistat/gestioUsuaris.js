@@ -40,13 +40,19 @@ async function listUsers() {
         var btnDelete = document.createElement("button");
         btnDelete.className = "btn btn-primary btn-lg";
         btnDelete.appendChild(document.createTextNode("Esborrar"));
-        btnDelete.addEventListener("click", function() {
-            console.log(user.id);
-            if(confirm('¿Desea eliminar a ' + user.name + '?')){
-                deleteData(url, 'Users', user.id); // Función para borrar el usuario
+        btnDelete.addEventListener("click", async function() {
+            let posts = await getData(url, 'Post');
+            let exists;
+            for (let i = 0; i < posts.length; i++){
+                if(posts.id_creator == user.id){
+                    exists = 1;
+                }
             }
-            
-            tbody.removeChild(tr);
+
+            if(!exists && confirm('¿Desea eliminar a ' + user.name + '?')){
+                deleteData(url, 'Users', user.id); // Función para borrar el usuario
+                tbody.removeChild(tr);
+            }    
         });
         tdDelete.appendChild(btnDelete);
 
