@@ -1,5 +1,11 @@
 $(document).ready(function() {
     thereIsUser();
+    let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (currentUser.role==="3"){
+        alert("no tens permisos per completar l'invetari")
+        history.back();
+    }
+
     const inventory = JSON.parse(localStorage.getItem("inventoryCompletar")); 
     if (inventory) {
         mostrarInventari(inventory);
