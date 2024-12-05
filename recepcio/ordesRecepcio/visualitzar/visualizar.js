@@ -21,7 +21,7 @@ async function mostrarOrden(orden) {
   const fila = document.createElement("tr");
 
   const idTD = document.createElement("td");
-  
+
   idTD.textContent = orden.id;
   fila.appendChild(idTD);
 
@@ -32,7 +32,7 @@ async function mostrarOrden(orden) {
   supplierID.textContent = proveidor;
   fila.appendChild(supplierID);
 
-  const fechaTD = document.createElemeasync nt("td");
+  const fechaTD = document.createElement("td");
   fechaTD.textContent = orden.estimated_reception_date;
   fila.appendChild(fechaTD);
 
@@ -49,11 +49,11 @@ async function mostrarProductos(ordenId) {
 
   productosDeOrden.forEach((producto) => {
     const fila = document.createElement("tr");
-    fila.setAttribute("id",producto.id);
+    fila.setAttribute("id", producto.id);
 
     const productName = products.find(
       (product) => Number(product.id) === producto.product_id
-    ).name;async 
+    ).name;
     const productTD = document.createElement("td");
     const textProducto = document.createTextNode(productName);
     productTD.appendChild(textProducto);
@@ -61,31 +61,32 @@ async function mostrarProductos(ordenId) {
 
     const cantidadTD = document.createElement("td");
     const textCantidad = document.createTextNode(producto.quantity_ordered);
-    cantidadTDasync .appendChild(textCantidad);
+    cantidadTD.appendChild(textCantidad);
     fila.appendChild(cantidadTD);
-    async 
     const btnIncidenciaTD = document.createElement("td");
     const btnIncidencia = document.createElement("button");
     btnIncidencia.className = "btn btn-primary";
-    $(btnIncidencia).click(function(){
+    $(btnIncidencia).click(function () {
       crearIncidencia(producto.id);
-    });async 
+    });
     const textBtn = document.createTextNode("Crear Incidencia");
     btnIncidencia.appendChild(textBtn);
-    btnIncidenasync ciaTD.appendChild(btnIncidencia);
+    btnIncidenciaTD.appendChild(btnIncidencia);
     fila.appendChild(btnIncidenciaTD);
 
     productosBody.appendChild(fila);
   });
-}async 
 
-async function crearIncidencia(id){
-  const ordreLineRecepcio = await getData(url,orderLineReceptionEP); 
-  const ordreSeleccionada = ordreLineRecepcio.find(o => o.id === id);
-    if(ordreSeleccionada){
-      localStorage.setItem("ordreLineSeleccionada", JSON.stringify(ordreSeleccionada));
-      window.location.href = "../../../magatzem/Incidents/alta/altaIncidencia.html";
+  async function crearIncidencia(id) {
+    const ordreLineRecepcio = await getData(url, orderLineReceptionEP);
+    const ordreSeleccionada = ordreLineRecepcio.find((o) => o.id === id);
+    if (ordreSeleccionada) {
+      localStorage.setItem(
+        "ordreLineSeleccionada",
+        JSON.stringify(ordreSeleccionada)
+      );
+      window.location.href =
+        "../../../magatzem/Incidents/alta/altaIncidencia.html";
     }
+  }
 }
-
-
