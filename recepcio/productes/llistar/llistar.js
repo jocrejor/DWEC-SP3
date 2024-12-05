@@ -1,3 +1,5 @@
+let arrProductes = [];
+
 window.onload = main;
 
 //const url = 'http://localhost:5001/';  // URL del servidor backend
@@ -8,6 +10,8 @@ function main() {
     document.getElementById('btnEliminar').addEventListener('click', eliminarProducte);
     document.getElementById('btnModificar').addEventListener('click', modificarProducte);
     document.getElementById('icon-filter').addEventListener('click', showFilters);
+    document.getElementById("lot").addEventListener("change", filtrarPorLot);
+
     obtenerProductos();
 }
 
@@ -62,6 +66,7 @@ async function obtenerProductos() {
 // Función para mostrar los productos en la tabla
 function mostrarProductes(arrProductes) {
     let tbody = document.getElementById("files");
+    cargarOpcionesLot();
 
     // Limpiar el contenido actual de la tabla
     while (tbody.firstChild) {
@@ -125,6 +130,53 @@ function mostrarProductes(arrProductes) {
     });
 }
 
+function cargarOpcionesLot() {
+    const opciones = [
+        { value: "Empty",   text: "" },
+        { value: "Non",     text: "Non" },
+        { value: "Lote",    text: "Lot" },
+        { value: "Serial",  text: "Serial" }
+    ];
+
+    const selectLotorserial = document.getElementById("lot");
+
+    opciones.forEach(opcion => {
+        const optionElement = document.createElement("option");
+        optionElement.value = opcion.value;
+        optionElement.textContent = opcion.text;
+        selectLotorserial.appendChild(optionElement);
+    });
+}
+
+function filtrarPorLot() {
+    const selectedLot = document.getElementById("lot").value;
+
+    obtenerProductos().then(arrProductes => {
+        // Si no hay un lote seleccionado, mostrar todos los productos
+        if (!selectedLot || selectedLot === "Empty") {
+            mostrarProductes(arrProductes);
+        } else {
+            // Filtrar los productos por el lote seleccionado
+            const filteredProducts = arrProductes.filter(product => product.lot === selectedLot);
+            mostrarProductes(filteredProducts);
+        }
+    }).catch(error => {
+        console.error('Error al filtrar por lote:', error);
+    });
+}
+
+async function obtenerProductos() {
+    try {
+        const arrProductes = await getData(url, endPoint);
+        console.log(arrProductes);
+        mostrarProductes(arrProductes);
+        activateAutocomplete(arrProductes);
+        return arrProductes;
+    } catch (error) {
+        console.error('Error al obtener los productos:', error);
+    }
+}
+
 function activateAutocomplete(arrProductes) {
     const sku           = arrProductes.map(product => product.sku);
     const description   = arrProductes.map(product => product.description);
@@ -145,7 +197,6 @@ function activateAutocomplete(arrProductes) {
             mostrarProductes(arrProductes); // Mostrar todos los productos
         }
     });
-
     $("#name").autocomplete({
         source: name,
         minLength: 3, //Autcompletem después de 3 caràcters
@@ -161,13 +212,12 @@ function activateAutocomplete(arrProductes) {
             mostrarProductes(arrProductes); // Mostrar todos los productos
         }
     });
-
     $("#description").autocomplete({
         source: description,
         minLength: 3, //Autcompletem después de 3 caràcters
         select: function (event, description) {
             console.log("Sku:", description.item.value);
-            // Filtra els productes per nom
+            // Filtra els productes per descripció
             filterDescriptionProducts(description.item.value, arrProductes);
         }
     });
@@ -185,13 +235,13 @@ function filterSKUProducts(query, arrProductes) {
     mostrarProductes(filteredProducts);
 }
 
-//Funció per filtrar els productes per SKU
+//Funció per filtrar els productes per Nom
 function filterNameProducts(query, arrProductes) {
     const filteredProducts = arrProductes.filter(product => product.name.toLowerCase().includes(query.toLowerCase()));
     mostrarProductes(filteredProducts);
 }
 
-//Funció per filtrar els productes per SKU
+//Funció per filtrar els productes per Descripció
 function filterDescriptionProducts(query, arrProductes) {
     const filteredProducts = arrProductes.filter(product => product.description.toLowerCase().includes(query.toLowerCase()));
     mostrarProductes(filteredProducts);

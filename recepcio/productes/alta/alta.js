@@ -7,10 +7,10 @@ function iniciar() {
 
 function cargarOpcionesLotorserial() {
     const opciones = [
-        { value: "Empty", text: "" },
-        { value: "Non", text: "Non" },
-        { value: "Lote", text: "Lot" },
-        { value: "Serial", text: "Serial" }
+        { value: "Empty",   text: "" },
+        { value: "Non",     text: "Non" },
+        { value: "Lote",    text: "Lot" },
+        { value: "Serial",  text: "Serial" }
     ];
 
     const selectLotorserial = document.getElementById("lotorserial");
@@ -141,13 +141,13 @@ async function validar(e) {
     if (validarSKU() && validarName() && validarVol() && validarWeight() /*&& validarImage()*/ && validarLote()) {
         // Crear el objeto producto
         let product = {
-            name: document.getElementById("name").value,
-            description: document.getElementById("description").value,
-            volume: document.getElementById("volume").value,
-            weight: document.getElementById("weight").value,
-            lotorserial: document.getElementById("lotorserial").value,
-            sku: document.getElementById("sku").value,
-            image_url: document.getElementById("image_url").value
+            name:           document.getElementById("name").value,
+            description:    document.getElementById("description").value,
+            volume:         document.getElementById("volume").value,
+            weight:         document.getElementById("weight").value,
+            lotorserial:    document.getElementById("lotorserial").value,
+            sku:            document.getElementById("sku").value,
+            image_url:      document.getElementById("image_url").value
         };
 
         // Obtindre el nou ID per al producto
