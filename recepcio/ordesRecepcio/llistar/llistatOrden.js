@@ -3,8 +3,9 @@ const orderLineReceptionEP = "OrderLineReception";
 
 $(document).ready(async function () {
   document.getElementById("nuevaOrden").addEventListener("click", nuevaOrden);
+  document.getElementById("filtre").addEventListener("click", activarFiltros);
   obtindreOrdens();
-  activarFiltros();
+  await autocompletat();
 });
 
 function nuevaOrden() {
@@ -95,7 +96,7 @@ async function crearLinea(order) {
   files.appendChild(linea);
 }
 
-async function activarFiltros() {
+async function autocompletat() {
   const proveidors = await getData(url, "Supplier");
   const availableTags = [];
   proveidors.forEach((proveidor) => availableTags.push(proveidor.name));
@@ -103,14 +104,12 @@ async function activarFiltros() {
   $("#search").autocomplete({
     source: availableTags,
   });
-  $("#search").on("input", filtraProveidor);
+}
 
-  $("#fromDate").on("input", filtraFromDate);
-  $("#toDate").on("input", filtraToDate);
-
-  $("#filter").click(function () {
-    $("#filter-group").slideToggle(300);
-  });
+function activarFiltros() {
+  filtraProveidor();
+  filtraFromDate();
+  filtraToDate();
 }
 
 function filtraProveidor() {
