@@ -7,11 +7,11 @@ let arrayUser = [];
 window.onload = async function () {
   try {
     await carregarDades();
-    construirTaula(); 
+    construirTaula();
     await autocompleta();
 
     // Temporal per a creaer Moviments de prova 
-    document.getElementById("crearMovProva").addEventListener("click", async ()=>{
+    document.getElementById("crearMovProva").addEventListener("click", async () => {
       // Objecte de prova (no se aon cridar-lo)
       const prova = {
         product_id: "3",
@@ -23,12 +23,12 @@ window.onload = async function () {
         operator_id: "2",
         origin: "OrderReception",
         document: "erft"
-    };
+      };
 
 
-     newMoviment(prova.storage_id,prova.street_id,prova.shelf_id,prova.space_id,prova.product_id,prova.quantity,prova.operator_id,prova.origin,prova.document);
-     await carregarDades();
-     construirTaula(); 
+      newMoviment(prova.storage_id, prova.street_id, prova.shelf_id, prova.space_id, prova.product_id, prova.quantity, prova.operator_id, prova.origin, prova.document);
+      await carregarDades();
+      construirTaula();
     })
     document.getElementById("filtrar").addEventListener("click", filtrar)
   } catch (error) {
@@ -115,8 +115,9 @@ function visualitzarMoviment(id) {
   window.location.href = `./visualitzar/ver.html?id=${id}`;
 }
 
-async function autocompleta(){
-  const prod = await getData(url,"Product");
+async function autocompleta() {
+  // Autocompletear per nom de producte
+  const prod = await getData(url, "Product");
   let arrayProduct = [];
 
   prod.forEach(p => arrayProduct.push(p.name));
@@ -125,7 +126,8 @@ async function autocompleta(){
     source: arrayProduct,
   });
 
-  const mag = await getData(url,"Storage");
+  // Autocompletar per id de magatzem
+  const mag = await getData(url, "Storage");
   let arrayMaga = [];
 
   mag.forEach(p => arrayMaga.push(p.id));
@@ -134,9 +136,178 @@ async function autocompleta(){
     source: arrayMaga,
   });
 
+  // Autocompletar per id de carrer
+  const carr = await getData(url, "Street");
+  let arrayCarrer = [];
+
+  carr.forEach(p => arrayCarrer.push(p.id));
+
+  $("#buscaCarrer").autocomplete({
+    source: arrayCarrer,
+  });
+
+  // Autocompletar per id de estanteria
+  const estant = await getData(url, "Shelf");
+  let arrayEstanteria = [];
+
+  estant.forEach(p => arrayEstanteria.push(p.id));
+
+  $("#buscaEstanteria").autocomplete({
+    source: arrayEstanteria,
+  });
+
+  // Autocompletar per id de espai
+  const espai = await getData(url, "Space");
+  let arrayEspai = [];
+
+  espai.forEach(p => arrayEspai.push(p.id));
+
+  $("#buscaEspai").autocomplete({
+    source: arrayEspai,
+  });
+
+  // Autocompletar per data (des de)
+  const desde = await getData(url, "Moviment");
+  let arrayDesde = [];
+
+  desde.forEach(p => arrayDesde.push(p.id));
+
+  $("#dataDesde").autocomplete({
+    source: arrayDesde,
+  });
+
+  // Autocompletar per data (fins)
+  const fins = await getData(url, "Moviment");
+  let arrayFins = [];
+
+  fins.forEach(p => arrayFins.push(p.id));
+
+  $("#buscaEspai").autocomplete({
+    source: arrayEspai,
+  });
+
+  // Autocompletar per id de espai
+  const espai = await getData(url, "Storage");
+  let arrayEspai = [];
+
+  espai.forEach(p => arrayEspai.push(p.id));
+
+  $("#buscaEspai").autocomplete({
+    source: arrayEspai,
+  });
 }
 
 
-function filtrar(){
-  
+function filtrar() {
+  const buscaProducte = document.getElementById("buscaProducte").value.trim().toLowerCase();
+  const buscaMagatzem = document.getElementById("buscaMagatzem").value.trim();
+
+  const movimentsFiltrats = arrayMoviments.filter((mov) => {
+    const nomProducte = obtenirNomProducte(mov.product_id).toLowerCase();
+    const coincideixProducte = !buscaProducte || nomProducte.includes(buscaProducte);
+    const coincideixMagatzem = !buscaMagatzem || mov.storage_id === buscaMagatzem;
+
+    return coincideixProducte && coincideixMagatzem;
+  });
+
+  // Construeix la taula només amb els moviments filtrats
+  construirTaulaFiltrada(movimentsFiltrats);
+}
+
+/**
+ * Construeix i mostra la taula amb els moviments filtrats.
+ * @param {Array} moviments - Llista de moviments a mostrar.
+ */
+function construirTaulaFiltrada(moviments) {
+  const tablaContenido = document.getElementById("tablaContenido");
+  if (!tablaContenido) {
+    console.error("No s'ha trobat l'element amb id 'tablaContenido'");
+    return;
+  }
+  tablaContenido.innerHTML = "";
+
+  moviments.forEach((mov) => {
+    const fila = document.createElement("tr");
+
+    // Afegir les columnes a la fila
+    fila.appendChild(creaCela(mov.id));
+    fila.appendChild(creaCela(obtenirNomProducte(mov.product_id)));
+    fila.appendChild(creaCela(mov.storage_id));
+    fila.appendChild(creaCela(mov.street_id));
+    fila.appendChild(creaCela(mov.shelf_id));
+    fila.appendChild(creaCela(mov.space_id));
+    fila.appendChild(creaCela(mov.quantity));
+    fila.appendChild(creaCela(mov.date));
+    fila.appendChild(creaCela(mov.operator_id));
+    fila.appendChild(creaCela(mov.orgin)); // Error original amb "orgin"
+    fila.appendChild(creaCela(mov.document));
+
+    // Botó Visualitzar
+    const accionsCela = document.createElement("td");
+    const visualitzarButton = document.createElement("button");
+    visualitzarButton.textContent = "Visualitzar";
+    visualitzarButton.className = "btn btn-info";
+    visualitzarButton.addEventListener("click", () => visualitzarMoviment(mov.id));
+    accionsCela.appendChild(visualitzarButton);
+    fila.appendChild(accionsCela);
+
+    tablaContenido.appendChild(fila);
+  });
+}
+
+function filtrar() {
+  const buscaProducte = document.getElementById("buscaProducte").value.trim().toLowerCase();
+  const buscaMagatzem = document.getElementById("buscaMagatzem").value.trim();
+
+  const movimentsFiltrats = arrayMoviments.filter((mov) => {
+    const nomProducte = obtenirNomProducte(mov.product_id).toLowerCase();
+    const coincideixProducte = !buscaProducte || nomProducte.includes(buscaProducte);
+    const coincideixMagatzem = !buscaMagatzem || mov.storage_id === buscaMagatzem;
+
+    return coincideixProducte && coincideixMagatzem;
+  });
+
+  // Construeix la taula només amb els moviments filtrats
+  construirTaulaFiltrada(movimentsFiltrats);
+}
+
+/**
+ * Construeix i mostra la taula amb els moviments filtrats.
+ * @param {Array} moviments - Llista de moviments a mostrar.
+ */
+function construirTaulaFiltrada(moviments) {
+  const tablaContenido = document.getElementById("tablaContenido");
+  if (!tablaContenido) {
+    console.error("No s'ha trobat l'element amb id 'tablaContenido'");
+    return;
+  }
+  tablaContenido.innerHTML = "";
+
+  moviments.forEach((mov) => {
+    const fila = document.createElement("tr");
+
+    // Afegir les columnes a la fila
+    fila.appendChild(creaCela(mov.id));
+    fila.appendChild(creaCela(obtenirNomProducte(mov.product_id)));
+    fila.appendChild(creaCela(mov.storage_id));
+    fila.appendChild(creaCela(mov.street_id));
+    fila.appendChild(creaCela(mov.shelf_id));
+    fila.appendChild(creaCela(mov.space_id));
+    fila.appendChild(creaCela(mov.quantity));
+    fila.appendChild(creaCela(mov.date));
+    fila.appendChild(creaCela(mov.operator_id));
+    fila.appendChild(creaCela(mov.orgin));
+    fila.appendChild(creaCela(mov.document));
+
+    // Botó Visualitzar
+    const accionsCela = document.createElement("td");
+    const visualitzarButton = document.createElement("button");
+    visualitzarButton.textContent = "Visualitzar";
+    visualitzarButton.className = "btn btn-info";
+    visualitzarButton.addEventListener("click", () => visualitzarMoviment(mov.id));
+    accionsCela.appendChild(visualitzarButton);
+    fila.appendChild(accionsCela);
+
+    tablaContenido.appendChild(fila);
+  });
 }
