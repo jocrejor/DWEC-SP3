@@ -3,7 +3,6 @@ let arrayMoviments = [];
 let arrayProduct = [];
 let arrayUser = [];
 
-// Carregar dades inicials 
 window.onload = async function () {
   try {
     await carregarDades();
@@ -22,14 +21,14 @@ window.onload = async function () {
         quantity: 9,
         operator_id: "2",
         origin: "OrderReception",
-        document: "erft"
+        document: "1"
       };
 
 
       newMoviment(prova.storage_id, prova.street_id, prova.shelf_id, prova.space_id, prova.product_id, prova.quantity, prova.operator_id, prova.origin, prova.document);
       await carregarDades();
       construirTaula();
-    })
+    });
     document.getElementById("filtrar").addEventListener("click", filtrar)
   } catch (error) {
     console.error("Error inicialitzant l'aplicació:", error);
@@ -73,7 +72,7 @@ function construirTaula() {
     fila.appendChild(creaCela(mov.quantity));
     fila.appendChild(creaCela(mov.date));
     fila.appendChild(creaCela(mov.operator_id));
-    fila.appendChild(creaCela(mov.orgin)); // el pobre Crespo s'ha enganyat amb origin mal escrit
+    fila.appendChild(creaCela(mov.orgin)); 
     fila.appendChild(creaCela(mov.document));
 
 
@@ -166,14 +165,41 @@ async function autocompleta() {
     source: arrayEspai,
   });
 
-  // Autocompletar per data (des de)
+  // Autocompletar per data
   const desde = await getData(url, "Moviment");
   let arrayDesde = [];
 
   desde.forEach(p => arrayDesde.push(p.date));
 
-  $("#dataDesde").autocomplete({
+  $("#data").autocomplete({
     source: arrayDesde,
+  });
+
+  // Autocompletar per operari
+  const op = await getData(url, "User");
+  let arrayOperaris = [];
+
+  op.forEach(p => arrayOperaris.push(p.id));
+
+  $("#buscaOperari").autocomplete({
+    source: arrayOperaris,
+  });
+
+  // Autocompletar per origen
+  const origin = await getData(url, "Moviment");
+  let arrayOrigin = [
+    //  "Incident",
+    //  "Reception",
+    //  "Inventary",
+    //  "OrderReception"  
+
+    // he fet una prova i no va JAjajsjajs
+  ];
+
+  origin.forEach(p => arrayOrigin.push(p.orgin)); //Crespo perfavor el orgin passau a origin AAAA
+
+  $("#buscaOrigen").autocomplete({
+    source: arrayOrigin,
   });
 }
 
@@ -219,7 +245,7 @@ function construirTaulaFiltrada(moviments) {
     fila.appendChild(creaCela(mov.quantity));
     fila.appendChild(creaCela(mov.date));
     fila.appendChild(creaCela(mov.operator_id));
-    fila.appendChild(creaCela(mov.orgin)); // Error original amb "orgin"
+    fila.appendChild(creaCela(mov.orgin));
     fila.appendChild(creaCela(mov.document));
 
     // Botó Visualitzar
@@ -238,18 +264,51 @@ function construirTaulaFiltrada(moviments) {
 function filtrar() {
   const buscaProducte = document.getElementById("buscaProducte").value.trim().toLowerCase();
   const buscaMagatzem = document.getElementById("buscaMagatzem").value.trim();
+  const buscaCarrer = document.getElementById("buscaCarrer").value.trim();
+  const buscaEstanteria = document.getElementById("buscaEstanteria").value.trim();
+  const buscaEspai = document.getElementById("buscaEspai").value.trim();
+  const dataDesDe = document.getElementById("data").value;
+  const buscaOperari = document.getElementById("buscaOperari").value.trim();
+  const buscaOrigen = document.getElementById("buscaOrigen").value.trim();
+  const buscaDocument = document.getElementById("buscaDocument").value.trim();
 
   const movimentsFiltrats = arrayMoviments.filter((mov) => {
     const nomProducte = obtenirNomProducte(mov.product_id).toLowerCase();
-    const coincideixProducte = !buscaProducte || nomProducte.includes(buscaProducte);
-    const coincideixMagatzem = !buscaMagatzem || mov.storage_id === buscaMagatzem;
 
-    return coincideixProducte && coincideixMagatzem;
+    // Filtrar per producte
+    const coincideixProducte = !buscaProducte || nomProducte.includes(buscaProducte);
+
+    // Filtrar per magatzem i camps dependents (carrer, estanteria, espai)
+    const coincideixMagatzem = !buscaMagatzem || mov.storage_id === buscaMagatzem;
+    const coincideixCarrer = !buscaCarrer || (buscaMagatzem && mov.street_id === buscaCarrer);
+    const coincideixEstanteria = !buscaEstanteria || (buscaMagatzem && mov.shelf_id === buscaEstanteria);
+    const coincideixEspai = !buscaEspai || (buscaMagatzem && mov.space_id === buscaEspai);
+
+    // Filtrar per operari
+    const coincideixOperari = !buscaOperari || mov.operator_id === buscaOperari;
+
+    // Filtrar per origen i document (si origen està especificat)
+    const coincideixOrigen = !buscaOrigen || mov.orgin === buscaOrigen;
+    const coincideixDocument = !buscaDocument || (buscaOrigen && mov.document === buscaDocument);
+
+    // Retorna true només si tots els filtres coincideixen
+    return (
+      coincideixProducte &&
+      coincideixMagatzem &&
+      coincideixCarrer &&
+      coincideixEstanteria &&
+      coincideixEspai &&
+      coincideixData &&
+      coincideixOperari &&
+      coincideixOrigen &&
+      coincideixDocument
+    );
   });
 
-  // Construeix la taula només amb els moviments filtrats
-  construirTaulaFiltrada(movimentsFiltrats);
+  // Reconstruir la taula amb els resultats filtrats
+  construirTaula(movimentsFiltrats);
 }
+
 
 /**
  * Construeix i mostra la taula amb els moviments filtrats.
