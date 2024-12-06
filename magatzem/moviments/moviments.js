@@ -170,30 +170,10 @@ async function autocompleta() {
   const desde = await getData(url, "Moviment");
   let arrayDesde = [];
 
-  desde.forEach(p => arrayDesde.push(p.id));
+  desde.forEach(p => arrayDesde.push(p.date));
 
   $("#dataDesde").autocomplete({
     source: arrayDesde,
-  });
-
-  // Autocompletar per data (fins)
-  const fins = await getData(url, "Moviment");
-  let arrayFins = [];
-
-  fins.forEach(p => arrayFins.push(p.id));
-
-  $("#buscaEspai").autocomplete({
-    source: arrayEspai,
-  });
-
-  // Autocompletar per id de espai
-  const espai = await getData(url, "Storage");
-  let arrayEspai = [];
-
-  espai.forEach(p => arrayEspai.push(p.id));
-
-  $("#buscaEspai").autocomplete({
-    source: arrayEspai,
   });
 }
 
