@@ -1,16 +1,23 @@
 <!DOCTYPE html>
-<html lang="ca">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Llistat de Espai</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous">
-    <script src="./llistatSpace.js"></script>
+    <title>Espais</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script type="text/javascript" src="../../../../apiAccess/crud.js"></script> <!-- Manteniendo la ruta -->
+    <script type="text/javascript" src="llistatSpace.js"></script>
+    <style>
+        .error {
+            border: solid 2px #FF0000;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>Espais</h1>
-        <button type="button" class="btn btn-primary my-3" id="nouSpace">Nou Espai</button><br>
+        <button class="btn btn-primary my-3" id="nouSpace">Nou espai</button>
         <table class="table">
             <thead class="thead-light">
                 <tr>
@@ -18,69 +25,16 @@
                     <th scope="col">Modificar</th>
                     <th scope="col">ID</th>
                     <th scope="col">Nom</th>
-                    <th scope="col"> Producte</th>
+                    <th scope="col">Producte</th>
                     <th scope="col">Quantitat</th>
                     <th scope="col">Volum</th>
                     <th scope="col">Pes</th>
-                    <th scope="col"> Magatzem</th>
-                    <th scope="col"> Carrer</th>
-                    <th scope="col"> Estanteria</th>
-
+                    <th scope="col">Magatzem</th>
+                    <th scope="col">Carrer</th>
+                    <th scope="col">Estanteria</th>
                 </tr>
             </thead>
-            <tbody id="files"></tbody>
-            <tr>
-                <td><button type="button" class="btn btn-primary btn-lg" onclick="esborrar('1')">Esborrar</button></td>
-                <td><button type="button" class="btn btn-primary btn-lg" ">Modificar</button></td>
-                <td>01</td>
-                <td>buit Enviament</td>
-                <td>0</td>
-                <td>0</td>
-                <td>1000</td>
-                <td>500</td>
-                <td>02</td>
-                <td>01</td>
-                <td>01</td>
-            </tr>
-            <tr>
-                <td><button type="button" class="btn btn-primary btn-lg" onclick="esborrar('1')">Esborrar</button></td>
-                <td><button type="button" class="btn btn-primary btn-lg" ">Modificar</button></td>
-                <td>01</td>
-                <td>buit Incidencies</td>
-                <td>0</td>
-                <td>0</td>
-                <td>1000</td>
-                <td>500</td>
-                <td>04</td>
-                <td>01</td>
-                <td>01</td>
-            </tr>
-            <tr>
-                <td><button type="button" class="btn btn-primary btn-lg" onclick="esborrar('1')">Esborrar</button></td>
-                <td><button type="button" class="btn btn-primary btn-lg" ">Modificar</button></td>
-                <td>01</td>
-                <td>buit Recepcio</td>
-                <td>104</td>
-                <td>60</td>
-                <td>1000</td>
-                <td>500</td>
-                <td>03</td>
-                <td>01</td>
-                <td>01</td>
-            </tr>
-            <tr>
-                <td><button type="button" class="btn btn-primary btn-lg" onclick="esborrar('1')">Esborrar</button></td>
-                <td><button type="button" class="btn btn-primary btn-lg" ">Modificar</button></td>
-                <td>01</td>
-                <td>buit 01</td>
-                <td>105</td>
-                <td>45</td>
-                <td>1000</td>
-                <td>500</td>
-                <td>03</td>
-                <td>01</td>
-                <td>01</td>
-            </tr>
+            <tbody id="files"></tbody> 
         </table>
     </div>
 </body>
