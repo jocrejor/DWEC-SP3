@@ -46,20 +46,27 @@ function agregarFila(shelf) {
 }
 async function esborrar(id) {
     try {
-        await deleteData(url, "Shelf", id); 
+       
+        const formattedId = String(id).padStart(2, '0');
+        
+        await deleteData(url, "Shelf", formattedId);
+
         const element = document.getElementById(`shelf-${id}`);
         if (element) {
-            element.remove();  // Elimina la fila
-            // Vuelve a cargar la lista de estanterías si es necesario
-            carregarInformacio();
+            element.remove();
+            console.log(`Estantería con ID ${formattedId} eliminada correctamente.`);
         } else {
-            console.log(`Elemento con ID 'shelf-${id}' no encontrado.`);
+            console.warn(`Elemento con ID 'shelf-${id}' no encontrado en el DOM.`);
         }
     } catch (error) {
-        console.error("Error al borrar:", error);
-        alert("No se pudo eliminar la estantería.");
+        console.error("Error al eliminar:", error);
+        alert(`No se pudo eliminar la estantería con ID ${id}. Verifica si existe en el servidor.`);
     }
 }
+
+
+
+
 async function modificar(storageId) {
     try {
         
