@@ -45,34 +45,40 @@ async function carregarDades(shelfId) {
     }
 }
 
-function guardarModificacions(event) {
+async function guardarModificacions(event) {
     event.preventDefault();
 
-    // Obtener valores del formulario.
     const id = document.getElementById("id").value;
     const name = document.getElementById("name").value;
     const storage_id = document.getElementById("storage_id").value;
     const steet_id = document.getElementById("steet_id").value;
 
-    // Validar los datos del formulario.
     if (!id || !name || !storage_id || !steet_id) {
         alert("Tots els camps són obligatoris. Revisa les dades introduïdes.");
         return;
     }
 
-    // Obtener estanterías desde localStorage.
-    const estanteries = JSON.parse(localStorage.getItem("shelfs")) || [];
+    try {
+        // Actualizar en el servidor
+        await updateId(url, "Shelf", id, { id, name, storage_id, steet_id });
 
-    // Buscar y actualizar la estantería en la lista.
-    const index = estanteries.findIndex((estanteria) => estanteria.id === id);
+        // Actualizar en el localStorage
+        const estanteries = JSON.parse(localStorage.getItem("shelfs")) || [];
+        const index = estanteries.findIndex(
+            (estanteria) => String(estanteria.id).padStart(2, '0') === String(id).padStart(2, '0')
+        );
 
-    if (index !== -1) {
-        estanteries[index] = { id, name, storage_id, steet_id };
-        localStorage.setItem("shelfs", JSON.stringify(estanteries));
+        if (index !== -1) {
+            estanteries[index] = { id, name, storage_id, steet_id };
+            localStorage.setItem("shelfs", JSON.stringify(estanteries));
 
-        alert("Estanteria modificada correctament.");
-        window.location.assign("../llista/llistatShelf.html");
-    } else {
-        alert("No s'ha trobat l'estanteria a modificar.");
+            alert("Estanteria modificada correctament.");
+            window.location.assign("../llista/llistatShelf.html");
+        } else {
+            alert("No s'ha trobat l'estanteria a modificar.");
+        }
+    } catch (error) {
+        console.error("Error al guardar les modificacions:", error);
+        alert("Hi ha hagut un problema. Torna-ho a intentar més tard.");
     }
 }
