@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizar Producto</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script type="text/javascript" src="../../../apiAccess/crud.js"></script>
+    <script type="text/javascript"src="visualitzar.js" defer></script>
+</head>
+    <body>
+        <div class="container">
+            <h1>Visualizar Producto</h1>
+            <form>
+                <div class="form-group row">
+                    <label for="sku" class="col-sm-2 col-form-label">SKU</label>
+                    <div class="col-sm-10">
+                        <p id="sku"></p>
+                    </div>
+                </div>
+        
+                <div class="form-group row">
+                    <label for="name" class="col-sm-2 col-form-label">Nombre</label>
+                    <div class="col-sm-10">
+                        <p id="name"></p>
+                    </div>
+                </div>
+        
+                <div class="form-group row">
+                    <label for="description" class="col-sm-2 col-form-label">Descripción</label>
+                    <div class="col-sm-10">
+                        <p id="description"></p>
+                    </div>
+                </div>
+        
+                <div class="form-group row">
+                    <label for="volume" class="col-sm-2 col-form-label">Volumen</label>
+                    <div class="col-sm-10">
+                        <p id="volume"></p>
+                    </div>
+                </div>
+        
+                <div class="form-group row">
+                    <label for="weight" class="col-sm-2 col-form-label">Peso</label>
+                    <div class="col-sm-10">
+                        <p id="weight"></p>
+                    </div>
+                </div>
+        
+                <div class="form-group row">
+                    <label for="lotorserial" class="col-sm-2 col-form-label">Control lotes</label>
+                    <div class="col-sm-10">
+                        <p id="lotorserial"></p>
+                    </div>
+                </div>
+                
+                <div class="form-group row">
+                    <label for="image_url" class="col-sm-2 col-form-label">Imagen</label>
+                    <div class="col-sm-10">
+                        <p id="image_url"></p>
+                    </div>
+                </div>
+                
+                <h5 id="mensajeError" class="text-danger"></h5>              
+            </form>
+
+            <button id="btnTornar" class="btn btn-primary">Tornar al llistat</button>
+        </div>
+    </body>
+</html>

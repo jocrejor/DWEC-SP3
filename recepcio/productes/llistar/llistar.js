@@ -7,10 +7,7 @@ const endPoint = 'Product'; // Creem la variable endPoint per a que siga més pr
 
 function main() {
     document.getElementById('altaProducte').addEventListener('click', altaProducte);
-    document.getElementById('btnEliminar').addEventListener('click', eliminarProducte);
-    document.getElementById('btnModificar').addEventListener('click', modificarProducte);
     document.getElementById('icon-filter').addEventListener('click', showFilters);
-    document.getElementById("lot").addEventListener("change", filtrarPorLot);
 
     obtenerProductos();
 }
@@ -50,6 +47,20 @@ async function modificarProducte(productId) {
     }
 }
 
+async function visualitzarProducte(productId) {
+    try {
+        // Obtenim les dades actuals del producte
+        const product = await getData(url, `${endPoint}/${productId}`);
+        
+        window.localStorage.setItem('producteVisualitzar', JSON.stringify(product));
+        
+        // Redirigim a la página de modificar
+        window.location.href = '../visualitzar/visualitzar.html';
+    } catch (error) {
+        console.error('Error al visualizar el producto:', error);
+    }
+}
+
 // Función per obtindre tots els productes de la base de datos utilitzant getData() del crud.js
 async function obtenerProductos() {
     try {
@@ -66,7 +77,29 @@ async function obtenerProductos() {
 // Función para mostrar los productos en la tabla
 function mostrarProductes(arrProductes) {
     let tbody = document.getElementById("files");
-    cargarOpcionesLot();
+
+    // Crear las opciones para el select de "lot"
+    const opciones = [
+        { value: "Seleccione un lot",       text: "Seleccione un lot" },
+        { value: "Non",                     text: "Non" },
+        { value: "Lote",                    text: "Lot" },
+        { value: "Serial",                  text: "Serial" }
+    ];
+
+    const selectLotorserial = document.getElementById("lot");
+
+    // Limpiar las opciones anteriores utilizando el DOM
+    while (selectLotorserial.firstChild) {
+        selectLotorserial.removeChild(selectLotorserial.firstChild);
+    }
+
+    // Añadir las nuevas opciones utilizando el DOM
+    opciones.forEach(opcion => {
+        const optionElement = document.createElement("option");
+        optionElement.value = opcion.value;
+        optionElement.textContent = opcion.text;
+        selectLotorserial.appendChild(optionElement);
+    });
 
     // Limpiar el contenido actual de la tabla
     while (tbody.firstChild) {
@@ -90,6 +123,13 @@ function mostrarProductes(arrProductes) {
         modificarBtn.className  = 'btn btn-primary btn-lg';
         modificarBtn.onclick    = function () { modificarProducte(product.id); };
         modificarCell.appendChild(modificarBtn);
+
+        let visualitzarCell = document.createElement('td');
+        let visualitzarBtn = document.createElement('button');
+        visualitzarBtn.appendChild(document.createTextNode('Visualitzar'));
+        visualitzarBtn.className = 'btn btn-primary btn-lg';
+        visualitzarBtn.onclick = function() { visualitzarProducte(product.id); };
+        visualitzarCell.appendChild(visualitzarBtn);
 
         let nameCell            = document.createElement('td');
         nameCell.appendChild(document.createTextNode(product.name));
@@ -118,6 +158,7 @@ function mostrarProductes(arrProductes) {
         // Añadir celdas a la fila
         row.appendChild(eliminarCell);
         row.appendChild(modificarCell);
+        row.appendChild(visualitzarCell);
         row.appendChild(nameCell);
         row.appendChild(descriptionCell);
         row.appendChild(volumeCell);
@@ -130,53 +171,6 @@ function mostrarProductes(arrProductes) {
     });
 }
 
-function cargarOpcionesLot() {
-    const opciones = [
-        { value: "Empty",   text: "" },
-        { value: "Non",     text: "Non" },
-        { value: "Lote",    text: "Lot" },
-        { value: "Serial",  text: "Serial" }
-    ];
-
-    const selectLotorserial = document.getElementById("lot");
-
-    opciones.forEach(opcion => {
-        const optionElement = document.createElement("option");
-        optionElement.value = opcion.value;
-        optionElement.textContent = opcion.text;
-        selectLotorserial.appendChild(optionElement);
-    });
-}
-
-function filtrarPorLot() {
-    const selectedLot = document.getElementById("lot").value;
-
-    obtenerProductos().then(arrProductes => {
-        // Si no hay un lote seleccionado, mostrar todos los productos
-        if (!selectedLot || selectedLot === "Empty") {
-            mostrarProductes(arrProductes);
-        } else {
-            // Filtrar los productos por el lote seleccionado
-            const filteredProducts = arrProductes.filter(product => product.lot === selectedLot);
-            mostrarProductes(filteredProducts);
-        }
-    }).catch(error => {
-        console.error('Error al filtrar por lote:', error);
-    });
-}
-
-async function obtenerProductos() {
-    try {
-        const arrProductes = await getData(url, endPoint);
-        console.log(arrProductes);
-        mostrarProductes(arrProductes);
-        activateAutocomplete(arrProductes);
-        return arrProductes;
-    } catch (error) {
-        console.error('Error al obtener los productos:', error);
-    }
-}
-
 function activateAutocomplete(arrProductes) {
     const sku           = arrProductes.map(product => product.sku);
     const description   = arrProductes.map(product => product.description);
@@ -187,7 +181,7 @@ function activateAutocomplete(arrProductes) {
         minLength: 3, //Autcompletem después de 3 caràcters
         select: function (event, sku) {
             console.log("Sku:", sku.item.value);
-            // Filtra els productes per nom
+            // Filtra els productes per sku
             filterSKUProducts(sku.item.value, arrProductes);
         }
     });
@@ -216,7 +210,7 @@ function activateAutocomplete(arrProductes) {
         source: description,
         minLength: 3, //Autcompletem después de 3 caràcters
         select: function (event, description) {
-            console.log("Sku:", description.item.value);
+            console.log("Description:", description.item.value);
             // Filtra els productes per descripció
             filterDescriptionProducts(description.item.value, arrProductes);
         }
@@ -225,6 +219,18 @@ function activateAutocomplete(arrProductes) {
         const query = $(this).val().trim();
         if (query === '') {
             mostrarProductes(arrProductes); // Mostrar todos los productos
+        }
+    });
+    
+    $("#lot").on(function() {
+        const query = $(this).val();  // Obtiene el valor seleccionado   
+        console.log('Valor seleccionado:', query);  // Depuración para ver qué valor se obtiene
+    
+        // Verificar si se seleccionó la primera opción (vacía)
+        if (query === "") {
+            mostrarProductes(arrProductes);  // Mostrar todos los productos
+        } else {
+            filterLotProducts(query, arrProductes);  // Filtrar productos por "lot"
         }
     });
 }
@@ -244,5 +250,10 @@ function filterNameProducts(query, arrProductes) {
 //Funció per filtrar els productes per Descripció
 function filterDescriptionProducts(query, arrProductes) {
     const filteredProducts = arrProductes.filter(product => product.description.toLowerCase().includes(query.toLowerCase()));
+    mostrarProductes(filteredProducts);
+}
+
+function filterLotProducts(query, arrProductes) {
+    const filteredProducts = arrProductes.filter(product => product.lotorserial && product.lotorserial.includes(query));
     mostrarProductes(filteredProducts);
 }
