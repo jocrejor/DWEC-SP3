@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestió de Provincies</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="./llistaProvincia.js"></script>
     <script src="../../../apiAccess/crud.js"></script>
 </head>
@@ -15,7 +18,16 @@
             <a href="../state/llistaEstat.html" class="btn btn-secondary">Torna als estats</a>
             <a href="./alta.html" class="btn btn-primary">Nova Provincia</a>
         </div>
-        
+
+        <!-- Filtro -->
+        <div id="filter-container" class="text-left mb-4">
+            <button id="filter-toggle" class="btn btn-info">Filtrar</button>
+            <div id="filter-input" class="d-none mt-2">
+                <input type="text" id="filter-text" class="form-control" placeholder="Escriu el nom de la provincia">
+                <button id="search-btn" class="btn btn-primary mt-2">Buscar</button>
+            </div>
+        </div>
+
         <h2 class="mt-4">Provincies</h2>
         <table class="table table-striped mt-3">
             <thead>

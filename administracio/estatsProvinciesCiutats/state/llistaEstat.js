@@ -1,12 +1,15 @@
 const ENDPOINT = 'State';
+let allStates = []; 
 
 window.onload = function () {
     loadStates();
+    setupFilter();
 };
 
 async function loadStates() {
     try {
         const states = await getData(url, ENDPOINT); 
+        allStates = states;
         displayStates(states);
     } catch (error) {
         console.error('Error cargando los estados:', error);
@@ -60,6 +63,29 @@ function displayStates(states) {
         row.appendChild(tdActions);
 
         stateList.appendChild(row);
+    });
+}
+
+function setupFilter() {
+    $('#filter-toggle').on('click', function() {
+        $('#filter-input').toggleClass('d-none');
+    });
+
+    $('#search-btn').on('click', function() {
+        const filterText = $('#filter-text').val().toLowerCase();
+        const filteredStates = allStates.filter(state => state.name.toLowerCase().includes(filterText));
+        displayStates(filteredStates);
+    });
+
+    $('#filter-text').autocomplete({
+        source: function(request, response) {
+            const matches = allStates.filter(state => state.name.toLowerCase().startsWith(request.term.toLowerCase()))
+                                      .map(state => state.name);
+            response(matches);
+        },
+        minLength: 2, 
+        delay: 300, 
+        autoFocus: true, 
     });
 }
 

@@ -1,13 +1,16 @@
-window.onload = loadProvinces;
-
 const ENDPOINT = 'Province'; 
+let allProvinces = []; 
+
+window.onload = function () {
+    loadProvinces();
+    setupFilter(); 
+};
 
 async function loadProvinces() {
     const stateId = "194";  
-
     try {
-        const provinces = await getData(url, `Province?state_id=${stateId}`); 
-
+        const provinces = await getData(url, `Province?state_id=${stateId}`);
+        allProvinces = provinces; 
         displayProvinces(provinces);
     } catch (error) {
         console.error('Error cargando las provincias:', error);
@@ -73,4 +76,27 @@ async function deleteProvince(id) {
     } catch (error) {
         console.error('Error al eliminar provincia:', error);
     }
+}
+
+function setupFilter() {
+    $('#filter-toggle').on('click', function() {
+        $('#filter-input').toggleClass('d-none');
+    });
+
+    $('#search-btn').on('click', function() {
+        const filterText = $('#filter-text').val().toLowerCase();
+        const filteredProvinces = allProvinces.filter(province => province.name.toLowerCase().includes(filterText));
+        displayProvinces(filteredProvinces);
+    });
+
+    $('#filter-text').autocomplete({
+        source: function(request, response) {
+            const matches = allProvinces.filter(province => province.name.toLowerCase().startsWith(request.term.toLowerCase()))
+                                       .map(province => province.name);
+            response(matches);
+        },
+        minLength: 2,  
+        delay: 300,  
+        autoFocus: true,  
+    });
 }

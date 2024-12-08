@@ -1,4 +1,9 @@
-window.onload = loadCities;
+let allCities = [];  
+
+window.onload = function () {
+    loadCities();
+    setupFilter(); 
+};
 
 async function loadCities() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -15,6 +20,7 @@ async function loadCities() {
     try {
         const cities = await getData(url, 'City'); 
         const citiesOfProvince = cities.filter(city => city.province_id === provinceId);
+        allCities = citiesOfProvince;  
         displayCities(citiesOfProvince);
     } catch (error) {
         console.error("Error al cargar las ciudades:", error);
@@ -24,6 +30,12 @@ async function loadCities() {
 function displayCities(cities) {
     const cityList = document.getElementById('cityList');
     cityList.innerHTML = ''; 
+
+    if (!cities || cities.length === 0) {
+        cityList.innerHTML = '<tr><td colspan="3">No hi ha ciutats disponibles per aquesta provincia.</td></tr>';
+        return;
+    }
+
     cities.forEach((city, index) => {
         const row = document.createElement('tr');
 
@@ -65,4 +77,27 @@ async function deleteCity(cityId) {
             console.error("Error al eliminar la ciudad:", error);
         }
     }
+}
+
+function setupFilter() {
+    $('#filter-toggle').on('click', function() {
+        $('#filter-input').toggleClass('d-none');
+    });
+
+    $('#search-btn').on('click', function() {
+        const filterText = $('#filter-text').val().toLowerCase();
+        const filteredCities = allCities.filter(city => city.name.toLowerCase().includes(filterText));
+        displayCities(filteredCities);
+    });
+
+    $('#filter-text').autocomplete({
+        source: function(request, response) {
+            const matches = allCities.filter(city => city.name.toLowerCase().startsWith(request.term.toLowerCase()))
+                                      .map(city => city.name);
+            response(matches);  
+        },
+        minLength: 2,  
+        delay: 300,    
+        autoFocus: true,  
+    });
 }
