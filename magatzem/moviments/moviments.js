@@ -10,8 +10,8 @@ window.onload = async function () {
 
     document.getElementById("crearMovProva").addEventListener("click", async () => {
       const prova = {
-        product_id: "3",
-        storage_id: "03",
+        product_id: "2",
+        storage_id: "01",
         street_id: "04",
         shelf_id: "02",
         space_id: "01",
@@ -69,7 +69,7 @@ function construirTaula(moviments = arrayMoviments) {
     fila.appendChild(creaCela(mov.quantity));
     fila.appendChild(creaCela(mov.date));
     fila.appendChild(creaCela(mov.operator_id));
-    fila.appendChild(creaCela(mov.orgin)); 
+    fila.appendChild(creaCela(mov.orgin));
     fila.appendChild(creaCela(mov.document));
 
 
@@ -196,10 +196,10 @@ async function autocompleta() {
 
   // Autocompletar per origen
   let arrayOrigin = [
-      "Incident",
-      "Reception",
-      "Inventary",
-      "OrderReception"  
+    "Incident",
+    "Reception",
+    "Inventary",
+    "OrderReception"
   ];
 
   $("#buscaOrigen").autocomplete({
@@ -211,25 +211,51 @@ async function autocompleta() {
  * Filtra i reconstrueix la taula basant-se en els criteris seleccionats.
  */
 function filtrar() {
+  
+  // Obtenir els valors dels camps 
   const buscaProducte = document.getElementById("buscaProducte").value.trim().toLowerCase();
   const buscaMagatzem = document.getElementById("buscaMagatzem").value.trim();
   const buscaCarrer = document.getElementById("buscaCarrer").value.trim();
   const buscaEstanteria = document.getElementById("buscaEstanteria").value.trim();
   const buscaEspai = document.getElementById("buscaEspai").value.trim();
+  const dataInici = document.getElementById("dataInici").value.trim();
+  const dataFinal = document.getElementById("dataFinal").value.trim();
+  const dataIniciObj = dataInici ? new Date(dataInici) : null;
+  const dataFinalObj = dataFinal ? new Date(dataFinal): null;
   const buscaOperari = document.getElementById("buscaOperari").value.trim();
   const buscaOrigen = document.getElementById("buscaOrigen").value.trim();
 
+  // Filtrar els moviments
   const movimentsFiltrats = arrayMoviments.filter((mov) => {
     const nomProducte = obtenirNomProducte(mov.product_id).toLowerCase();
-    return (
-      (!buscaProducte || nomProducte.includes(buscaProducte)) &&
-      (!buscaMagatzem || mov.storage_id === buscaMagatzem) &&
-      (!buscaCarrer || mov.street_id === buscaCarrer) &&
-      (!buscaEstanteria || mov.shelf_id === buscaEstanteria) &&
-      (!buscaEspai || mov.space_id === buscaEspai) &&
-      (!buscaOperari || mov.operator_id === buscaOperari) &&
-      (!buscaOrigen || mov.origin === buscaOrigen)
-    );
+    const magatzemID = mov.storage_id;
+    const carrerID = mov.street_id;
+    const estanteriaID = mov.shelf_id;
+    const espaiID = mov.space_id;
+    const dataMoviment = new Date(mov.date);
+    const operariID = mov.operator_id;
+    const origen = mov.orgin;
+
+    // Validació
+    const coincideixProducte = !buscaProducte || nomProducte.includes(buscaProducte);
+    const coincideixMagatzem = !buscaMagatzem || magatzemID == buscaMagatzem;
+    const coincideixCarrer = !buscaCarrer || carrerID == buscaCarrer;
+    const coincideixEstanteria = !buscaEstanteria || estanteriaID == buscaEstanteria;
+    const coincideixEspai = !buscaEspai || espaiID == buscaEspai;
+    const coincideixData = !dataIniciObj || dataMoviment >= dataIniciObj;
+    const coincideixDataFinal = !dataFinalObj || dataMoviment <= dataFinalObj;
+    const coincideixOperari = !buscaOperari || operariID == buscaOperari;
+    const coincideixOrigen = !buscaOrigen || origen == buscaOrigen;
+
+    return coincideixProducte &&
+      coincideixMagatzem &&
+      coincideixCarrer &&
+      coincideixEstanteria &&
+      coincideixEspai &&
+      coincideixData &&
+      coincideixDataFinal &&
+      coincideixOperari &&
+      coincideixOrigen;
   });
 
   construirTaula(movimentsFiltrats);

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,42 +16,47 @@
         .error {
             color: red;
         }
+
         .valid {
             color: green;
         }
     </style>
 </head>
+
 <body>
     <div class="container-fluid">
         <h2 class="mt-3">Moviments</h2>
-      
-        <button id="crearMovProva" class="btn btn-primary" >Crear Mov Prova</button><br>
-        
+
+        <button id="crearMovProva" class="btn btn-primary">Crear Mov Prova</button><br>
+
         <label for="buscaProducte">Filtra per Productes: </label>
-        <input type="text" id="buscaProducte"class="my-3" placeholder="Ex: Producto uno">
-        
+        <input type="text" id="buscaProducte" class="my-3" placeholder="Ex: Producto uno">
+
         <label for="buscaProducte">Filtra per Magatzem: </label>
-        <input type="text" id="buscaMagatzem"class="my-3" placeholder="Ex: 01">
+        <input type="text" id="buscaMagatzem" class="my-3" placeholder="Ex: 01">
 
         <label for="buscaProducte">Filtra per Carrer: </label>
-        <input type="text" id="buscaCarrer"class="my-3" placeholder="Ex: 01">
+        <input type="text" id="buscaCarrer" class="my-3" placeholder="Ex: 01">
 
         <label for="buscaProducte">Filtra per Estanteria: </label>
-        <input type="text" id="buscaEstanteria"class="my-3" placeholder="Ex: 01">
+        <input type="text" id="buscaEstanteria" class="my-3" placeholder="Ex: 01">
 
         <label for="buscaProducte">Filtra per Espai: </label>
-        <input type="text" id="buscaEspai"class="my-3" placeholder="Ex: 01"><br>
+        <input type="text" id="buscaEspai" class="my-3" placeholder="Ex: 01"><br>
 
-        <label for="buscaProducte">Filtra per Data: </label>
-        <input type="text" id="data"class="my-3" placeholder="Ex: 3/12/2024">
+        <label for="buscaProducte">Data d'inici: </label>
+        <input type="date" id="dataInici" class="my-3" placeholder="Ex: 3/12/2024">
+
+        <label for="dataFinal">Data de Finalització:</label>
+        <input type="date" id="dataFinal" class="my-3" placeholder="Ex: 3/12/2024">
 
         <label for="buscaProducte">Filtra per Operari: </label>
-        <input type="text" id="buscaOperari"class="my-3" placeholder="Ex: 1">
+        <input type="text" id="buscaOperari" class="my-3" placeholder="Ex: 1">
 
         <label for="buscaProducte">Filtra per Origen: </label>
-        <input type="text" id="buscaOrigen"class="my-3" placeholder="Ex: Reception">
+        <input type="text" id="buscaOrigen" class="my-3" placeholder="Ex: Reception">
 
-        <button id="filtrar" class="btn btn-primary" >Filtrar</button><br>
+        <button id="filtrar" class="btn btn-primary">Filtrar</button><br>
         <div id="tablaEstadoOrdenes" class="table-responsive my-3">
             <table class="table">
                 <thead class="thead-light">
@@ -61,10 +67,10 @@
                         <th>Carrer</th>
                         <th>Estanteria</th>
                         <th>Espai</th>
-                        <th>Quantitat</th> 
-                        <th>Data</th> 
+                        <th>Quantitat</th>
+                        <th>Data</th>
                         <th>Operari</th>
-                        <th>Origen</th> 
+                        <th>Origen</th>
                         <th>Document</th>
                         <th>Accions</th>
                     </tr>
@@ -74,4 +80,5 @@
         </div>
     </div>
 </body>
+
 </html>
