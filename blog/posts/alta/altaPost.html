@@ -28,7 +28,7 @@
             <div class="form-group row">
                 <label for="foto" class="col-sm-2 col-form-label">Foto:</label>
                 <div class="col-sm-10">
-                    <input type="file" class="form-control" id="foto" accept="image/*" required>
+                    <input type="text" class="form-control" id="foto" pattern="https?://.*\.(jpg|jpeg|png|gif|bmp|webp)" required>
                     <img id="preview" src="" alt="Vista previa" style="display: none; max-width: 100%; margin-top: 10px;">
                 </div>
             </div>           

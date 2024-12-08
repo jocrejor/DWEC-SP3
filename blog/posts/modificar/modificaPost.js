@@ -67,10 +67,10 @@ function esborrarError() {
 }
 
 function formatDate(date) {
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const year = date.getFullYear();
-    const month = date.getMonth() + 1; 
-    const day = date.getDate();
-    return `${year}-${month}-${day}`;
+    return `${day}-${month}-${year}`;
   }
 
 async function enviarFormulari() {
@@ -80,10 +80,15 @@ async function enviarFormulari() {
     const fotoModificada = document.getElementById("foto").value;
     const descripcioModificada = document.getElementById("descripcio").value;
     const nomEtiquetaModificada = document.getElementById("nom-etiqueta").value;
+    const currentUserDataModificada = localStorage.getItem("currentUser");
+
+    const currentUserModificada = JSON.parse(currentUserDataModificada);
+    const creatorIdModificada = currentUserModificada.name;
 
     postSeleccionado.title = titolModificat;
     postSeleccionado.photo = fotoModificada;
     postSeleccionado.creation_date = formatDate(new Date);
+    postSeleccionado.creator_id = creatorIdModificada;
     postSeleccionado.description = descripcioModificada;
     postSeleccionado.tag = nomEtiquetaModificada;
 

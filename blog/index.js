@@ -130,6 +130,9 @@ async function mostrarPosts(selectedTag = "") {
     // Filtrar los posts si se seleccionó una etiqueta
     const filteredPosts = selectedTag ? posts.filter(post => post.tag === selectedTag) : posts;
 
+    // Ordenar los posts por fecha de creación (de más reciente a más antiguo)
+    filteredPosts.sort((a, b) => new Date(b.creation_date) - new Date(a.creation_date));
+
     filteredPosts.forEach(post => {
         const postDiv = document.createElement("div");
         postDiv.classList.add("postCreat");
@@ -143,6 +146,11 @@ async function mostrarPosts(selectedTag = "") {
         titulo.style.cssText = "font-size: 1.2em; margin: 0; padding: 0.5em; font-weight: bold;";
         titulo.appendChild(document.createTextNode(post.title));
 
+        const fecha = document.createElement("p");
+        fecha.id = "fecha";
+        fecha.style.cssText = "font-size: 0.9em; padding-left: 0.7em;";
+        fecha.appendChild(document.createTextNode(post.creation_date));
+
         const etiqueta = document.createElement("p");
         etiqueta.id = "etiqueta";
         etiqueta.style.cssText = "font-size: 0.9em; padding-left: 0.7em;";
@@ -155,6 +163,7 @@ async function mostrarPosts(selectedTag = "") {
         descripcion.appendChild(document.createTextNode(post.description));
 
         postInfoDiv.appendChild(titulo);
+        postInfoDiv.appendChild(fecha);
         postInfoDiv.appendChild(etiqueta);
         postInfoDiv.appendChild(descripcion);
 
@@ -178,7 +187,7 @@ async function mostrarPosts(selectedTag = "") {
         imatgeDiv.style.marginLeft = "4em";
 
         const img = document.createElement("img");
-        img.src = post.foto || "default-image-url.jpg"; 
+        img.src = post.foto || "https://www.shutterstock.com/image-vector/write-blog-post-icon-blogging-600nw-2417074323.jpg"; 
         img.alt = "imatgePost";
         img.style.width = "14em";
 
@@ -202,6 +211,7 @@ async function mostrarPosts(selectedTag = "") {
         mostraPostsContainer.appendChild(comentariosDiv);
     });
 }
+
 
 
 

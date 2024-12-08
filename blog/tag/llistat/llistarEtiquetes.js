@@ -25,9 +25,7 @@ async function obtindreEtiquetes(filtro = null) {
   tbody.innerHTML = "";
 
   // Si se pasa un filtro, aplicar, si no, mostrar todas las etiquetas
-  const etiquetasFiltradas = filtro 
-    ? llistaEtiquetes.filter(filtro) 
-    : llistaEtiquetes;  // Si no hay filtro, no se filtra nada
+  const etiquetasFiltradas = filtro ? llistaEtiquetes.filter(filtro) : llistaEtiquetes;  // Si no hay filtro, no se filtra nada
 
   // Recorrer las etiquetas filtradas y agregarlas a la tabla
   etiquetasFiltradas.forEach((etiqueta) => {

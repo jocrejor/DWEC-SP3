@@ -119,24 +119,28 @@ async function cargarEtiquetas() {
   }
   
   function formatDate(date) {
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const year = date.getFullYear();
-    const month = date.getMonth() + 1; 
-    const day = date.getDate();
-    return `${year}-${month}-${day}`;
+    return `${day}-${month}-${year}`;
   }
+  
 
   async function enviarFormulari() {
     const nomPost = document.getElementById("titol").value.trim();
     const foto = document.getElementById("foto").value;
     const descripcio = document.getElementById("descripcio").value;
     const etiqueta = document.getElementById("nom-etiqueta").value;
-    //const currentUser = localStorage.getItem("currentUser").value;
+    const currentUserData = localStorage.getItem("currentUser");
+
+    const currentUser = JSON.parse(currentUserData); 
+    const creatorId = currentUser.name; 
 
     const post = {
         title: nomPost,
         photo: foto,
         creation_date: formatDate(new Date()),
-        //creator_id: currentUser,
+        creator_id: creatorId, 
         description: descripcio,
         tag: etiqueta
     };
@@ -154,6 +158,7 @@ async function cargarEtiquetas() {
     // Redirigir a llistaposts.html
     window.location.href = "../llistat/llistarPosts.html";
 }
+
 
 function tornarArrere() {
     window.location.href = "../llistat/llistarPosts.html";
