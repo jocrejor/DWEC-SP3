@@ -267,7 +267,6 @@ function filtrar() {
   const buscaCarrer = document.getElementById("buscaCarrer").value.trim();
   const buscaEstanteria = document.getElementById("buscaEstanteria").value.trim();
   const buscaEspai = document.getElementById("buscaEspai").value.trim();
-  const dataDesDe = document.getElementById("data").value;
   const buscaOperari = document.getElementById("buscaOperari").value.trim();
   const buscaOrigen = document.getElementById("buscaOrigen").value.trim();
   const buscaDocument = document.getElementById("buscaDocument").value.trim();
@@ -278,7 +277,7 @@ function filtrar() {
     // Filtrar per producte
     const coincideixProducte = !buscaProducte || nomProducte.includes(buscaProducte);
 
-    // Filtrar per magatzem i camps dependents (carrer, estanteria, espai)
+    // Filtrar per magatzem (carrer, estanteria, espai)
     const coincideixMagatzem = !buscaMagatzem || mov.storage_id === buscaMagatzem;
     const coincideixCarrer = !buscaCarrer || (buscaMagatzem && mov.street_id === buscaCarrer);
     const coincideixEstanteria = !buscaEstanteria || (buscaMagatzem && mov.shelf_id === buscaEstanteria);
@@ -298,7 +297,6 @@ function filtrar() {
       coincideixCarrer &&
       coincideixEstanteria &&
       coincideixEspai &&
-      coincideixData &&
       coincideixOperari &&
       coincideixOrigen &&
       coincideixDocument
