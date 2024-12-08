@@ -1,6 +1,3 @@
-
-      
-
 async function  newMoviment (storage, street, shelf, space, product, quantity, operator, origin,document ) {
         try {
             const ara= new Date();
@@ -22,5 +19,3 @@ async function  newMoviment (storage, street, shelf, space, product, quantity, o
             console.error("Error al crear el moviment:", error);    
     }
 }
-
-

@@ -1,4 +1,3 @@
-// Variables globals
 let arrayMoviments = [];
 let arrayProduct = [];
 let arrayUser = [];
@@ -9,9 +8,7 @@ window.onload = async function () {
     construirTaula();
     await autocompleta();
 
-    // Temporal per a creaer Moviments de prova 
     document.getElementById("crearMovProva").addEventListener("click", async () => {
-      // Objecte de prova (no se aon cridar-lo)
       const prova = {
         product_id: "3",
         storage_id: "03",
@@ -24,19 +21,19 @@ window.onload = async function () {
         document: "1"
       };
 
-
       newMoviment(prova.storage_id, prova.street_id, prova.shelf_id, prova.space_id, prova.product_id, prova.quantity, prova.operator_id, prova.origin, prova.document);
       await carregarDades();
       construirTaula();
     });
-    document.getElementById("filtrar").addEventListener("click", filtrar)
+
+    document.getElementById("filtrar").addEventListener("click", filtrar);
   } catch (error) {
     console.error("Error inicialitzant l'aplicació:", error);
   }
 };
 
 /**
- * Carrega les dades inicials des de l'API.
+ * Carrega les dades inicials des de l'API (merci crud).
  */
 async function carregarDades() {
   try {
@@ -51,15 +48,15 @@ async function carregarDades() {
 /**
  * Construeix i mostra la taula amb els moviments carregats.
  */
-function construirTaula() {
-  const tablaContenido = document.getElementById("tablaContenido");
-  if (!tablaContenido) {
-    console.error("No s'ha trobat l'element amb id 'tablaContenido'");
+function construirTaula(moviments = arrayMoviments) {
+  const taulaContingut = document.getElementById("taulaContingut");
+  if (!taulaContingut) {
+    console.error("No s'ha trobat l'element amb id 'taulaContingut'");
     return;
   }
-  tablaContenido.innerHTML = "";
+  taulaContingut.innerHTML = "";
 
-  arrayMoviments.forEach((mov) => {
+  moviments.forEach((mov) => {
     const fila = document.createElement("tr");
 
     // Afegir les columnes a la fila
@@ -85,7 +82,7 @@ function construirTaula() {
     accionsCela.appendChild(visualitzarButton);
     fila.appendChild(accionsCela);
 
-    tablaContenido.appendChild(fila);
+    taulaContingut.appendChild(fila);
   });
 }
 
@@ -93,9 +90,9 @@ function construirTaula() {
  * Crea una cel·la de taula amb un text donat.
  */
 function creaCela(text) {
-  const celda = document.createElement("td");
-  celda.textContent = text;
-  return celda;
+  const cela = document.createElement("td");
+  cela.textContent = text;
+  return cela;
 }
 
 /**
@@ -136,20 +133,32 @@ async function autocompleta() {
   });
 
   // Autocompletar per id de carrer
-  const carr = await getData(url, "Street");
-  let arrayCarrer = [];
-
-  carr.forEach(p => arrayCarrer.push(p.id));
+  let arrayCarrer = [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10"
+  ];
 
   $("#buscaCarrer").autocomplete({
     source: arrayCarrer,
   });
 
   // Autocompletar per id de estanteria
-  const estant = await getData(url, "Shelf");
-  let arrayEstanteria = [];
-
-  estant.forEach(p => arrayEstanteria.push(p.id));
+  let arrayEstanteria = [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06"
+  ];
 
   $("#buscaEstanteria").autocomplete({
     source: arrayEstanteria,
@@ -186,81 +195,21 @@ async function autocompleta() {
   });
 
   // Autocompletar per origen
-  const origin = await getData(url, "Moviment");
   let arrayOrigin = [
-    //  "Incident",
-    //  "Reception",
-    //  "Inventary",
-    //  "OrderReception"  
-
-    // he fet una prova i no va JAjajsjajs
+      "Incident",
+      "Reception",
+      "Inventary",
+      "OrderReception"  
   ];
-
-  origin.forEach(p => arrayOrigin.push(p.orgin)); //Crespo perfavor el orgin passau a origin AAAA
 
   $("#buscaOrigen").autocomplete({
     source: arrayOrigin,
   });
 }
 
-
-function filtrar() {
-  const buscaProducte = document.getElementById("buscaProducte").value.trim().toLowerCase();
-  const buscaMagatzem = document.getElementById("buscaMagatzem").value.trim();
-
-  const movimentsFiltrats = arrayMoviments.filter((mov) => {
-    const nomProducte = obtenirNomProducte(mov.product_id).toLowerCase();
-    const coincideixProducte = !buscaProducte || nomProducte.includes(buscaProducte);
-    const coincideixMagatzem = !buscaMagatzem || mov.storage_id === buscaMagatzem;
-
-    return coincideixProducte && coincideixMagatzem;
-  });
-
-  // Construeix la taula només amb els moviments filtrats
-  construirTaulaFiltrada(movimentsFiltrats);
-}
-
 /**
- * Construeix i mostra la taula amb els moviments filtrats.
- * @param {Array} moviments - Llista de moviments a mostrar.
+ * Filtra i reconstrueix la taula basant-se en els criteris seleccionats.
  */
-function construirTaulaFiltrada(moviments) {
-  const tablaContenido = document.getElementById("tablaContenido");
-  if (!tablaContenido) {
-    console.error("No s'ha trobat l'element amb id 'tablaContenido'");
-    return;
-  }
-  tablaContenido.innerHTML = "";
-
-  moviments.forEach((mov) => {
-    const fila = document.createElement("tr");
-
-    // Afegir les columnes a la fila
-    fila.appendChild(creaCela(mov.id));
-    fila.appendChild(creaCela(obtenirNomProducte(mov.product_id)));
-    fila.appendChild(creaCela(mov.storage_id));
-    fila.appendChild(creaCela(mov.street_id));
-    fila.appendChild(creaCela(mov.shelf_id));
-    fila.appendChild(creaCela(mov.space_id));
-    fila.appendChild(creaCela(mov.quantity));
-    fila.appendChild(creaCela(mov.date));
-    fila.appendChild(creaCela(mov.operator_id));
-    fila.appendChild(creaCela(mov.orgin));
-    fila.appendChild(creaCela(mov.document));
-
-    // Botó Visualitzar
-    const accionsCela = document.createElement("td");
-    const visualitzarButton = document.createElement("button");
-    visualitzarButton.textContent = "Visualitzar";
-    visualitzarButton.className = "btn btn-info";
-    visualitzarButton.addEventListener("click", () => visualitzarMoviment(mov.id));
-    accionsCela.appendChild(visualitzarButton);
-    fila.appendChild(accionsCela);
-
-    tablaContenido.appendChild(fila);
-  });
-}
-
 function filtrar() {
   const buscaProducte = document.getElementById("buscaProducte").value.trim().toLowerCase();
   const buscaMagatzem = document.getElementById("buscaMagatzem").value.trim();
@@ -269,82 +218,19 @@ function filtrar() {
   const buscaEspai = document.getElementById("buscaEspai").value.trim();
   const buscaOperari = document.getElementById("buscaOperari").value.trim();
   const buscaOrigen = document.getElementById("buscaOrigen").value.trim();
-  const buscaDocument = document.getElementById("buscaDocument").value.trim();
 
   const movimentsFiltrats = arrayMoviments.filter((mov) => {
     const nomProducte = obtenirNomProducte(mov.product_id).toLowerCase();
-
-    // Filtrar per producte
-    const coincideixProducte = !buscaProducte || nomProducte.includes(buscaProducte);
-
-    // Filtrar per magatzem (carrer, estanteria, espai)
-    const coincideixMagatzem = !buscaMagatzem || mov.storage_id === buscaMagatzem;
-    const coincideixCarrer = !buscaCarrer || (buscaMagatzem && mov.street_id === buscaCarrer);
-    const coincideixEstanteria = !buscaEstanteria || (buscaMagatzem && mov.shelf_id === buscaEstanteria);
-    const coincideixEspai = !buscaEspai || (buscaMagatzem && mov.space_id === buscaEspai);
-
-    // Filtrar per operari
-    const coincideixOperari = !buscaOperari || mov.operator_id === buscaOperari;
-
-    // Filtrar per origen i document (si origen està especificat)
-    const coincideixOrigen = !buscaOrigen || mov.orgin === buscaOrigen;
-    const coincideixDocument = !buscaDocument || (buscaOrigen && mov.document === buscaDocument);
-
-    // Retorna true només si tots els filtres coincideixen
     return (
-      coincideixProducte &&
-      coincideixMagatzem &&
-      coincideixCarrer &&
-      coincideixEstanteria &&
-      coincideixEspai &&
-      coincideixOperari &&
-      coincideixOrigen &&
-      coincideixDocument
+      (!buscaProducte || nomProducte.includes(buscaProducte)) &&
+      (!buscaMagatzem || mov.storage_id === buscaMagatzem) &&
+      (!buscaCarrer || mov.street_id === buscaCarrer) &&
+      (!buscaEstanteria || mov.shelf_id === buscaEstanteria) &&
+      (!buscaEspai || mov.space_id === buscaEspai) &&
+      (!buscaOperari || mov.operator_id === buscaOperari) &&
+      (!buscaOrigen || mov.origin === buscaOrigen)
     );
   });
 
-  // Reconstruir la taula amb els resultats filtrats
   construirTaula(movimentsFiltrats);
-}
-
-
-/**
- * Construeix i mostra la taula amb els moviments filtrats.
- * @param {Array} moviments - Llista de moviments a mostrar.
- */
-function construirTaulaFiltrada(moviments) {
-  const tablaContenido = document.getElementById("tablaContenido");
-  if (!tablaContenido) {
-    console.error("No s'ha trobat l'element amb id 'tablaContenido'");
-    return;
-  }
-  tablaContenido.innerHTML = "";
-
-  moviments.forEach((mov) => {
-    const fila = document.createElement("tr");
-
-    // Afegir les columnes a la fila
-    fila.appendChild(creaCela(mov.id));
-    fila.appendChild(creaCela(obtenirNomProducte(mov.product_id)));
-    fila.appendChild(creaCela(mov.storage_id));
-    fila.appendChild(creaCela(mov.street_id));
-    fila.appendChild(creaCela(mov.shelf_id));
-    fila.appendChild(creaCela(mov.space_id));
-    fila.appendChild(creaCela(mov.quantity));
-    fila.appendChild(creaCela(mov.date));
-    fila.appendChild(creaCela(mov.operator_id));
-    fila.appendChild(creaCela(mov.orgin));
-    fila.appendChild(creaCela(mov.document));
-
-    // Botó Visualitzar
-    const accionsCela = document.createElement("td");
-    const visualitzarButton = document.createElement("button");
-    visualitzarButton.textContent = "Visualitzar";
-    visualitzarButton.className = "btn btn-info";
-    visualitzarButton.addEventListener("click", () => visualitzarMoviment(mov.id));
-    accionsCela.appendChild(visualitzarButton);
-    fila.appendChild(accionsCela);
-
-    tablaContenido.appendChild(fila);
-  });
 }
