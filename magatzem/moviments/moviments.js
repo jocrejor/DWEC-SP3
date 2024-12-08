@@ -211,7 +211,7 @@ async function autocompleta() {
  * Filtra i reconstrueix la taula basant-se en els criteris seleccionats.
  */
 function filtrar() {
-  
+
   // Obtenir els valors dels camps 
   const buscaProducte = document.getElementById("buscaProducte").value.trim().toLowerCase();
   const buscaMagatzem = document.getElementById("buscaMagatzem").value.trim();
@@ -257,6 +257,6 @@ function filtrar() {
       coincideixOperari &&
       coincideixOrigen;
   });
-
+  // Mostra la taula amb els moviments filtrats
   construirTaula(movimentsFiltrats);
 }
