@@ -11,25 +11,25 @@ document.getElementById('newStateForm').addEventListener('submit', async functio
     }
 
     try {
-        const states = await getData(url, ENDPOINT);
-
-        const maxId = states.reduce((max, state) => (state.id > max ? state.id : max), 0);
-
-        const newId = maxId + 1;
+        const newId = generateUniqueId();
 
         const newState = {
-            id: newId,  
+            id: newId, 
             name: newName
         };
 
         await postData(url, ENDPOINT, newState);
 
-        alert('Estat afegit correctament');
         window.location.href = 'llistaEstat.html'; 
     } catch (error) {
         console.error('Error afegint l\'estat:', error);
     }
 });
+
+function generateUniqueId() {
+    const idNumber = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
+    return idNumber.toString();  
+}
 
 function validarNom(name) {
     const pattern = /^[A-Za-záéíóúÁÉÍÓÚñÑ\s]{2,25}$/;

@@ -40,17 +40,12 @@ function displayStates(states) {
         deleteButton.textContent = 'Eliminar';
         deleteButton.onclick = () => deleteState(state.id);
 
-
         const provincesButton = document.createElement('button');
         provincesButton.classList.add('btn', 'btn-info', 'btn-sm');
         provincesButton.textContent = 'Mostrar Provincias';
 
         provincesButton.addEventListener('click', function() {
-            if (state.name === "Spain") {
-                window.location.href = '../province/llistaProvincia.html'; 
-            } else {
-                window.location.href = '../province/llistaProvincia.html';
-            }
+            window.location.href = `../province/llistaProvincia.html?stateId=${state.id}`;
         });
 
         tdActions.appendChild(editButton);
@@ -65,12 +60,15 @@ function displayStates(states) {
 }
 
 async function deleteState(id) {
-    if (confirm("Estas segur que vols eliminar l'estat?")) {
+    if (confirm("Estás seguro de que vols eliminar este estat?")) {
         try {
-            await deleteData(url, ENDPOINT, id);
+            const validId = String(id); 
+
+            await deleteData(url, ENDPOINT, validId);
             loadStates();
         } catch (error) {
-            console.error('Error eliminando el estado:', error);
+            console.error('Error al eliminar el estado:', error);
         }
     }
 }
+

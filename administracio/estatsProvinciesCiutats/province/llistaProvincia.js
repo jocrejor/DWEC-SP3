@@ -1,39 +1,35 @@
 window.onload = loadProvinces;
 
-const url = 'http://node.daw.iesevalorpego.es:3001/';  
+const ENDPOINT = 'Province';
+
+const urlParams = new URLSearchParams(window.location.search);
+const stateId = urlParams.get('stateId');  
 
 async function loadProvinces() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const stateId = urlParams.get('stateId'); 
+
     try {
-        const provinces = await getData(url, 'provinces');  
-        const stateIdSpain = "194"; 
-        const provincesOfSpain = provinces.filter(province => province.state_id === stateIdSpain);
-
-        if (provincesOfSpain.length === 0) {
-            alert("No se encontraron provincias de España");
-        }
-
-        displayProvinces(provincesOfSpain);
+        const provinces = await getData(url, `Province?state_id=${stateId}`); 
+        displayProvinces(provinces);
     } catch (error) {
-        console.error('Error al cargar provincias:', error);
+        console.error('Error cargando las provincias:', error);
     }
 }
 
+
 function displayProvinces(provinces) {
     const provinceList = document.getElementById('provinceList');
-    provinceList.innerHTML = ''; 
+    provinceList.innerHTML = '';
 
-    if (provinces.length === 0) {
-        const row = document.createElement('tr');
-        const td = document.createElement('td');
-        td.setAttribute('colspan', '3');
-        td.textContent = 'No hay provincias disponibles';
-        row.appendChild(td);
-        provinceList.appendChild(row);
+    if (!provinces || provinces.length === 0) {
+        provinceList.innerHTML = '<tr><td colspan="3">No hay provincias disponibles para este estado.</td></tr>';
         return;
     }
 
     provinces.forEach((province, index) => {
         const row = document.createElement('tr');
+
         const tdIndex = document.createElement('td');
         tdIndex.textContent = index + 1;
 
@@ -75,8 +71,8 @@ function editProvince(id) {
 async function deleteProvince(id) {
     try {
         if (confirm('Estas segur que vols eliminar aquesta provincia?')) {
-            await deleteData(url, 'provinces', id);
-            loadProvinces();  
+            await deleteData(url, ENDPOINT, id);
+            loadProvinces();
         }
     } catch (error) {
         console.error('Error al eliminar provincia:', error);
