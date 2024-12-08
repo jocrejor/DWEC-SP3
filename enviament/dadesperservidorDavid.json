@@ -1,0 +1,69 @@
+{
+"OrderShipping": [
+    {
+      "id": 1,
+      "client_id": 101,
+      "prepared_by": 12,
+      "shipping_date": "2024-12-08",
+      "ordershipping_status_id": 1,
+      "carrier_id": 5,
+      "status_name": "Pendiente"
+    },
+    {
+      "id": 2,
+      "client_id": 102,
+      "prepared_by": 14,
+      "shipping_date": "2024-12-09",
+      "ordershipping_status_id": 2,
+      "carrier_id": 6
+    },
+    {
+      "id": 3,
+      "client_id": 103,
+      "prepared_by": 15,
+      "shipping_date": "2024-12-10",
+      "ordershipping_status_id": 3,
+      "carrier_id": 7
+   
+    },
+    {
+      "id": 4,
+      "client_id": 104,
+      "prepared_by": 16,
+      "shipping_date": "2024-12-11",
+      "ordershipping_status_id": 4,
+      "carrier_id": 8
+    }
+   
+  ],
+  "OrderLineShipping": [
+    {
+      "id": 1,
+      "shipping_order_id": 1,
+      "product_id": 101,
+      "quantity": 5,
+      "lotorserial": "LOT12345"
+    },
+    {
+      "id": 2,
+      "shipping_order_id": 1,
+      "product_id": 102,
+      "quantity": 3,
+      "lotorserial": "SER45678"
+    },
+    {
+      "id": 3,
+      "shipping_order_id": 2,
+      "product_id": 103,
+      "quantity": 10,
+      "lotorserial": "LOT67890"
+    },
+    {
+      "id": 4,
+      "shipping_order_id": 3,
+      "product_id": 104,
+      "quantity": 7,
+      "lotorserial": "SER78901"
+    }
+  ]
+}

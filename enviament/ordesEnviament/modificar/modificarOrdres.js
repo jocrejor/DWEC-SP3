@@ -4,70 +4,55 @@ window.onload = function () {
     replenarProductes();
     carregarDadesModificacio();
 
+    // Configurar el evento para el botón de guardar modificaciones
     document.getElementById("btnGuardarModificacions").addEventListener("click", validarFormulari);
 };
 
 let idAEditar = null;
 
-// Cargar datos de la orden seleccionada para modificar
 function carregarDadesModificacio() {
-    let ordreSeleccionada = JSON.parse(localStorage.getItem("ordreSeleccionada"));
-    let ordresLineShipping = JSON.parse(localStorage.getItem("orderLineShipping")) || [];
-    let ordresLine = JSON.parse(localStorage.getItem("orderShipping")) || [];
+    const ordreSeleccionada = JSON.parse(localStorage.getItem("ordreSeleccionada"));
+    const ordresLineShipping = JSON.parse(localStorage.getItem("orderLineShipping")) || [];
+    const ordresLine = JSON.parse(localStorage.getItem("orderShipping")) || [];
 
     if (ordreSeleccionada) {
-        let orderLine = ordresLine.find(o => o.id === ordreSeleccionada.id);
-        let ordre = ordresLineShipping.find(o => o.id === ordreSeleccionada.id);
+        const orderLine = ordresLine.find(o => o.id === ordreSeleccionada.id);
+        const ordre = ordresLineShipping.find(o => o.id === ordreSeleccionada.id);
 
-        if (orderLine && ordre) {
-            document.getElementById("client").value = orderLine.client_id || "";
-            document.getElementById("carrier").value = orderLine.carrier_id || "";
-            document.getElementById("product").value = ordre.product || "";
-            document.getElementById("quantitat").value = ordre.quantity || "";
-
-            const estadoMap = {
-                "pendiente": "Pendent",
-                "preparandose": "Preparant-se",
-                "preparada": "Preparada",
-                "envio": "Enviament"
-            };
-
-            console.log("Estado recuperado:", ordre.estado); // Verificar estado recuperado
-            document.getElementById("estado").value = estadoMap[ordre.estado] || "";
-
-            if (ordre.fechaEnvio) {
-                let fecha = new Date(ordre.fechaEnvio);
-                let fechaFormateada = fecha.toISOString().slice(0, 10); 
-                document.getElementById("fechaEnvio").value = fechaFormateada;
-            } else {
-                document.getElementById("fechaEnvio").value = "";
-            }
+        if (ordre && orderLine) {
+            document.getElementById("client").value = orderLine.client_id;
+            document.getElementById("carrier").value = orderLine.carrier_id;
+            document.getElementById("product").value = ordre.product;
+            document.getElementById("quantitat").value = ordre.quantity;
+            document.getElementById("estado").value = ordre.estado || ""; // Cargar el estado
+            document.getElementById("fechaEnvio").value = ordre.fechaEnvio || ""; // Cargar la fecha de envío
         }
+
         idAEditar = ordreSeleccionada.id;
     }
 
     localStorage.removeItem("ordreSeleccionada");
 }
 
-
-// Validar el formulario antes de guardar las modificaciones
+// Validar formulario antes de guardar
 function validarFormulari() {
     esborrarError();
+
     if (
         validarCamp("client", "Has d'introduir un client") &&
         validarCamp("carrier", "Has d'introduir un transportista") &&
         validarCamp("product", "Has d'indicar un producte") &&
         validarQuantitat() &&
-        validarCamp("estado", "Has d'indicar un estat vàlid") &&
-        validarCamp("fechaEnvio", "Has d'indicar una data d'enviament vàlida")
+        validarCamp("estado", "Has d'indicar un estat vàlida") &&
+        validarCamp("fechaEnvio", "Has d'indicar una data de enviament")
     ) {
         guardarModificacions();
     }
 }
 
-// Validar un campo específico del formulario
+// Validar un campo general (client, carrier, product, estado, fechaEnvio)
 function validarCamp(id, missatge) {
-    let element = document.getElementById(id);
+    const element = document.getElementById(id);
     if (!element.checkValidity() || !element.value) {
         error(element, missatge);
         return false;
@@ -75,9 +60,9 @@ function validarCamp(id, missatge) {
     return true;
 }
 
-// Validar el campo cantidad
+// Validar cantidad
 function validarQuantitat() {
-    let quantitat = document.getElementById("quantitat");
+    const quantitat = document.getElementById("quantitat");
     if (!quantitat.checkValidity() || quantitat.value <= 0) {
         error(quantitat, "Has d'indicar una quantitat vàlida");
         return false;
@@ -85,58 +70,62 @@ function validarQuantitat() {
     return true;
 }
 
-function replenaSelectClients () {
-    var clientSeleccionat = document.getElementById("client");
-    
-    Client.forEach(clients => {
-        var option   = document.createElement("option");
-        var text     = document.createTextNode(clients.name);
-        option.value = clients.name;
-        option.appendChild(text);
-        clientSeleccionat.appendChild(option);       
+function replenaSelectClients() {
+    const clientSeleccionat = document.getElementById("client");
+    const clients = JSON.parse(localStorage.getItem("clients")) || [];
+
+    if (clients.length === 0) {
+        const option = document.createElement("option");
+        option.value = "";
+        option.textContent = "No hi ha clients disponibles";
+        clientSeleccionat.appendChild(option);
+        return;
+    }
+
+    clients.forEach(client => {
+        const option = document.createElement("option");
+        option.value = client.name;
+        option.textContent = client.name;
+        clientSeleccionat.appendChild(option);
     });
 }
 
-/* replenarProductes: Funció que replena el input de productes */
-function replenarProductes () {
-    var producteSeleccionat = document.getElementById("product");
+// Llenar el select de productos desde localStorage
+function replenarProductes() {
+    const producteSeleccionat = document.getElementById("product");
+    const products = JSON.parse(localStorage.getItem("products")) || [];
 
-    Product.forEach(products => {
-        var option   = document.createElement("option");
-        var text     = document.createTextNode(products.name);
-
-        option.value = products.name;
-        option.appendChild(text);
-        producteSeleccionat.appendChild(option);       
+    products.forEach(product => {
+        const option = document.createElement("option");
+        option.value = product.name;
+        option.textContent = product.name;
+        producteSeleccionat.appendChild(option);
     });
-
 }
 
-/** replenaSelectTransportistes: Funció que replena el select dels transportistes a partir del JSON
-*/
-function replenaSelectTransportistes () {
-    var transportistaSeleccionat = document.getElementById("carrier");
+// Llenar el select de transportistas desde localStorage
+function replenaSelectTransportistes() {
+    const transportistaSeleccionat = document.getElementById("carrier");
+    const carriers = JSON.parse(localStorage.getItem("carriers")) || [];
 
-    Carriers.forEach(carrier => {    
-        var option   = document.createElement("option");
-        var text     = document.createTextNode(carrier.name);
-
+    carriers.forEach(carrier => {
+        const option = document.createElement("option");
         option.value = carrier.name;
-        option.appendChild(text);
+        option.textContent = carrier.name;
         transportistaSeleccionat.appendChild(option);
     });
 }
 
-// Mostrar mensaje de error en el formulario
+// Mostrar error en el campo
 function error(element, missatge) {
-    let textError = document.createTextNode(missatge);
-    let elementError = document.getElementById("missatgeError");
+    const textError = document.createTextNode(missatge);
+    const elementError = document.getElementById("missatgeError");
     elementError.appendChild(textError);
     element.classList.add("error");
     element.focus();
 }
 
-// Limpiar errores del formulario
+// Borrar errores previos
 function esborrarError() {
     const formElements = document.forms[0].elements;
     for (let i = 0; i < formElements.length; i++) {
@@ -145,34 +134,34 @@ function esborrarError() {
     document.getElementById("missatgeError").replaceChildren();
 }
 
-// Guardar las modificaciones en el localStorage
 function guardarModificacions() {
-    let ordresLineShipping = JSON.parse(localStorage.getItem("orderLineShipping")) || [];
-    let ordresLine = JSON.parse(localStorage.getItem("orderShipping")) || [];
+    const ordresLineShipping = JSON.parse(localStorage.getItem("orderLineShipping")) || [];
+    const ordresLine = JSON.parse(localStorage.getItem("orderShipping")) || [];
 
-    let indexOrderLine = ordresLine.findIndex(o => o.id === idAEditar);
-    let indexOrdreLineShipping = ordresLineShipping.findIndex(o => o.id === idAEditar);
+    const indexOrderLine = ordresLine.findIndex(o => o.id === idAEditar);
+    const indexOrdreLineShipping = ordresLineShipping.findIndex(o => o.id === idAEditar);
 
     if (indexOrderLine !== -1 && indexOrdreLineShipping !== -1) {
         ordresLine[indexOrderLine] = {
             ...ordresLine[indexOrderLine],
             client_id: document.getElementById("client").value,
             carrier_id: document.getElementById("carrier").value,
-            ordershipping_status: document.getElementById("estado").value,
-            shipping_date: document.getElementById("fechaEnvio").value 
         };
 
         ordresLineShipping[indexOrdreLineShipping] = {
             ...ordresLineShipping[indexOrdreLineShipping],
             product: document.getElementById("product").value,
             quantity: parseInt(document.getElementById("quantitat").value, 10),
-            estado: document.getElementById("estado").value,
-            fechaEnvio: document.getElementById("fechaEnvio").value
+            estado: document.getElementById("estado").value, // Guardar el estado
+            fechaEnvio: document.getElementById("fechaEnvio").value, // Guardar la fecha de envío
         };
 
+        // Guardar las modificaciones de nuevo en localStorage
         localStorage.setItem("orderShipping", JSON.stringify(ordresLine));
         localStorage.setItem("orderLineShipping", JSON.stringify(ordresLineShipping));
+
         alert("Les modificacions s'han guardat correctament!");
+
         window.location.href = "../llistat/llistatOrdres.html";
     } else {
         alert("No s'ha trobat l'ordre per modificar.");

@@ -5,17 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modificar Ordre</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="modificarOrdres.js" defer></script>
-   
     <style>
-
         .error {
             border: solid 2px #FF0000;
         }
-
     </style>
 </head>
-
 <body>
 <div class="container">
     <h1>Modificar Ordre</h1>
@@ -57,15 +52,18 @@
                 <select name="estado" class="form-control" id="estado" required>
                     <option value="" selected disabled>Selecciona l'estat</option>
                     <option value="Pendent">Pendent</option>
-                    <option value="Preparant-se">Preparant-se</option>
-                    <option value="Preparada">Preparada</option>
-                    <option value="Enviament">Enviament</option>
-                    
+                    <option value="Completat">Completat</option>
+                    <option value="Cancel·lat">Cancel·lat</option>
                 </select>
             </div>
         </div>
 
-        <input type="date" id="fechaEnvio" required>
+        <div class="form-group row">
+            <label for="fechaEnvio" class="col-sm-2 col-form-label">Data d'enviament</label>
+            <div class="col-sm-10">
+                <input type="date" class="form-control" id="fechaEnvio" required>
+            </div>
+        </div>
 
         <h5 id="missatgeError" class="text-danger"></h5>
 
@@ -77,9 +75,7 @@
         </div>
     </form>
 </div>
-<script src="../../../apiAccess/crud.js">  defer</script>
-<script type="text/javascript" src="../BBDD.js"></script>   
 
-
+<script src="modificarOrdres.js" defer></script>
 </body>
 </html>

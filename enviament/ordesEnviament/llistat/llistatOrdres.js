@@ -15,12 +15,12 @@ function obtindreordres() {
     const ordres = JSON.parse(localStorage.getItem("orderLineShipping")) || [];
     const ordresShipping = JSON.parse(localStorage.getItem("orderShipping")) || [];
     const tabla = document.getElementById("files");
-
     tabla.innerHTML = "";
 
     ordres.forEach((ordre) => {
         const row = document.createElement("tr");
 
+        // Boto de borrar
         let tdEsborrar = document.createElement("td");
         let btnEsborrar = document.createElement("button");
         btnEsborrar.className = "btn btn-danger";
@@ -29,7 +29,8 @@ function obtindreordres() {
          btnEsborrar.addEventListener("click", function () { esborrar(ordre.id); });
         tdEsborrar.appendChild(btnEsborrar);
         row.appendChild(tdEsborrar);
- 
+
+        // Boto de modificar  
         let tdModificar = document.createElement("td");
         let btnModificar = document.createElement("button");
         btnModificar.className = "btn btn-warning";
@@ -39,17 +40,11 @@ function obtindreordres() {
         tdModificar.appendChild(btnModificar);
         row.appendChild(tdModificar);
 
-        row.appendChild(CrearCelda(ordre.id));
         const orderShipping = ordresShipping.find(order => order.id === ordre.id);
         if (orderShipping) {
-            row.appendChild(CrearCelda(orderShipping.client_id));
-            row.appendChild(CrearCelda(orderShipping.carrier_id));
             row.appendChild(CrearCelda(orderShipping.shipping_date));
-            row.appendChild(CrearCelda(ordre.product));
-            row.appendChild(CrearCelda(ordre.quantity));
             row.appendChild(CrearCelda(orderShipping.ordershipping_status));
         }
-
         tabla.appendChild(row);
     });
 }
@@ -61,42 +56,38 @@ function CrearCelda(contingut) {
     return cell;
 }
 
-async function esborrar(id) {
-    try {
-        let ordres = JSON.parse(localStorage.getItem("orderShipping")) || [];
-        let ordresLine = JSON.parse(localStorage.getItem("orderLineShipping")) || [];
+// Funció per esborrar una ordre
+function esborrar(id) {
+    let ordres = JSON.parse(localStorage.getItem("orderShipping")) || [];
+    let ordresLine = JSON.parse(localStorage.getItem("orderLineShipping")) || [];
+    const idEliminar = ordres.findIndex(order => order.id === id);
+    if (idEliminar !== -1) {
+        ordres.splice(idEliminar, 1);
+        ordresLine.splice(idEliminar,1);
 
-        const idEliminar = ordres.findIndex(order => order.id === id);
-
-        if (idEliminar !== -1) {
-            ordres.splice(idEliminar, 1);
-            ordresLine.splice(idEliminar, 1);
-
-            localStorage.setItem("orderShipping", JSON.stringify(ordres));
-            localStorage.setItem("orderLineShipping", JSON.stringify(ordresLine));
-            obtindreordres();
-            alert("L'ordre ha estat esborrada correctament.");
-        } else {
-            alert("No s'ha trobat l'ordre amb l'ID especificat.");
-        }
-    } catch (error) {
-        alert("No s'ha pogut eliminar l'ordre.");
+        localStorage.setItem("orderShipping", JSON.stringify(ordres));
+        localStorage.setItem("orderLineShipping", JSON.stringify(ordresLine));
+        obtindreordres();
     }
 }
 
 function modificar(id) {
-    let ordresShipping = JSON.parse(localStorage.getItem("orderShipping")) || [];
-    let ordreSeleccionada = ordresShipping.find(o => o.id === id);
+    const ordresShipping = JSON.parse(localStorage.getItem("orderShipping")) || [];
+    console.log("Ordres disponibles:", ordresShipping);  // Verifica las órdenes almacenadas
+
+    const ordreSeleccionada = ordresShipping.find(o => o.id === id);
+    console.log("Orden encontrada:", ordreSeleccionada);  
 
     if (ordreSeleccionada) {
+        console.log("Orden seleccionada para modificar:", ordreSeleccionada); // Verifica los datos de la orden seleccionada
         localStorage.setItem("ordreSeleccionada", JSON.stringify(ordreSeleccionada));
         window.location.href = "../modificar/modificarOrdres.html"; 
-    }
-     else {
+    } else {
         alert("No s'ha trobat l'ordre seleccionada.");
+        console.error("Error: No se encontró la orden con ID:", id);
     }
 }
-
+let idAEditar = null; 
 
 
 
