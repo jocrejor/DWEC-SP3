@@ -1,22 +1,18 @@
 window.onload = loadProvinces;
 
-const ENDPOINT = 'Province';
-
-const urlParams = new URLSearchParams(window.location.search);
-const stateId = urlParams.get('stateId');  
+const ENDPOINT = 'Province'; 
 
 async function loadProvinces() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const stateId = urlParams.get('stateId'); 
+    const stateId = "194";  
 
     try {
         const provinces = await getData(url, `Province?state_id=${stateId}`); 
+
         displayProvinces(provinces);
     } catch (error) {
         console.error('Error cargando las provincias:', error);
     }
 }
-
 
 function displayProvinces(provinces) {
     const provinceList = document.getElementById('provinceList');
@@ -72,7 +68,7 @@ async function deleteProvince(id) {
     try {
         if (confirm('Estas segur que vols eliminar aquesta provincia?')) {
             await deleteData(url, ENDPOINT, id);
-            loadProvinces();
+            loadProvinces();  
         }
     } catch (error) {
         console.error('Error al eliminar provincia:', error);

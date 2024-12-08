@@ -1,51 +1,60 @@
+const ENDPOINT = 'Province';
+
 window.onload = function () {
-    loadProvinceData();
-    document.getElementById("editProvinceForm").addEventListener("submit", modifyProvince); // El id del formulario debe coincidir
+    const urlParams = new URLSearchParams(window.location.search);
+    const provinceId = urlParams.get('id');
+    
+    if (provinceId) {
+        loadProvinceForEditing(provinceId);
+    }
 };
 
-function loadProvinceData() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const index = parseInt(urlParams.get("index"), 10);
+async function loadProvinceForEditing(id) {
+    try {
+        const provinces = await getData(url, ENDPOINT);
+        const provinceToEdit = provinces.find(p => p.id == id);
 
-    if (isNaN(index)) {
-        window.location.href = "./llistaProvincia.html";
-        return;
+        if (provinceToEdit) {
+            document.getElementById('provinceName').value = provinceToEdit.name;
+        } 
+    } catch (error) {
+        console.error('Error cargando la provincia:', error);
     }
-
-    const provinces = JSON.parse(localStorage.getItem("Province")) || [];
-    const stateIdSpain = "194";
-    const provincesOfSpain = provinces.filter(province => province.state_id === stateIdSpain);
-
-    if (!provincesOfSpain[index]) {
-        window.location.href = "./llistaProvincia.html";
-        return;
-    }
-
-    const province = provincesOfSpain[index];
-    document.getElementById("provinceName").value = province.name;
-    localStorage.setItem("selectedProvinceIndex", index);
 }
 
-function validarNom(nom) {
+document.getElementById('editForm').addEventListener('submit', async function(event) {
+    event.preventDefault();
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const provinceId = urlParams.get('id');
+    const newName = document.getElementById('provinceName').value;
+
+    if (!validarNombre(newName)) {
+        error(document.getElementById('provinceName'), 'El nombre debe tener entre 2 y 25 caracteres y solo permitir letras (con acentos y ñ)');
+        return;
+    }
+
+    if (provinceId) {
+        const updatedProvince = {
+            name: newName
+        };
+
+        try {
+            await updateId(url, ENDPOINT, provinceId, updatedProvince);
+            window.location.href = 'llistaProvincia.html';  
+        } catch (error) {
+            console.error('Error actualizando la provincia:', error);
+        }
+    }
+});
+
+function validarNombre(name) {
     const pattern = /^[A-Za-záéíóúÁÉÍÓÚñÑ\s]{2,25}$/;
-    const nomInput = document.getElementById("provinceName");
-
-    esborrarError(); 
-
-    if (!nom) {
-        error(nomInput, "Ompli el camp!");
-        return false;
-    }
-
-    if (!pattern.test(nom)) {
-        error(nomInput, "El nom no pot contenir números ni caràcters especials, ha de tenir entre 2 i 25 caràcters.");
-        return false;
-    }
-
-    return true;
+    return pattern.test(name);
 }
 
 function error(input, message) {
+    esborrarError();
     const errorElement = document.createElement('div');
     errorElement.classList.add('error-message', 'text-danger', 'mt-2');
     errorElement.innerText = message;
@@ -55,33 +64,4 @@ function error(input, message) {
 function esborrarError() {
     const errorMessages = document.querySelectorAll('.error-message');
     errorMessages.forEach((message) => message.remove());
-}
-
-function modifyProvince(e) {
-    e.preventDefault();
-
-    const newName = document.getElementById("provinceName").value.trim();
-    if (!validarNom(newName)) {
-        return;
-    }
-
-    const provinces = JSON.parse(localStorage.getItem("Province")) || [];
-    const stateIdSpain = "194";
-    const provincesOfSpain = provinces.filter(province => province.state_id === stateIdSpain);
-
-    const index = parseInt(localStorage.getItem("selectedProvinceIndex"), 10);
-
-    if (isNaN(index) || !provincesOfSpain[index]) {
-        window.location.href = "./llistaProvincia.html";
-        return;
-    }
-
-    provincesOfSpain[index].name = newName;
-
-    const updatedProvinces = provinces.map(province =>
-        province.id === provincesOfSpain[index].id ? provincesOfSpain[index] : province
-    );
-
-    localStorage.setItem("Province", JSON.stringify(updatedProvinces));
-    window.location.href = "./llistaProvincia.html"; 
 }

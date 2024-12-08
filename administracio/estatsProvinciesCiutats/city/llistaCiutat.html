@@ -6,22 +6,28 @@
     <title>Gestió de Ciutats</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="./llistaCiutat.js" defer></script>
+    <script src="../../../apiAccess/crud.js"></script>
 </head>
 <body>
     <div class="container mt-5">
         <h1 class="text-center">Llistat de Ciutats</h1>
-        <a href="../province/llistaProvincia.html" class="btn btn-secondary">Torna a Provincies</a>
+        <div class="text-center mb-4">
+            <a href="../province/llistaProvincia.html" class="btn btn-secondary">Torna a Provincies</a>
+            <a href="alta.html" class="btn btn-primary">Afegir Nova Ciutat</a>
+        </div>
+
         <h2 id="provinceTitle" class="mt-4"></h2>
-        <a href="alta.html?provinceId=<%= provinceId %>" class="btn btn-success mb-3">Afegir Nova Ciutat</a>
-
-
+        
         <table class="table table-striped mt-3">
-            <tr>
-                <th>#</th>
-                <th>Nom de la Ciutat</th>
-                <th>Accions</th>
-            </tr>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nom de la Ciutat</th>
+                    <th>Accions</th>
+                </tr>
+            </thead>
             <tbody id="cityList">
+
             </tbody>
         </table>
     </div>

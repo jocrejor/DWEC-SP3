@@ -44,9 +44,13 @@ function displayStates(states) {
         provincesButton.classList.add('btn', 'btn-info', 'btn-sm');
         provincesButton.textContent = 'Mostrar Provincias';
 
-        provincesButton.addEventListener('click', function() {
-            window.location.href = `../province/llistaProvincia.html?stateId=${state.id}`;
-        });
+        if (Number(state.id) === 194) {  
+            provincesButton.addEventListener('click', function() {
+                window.location.href = `../province/llistaProvincia.html?stateId=${state.id}`;
+            });
+        } else {
+            provincesButton.disabled = true;  
+        }
 
         tdActions.appendChild(editButton);
         tdActions.appendChild(deleteButton);
@@ -71,4 +75,3 @@ async function deleteState(id) {
         }
     }
 }
-

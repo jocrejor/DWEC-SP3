@@ -1,21 +1,42 @@
-document.getElementById('addProvinceForm').addEventListener('submit', function (event) {
-    event.preventDefault();
-    esborrarError();
+const ENDPOINT = 'Province'; 
 
-    const provinceName = document.getElementById('provinceName');
-    const provinceNameValue = provinceName.value.trim();
+document.getElementById('newProvinceForm').addEventListener('submit', async function(event) {
+    event.preventDefault(); 
 
-    if (!validarNom(provinceNameValue)) {
-        error(provinceName, "El nom no pot contenir números ni caràcters especials, ha de tenir entre 2 i 25 caràcters.");
-        return false;
+    const provinceName = document.getElementById('provinceName').value; 
+    const stateId = "194"; 
+
+    if (!validarNom(provinceName)) {
+        error(document.getElementById('provinceName'), 'El nom ha de tenir entre 2 i 25 caràcters i només permet lletres (amb accents i ñ)');
+        return;
     }
 
-    addProvince(provinceNameValue); 
-    window.location.href = "./llistaProvincia.html"; 
+    const newId = generateUniqueId();  
+
+    const newProvince = {
+        state_id: stateId, 
+        id: newId,         
+        name: provinceName 
+    };
+
+    try {
+        const result = await postData(url, ENDPOINT, newProvince);
+
+        if (result) {
+            window.location.href = `llistaProvincia.html?stateId=194`; 
+        }
+    } catch (error) {
+        console.error('Error al afegir la provincia:', error);
+    }
 });
 
+function generateUniqueId() {
+    const id = Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000;  
+    return id.toString(); 
+}
+
 function validarNom(name) {
-    const pattern = /^[A-Za-záéíóúÁÉÍÓÚñÑ\s]{2,25}$/;
+    const pattern = /^[A-Za-záéíóúÁÉÍÓÚñÑ\s]{2,25}$/;  
     return pattern.test(name);
 }
 
@@ -30,19 +51,4 @@ function error(input, message) {
 function esborrarError() {
     const errorMessages = document.querySelectorAll('.error-message');
     errorMessages.forEach((message) => message.remove());
-}
-
-function addProvince(provinceName) {
-    const provinces = JSON.parse(localStorage.getItem('Province')) || [];
-    
-    const newId = provinces.length > 0 ? Math.max(...provinces.map(p => parseInt(p.id))) + 1 : 1;
-
-    const newProvince = {
-        id: newId.toString(),
-        name: provinceName,
-        state_id: "194" 
-    };
-
-    provinces.push(newProvince);
-    localStorage.setItem('Province', JSON.stringify(provinces));
 }

@@ -6,19 +6,20 @@
     <title>Alta Provincia</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="./alta.js" defer></script>
+    <script src="../../../apiAccess/crud.js"></script>
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="text-center">Alta Provincia</h1>
+        <h1 class="text-center">Alta de Provincia</h1>
+        <a href="llistaProvincia.html?stateId={{stateId}}" class="btn btn-secondary mb-3">Torna a la llista de Provincies</a>
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <form id="addProvinceForm">
-                    <div class="form-group">
-                        <label for="provinceName">Nom de la Provincia</label>
-                        <input type="text" class="form-control" id="provinceName" placeholder="Escriu el nom de la provincia" />
+                <form id="newProvinceForm">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" id="provinceName" placeholder="Nom de la Provincia" />
                     </div>
-                    <button type="submit" class="btn btn-primary">Afegir</button>
-                    <a href="./llistaProvincia.html" class="btn btn-secondary">Cancel·lar</a>
+                    <button type="submit" class="btn btn-primary">Crear Provincia</button>
+                    <a href="llistaProvincia.html?stateId={{stateId}}" class="btn btn-secondary ml-2">Cancelar</a>
                 </form>
             </div>
         </div>
