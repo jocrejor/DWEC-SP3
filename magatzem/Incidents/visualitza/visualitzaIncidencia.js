@@ -3,13 +3,10 @@ let operaris;
 let productes;
 $(document).ready(async function () { 
     proveidors = await getData(url,"Supplier");
-    operaris = await getData(url,"User"); 
-    productes = await getData(url,"Product");
+    operaris = await getData(url,"User");
+    productes = await getData(url,"Product"); 
     $("#btnTorna").click(function(){
         window.location.assign("../incidencies.html");
-    }),
-    $("#btnRevisar").click(function(){
-        revisaIncidencia();
     })
     carregarCapçalera();
 });
@@ -25,7 +22,6 @@ async function revisaIncidencia(){
         window.location.href = "../incidencies.html";
     }
 }
-
 
 function validar(){ 
     if(validarQuantitat() && validarDescripcio()){
@@ -124,4 +120,3 @@ function getProducte(id){
         return producteExistent.name;
     }
 }
-

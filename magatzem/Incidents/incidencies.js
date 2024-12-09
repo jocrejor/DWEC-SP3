@@ -166,6 +166,15 @@ async function carregarIncidencies() {
              });
              divAccions.appendChild(accioRevisar);
 
+            let accioVisualitza = document.createElement("a");
+            let iVisualitza = document.createElement("i");
+            iVisualitza.className = "fa-regular fa-eye";
+            accioVisualitza.appendChild(iVisualitza);
+            $(accioVisualitza).click(function(){
+                visualitzaIncidencia(ordre.id);
+            });
+            divAccions.appendChild(accioVisualitza);
+
             let accioResoldre = document.createElement("a");
             let iResoldre = document.createElement("i");
             iResoldre.className = "fas fa-check";
@@ -174,6 +183,8 @@ async function carregarIncidencies() {
                 resolIncidencia(ordre.id);
             });
             divAccions.appendChild(accioResoldre);
+
+
             tdAccions.appendChild(divAccions);
             row.appendChild(tdAccions);
 
@@ -211,7 +222,7 @@ function getEstat(id){
 }
 
 function getProducte(id){
-    const producteExistent = productes.find(o => Number(o.id) === id);
+    const producteExistent = productes.find(o => o.id === id);
     
     if(producteExistent){ 
         return producteExistent.name;
@@ -235,6 +246,16 @@ async function resolIncidencia(id){
     if(incidentSeleccionat){
         localStorage.setItem("incidentSeleccionat", JSON.stringify(incidentSeleccionat));
         window.location.href = "resol/resolIncident.html";
+    }
+}
+
+async function visualitzaIncidencia(id){
+    const incidencies = await getData(url,"Incident"); 
+    const incidentSeleccionat = incidencies.find(o => o.id === id);
+
+    if(incidentSeleccionat){
+        localStorage.setItem("incidentSeleccionat", JSON.stringify(incidentSeleccionat));
+        window.location.href = "visualitza/visualitzaIncidencia.html";
     }
 }
 

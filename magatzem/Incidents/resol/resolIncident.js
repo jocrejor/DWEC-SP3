@@ -1,4 +1,6 @@
 let proveidors;
+let operaris;
+let productes;
 $(document).ready(async function () {
     thereIsUser();
     let currentUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -6,7 +8,9 @@ $(document).ready(async function () {
         alert("No tens permisos per resoldre una incidencia");
         history.back();
     }
-    proveidors = await getData(url,"Supplier"); 
+    proveidors = await getData(url,"Supplier");
+    operaris = await getData(url,"User"); 
+    productes = await getData(url,"Product");
     replenaEstats();
     $("#btnTorna").click(function(){
         window.location.assign("../incidencies.html");
@@ -50,9 +54,20 @@ async function carregarCapçalera(){
     let inputID = document.getElementById("orderReceptiod_ID");
     inputID.value = incidentSeleccionat.orderReception_id;
 
+    let dataCreacio = document.getElementById("data");
+    dataCreacio.value = incidentSeleccionat.created_at;
+
+    let producte = document.getElementById("product");
+    let nomProducte = getProducte(incidentSeleccionat.product);
+    producte.value = nomProducte;
+
     let inputProveidor = document.getElementById("supplier");
     let nomProveidor = getProveidor(incidentSeleccionat.supplier);
     inputProveidor.value = nomProveidor;
+
+    let inputOperari = document.getElementById("operator");
+    let nomOperari = getOperari(incidentSeleccionat.operator);
+    inputOperari.value = nomOperari;
 
     let inputOrdered = document.getElementById("quantity_order");
     inputOrdered. value = incidentSeleccionat.quantity_ordered;
@@ -69,6 +84,21 @@ function getProveidor(id){
     if(proveidorExistent){ 
         return proveidorExistent.name;         
     }  
+}
+
+function getOperari(id){  
+    const operariExistent = operaris.find(o => o.id === id);
+    if(operariExistent){ 
+        return operariExistent.name;         
+    }  
+}
+
+function getProducte(id){
+    const producteExistent = productes.find(o => o.id === id);
+    
+    if(producteExistent){ 
+        return producteExistent.name;
+    }
 }
 
 async function replenaEstats(){
