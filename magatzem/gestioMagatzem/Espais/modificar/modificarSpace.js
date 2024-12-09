@@ -1,17 +1,16 @@
 window.onload = iniciar;
 
 function iniciar() {
-    // Obtener la referencia del espacio desde localStorage.
-    const spaceId = JSON.parse(localStorage.getItem("modSpace"));
+
+    const spaceId = JSON.parse(localStorage.getItem("Espai"));
 
     if (spaceId) {
-        carregarDades(spaceId); // Cargar datos del espacio seleccionado.
+        carregarDades(spaceId); 
     } else {
         alert("No s'ha trobat cap referència d'espai.");
-        window.location.assign("../llista/llistatSpace.html"); // Redirigir si no hay datos.
+        window.location.assign("../llista/llistatSpace.html"); 
     }
 
-    // Añadir eventos a los botones.
     document.getElementById("btnGuardar").addEventListener("click", guardarModificacions);
     document.getElementById("btnCancelar").addEventListener("click", () =>
         window.location.assign("../llista/llistatSpace.html")
@@ -20,17 +19,16 @@ function iniciar() {
 
 async function carregarDades(spaceId) {
     try {
-        // Obtener los datos de los espacios.
+     
         const spaces = await getData(url, "Space");
 
-        // Asegurarnos de comparar el ID como cadena con ceros iniciales.
         const formattedId = String(spaceId).padStart(2, '0');
         const spaceSeleccionado = spaces.find(
             (space) => String(space.id).padStart(2, '0') === formattedId
         );
 
         if (spaceSeleccionado) {
-            // Rellenar los campos del formulario con los datos del espacio seleccionado.
+         
             document.getElementById("id").value = spaceSeleccionado.id || "";
             document.getElementById("name").value = spaceSeleccionado.name || "";
             document.getElementById("product_id ").value = spaceSeleccionado.product_id || "";
@@ -69,10 +67,10 @@ async function guardarModificacions(event) {
     }
 
     try {
-        // Actualizar en el servidor
+    
         await updateId(url, "Space", id, { id, name, product_id, quantity, maxVol, maxWeight, storage_id, street_id, selft_id });
 
-        // Actualizar en el localStorage
+   
         const spaces = JSON.parse(localStorage.getItem("spaces")) || [];
         const index = spaces.findIndex(
             (space) => String(space.id).padStart(2, '0') === String(id).padStart(2, '0')
