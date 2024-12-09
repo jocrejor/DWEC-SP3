@@ -130,7 +130,7 @@ async function enviarFormulari () {
     let password    = document.getElementById("password").value;
 
     let users = await getData(url, 'Users');
-    console.log(user.lenght);
+
     let user = {    
         name: name,
         email: email,

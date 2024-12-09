@@ -66,9 +66,9 @@ function verifyUser() {
     }
     else if (currentUser && currentUser.user_profile === "Publicador") {
         gestioUsuarisBtn.style.display  = "none";
-        tancarSessio.style.display      = "inline-block";
+        tancarSessio.style.display      = "none";
         btnCrearEtiqueta.style.display  = "none";
-        btnCrearPost.style.display      = "none";
+        btnCrearPost.style.display      = "inline-block";
     }
 }
 

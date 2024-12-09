@@ -25,7 +25,7 @@
             <table>
                 <tr>
                     <td>
-                        <label for="name">Nombre:</label>
+                        <label for="name">Nom:</label>
                     </td>
                     <td>
                         <input id="name" class="form-control">
@@ -33,7 +33,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <label for="email">Correo electrónico:</label>
+                        <label for="email">Correu electrònic:</label>
                     </td>
                     <td>
                         <input id="email" class="form-control">
@@ -44,7 +44,7 @@
                         <label for="role">Rol:</label>
                     </td>
                     <td>
-                        <select name="roles" id="roles" class="form-control">
+                        <select name="user_profile" id="user_profile" class="form-control">
                             <option value="" selected="selected">Seleccione el rol</option>
                             <option value="Administrador">Administrador</option>
                             <option value="Editor">Editor</option>
@@ -55,26 +55,27 @@
                 <tr>
                     <td></td>
                     <td>
-                        <button class=" btn btn-primary my-3">Buscar</button>
+                        <button class="btn btn-primary my-3" id="cleanFilters">Netejar filtres</button>
+                        <button class=" btn btn-primary my-3" id="searchUser">Cercar</button>
                     </td>
                 </tr>
             </table>
 
         </div>
         
-        <button class=" btn btn-primary my-3" id="nouUsuari">Nuevo usuario</button>
+        <button class=" btn btn-primary my-3" id="nouUsuari">Nou usuari</button>
         <button class=" btn btn-primary my-3" id="backToBlog">Blog</button></br>
         <table class="table">
             <thead class="thead-light">
                 <tr>
-                    <th scope="col">Borrar</th>
+                    <th scope="col">Esborrar</th>
                     <th scope="col">Modificar</th>
-                    <th scope="col">Nombre</th>
+                    <th scope="col">Nom</th>
                     <th scope="col">Email</th>
                     <th scope="col">Rol</th>
                 </tr>
             </thead>
-            <tbody id="files">
+            <tbody id="users-list">
 
             </tbody>
         </table>

@@ -130,13 +130,13 @@ async function cargarEtiquetas() {
     const foto = document.getElementById("foto").value;
     const descripcio = document.getElementById("descripcio").value;
     const etiqueta = document.getElementById("nom-etiqueta").value;
-    //const currentUser = localStorage.getItem("currentUser").value;
-
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    console.log(currentUser.id);
     const post = {
         title: nomPost,
         photo: foto,
         creation_date: formatDate(new Date()),
-        //creator_id: currentUser,
+        creator_id: currentUser.name,
         description: descripcio,
         tag: etiqueta
     };
