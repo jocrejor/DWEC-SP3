@@ -204,7 +204,7 @@ h2 {
 
 /*BOX TAULA*/
 .boxTaula {
-    padding: 3em 0 2em 0;
+    padding: 3em 1em 2em 1em;
 }
   
 .checkBoxth {
@@ -216,7 +216,7 @@ h2 {
     padding-bottom: 0.8em;
 }
   
-.boxBtn button {
+button {
     background-color: var(--taronja);
     padding: 0.4em 0.8em 0.4em 0.8em;
     border-radius: 0.3em;
@@ -224,7 +224,7 @@ h2 {
     color: white;
 }
 
-.boxBtn button:hover{
+button:hover{
     color: var(--blauFosc);
 }
   
@@ -251,6 +251,7 @@ h2 {
 
 .divAccions i:hover{
     color: var(--taronja);
+	cursor: pointer;
 }
 
 /*TAULA*/
@@ -282,7 +283,7 @@ tbody tr:nth-child(even){
 }
 
 td, th {
-    padding: 0.5em 3em 0.5em 3em;
+    padding: 0.5em 1em;
 }
 
 .veureMes{
@@ -324,8 +325,13 @@ td, th {
     width: 100%;
 }
 
-/* BOTO TORNAR HECHO POR EL JAVMAN MAGNIFICO */
+.inputSolsVisualitzar{
+    background-color: transparent;
+    border: 0;
+    appearance: none;
+}
 
+/* BOTO TORNAR */
 .botoTornar{
     background-color: var(--blauClar);
     padding: 0.4em 0.8em 0.4em 0.8em;
@@ -335,10 +341,32 @@ td, th {
     text-decoration: none;
 }
 
+.botoTornar a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* HOVER */
+.botoTornar:hover{
+    color: var(--taronja);
+}
+
+/* MISSATGE QUE ES MOSTRA QUAN HI 
+HA UN ERROR O SI NO HI HA CLIENTS */
+#missatgeError{
+    text-align: center; 
+    font-size: 1.5em; 
+    color: #ff0000;
+    margin-top: 1em;
+}
+
 /*MEDIAQUERY*/
 @media only screen and (max-width: 1100px) {
     #logo{
         width: 100%;
+    }
+	td, th {
+        padding: 0.5em 0.5em 0.5em 0.5em;
     }
 }
 
