@@ -17,15 +17,21 @@ async function loadCities() {
 
     document.getElementById('provinceTitle').textContent = `Pobles de la provincia: ${provinceName}`;
 
+    const addCityBtn = document.getElementById('addCityBtn');
+    if (addCityBtn) {
+        addCityBtn.href = `alta.html?provinceId=${provinceId}&provinceName=${encodeURIComponent(provinceName)}`;
+    }
+
     try {
         const cities = await getData(url, 'City'); 
         const citiesOfProvince = cities.filter(city => city.province_id === provinceId);
-        allCities = citiesOfProvince;  
+        allCities = citiesOfProvince;
         displayCities(citiesOfProvince);
     } catch (error) {
         console.error("Error al cargar las ciudades:", error);
     }
 }
+
 
 function displayCities(cities) {
     const cityList = document.getElementById('cityList');

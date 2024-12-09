@@ -1,54 +1,74 @@
-const ENDPOINT = 'City';  // Endpoint para la tabla de ciudades
+const ENDPOINT = 'City';  
 
-document.getElementById('newCityForm').addEventListener('submit', async function(event) {
-    event.preventDefault();  // Evitar el comportamiento por defecto del formulario
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const provinceId = urlParams.get('provinceId');
+    const provinceName = urlParams.get('provinceName');
 
-    const cityName = document.getElementById('cityName').value;  // Obtener el nombre de la ciudad
-    const provinceId = new URLSearchParams(window.location.search).get('provinceId');  // Obtener el ID de la provincia desde los parámetros de la URL
 
-    if (!validarNom(cityName)) {
-        error(document.getElementById('cityName'), 'El nom ha de tenir entre 2 i 25 caràcters i només permet lletres (amb accents i ñ)');
+    if (!provinceId || !provinceName) {
+        alert("No es pot determinar la provincia. Torna enrere i selecciona una provincia.");
+        window.location.href = '../province/llistaProvincia.html'; 
         return;
     }
 
-    const newId = generateUniqueId();  // Generar un ID único para la ciudad
+    document.getElementById('provinceTitle').textContent = `Nova ciutat per a la provincia: ${provinceName}`;
 
-    const newCity = {
-        province_id: provinceId,  // Asociamos la ciudad a la provincia
-        id: newId,                 // ID único de la ciudad
-        name: cityName             // Nombre de la ciudad
-    };
+    // Configurar el formulario
+    document.getElementById('newCityForm').addEventListener('submit', async function (event) {
+        event.preventDefault();
 
-    try {
-        const result = await postData(url, ENDPOINT, newCity);  // Llamada a la API para crear la ciudad
+        const cityName = document.getElementById('cityName').value.trim();
 
-        if (result) {
-            window.location.href = `llistaCiutat.html?provinceId=${provinceId}&provinceName=${encodeURIComponent(cityName)}`;  // Redirigir a la lista de ciudades de la provincia
+        // Validar el nombre de la ciudad
+        if (!validarNom(cityName)) {
+            mostrarError(document.getElementById('cityName'), 'El nom ha de tenir entre 2 i 25 caràcters i només permet lletres (amb accents i ñ).');
+            return;
         }
-    } catch (error) {
-        console.error('Error al afegir la ciutat:', error);
-    }
+
+        try {
+            const cities = await getData(url, ENDPOINT); 
+            const newId = generarNuevoId(cities); 
+
+            const newCity = {
+                province_id: provinceId,
+                id: newId,
+                name: cityName
+            };
+
+            const result = await postData(url, ENDPOINT, newCity);
+
+            if (result) {
+                window.location.href = `llistaCiutat.html?provinceId=${provinceId}&provinceName=${encodeURIComponent(provinceName)}`;
+            }
+        } catch (error) {
+            console.error('Error al afegir la ciutat:', error);
+            mostrarError(document.getElementById('cityName'), 'Error al afegir la ciutat. Torna-ho a intentar.');
+        }
+    });
 });
 
-function generateUniqueId() {
-    const id = Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000;  // Generación de ID único
-    return id.toString();  // Retorna el ID como string
+function generarNuevoId(cities) {
+    const ids = cities.map(city => parseInt(city.id, 10));
+    const maxId = ids.length > 0 ? Math.max(...ids) : 0;
+    return (maxId + 1).toString();
 }
 
 function validarNom(name) {
-    const pattern = /^[A-Za-záéíóúÁÉÍÓÚñÑ\s]{2,25}$/;  // Validación del nombre de la ciudad
+    const pattern = /^[A-Za-záéíóúÁÉÍÓÚñÑ\s]{2,25}$/;
     return pattern.test(name);
 }
 
-function error(input, message) {
+
+function mostrarError(input, message) {
     esborrarError();
     const errorElement = document.createElement('div');
     errorElement.classList.add('error-message', 'text-danger', 'mt-2');
     errorElement.innerText = message;
-    input.parentNode.appendChild(errorElement);  // Mostrar mensaje de error
+    input.parentNode.appendChild(errorElement);
 }
 
 function esborrarError() {
     const errorMessages = document.querySelectorAll('.error-message');
-    errorMessages.forEach((message) => message.remove());  // Eliminar mensajes de error previos
+    errorMessages.forEach(message => message.remove());
 }
