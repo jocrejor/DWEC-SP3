@@ -6,15 +6,53 @@
     <title>Llistat de transportistes</title>
     <link rel="stylesheet" href="llistatTransportistes.css">
     <script src="../../../apiAccess/crud.js"></script>
-    <script type="text/javascript" src="llistatTransportistes.js"></script>
+    
     
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">  <!--icono filtro-->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">      <!--estilos jquery-->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>             <!--jquery general-->
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>      <!--autocompletar-->
+    <script type="text/javascript" src="llistatTransportistes.js"></script>
+
 </head>
 <body>
     <div class="container">
         <h1>Llistat de transportistes</h1>
+        <i class="bi bi-funnel" id="filterIcon" style="cursor: pointer; font-size: 1.5em;"></i>
+
+        <div style="display: none;" class="form-group row filterSection">
+            <label for="address" class="col-sm-1 col-form-label">Nombre:</label>
+            <div class="col-sm-5" style="display: flex; align-items: center;">
+                <input id="nombreFilter" type="text"  class="form-control" placeholder="Filtra"></br>
+            </div>
+
+            <label for="address" class="col-sm-1 col-form-label">DNI/NIF:</label>
+            <div class="col-sm-5" style="display: flex; align-items: center;">
+                <input id="dniFilter" type="text" class="form-control" placeholder="Filtra">
+            </div>
+
+        </div>
+
+        <div style="display: none;" class="form-group row filterSection">
+            <label for="address" class="col-sm-1 col-form-label">Teléfon:</label>
+            <div class="col-sm-5" style="display: flex; align-items: center;">
+                <input id="telefonoFilter" type="text" class="form-control" placeholder="Filtra">
+            </div>
+
+            <label for="address" class="col-sm-1 col-form-label">Correu:</label>
+            <div class="col-sm-5" style="display: flex; align-items: center;">
+                <input id="correuFilter" type="text" class="form-control" placeholder="Filtra">
+            </div>
+        </div>
+
+        <div style="display: none; margin-left: 0.01em;" class="form-group row filterSection">
+            <button id="applyFilter" class=" col-sm-1 col-form-label btn btn-primary my-3">Filtra</button>
+        </div>
+        <br>
+
         <button class="btn btn-primary my-3" id="nouTransportista">Nou Transportista</button><br>
         <table class="table">
             <thead class="thead-light">

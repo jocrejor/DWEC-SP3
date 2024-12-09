@@ -31,6 +31,7 @@ function main() {
         document.getElementById("city").value = carrier.city || '';
         carregarCiutats(carrier.city);
         document.getElementById("address").value = carrier.address || '';
+        document.getElementById("cp").value = carrier.cp || '';
     } else {
         window.location.assign("../llistar/llistatTransportistes.html");
     }
@@ -217,7 +218,7 @@ function validarDireccio() {
     return true; // Tot correcte
 }
 
-function validar(e) {
+async function validar(e) {
     esborrarError();
     e.preventDefault();
     let errors = [];
@@ -236,7 +237,7 @@ function validar(e) {
         error(document.getElementById("missatgeError"), errors.join(" "));
         return false;
     } else {
-        enviarFormulari();
+        await enviarFormulari();
         return true;
     }
 }
@@ -256,27 +257,38 @@ function esborrarError() {
     document.getElementById("missatgeError").replaceChildren();
 }
 
-function enviarFormulari() {
-    var carriers = JSON.parse(localStorage.getItem("Carriers")) || [];
-    var id = document.getElementById("id").value;
-    var index = carriers.findIndex(carrier => carrier.id === id);
-    if (index > -1) {
-        carriers[index] = {
-            id: id,
-            name: document.getElementById("name").value,
-            nif: document.getElementById("nif").value,
-            phone: document.getElementById("phone").value,
-            email: document.getElementById("email").value,
-            address: document.getElementById("address").value,
-            state: document.getElementById("state").value,
-            province: document.getElementById("province").value,
-            city: document.getElementById("city").value,
-            cp: document.getElementById("cp").value
-        };
-        localStorage.setItem("Carriers", JSON.stringify(carriers));
-    } else {
-        alert("No s'ha trobat cap transportista amb aquest ID.");
+async function enviarFormulari() {
+    const carrierData = {
+        id: document.getElementById("id").value,
+        name: document.getElementById("name").value,
+        nif: document.getElementById("nif").value,
+        phone: document.getElementById("phone").value,
+        email: document.getElementById("email").value,
+        state: document.getElementById("state").value,
+        province: document.getElementById("province").value,
+        city: document.getElementById("city").value,
+        address: document.getElementById("address").value,
+        cp: document.getElementById("cp").value
+    };
+
+    try {
+        const response = await fetch('http://node.daw.iesevalorpego.es:3001/Carriers/' + carrierData.id, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(carrierData)
+        });
+
+        if (!response.ok) {
+            throw new Error('Error al modificar el transportista.');
+        }
+
+        const result = await response.json();
+        console.log('Transportista modificado:', result);
+        window.location.assign("../llistar/llistatTransportistes.html"); // Redirigir después de éxito
+    } catch (error) {
+        console.error('Error al modificar el transportista:', error);
+        error(document.getElementById("missatgeError"), "Error al modificar el transportista. Intenta de nou.");
     }
-    localStorage.removeItem("modTransportista");
-    window.location.assign("../llistar/llistatTransportistes.html");
 }

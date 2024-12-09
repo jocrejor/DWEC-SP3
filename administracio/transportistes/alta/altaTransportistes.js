@@ -1,26 +1,26 @@
-let url = 'http://node.daw.iesevalorpego.es:3001/';
+//let url = 'http://node.daw.iesevalorpego.es:3001/';
 
-let state = [];
-let province= [];
-let city= [];
+
 
 window.onload = iniciar;
 
 
 
 async function iniciar() {
+    let url = 'http://node.daw.iesevalorpego.es:3001/';
     document.getElementById("btnGravar").addEventListener("click", validar, false);
     carregarPaisos();
     document.getElementById("state").addEventListener("change", manejarState);
-    state = await getData(url, "state");
-    province = await getData(url, "province");
-    city = await getData(url, "city");
+    state = await getData(url, "State");
+    province = await getData(url, "Province");
+    city = await getData(url, "City");
 
 }
 
 async function carregarPaisos() {
-    const stateData = await getData(url, "state");
-    console.log("Datos de países recibidos:", stateData);
+    
+    const stateData = await getData(url, "State");
+    //console.log("Datos de países recibidos:", stateData);
     const stateSelect = document.getElementById("state");
     stateData.forEach(state => {
         const option = document.createElement("option");
@@ -33,17 +33,23 @@ async function carregarPaisos() {
 async function manejarState() {
     const stateId = document.getElementById("state").value;
 
-    if (stateId === "194"){
-        carregarProvincies(stateId);
-    }else{
+    if (stateId) {
+        // Verificar si el estado seleccionado es España
+        const stateData = await getData(url, `State/${stateId}`);
+        if (stateData && stateData.name !== "Spain") {
+            convertirProvinciaCiudadEnInput();
+        } else {
+            await carregarProvincies(stateId);
+        }
+    } else {
         convertirProvinciaCiudadEnInput();
     }
-    
 }
 
+
 async function carregarProvincies(stateId) {
-    const provinceSelect = document.getElementById("province").parentElement;
-    const provinceData = await getData(url, `provinces?state_id=${stateId}`);
+    const provinceSelect = document.getElementById("Province");
+    const provinceData = await getData(url, `Province?state_id=${stateId}`);
 
     provinceSelect.innerHTML = '<option value="">Selecciona una província</option>';
     provinceData.forEach(province => {
@@ -58,17 +64,18 @@ async function carregarProvincies(stateId) {
 }
 
 function convertirProvinciaCiudadEnInput() {
-    const provinceContainer = document.getElementById("provinceContainer");
-    const cityContainer = document.getElementById("cityContainer");
+    const provinceContainer = document.getElementById("province").parentNode; // Obteniendo el contenedor del select
+    const cityContainer = document.getElementById("city").parentNode; // Obteniendo el contenedor del select
 
-    provinceContainer.innerHTML = '<input type="text" id="province" name="province" placeholder="Introduce la provincia">';
-    cityContainer.innerHTML = '<input type="text" id="city" name="city" placeholder="Introduce la ciudad">';
+    provinceContainer.innerHTML = '<input type="text" class="form-control" id="province" placeholder="Introduce la provincia">';
+    cityContainer.innerHTML = '<input type="text" class="form-control" id="city" placeholder="Introduce la ciudad">';
 }
 
+
 async function carregarCiutats() {
-    const provinceId = document.getElementById("province").value;
-    const citySelect = document.getElementById("city");
-    const cityData = await getData(url, `cities?province_id=${provinceId}`);
+    const provinceId = document.getElementById("Province").value;
+    const citySelect = document.getElementById("City");
+    const cityData = await getData(url, `City?province_id=${provinceId}`);
 
     citySelect.innerHTML = '<option value="">Selecciona una ciutat</option>';
     cityData.forEach(city => {
@@ -230,9 +237,8 @@ function esborrarError() {
 
 
 async function enviarFormulari() {
-    const nouId = await getNewId(url, "getTransportistaId");
     const nouTransportista = {
-        id: nouId,
+        id: await getNewId(url, "getTransportistaId"), // Obtener un nuevo ID
         name: document.getElementById("name").value,
         nif: document.getElementById("nif").value,
         phone: document.getElementById("phone").value,
@@ -241,18 +247,37 @@ async function enviarFormulari() {
         state: document.getElementById("state").value,
         province: document.getElementById("province").value,
         city: document.getElementById("city").value,
-        cp: document.getElementById("cp").value
+        cp: document.getElementById("cp").value // Asegúrate de que este campo exista en tu HTML
     };
 
     try {
-        await postData(url, "saveTransportista", nouTransportista);
+        const response = await postData(url, "Carriers", nouTransportista);
+        
+        if (!response.ok) {
+            throw new Error('Error al guardar el transportista'); // Manejo de errores
+        }
+
         alert("Transportista guardado con éxito.");
-        location.href = "../llistar/llistatTransportistes.html";
+        location.href = "../llistar/llistatTransportistes.html"; // Redirigir después de guardar
     } catch (error) {
         console.error("Error al guardar el transportista:", error);
         alert("Ocurrió un error al guardar el transportista.");
     }
 }
+
+// Función para hacer la solicitud POST
+async function postData(url, endpoint, data) {
+    const response = await fetch(`${url}/${endpoint}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+    return response; // Retorna la respuesta para que pueda ser manejada
+}
+
+
 
 function limpiarFormulari() {
     document.getElementById("name").value = "";
