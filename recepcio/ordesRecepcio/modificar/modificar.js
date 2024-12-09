@@ -228,9 +228,9 @@ async function guardarCambios() {
     });
 
     if (orderReception.length > 0) {
-      await postData(url, orderReceptionEP, ordenMod);
+      await updateId(url, orderReceptionEP, ordenMod.id, ordenMod);
     }
-    await postData(url, orderLineReceptionEP, orderLineReception);
+    await updateId(url, orderLineReceptionEP, orderLineReception);
     localStorage.removeItem("modOrden");
 
     alert("Cambios guardados correctamente");
