@@ -4,11 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estat de Línia d'Orde de Recepció</title>
-    <script src="listar.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="listar.js" defer></script>
+    <script src="../../../../apiAccess/crud.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" 
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous" defer>
+    </script>
+    <style>
+        .error {
+            color: red;
+        }
+        .valid {
+            color: green;
+        }
+    </style>
 </head>
 <body>
-    
+    <div class="container my-4">
+        <h2>Estat d'Orde de Recepció</h2>
+        
+        <button class="btn btn-primary my-3" id="crear">Crear Estat</button>
+        <div id="tablaEstadoOrdenes" class="table-responsive">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Esborrar</th>
+                        <th>Modificar</th>
+                        <th>Visualitzar</th>
+                        <th>ID</th>
+                        <th>Nom</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaContenido"></tbody>
+            </table>
+        </div>
+    </div>
 </body>
 </html>

@@ -59,7 +59,10 @@ button{
     left: 0;
     width: 16.6666666667%;
     overflow-y: scroll;
+<<<<<<< HEAD
     color: white;
+=======
+>>>>>>> Gabi-v2
 }
 
 #logo{
@@ -342,6 +345,14 @@ td, th {
     text-decoration: none;
 }
 
+<<<<<<< HEAD
+=======
+.botoTornar a {
+    text-decoration: none;
+    color: inherit;
+}
+
+>>>>>>> Gabi-v2
 /*MEDIAQUERY*/
 @media only screen and (max-width: 1100px) {
     #logo{

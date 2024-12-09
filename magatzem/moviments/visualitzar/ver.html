@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualització del Moviment</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="ver.js" defer></script>
+    <script src="../../../apiAccess/crud.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <h2>Visualitzar el Moviment</h2>
+        <form id="formulario">
+            <div class="form-group">
+                <label for="id">Producte:</label>
+                <input type="text" id="product_id" class="form-control" readonly>
+            </div>
+
+            <div class="form-group">
+                <label for="name">Magatzem:</label>
+                <input type="text" id="storage_id" class="form-control" readonly>
+            </div>
+            
+            <div class="form-group">
+                <label for="name">Carrer:</label>
+                <input type="text" id="street_id" class="form-control" readonly>
+            </div>
+            
+            <div class="form-group">
+                <label for="name">Estanteria:</label>
+                <input type="text" id="shelf_id" class="form-control" readonly>
+            </div>
+            
+
+            <div class="form-group">
+                <label for="name">Espai:</label>
+                <input type="text" id="space_id" class="form-control" readonly>
+            </div>
+
+
+            <div class="form-group">
+                <label for="name">Quantitat:</label>
+                <input type="text" id="quantity" class="form-control" readonly>
+            </div>
+
+
+            <div class="form-group">
+                <label for="name">Data:</label>
+                <input type="text" id="date" class="form-control" readonly>
+            </div>
+
+
+            <div class="form-group">
+                <label for="name">Operari:</label>
+                <input type="text" id="operator_id" class="form-control" readonly>
+            </div>
+
+
+            <div class="form-group">
+                <label for="name">Origen:</label>
+                <input type="text" id="origin" class="form-control" readonly>
+            </div>
+
+
+            <div class="form-group">
+                <label for="name">Document:</label>
+                <input type="text" id="document" class="form-control" readonly>
+            </div>
+            <div class="form-group">
+                <button type="button" id="tornar" class="btn btn-primary">Tornar</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
