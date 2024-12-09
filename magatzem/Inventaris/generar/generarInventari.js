@@ -69,9 +69,7 @@ async function generarInventari() {
     
     let nouInventari = await postData(url, "Inventory", newInventory);
 
-    //inventoryLine
-    //let idInventoryLine = await getNewId(url, "InventoryLine"); 
-    
+    //inventoryLine 
     await filteredSpaces.forEach(space => {
         let newInventoryLine =  {
             inventory_id: nouInventari.id,
