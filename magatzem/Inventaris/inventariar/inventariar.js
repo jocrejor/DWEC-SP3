@@ -7,8 +7,10 @@ $(document).ready(function() {
     }
 
     document.getElementById("tornarBtn").addEventListener("click",tornar,false)
+    //document.getElementById("guardarBtn").addEventListener("click", validar, false);
     document.getElementById("guardarBtn").addEventListener("click", () => {
-        actualitzarQuantitat(inventory.id);
+        validar();
+        //actualitzarQuantitat(inventory.id);
         localStorage.removeItem("inventariarInventory");
     });
 });
@@ -85,6 +87,7 @@ async function mostrarProductes(inventoryID) {
         inputQuantitat.id = producte.id;  //id inventory Line
         inputQuantitat.name = `quantitat-${producte.product_id}`;
         inputQuantitat.placeholder = "Introduïu la quantitat";
+        inputQuantitat.setAttribute("required","required");    
         quantitatTD.appendChild(inputQuantitat);
         fila.appendChild(quantitatTD);
 
@@ -123,4 +126,53 @@ async function actualitzarQuantitat(inventoryID) {
         }
     }
     alert('Inventari correctament inventariat');
+}
+
+function validarQuantitat() {
+    
+    let taula = document.querySelectorAll("#productesBody input");
+    for (let input of taula){
+        if (!input.checkValidity()) {
+            if (input.validity.valueMissing) {
+                error(input, "Introdueix totes les quantitats reals");
+            }
+            else if (input.validity.patternMismatch) {
+                error(input, "Introduce sols números");
+            }
+            return false;
+        }
+       
+    }
+ return true;
+
+}
+
+function validar() {
+    esborrarError();
+   
+    if (validarQuantitat()) {
+       // actualitzarQuantitat(inventory.id);
+       // localStorage.removeItem("inventariarInventory");
+        return true;
+
+    } else {
+        return false;
+    }
+}
+
+function error(element, missatge) {
+    const textError = document.createTextNode(missatge);
+    const elementError = document.getElementById("missatgeError")
+    elementError.appendChild(textError)
+    element.classList.add("error")
+    element.focus();
+}
+
+function esborrarError() {
+    let inputs = document.querySelectorAll("#productesBody input");
+   
+    for (let ele of inputs) {
+        ele.classList.remove("error")
+    }
+    document.getElementById("missatgeError").replaceChildren();
 }
