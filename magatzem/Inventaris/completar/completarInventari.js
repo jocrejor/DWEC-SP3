@@ -11,8 +11,8 @@ $(document).ready(function() {
         mostrarInventari(inventory);
         mostrarProductes(inventory.id);
     }
-    document.getElementById("btnCompletar").addEventListener("click",completarInventari,false);
-     //document.getElementById("btnCompletar").addEventListener("click", validar, false);
+    
+    document.getElementById("btnCompletar").addEventListener("click", () => completarInventari(inventory.id), false);
     document.getElementById("btnRegresar").addEventListener("click", () => {
         localStorage.removeItem("inventoryCompletar");
         window.location.assign("../processarInventari/processarInventari.html"); 
@@ -99,7 +99,16 @@ async function mostrarProductes(inventoryID) {
     });
 }
 
-async function completarInventari() {
+async function completarInventari(inventoryID) {
+    //actualitzarInventari
+    const inventari = await getData(url,"Inventory");
+    const inventariObj = inventari.find(inventari => inventari.id === inventoryID);
+
+    if (inventariObj) {
+        inventariObj.inventory_status = "Completat";
+        await updateId(url, "Inventory", inventoryID, inventariObj);
+    }
+
     let currentUser = JSON.parse(localStorage.getItem("currentUser"));
     //actualitzar linea inventari
     const valorsDetall = document.querySelectorAll("table select");
@@ -131,42 +140,4 @@ async function completarInventari() {
     alert('Inventari correctament completat'); 
 }
 
-/*function validarJustificacio() {
-    var justificacio = document.getElementById("storage");
-    if (!justificacio.checkValidity()) {
-        if (justificacio.validity.valueMissing) {
-            error(justificacio, "Selecciona totes les justificacions");
-        }
-        return false;
-    }
-    return true;
-}
 
-function validar(e) {
-    esborrarError();
-    e.preventDefault();
-
-    if (validarJustificacio()) {
-        completarInventari();
-        return true;
-
-    } else {
-        return false;
-    }
-}
-
-function error(element, missatge) {
-    const textError = document.createTextNode(missatge);
-    const elementError = document.getElementById("missatgeError")
-    elementError.appendChild(textError)
-    element.classList.add("error")
-    element.focus();
-}
-
-function esborrarError() {
-    let formulari = document.forms[0].elements;
-    for (let ele of formulari) {
-        ele.classList.remove("error")
-    }
-    document.getElementById("missatgeError").replaceChildren();
-}*/

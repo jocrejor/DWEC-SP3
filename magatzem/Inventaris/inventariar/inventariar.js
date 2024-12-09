@@ -7,12 +7,7 @@ $(document).ready(function() {
     }
 
     document.getElementById("tornarBtn").addEventListener("click",tornar,false)
-    //document.getElementById("guardarBtn").addEventListener("click", validar, false);
-    document.getElementById("guardarBtn").addEventListener("click", () => {
-        validar();
-        //actualitzarQuantitat(inventory.id);
-        localStorage.removeItem("inventariarInventory");
-    });
+    document.getElementById("guardarBtn").addEventListener("click", validar, false);
 });
 
 function tornar() {
@@ -98,6 +93,7 @@ async function mostrarProductes(inventoryID) {
 
 async function actualitzarQuantitat(inventoryID) {
     //actualitzar inventari
+    let currentUser = JSON.parse(localStorage.getItem("currentUser"));
     const inventari = await getData(url,"Inventory");
     const inventariObj = inventari.find(inventari => inventari.id === inventoryID);
 
@@ -119,6 +115,7 @@ async function actualitzarQuantitat(inventoryID) {
 
                 if (inventoryLine) {
                     inventoryLine.real_quantity = updatedData;
+                    inventoryLine.operator = currentUser.id;
                     await updateId(url, "InventoryLine", ele.id, inventoryLine);
                 }
                 //Falta operador
@@ -148,11 +145,12 @@ function validarQuantitat() {
 }
 
 function validar() {
+    const inventory = JSON.parse(localStorage.getItem("inventariarInventory")); 
     esborrarError();
    
     if (validarQuantitat()) {
-       // actualitzarQuantitat(inventory.id);
-       // localStorage.removeItem("inventariarInventory");
+        actualitzarQuantitat(inventory.id);
+        localStorage.removeItem("inventariarInventory");
         return true;
 
     } else {
