@@ -8,6 +8,9 @@ window.onload = async function () {
     construirTaula();
     await autocompleta();
 
+    $("#filtre").on("click", function(){
+      $("#divFiltres").fadeToggle(300);
+    });
     document.getElementById("crearMovProva").addEventListener("click", async () => {
       const prova = {
         product_id: "2",

@@ -27,36 +27,41 @@
     <div class="container-fluid">
         <h2 class="mt-3">Moviments</h2>
 
-        <button id="crearMovProva" class="btn btn-primary">Crear Mov Prova</button><br>
+        <button id="crearMovProva" class="btn btn-primary">Crear Mov Prova</button><br><br>
 
-        <label for="buscaProducte">Filtra per Productes: </label>
-        <input type="text" id="buscaProducte" class="my-3" placeholder="Ex: Producto uno">
+        <svg xmlns="http://www.w3.org/2000/svg" id="filtre" width="16" height="16" fill="currentColor" class="bi bi-funnel" viewBox="0 0 16 16">
+            <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2z"/>
+        </svg>
+        <div id="divFiltres">
+            <label for="buscaProducte">Filtra per Productes: </label>
+            <input type="text" id="buscaProducte" class="my-3" placeholder="Ex: Producto uno">
 
-        <label for="buscaProducte">Filtra per Magatzem: </label>
-        <input type="text" id="buscaMagatzem" class="my-3" placeholder="Ex: 01">
+            <label for="buscaProducte">Filtra per Magatzem: </label>
+            <input type="text" id="buscaMagatzem" class="my-3" placeholder="Ex: 01">
 
-        <label for="buscaProducte">Filtra per Carrer: </label>
-        <input type="text" id="buscaCarrer" class="my-3" placeholder="Ex: 01">
+            <label for="buscaProducte">Filtra per Carrer: </label>
+            <input type="text" id="buscaCarrer" class="my-3" placeholder="Ex: 01">
 
-        <label for="buscaProducte">Filtra per Estanteria: </label>
-        <input type="text" id="buscaEstanteria" class="my-3" placeholder="Ex: 01">
+            <label for="buscaProducte">Filtra per Estanteria: </label>
+            <input type="text" id="buscaEstanteria" class="my-3" placeholder="Ex: 01">
 
-        <label for="buscaProducte">Filtra per Espai: </label>
-        <input type="text" id="buscaEspai" class="my-3" placeholder="Ex: 01"><br>
+            <label for="buscaProducte">Filtra per Espai: </label>
+            <input type="text" id="buscaEspai" class="my-3" placeholder="Ex: 01"><br>
 
-        <label for="buscaProducte">Data d'inici: </label>
-        <input type="date" id="dataInici" class="my-3" placeholder="Ex: 3/12/2024">
+            <label for="buscaProducte">Data d'inici: </label>
+            <input type="date" id="dataInici" class="my-3" placeholder="Ex: 3/12/2024">
 
-        <label for="dataFinal">Data de Finalització:</label>
-        <input type="date" id="dataFinal" class="my-3" placeholder="Ex: 3/12/2024">
+            <label for="dataFinal">Data de Finalització:</label>
+            <input type="date" id="dataFinal" class="my-3" placeholder="Ex: 3/12/2024">
 
-        <label for="buscaProducte">Filtra per Operari: </label>
-        <input type="text" id="buscaOperari" class="my-3" placeholder="Ex: 1">
+            <label for="buscaProducte">Filtra per Operari: </label>
+            <input type="text" id="buscaOperari" class="my-3" placeholder="Ex: 1">
 
-        <label for="buscaProducte">Filtra per Origen: </label>
-        <input type="text" id="buscaOrigen" class="my-3" placeholder="Ex: Reception">
+            <label for="buscaProducte">Filtra per Origen: </label>
+            <input type="text" id="buscaOrigen" class="my-3" placeholder="Ex: Reception">
 
-        <button id="filtrar" class="btn btn-primary">Filtrar</button><br>
+            <button id="filtrar" class="btn btn-primary">Filtrar</button><br>
+        </div>
         <div id="tablaEstadoOrdenes" class="table-responsive my-3">
             <table class="table">
                 <thead class="thead-light">
