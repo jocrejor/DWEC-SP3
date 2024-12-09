@@ -99,7 +99,7 @@ async function actualitzarQuantitat(inventoryID) {
     const inventariObj = inventari.find(inventari => inventari.id === inventoryID);
 
     if (inventariObj) {
-        inventariObj.inventory_status = "Completat";
+        inventariObj.inventory_status = "Fent-se";
         await updateId(url, "Inventory", inventoryID, inventariObj);
     }
 
