@@ -1,4 +1,4 @@
-let arrProductes = [];
+arrProductes = [];
 
 window.onload = main;
 
@@ -8,6 +8,7 @@ const endPoint = 'Product'; // Creem la variable endPoint per a que siga més pr
 function main() {
     document.getElementById('altaProducte').addEventListener('click', altaProducte);
     document.getElementById('icon-filter').addEventListener('click', showFilters);
+    document.getElementById('filtrarProductes').addEventListener('click', filtrarProductes);
 
     obtenerProductos();
 }
@@ -65,10 +66,10 @@ async function visualitzarProducte(productId) {
 async function obtenerProductos() {
     try {
         // Cridem a la funció getData() del script crud.js
-        const arrProductes = await getData(url, endPoint);
+        arrProductes = await getData(url, endPoint);
         console.log(arrProductes);
         mostrarProductes(arrProductes);
-        activateAutocomplete(arrProductes);
+        activateAutocomplete();
     } catch (error) {
         console.error('Error al obtener los productos:', error);
     }
@@ -171,7 +172,72 @@ function mostrarProductes(arrProductes) {
     });
 }
 
-function activateAutocomplete(arrProductes) {
+// Función que aplica los filtros y muestra los productos filtrados
+async function filtrarProductes() {
+    arrProductes = await getData(url, endPoint);
+
+    const skuInput          = $('#sku').val().trim().toLowerCase();
+    const nameInput         = $('#name').val().trim().toLowerCase();
+    const descriptionInput  = $('#description').val().trim().toLowerCase();
+    const lotInput          = $('#lot').val().trim();
+
+    console.log('SKU Input:', skuInput);
+    console.log('Name Input:', nameInput);
+    console.log('Description Input:', descriptionInput);
+    console.log('Lot Input:', lotInput);
+
+    // Filtrar los productos basándonos en los valores de los filtros
+    const productosFiltrados = arrProductes.filter(product => {
+        const matchesSKU = !skuInput || product.sku.toLowerCase().includes(skuInput);
+        const matchesName = !nameInput || product.name.toLowerCase().includes(nameInput); // Comparar con minúsculas
+        const matchesDescription = !descriptionInput || product.description.toLowerCase().includes(descriptionInput);
+        
+        // Filtrar por lotInput solo si el valor no es "Seleccione un lot"
+        const matchesLot = !lotInput || (lotInput !== "Seleccione un lot" && product.lotorserial && product.lotorserial.includes(lotInput));
+
+        // El producto pasa el filtro si cumple todos los criterios
+        return matchesSKU && matchesName && matchesDescription;
+    });
+
+    mostrarProductes(productosFiltrados);
+}
+
+// Función para activar el autocompletado para los campos de filtro
+function activateAutocomplete() {
+    const skuOptions = arrProductes.map(product => product.sku);
+    const nameOptions = arrProductes.map(product => product.name);
+    const descriptionOptions = arrProductes.map(product => product.description);
+
+    // Activar autocompletado para SKU
+    $('#sku').autocomplete({
+        source: function(request, response) {
+            const filtered = skuOptions.filter(option => option.toLowerCase().includes(request.term.toLowerCase()));
+            response(filtered);
+        },
+        minLength: 3, // Mostrar opciones después de 3 caracteres
+    });
+
+    // Activar autocompletado para Name
+    $('#name').autocomplete({
+        source: function(request, response) {
+            const filtered = nameOptions.filter(option => option.toLowerCase().includes(request.term.toLowerCase()));
+            response(filtered);
+        },
+        minLength: 3, // Mostrar opciones después de 3 caracteres
+    });
+
+    // Activar autocompletado para Description
+    $('#description').autocomplete({
+        source: function(request, response) {
+            const filtered = descriptionOptions.filter(option => option.toLowerCase().includes(request.term.toLowerCase()));
+            response(filtered);
+        },
+        minLength: 3, // Mostrar opciones después de 3 caracteres
+    });
+}
+
+//PROVES
+/*function activateAutocomplete(arrProductes) {
     const sku           = arrProductes.map(product => product.sku);
     const description   = arrProductes.map(product => product.description);
     const name          = arrProductes.map(product => product.name);
@@ -233,10 +299,10 @@ function activateAutocomplete(arrProductes) {
             filterLotProducts(query, arrProductes);  // Filtrar productos por "lot"
         }
     });
-}
-
+}*/
+//MES PROVES DELS FILTRATS
 //Funció per filtrar els productes per SKU
-function filterSKUProducts(query, arrProductes) {
+/*function filterSKUProducts(query, arrProductes) {
     const filteredProducts = arrProductes.filter(product => product.sku.toLowerCase().includes(query.toLowerCase()));
     mostrarProductes(filteredProducts);
 }
@@ -256,4 +322,4 @@ function filterDescriptionProducts(query, arrProductes) {
 function filterLotProducts(query, arrProductes) {
     const filteredProducts = arrProductes.filter(product => product.lotorserial && product.lotorserial.includes(query));
     mostrarProductes(filteredProducts);
-}
+}*/
