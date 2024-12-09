@@ -14,14 +14,8 @@ function main() {
 }
 
 function showFilters() {
-    const filters = document.getElementById('filters');
-
-    if (filters.style.display == 'block') {
-        filters.style.display = 'none';
-    }
-    else {
-        filters.style.display = 'block';
-    }
+    const filters = $('#filters');
+    filters.slideToggle(500);  // 500ms de duración para la animación
 }
 
 function altaProducte() {
@@ -62,7 +56,7 @@ async function visualitzarProducte(productId) {
     }
 }
 
-// Función per obtindre tots els productes de la base de datos utilitzant getData() del crud.js
+//Funció per obtindre tots els productes de la base de datos utilitzant getData() del crud.js
 async function obtenerProductos() {
     try {
         // Cridem a la funció getData() del script crud.js
@@ -75,11 +69,11 @@ async function obtenerProductos() {
     }
 }
 
-// Función para mostrar los productos en la tabla
+//Funció para mostrar los productos en la tabla
 function mostrarProductes(arrProductes) {
     let tbody = document.getElementById("files");
 
-    // Crear las opciones para el select de "lot"
+    //Crear las opciones para el select de "lot"
     const opciones = [
         { value: "Seleccione un lot",       text: "Seleccione un lot" },
         { value: "Non",                     text: "Non" },
@@ -89,12 +83,12 @@ function mostrarProductes(arrProductes) {
 
     const selectLotorserial = document.getElementById("lot");
 
-    // Limpiar las opciones anteriores utilizando el DOM
+    //Limpiar las opciones anteriores utilizando el DOM
     while (selectLotorserial.firstChild) {
         selectLotorserial.removeChild(selectLotorserial.firstChild);
     }
 
-    // Añadir las nuevas opciones utilizando el DOM
+    //Añadir las nuevas opciones utilizando el DOM
     opciones.forEach(opcion => {
         const optionElement = document.createElement("option");
         optionElement.value = opcion.value;
@@ -172,7 +166,7 @@ function mostrarProductes(arrProductes) {
     });
 }
 
-// Función que aplica los filtros y muestra los productos filtrados
+// Funció que aplica els filtros i mostra els productes filtrats
 async function filtrarProductes() {
     arrProductes = await getData(url, endPoint);
 
@@ -186,23 +180,28 @@ async function filtrarProductes() {
     console.log('Description Input:', descriptionInput);
     console.log('Lot Input:', lotInput);
 
-    // Filtrar los productos basándonos en los valores de los filtros
+    // Filtrar productes depenent dels valors dels filtros
     const productosFiltrados = arrProductes.filter(product => {
         const matchesSKU = !skuInput || product.sku.toLowerCase().includes(skuInput);
-        const matchesName = !nameInput || product.name.toLowerCase().includes(nameInput); // Comparar con minúsculas
+        const matchesName = !nameInput || product.name.toLowerCase().includes(nameInput);
         const matchesDescription = !descriptionInput || product.description.toLowerCase().includes(descriptionInput);
-        
-        // Filtrar por lotInput solo si el valor no es "Seleccione un lot"
-        const matchesLot = !lotInput || (lotInput !== "Seleccione un lot" && product.lotorserial && product.lotorserial.includes(lotInput));
+
+        // Filtro de lote con verificación adicional
+        const matchesLot = lotInput && lotInput !== "Seleccione un lot" && product.lotorserial && String(product.lotorserial).toLowerCase().includes(lotInput.toLowerCase());
 
         // El producto pasa el filtro si cumple todos los criterios
-        return matchesSKU && matchesName && matchesDescription;
+        return matchesSKU && matchesName && matchesDescription && matchesLot;
     });
 
+    // Mostrar los productos filtrados
+    console.log('Productos filtrados:', productosFiltrados);
     mostrarProductes(productosFiltrados);
+
+    // Mantener la opción seleccionada en el select
+    $('#lot').val(lotInput); // Establece el valor seleccionado de "lot" en el select
 }
 
-// Función para activar el autocompletado para los campos de filtro
+// Funció per activar el autocompletat pels camps de filtro
 function activateAutocomplete() {
     const skuOptions = arrProductes.map(product => product.sku);
     const nameOptions = arrProductes.map(product => product.name);
@@ -214,7 +213,7 @@ function activateAutocomplete() {
             const filtered = skuOptions.filter(option => option.toLowerCase().includes(request.term.toLowerCase()));
             response(filtered);
         },
-        minLength: 3, // Mostrar opciones después de 3 caracteres
+        minLength: 3,
     });
 
     // Activar autocompletado para Name
@@ -223,7 +222,7 @@ function activateAutocomplete() {
             const filtered = nameOptions.filter(option => option.toLowerCase().includes(request.term.toLowerCase()));
             response(filtered);
         },
-        minLength: 3, // Mostrar opciones después de 3 caracteres
+        minLength: 3,
     });
 
     // Activar autocompletado para Description
@@ -232,7 +231,7 @@ function activateAutocomplete() {
             const filtered = descriptionOptions.filter(option => option.toLowerCase().includes(request.term.toLowerCase()));
             response(filtered);
         },
-        minLength: 3, // Mostrar opciones después de 3 caracteres
+        minLength: 3,
     });
 }
 
