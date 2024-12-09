@@ -3,38 +3,31 @@ const ENDPOINT = 'State';
 document.getElementById('newStateForm').addEventListener('submit', async function(event) {
     event.preventDefault();
 
-    const newName = document.getElementById('stateName').value;
+    const form = document.getElementById('newStateForm');
+    const stateNameField = document.getElementById('stateName');
 
-    if (!validarNom(newName)) {
-        error(document.getElementById('stateName'), 'El nom ha de tenir entre 2 i 25 caràcters i només permet lletres (amb accents i ñ)');
+    if (!form.checkValidity()) {
+        if (!stateNameField.checkValidity()) {
+            error(stateNameField, 'El nom ha de tenir entre 2 i 25 caràcters i només permet lletres (amb accents i ñ)');
+        }
         return;
     }
 
     try {
-        const newId = generateUniqueId();
+        const newName = stateNameField.value;
 
         const newState = {
-            id: newId, 
             name: newName
         };
 
-        await postData(url, ENDPOINT, newState);
-
-        window.location.href = 'llistaEstat.html'; 
+        const result = await postData(url, ENDPOINT, newState);
+        if (result) {
+            window.location.href = 'llistaEstat.html'; 
+        }
     } catch (error) {
         console.error('Error afegint l\'estat:', error);
     }
 });
-
-function generateUniqueId() {
-    const idNumber = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
-    return idNumber.toString();  
-}
-
-function validarNom(name) {
-    const pattern = /^[A-Za-záéíóúÁÉÍÓÚñÑ\s]{2,25}$/;
-    return pattern.test(name);
-}
 
 function error(input, message) {
     esborrarError();

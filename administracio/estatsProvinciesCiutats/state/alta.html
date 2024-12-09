@@ -14,7 +14,7 @@
         <form id="newStateForm" class="mt-4">
             <div class="form-group">
                 <label for="stateName">Nom del Estat</label>
-                <input type="text" id="stateName" class="form-control" required>
+                <input type="text" id="stateName" class="form-control" required pattern="^[A-Za-záéíóúÁÉÍÓÚñÑ\s]{2,25}$">
             </div>
             <button type="submit" class="btn btn-primary">Afegir Estat</button>
         </form>

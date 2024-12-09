@@ -1,99 +1,78 @@
+const ENDPOINT = 'City';
+
 window.onload = function () {
-    loadCityData();
-    document.getElementById("editCityForm").addEventListener("submit", modifyCity);
-    configureCancelButton();
+    const urlParams = new URLSearchParams(window.location.search);
+    const cityId = urlParams.get('cityId');
+    const provinceId = localStorage.getItem('provinceId');
+    
+    if (!cityId || !provinceId) {
+        alert("No s'han proporcionat dades vàlides.");
+        window.location.href = `llistaCiutat.html`; // Redirige a la lista si falta algún parámetro
+        return;
+    }
+
+    // Establecemos el enlace de cancelación para regresar a la lista de ciudades
+    document.getElementById('cancelLink').href = `llistaCiutat.html?provinceId=${provinceId}&provinceName=${encodeURIComponent(localStorage.getItem('provinceName'))}`;
+
+    loadCityForEditing(cityId);
 };
 
-function loadCityData() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const index = parseInt(urlParams.get("index"), 10);
+async function loadCityForEditing(cityId) {
+    try {
+        const cities = await getData(url, ENDPOINT);
+        const cityToEdit = cities.find(city => city.id == cityId);
 
-    if (isNaN(index)) {
-        window.location.href = "./llistaCiutat.html"; 
-        return;
+        if (cityToEdit) {
+            document.getElementById('cityName').value = cityToEdit.name;
+        } else {
+            alert("Ciutat no trobada.");
+            window.location.href = `llistaCiutat.html`;
+        }
+    } catch (error) {
+        console.error('Error carregant la ciutat:', error);
     }
-
-    const cities = JSON.parse(localStorage.getItem("City")) || [];
-    const provinceId = urlParams.get("provinceId");
-    const citiesOfProvince = cities.filter(city => city.province_id === provinceId);
-
-    if (!citiesOfProvince[index]) {
-        window.location.href = "./llistaCiutat.html"; 
-        return;
-    }
-
-    const city = citiesOfProvince[index];
-    document.getElementById("cityName").value = city.name;
-
-    localStorage.setItem("selectedCityIndex", index);
 }
 
-function configureCancelButton() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const provinceId = urlParams.get("provinceId");
-    const index = urlParams.get("index");
+async function modifyCity(event) {
+    event.preventDefault();
 
-    const cancelLink = document.getElementById("cancelLink");
-    cancelLink.href = `llistaCiutat.html?provinceId=${provinceId}&index=${index}`;
-}
+    const cityId = new URLSearchParams(window.location.search).get('cityId');
+    const newName = document.getElementById('cityName').value.trim();
 
-function modifyCity(e) {
-    e.preventDefault();
-
-    const newName = document.getElementById("cityName").value.trim();
-    if (!validateCityName(newName)) {
+    if (!validarNom(newName)) {
+        mostrarError('El nom ha de tenir entre 2 i 25 caràcters i només permet lletres (amb accents i ñ)');
         return;
     }
 
-    const cities = JSON.parse(localStorage.getItem("City")) || [];
-    const urlParams = new URLSearchParams(window.location.search);
-    const provinceId = urlParams.get("provinceId");
-    const index = parseInt(urlParams.get("index"), 10);
+    const updatedCity = { name: newName };
 
-    const citiesOfProvince = cities.filter(city => city.province_id === provinceId);
-
-    if (!citiesOfProvince[index]) {
-        window.location.href = "./llistaCiutat.html";
-        return;
+    try {
+        await updateId(url, ENDPOINT, cityId, updatedCity); 
+        
+        const provinceId = localStorage.getItem('provinceId');
+        window.location.href = `llistaCiutat.html?provinceId=${provinceId}&provinceName=${encodeURIComponent(localStorage.getItem('provinceName'))}`;
+    } catch (error) {
+        console.error("Error actualitzant la ciutat:", error);
     }
-
-    citiesOfProvince[index].name = newName;
-
-    const updatedCities = cities.map(city =>
-        city.id === citiesOfProvince[index].id ? citiesOfProvince[index] : city
-    );
-
-    localStorage.setItem("City", JSON.stringify(updatedCities));
-    window.location.href = `llistaCiutat.html?provinceId=${provinceId}`;
 }
 
-function validateCityName(name) {
+function validarNom(name) {
     const pattern = /^[A-Za-záéíóúÁÉÍÓÚñÑ\s]{2,25}$/;
-    const cityInput = document.getElementById("cityName");
-
-    clearError(); 
-    if (!name) {
-        showError(cityInput, "Ompli el camp!");
-        return false;
-    }
-
-    if (!pattern.test(name)) {
-        showError(cityInput, "El nom no pot contenir números ni caràcters especials, ha de tenir entre 2 i 25 caràcters.");
-        return false;
-    }
-
-    return true;
+    return pattern.test(name);
 }
 
-function showError(input, message) {
+function mostrarError(message) {
+    const form = document.getElementById('editCityForm');
+    esborrarError();
+
     const errorElement = document.createElement('div');
-    errorElement.classList.add('error-message', 'text-danger', 'mt-2');
+    errorElement.classList.add('text-danger', 'mt-2');
     errorElement.innerText = message;
-    input.parentNode.appendChild(errorElement);
+
+    form.appendChild(errorElement);
 }
 
-function clearError() {
-    const errorMessages = document.querySelectorAll('.error-message');
-    errorMessages.forEach((message) => message.remove());
+function esborrarError() {
+    const errors = document.querySelectorAll('.text-danger');
+    errors.forEach(error => error.remove());
 }
-

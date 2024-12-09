@@ -11,11 +11,8 @@ document.getElementById('newProvinceForm').addEventListener('submit', async func
         return;
     }
 
-    const newId = generateUniqueId();  
-
     const newProvince = {
         state_id: stateId, 
-        id: newId,         
         name: provinceName 
     };
 
@@ -29,11 +26,6 @@ document.getElementById('newProvinceForm').addEventListener('submit', async func
         console.error('Error al afegir la provincia:', error);
     }
 });
-
-function generateUniqueId() {
-    const id = Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000;  
-    return id.toString(); 
-}
 
 function validarNom(name) {
     const pattern = /^[A-Za-záéíóúÁÉÍÓÚñÑ\s]{2,25}$/;  
