@@ -16,8 +16,56 @@ async function revisaIncidencia(){
     let valorInputDescripcio = document.getElementById("description").value;
     incidentSeleccionat.description = valorInputDescripcio;
     incidentSeleccionat.quantity_received = valorInputQuantitat;
-    await updateId(url,"Incident",incidentSeleccionat.id,incidentSeleccionat);
-    window.location.href = "../incidencies.html";
+    if(validar()){
+        await updateId(url,"Incident",incidentSeleccionat.id,incidentSeleccionat);
+        window.location.href = "../incidencies.html";
+    }
+}
+
+
+function validar(){ 
+    if(validarQuantitat() && validarDescripcio()){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+function validarQuantitat(){
+    var inputQuantitat = document.getElementById("quantity");
+    var missatgeError = document.getElementById("missatgeError");
+
+    missatgeError.textContent = "";
+
+    if(!inputQuantitat.checkValidity()){
+        if(inputQuantitat.validity.valueMissing){
+            const textNode = document.createTextNode("Insereix una quantitat de productes rebuts");
+            missatgeError.appendChild(textNode);
+            return false;
+        }
+    }
+    else{
+        return true;
+    }
+}
+
+function validarDescripcio(){
+    var inputDescription = document.getElementById("description");
+    var missatgeError = document.getElementById("missatgeError");
+
+    missatgeError.textContent = "";
+
+    if(!inputDescription.checkValidity()){
+        if(inputDescription.validity.valueMissing){
+            const textNode = document.createTextNode("Insereix una descripció per a l'incidencia");
+            missatgeError.appendChild(textNode);
+            return false;
+        }
+    }
+    else{
+        return true;
+    }
 }
 
 async function carregarCapçalera(){

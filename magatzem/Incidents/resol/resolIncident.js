@@ -1,5 +1,11 @@
 let proveidors;
-$(document).ready(async function () { 
+$(document).ready(async function () {
+    thereIsUser();
+    let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (currentUser.role==="3"){
+        alert("No tens permisos per resoldre una incidencia");
+        history.back();
+    }
     proveidors = await getData(url,"Supplier"); 
     replenaEstats();
     $("#btnTorna").click(function(){
@@ -12,10 +18,30 @@ $(document).ready(async function () {
 });
 
 async function resolIncidencia(){
-    const incidentSeleccionat = JSON.parse(localStorage.getItem("incidentSeleccionat"));
-    incidentSeleccionat.status = document.getElementById("incidentStatus").value;
-    await updateId(url,"Incident",incidentSeleccionat.id,incidentSeleccionat);
-    window.location.href = "../incidencies.html";
+    if(validar()){
+        const incidentSeleccionat = JSON.parse(localStorage.getItem("incidentSeleccionat"));
+        incidentSeleccionat.status = document.getElementById("incidentStatus").value;
+        await updateId(url,"Incident",incidentSeleccionat.id,incidentSeleccionat);
+        window.location.href = "../incidencies.html";
+    }
+}
+
+function validar(){
+    var inputEstat = document.getElementById("incidentStatus");
+    var missatgeError = document.getElementById("missatgeError");
+
+    missatgeError.textContent = "";
+
+    if(!inputEstat.checkValidity()){
+        if(inputEstat.validity.valueMissing){
+            const textNode = document.createTextNode("Insereix un estat d'incidencia");
+            missatgeError.appendChild(textNode);
+            return false;
+        }
+    }
+    else{
+        return true;
+    }
 }
 
 async function carregarCapçalera(){

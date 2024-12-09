@@ -1,7 +1,8 @@
 let suppliers;
 
 $(document).ready(function () {
-    carregarCapçalera();  
+    carregarCapçalera();
+    thereIsUser();  
     $("#btnTorna").click(function(){
         window.location.href = "../../../recepcio/ordesRecepcio/visualitzar/visualizar.html";
     }),
@@ -72,10 +73,10 @@ async function altaIncidencia(){
         const ordreRecepcioSeleccionada = JSON.parse(localStorage.getItem("ordenVisualizar"));
         const orderLine = await getData(url,"OrderLineReception");
         const orderLineReception = orderLine.find(o => o.order_reception_id === ordreRecepcioSeleccionada.id);
-
+        const usuarioActual = JSON.parse(localStorage.getItem("currentUser"));
         const unitats = document. getElementById("quantity").value;
         const descripcio = document.getElementById("description").value;
-        const data = new Date().toLocaleDateString();
+        const data = new Date().toLocaleDateString('es-ES');
 
         const incidencia = {
             created_at: data,
@@ -83,10 +84,12 @@ async function altaIncidencia(){
             supplier: ordreRecepcioSeleccionada.supplier_id,
             orderReception_id:  ordreRecepcioSeleccionada.id,
             product: orderLineReception.product_id,
+            operator: usuarioActual.id,
             status: "Pendent",
             quantity_ordered: orderLineReception.quantity_ordered,
             quantity_received: unitats
         };
+
         await postData(url,"Incident",incidencia);
         window.location.href = "../incidencies.html";
     }
@@ -98,15 +101,6 @@ function getProveidor(id){
         return proveidorExistent.name;         
     }
     
-}
-
-function error(element, missatge) {
-    const textError = document.createTextNode(missatge);
-    const elementError = document.getElementById("missatgeError");
-
-    elementError.appendChild(textError);
-    element.classList.add( "error" );
-    element.focus();
 }
 
 /** esborrarError: funcio que borra el mensatge de error

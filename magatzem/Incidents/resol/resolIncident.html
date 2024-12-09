@@ -19,6 +19,7 @@
     <script src="../../../common/js/common.js" defer></script> 
     <link rel="stylesheet" href="alta.css">
     <script src="alta.js" defer></script>
+    <link rel="shortcut icon" href="../../../img/favicon_1.ico" type="image/x-icon">
 </head>
 <body>
     <div class="container-fluid">
@@ -93,11 +94,19 @@
             </div>
             <div class="col-10 padding-zero">
                 <div>
-                    <h2>Modificar</h2>
+                    <h2>Resol Incidencia</h2>
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-12">
                                 <div class="boxTaula">
+                                    <div class="boxBtn">
+                                        <button id="btnTorna" class="botoTornar">
+                                            Tornar
+                                        </button>
+                                        <button id="btnResol">
+                                            Resol
+                                        </button>
+                                    </div>
                                     <form class="formulari">
                                         <div class="row">
                                             <label for="name" class="col-3">ID Ordre de Recepció:</label>
@@ -123,34 +132,28 @@
                                         <div class="row">
                                             <label for="quantity" class="col-3">Quantitat rebuda:</label>
                                             <div class="col-9">
-                                                <input type="quantity" class="inputVisualitzar inputSolsVisualitzar" id="quantity" placeholder="Insereix les unitats rebudes" required>
+                                                <input type="quantity" class="inputVisualitzar inputSolsVisualitzar" id="quantity" disabled placeholder="Insereix les unitats rebudes" required>
                                             </div>
                                         </div>
                                         
                                         <div class="row">
                                             <label for="descripction" class="col-3">Descripcio:</label>
                                             <div class="col-9">
-                                                <input type="text" class="inputVisualitzar inputSolsVisualitzar" id="description" placeholder="Insereix una descripció" maxlength="30" required>
+                                                <input type="text" class="inputVisualitzar inputSolsVisualitzar" id="description" disabled placeholder="Insereix una descripció" maxlength="30" required>
                                             </div>
                                         </div>
 
                                         <div class="row">
                                             <label for="incidentStatus" class="col-3" >Estat</label>
                                             <div class="col-9">
-                                                <select class="inputVisualitzar" name="incidentStatus" id="incidentStatus">
+                                                <select class="inputVisualitzar" name="incidentStatus" id="incidentStatus" required>
                                                     <option value="" disabled selected>Selecciona un estat d'incidencia</option>
                                                 </select>
                                             </div>
                                         </div>
 
                                     </form>
-                                    <h5 id="missatgeError"></h5>
-                                    <button id="btnResol">
-										Resol
-    								</button>
-                                    <button id="btnTorna">
-										Tornar
-    								</button>
+                                    <h3 id="missatgeError"></h3>
                                 </div>
                             </div>
                         </div>

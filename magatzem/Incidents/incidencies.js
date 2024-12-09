@@ -7,6 +7,7 @@ $(document).ready(async function () {
     users = await getData(url,"User");
     estats = await getData(url,"OrderLineReception_Status");
     productes = await getData(url,"Product");
+    thereIsUser();
     carregarIncidencies();
     autocompletarProductes();
     replenarEstats();

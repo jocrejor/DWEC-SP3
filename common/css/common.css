@@ -59,10 +59,6 @@ button{
     left: 0;
     width: 16.6666666667%;
     overflow-y: scroll;
-<<<<<<< HEAD
-    color: white;
-=======
->>>>>>> Gabi-v2
 }
 
 #logo{
@@ -255,6 +251,7 @@ button:hover{
 
 .divAccions i:hover{
     color: var(--taronja);
+	cursor: pointer;
 }
 
 /*TAULA*/
@@ -335,7 +332,6 @@ td, th {
 }
 
 /* BOTO TORNAR HECHO POR EL JAVMAN MAGNIFICO */
-
 .botoTornar{
     background-color: var(--blauClar);
     padding: 0.4em 0.8em 0.4em 0.8em;
@@ -345,14 +341,25 @@ td, th {
     text-decoration: none;
 }
 
-<<<<<<< HEAD
-=======
 .botoTornar a {
     text-decoration: none;
     color: inherit;
 }
 
->>>>>>> Gabi-v2
+/* HOVER HECHO POR MANU */
+.botoTornar:hover{
+    color: var(--taronja);
+}
+
+/* MISSATGE QUE ES MOSTRA QUAN HI 
+HA UN ERROR O SI NO HI HA CLIENTS */
+#missatgeError{
+    text-align: center; 
+    font-size: 1.5em; 
+    color: #ff0000;
+    margin-top: 1em;
+}
+
 /*MEDIAQUERY*/
 @media only screen and (max-width: 1100px) {
     #logo{
