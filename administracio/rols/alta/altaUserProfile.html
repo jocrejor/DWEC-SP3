@@ -1,36 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rols - Formulari Alta</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script type="text/javascript"src="altaUserProfile.js" ></script>
-    <script type="text/javascript"src="../../../apiAccess/crud.js" ></script>
-    <style> 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script type="text/javascript" src="altaUserProfile.js"></script>
+    <script type="text/javascript" src="../../../apiAccess/crud.js"></script>
+    <style>
         .error {
-            border:solid 2px #FF0000; 
+            border: solid 2px #FF0000;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
-        <button class=" btn bg-white text-primary my-3" id="home">< Tornar</button></br>
-        <h1>Alta Rol</h1>
+        <button class=" btn bg-white text-primary my-3" id="home">
+            < Tornar</button></br>
+                <h1>Alta Rol</h1>
 
-        <form>
+                <form>
 
-            <div class="form-group row">
-                <label for="nom" class="col-sm-2 col-form-label" >Nom:</label>
-                <div class="col-sm-10">
-                    <input type="text"  class="form-control" id="nom" min="2" max="25" pattern="^[A-Za-záéíóúÁÉÍÓÚñÑ\s]{2,25}$" required></br>
-                </div>
-            </div>
+                    <div class="form-group row">
+                        <label for="nom" class="col-sm-2 col-form-label">Nom:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="nom" min="2" max="25"
+                                pattern="^[A-Za-záéíóúÁÉÍÓÚñÑ\s]{2,25}$" required></br>
+                        </div>
+                    </div>
 
-            <h5 id="missatgeError" class="text-danger"></h5>
-            <button id="btnGravar" class="btn btn-primary">Gravar</button>      
-        </form>
+                    <h5 id="missatgeError" class="text-danger"></h5>
+                    <button id="btnGravar" class="btn btn-primary">Gravar</button>
+                </form>
 
     </div>
 </body>
+
 </html>

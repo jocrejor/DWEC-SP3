@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ca">
 
 <head>
     <meta charset="UTF-8">
@@ -25,16 +25,21 @@
     <div class="container">
         <h1>Llistat Rols</h1>
 
-
-        <div><a href="#" id="controlFiltre"> <i class="bi bi-funnel"></i></a>
-            <div id="filtres" class="input-group mb-3">
+        <!-- Control de filtres -->
+        <div>
+            <a href="#" id="controlFiltre"> <i class="bi bi-funnel"></i> Filtrar</a>
+            <div id="filtres" class="input-group mb-3" style="display: none;">
                 <span class="input-group-text" id="basic-addon1">Nom</span>
-                <input type="text" class="form-control" id="filtreNom">
+                <input type="text" class="form-control" id="filtreNom" placeholder="Filtrar per nom">
+                <button class="btn btn-primary" id="filtrarBtn">Filtrar</button>
+                <button class="btn btn-secondary" id="mostrarTotsBtn">Mostrar Tots</button>
             </div>
         </div>
 
+        <button class="btn btn-primary my-3" id="nouProfile">Nou User Profile</button>
+        </br>
 
-        <button class=" btn btn-primary my-3" id="nouProfile">Nou User Profile</button></br>
+        <!-- Taula per mostrar els perfils -->
         <table class="table">
             <thead class="thead-light">
                 <tr>
@@ -46,7 +51,6 @@
             </thead>
             <tbody id="files"></tbody>
         </table>
-
     </div>
 </body>
 

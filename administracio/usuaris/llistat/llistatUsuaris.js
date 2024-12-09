@@ -32,6 +32,10 @@ function controlFiltre() {
   }
 }
 
+function home() {
+  history.back();
+}
+
 function aplicarFiltre() {
   const nom = $("#filtreNom").val().toLowerCase();
   const email = $("#filtreEmail").val().toLowerCase();
