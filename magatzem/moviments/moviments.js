@@ -189,6 +189,7 @@ async function autocompleta() {
 
 /**
  * Filtra i reconstrueix la taula basant-se en els criteris seleccionats.
+ * No faig el filtra document, per que si filtre per Origen el Document pertany al Origen
  */
 function filtrar() {
 
