@@ -43,7 +43,7 @@ function agregarFilaSpace(space) {
         <td>${space.maxWeight}</td>
         <td>${space.storage_id}</td>
         <td>${space.street_id}</td>
-        <td>${space.shelf_id}</td> <!-- Corrige si es shelf_id o selft_id -->
+        <td>${space.selft_id}</td> <!-- Corrige si es shelf_id o selft_id -->
     `;
 
     tbody.appendChild(row); 
@@ -110,7 +110,7 @@ function aplicarFiltres() {
             (!filterName || space.name.toLowerCase().includes(filterName)) &&
             (!filterStorage || space.storage_id.toLowerCase().includes(filterStorage)) &&
             (!filterStreet || space.street_id.toLowerCase().includes(filterStreet)) &&
-            (!filterShelf || space.shelf_id.toLowerCase().includes(filterShelf)) &&
+            (!filterShelf || space.selft_id.toLowerCase().includes(filterShelf)) &&
             (!filterProduct || space.product_id.toLowerCase().includes(filterProduct)) &&
             (filterQuantity === undefined || parseInt(space.quantity) === filterQuantity) &&
             (filterVolume === undefined || parseFloat(space.maxVol) === filterVolume) &&
