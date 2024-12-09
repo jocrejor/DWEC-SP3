@@ -138,7 +138,7 @@ async function validar(e) {
     e.preventDefault();
 
     // Verificar si todos los campos son válidos
-    if (validarSKU() && validarName() && validarVol() && validarWeight() /*&& validarImage()*/ && validarLote()) {
+    if (validarSKU() && validarName() && validarVol() && validarWeight() && validarLote()) {
         // Crear el objeto producto
         let product = {
             name:           document.getElementById("name").value,
