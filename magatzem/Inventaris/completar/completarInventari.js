@@ -99,6 +99,7 @@ async function mostrarProductes(inventoryID) {
 }
 
 async function completarInventari() {
+    let currentUser = JSON.parse(localStorage.getItem("currentUser"));
     //actualitzar linea inventari
     const valorsDetall = document.querySelectorAll("table select");
      
@@ -121,7 +122,7 @@ async function completarInventari() {
                     space.quantity = inventoryLine.real_quantity;
                     await updateId(url, "Space", space.id, space);
 
-                    newMoviment (inventoryLine.storage_id, inventoryLine.street_id, inventoryLine.selft_id, inventoryLine.space_id, inventoryLine.product_id, diferenciaQuantitat, 1, "Inventory",inventoryLine.inventory_id);
+                    newMoviment (inventoryLine.storage_id, inventoryLine.street_id, inventoryLine.selft_id, inventoryLine.space_id, inventoryLine.product_id, diferenciaQuantitat, currentUser.id, "Inventory",inventoryLine.inventory_id);
                 }
             }
         }
