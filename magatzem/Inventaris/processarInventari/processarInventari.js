@@ -2,30 +2,7 @@ $(document).ready(function() {
     thereIsUser();
     document.getElementById("nouInventari").addEventListener("click", nouInventari);
     obtindreInventaris();
-
-    $( "#filtres" ).hide();
-    $("#controlFiltre").click(controlFiltre);
-    $("#filtrarEstat").on("keyup",filtrarEstat);
-    $("#filtrarEstat").on("keyup",filtrarMagatzem);
 });
-
-function controlFiltre () {
-    if ($("#filtres").css("display") === "none"){
-    $( "#filtres" ).fadeIn( "slow", function() {
-      const  arrFiltreEstat =[];
-      const  arrFiltreMagatzem =[];
-      profilesList.forEach(rol => arrFilterRol.push(rol.name)) 
-      $( "#filtreNom" ).autocomplete({   
-        source: arrFilterRol 
-      });
-      
-    }).show();
-    }else{
-      $("#filtreNom").val('')
-      $( "#filtres" ).fadeOut( "slow", function() {
-      }).hide();
-    }
-}
 
 function nouInventari() {
     window.location.assign("../generar/generarInventari.html");
