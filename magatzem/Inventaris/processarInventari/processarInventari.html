@@ -22,23 +22,52 @@
     <div class="container">
         <h1>Llistat Inventari General</h1>
 
-        <div ><a href="#" id="controlFiltre"> <i class="bi bi-funnel"></i></a>
-            <div id="filtres" class="input-group mb-3" >
-                <span class="input-group-text" id="filtrarEstat">Estat</span>
-                    <select name="estat" id="estat">
-                        <option value="Pendent">Pendent</option>
-                        <option value="Completat">Completat</option>
-                    </select>
+        <div class="row rowFiltres" >
+            <div class="col-4">
+                <div class="boxFiltre">                              
+                        <label for="dataDesde">De:</label>
+                        <input id="dataDesde" type="date" id="search"/>
+                        
+                </div>
             </div>
 
-            <div id="filtres" class="input-group mb-3" >
-                <span class="input-group-text">Magatzem</span>
-                    <select name="magatzem" id="filtrarMagatzem">
-                        <option value="recepció">Magatzem de Recepció</option>
-                        <option value="enviament">Magatzem d'Enviament</option>
-                        <option value="principal">Magatzem Principal</option>
-                        <option value="incidencies">Magatzem d'Incidencies</option>
-                    </select>
+            <div class="col-4">
+                <div class="boxFiltre">
+                    <label for="dataFins">Fins:</label>
+                    <input id="dataFins" type="date"  id="search"/>
+                </div>
+            </div>
+
+            <div class="col-4">
+                <div class="boxFiltre">                              
+                        <label for="status">Estat:</label>
+                        <select name="status" id="status">
+                            <option value="">Selecciona un estat</option>
+                            <option value="Pendent">Pendent</option>
+                            <option value="Fent-se">Fent-se</option>
+                            <option value="Completat">Completat</option>
+                        </select>                  
+                </div>
+            </div>
+        </div>
+
+        <div class="row rowFiltres">      
+            <div class="col-4">
+                <div class="boxFiltre">                              
+                        <label for="magatzem">Magatzem:</label>
+                        <select name="magatzem" id="magatzem">
+                            <option value="">Selecciona un magatzem</option>
+                        </select>                  
+                </div>
+            </div>      
+        </div>
+
+         <!--- FILTRES BOTÓ --->
+         <div class="row rowFiltres">
+            <div class="col-12">
+                <div class="container-button-filter">
+                    <button id="filtre" class="filter-button">Filtrar</button>
+                </div>
             </div>
         </div>
         
