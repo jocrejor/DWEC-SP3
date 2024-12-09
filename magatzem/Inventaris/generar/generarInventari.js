@@ -10,7 +10,7 @@ $(document).ready(function() {
 
     carregarMagatzem();
 
-    document.getElementById("btnGenerar").addEventListener("click", generarInventari, false);
+    document.getElementById("btnGenerar").addEventListener("click", validar, false);
 });
 
 async function carregarMagatzem() {
@@ -88,4 +88,44 @@ async function generarInventari() {
 
     alert("Inventari Generat Correctament");
     window.location.assign("../processarInventari/processarInventari.html");
+}
+
+function validarMagatzem() {
+    var magatzem = document.getElementById("storage");
+    if (!magatzem.checkValidity()) {
+        if (magatzem.validity.valueMissing) {
+            error(magatzem, "Selecciona un magatzem");
+        }
+        return false;
+    }
+    return true;
+}
+
+function validar(e) {
+    esborrarError();
+    e.preventDefault();
+
+    if (validarMagatzem()) {
+        generarInventari();
+        return true;
+
+    } else {
+        return false;
+    }
+}
+
+function error(element, missatge) {
+    const textError = document.createTextNode(missatge);
+    const elementError = document.getElementById("missatgeError")
+    elementError.appendChild(textError)
+    element.classList.add("error")
+    element.focus();
+}
+
+function esborrarError() {
+    let formulari = document.forms[0].elements;
+    for (let ele of formulari) {
+        ele.classList.remove("error")
+    }
+    document.getElementById("missatgeError").replaceChildren();
 }
