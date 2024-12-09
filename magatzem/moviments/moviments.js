@@ -8,7 +8,7 @@ window.onload = async function () {
     construirTaula();
     await autocompleta();
 
-    $("#filtre").on("click", function(){
+    $("#filtre").on("click", function () {
       $("#divFiltres").fadeToggle(300);
     });
     document.getElementById("crearMovProva").addEventListener("click", async () => {
@@ -72,7 +72,7 @@ function construirTaula(moviments = arrayMoviments) {
     fila.appendChild(creaCela(mov.quantity));
     fila.appendChild(creaCela(mov.date));
     fila.appendChild(creaCela(mov.operator_id));
-    fila.appendChild(creaCela(mov.orgin));
+    fila.appendChild(creaCela(mov.orgin)); //Crespo ha de canviar això, orgin per "origin"
     fila.appendChild(creaCela(mov.document));
 
 
@@ -136,32 +136,14 @@ async function autocompleta() {
   });
 
   // Autocompletar per id de carrer
-  let arrayCarrer = [
-    "01",
-    "02",
-    "03",
-    "04",
-    "05",
-    "06",
-    "07",
-    "08",
-    "09",
-    "10"
-  ];
+  let arrayCarrer = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10"];
 
   $("#buscaCarrer").autocomplete({
     source: arrayCarrer,
   });
 
   // Autocompletar per id de estanteria
-  let arrayEstanteria = [
-    "01",
-    "02",
-    "03",
-    "04",
-    "05",
-    "06"
-  ];
+  let arrayEstanteria = ["01", "02", "03", "04", "05", "06"];
 
   $("#buscaEstanteria").autocomplete({
     source: arrayEstanteria,
@@ -198,12 +180,7 @@ async function autocompleta() {
   });
 
   // Autocompletar per origen
-  let arrayOrigin = [
-    "Incident",
-    "Reception",
-    "Inventary",
-    "OrderReception"
-  ];
+  let arrayOrigin = ["Incident", "Reception", "Inventary", "OrderReception"];
 
   $("#buscaOrigen").autocomplete({
     source: arrayOrigin,
@@ -224,7 +201,7 @@ function filtrar() {
   const dataInici = document.getElementById("dataInici").value.trim();
   const dataFinal = document.getElementById("dataFinal").value.trim();
   const dataIniciObj = dataInici ? new Date(dataInici) : null;
-  const dataFinalObj = dataFinal ? new Date(dataFinal): null;
+  const dataFinalObj = dataFinal ? new Date(dataFinal) : null;
   const buscaOperari = document.getElementById("buscaOperari").value.trim();
   const buscaOrigen = document.getElementById("buscaOrigen").value.trim();
 
