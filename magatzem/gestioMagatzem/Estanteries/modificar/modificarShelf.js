@@ -1,17 +1,16 @@
 window.onload = iniciar;
 
 function iniciar() {
-    // Obtener la referencia de la estantería desde localStorage.
+   
     const shelfId = JSON.parse(localStorage.getItem("Estanteria"));
 
     if (shelfId) {
-        carregarDades(shelfId); // Cargar datos de la estantería seleccionada.
+        carregarDades(shelfId); 
     } else {
         alert("No s'ha trobat cap referència d'estanteria.");
-        window.location.assign("../llista/llistatShelf.html"); // Redirigir si no hay datos.
+        window.location.assign("../llista/llistatShelf.html");
     }
 
-    // Añadir eventos a los botones.
     document.getElementById("btnGuardar").addEventListener("click", guardarModificacions);
     document.getElementById("btnCancelar").addEventListener("click", () => 
         window.location.assign("../llista/llistatShelf.html")
@@ -20,17 +19,17 @@ function iniciar() {
 
 async function carregarDades(shelfId) {
     try {
-        // Obtener los datos de las estanterías.
+       
         const estanteries = await getData(url, "Shelf");
 
-        // Asegurarnos de comparar el ID como cadena con ceros iniciales.
+      
         const formattedId = String(shelfId).padStart(2, '0');
         const estanteriaSeleccionada = estanteries.find(
             (estanteria) => String(estanteria.id).padStart(2, '0') === formattedId
         );
 
         if (estanteriaSeleccionada) {
-            // Rellenar los campos del formulario con los datos de la estantería seleccionada.
+            
             document.getElementById("id").value = estanteriaSeleccionada.id || "";
             document.getElementById("name").value = estanteriaSeleccionada.name || "";
             document.getElementById("storage_id").value = estanteriaSeleccionada.storage_id || "";
@@ -59,10 +58,9 @@ async function guardarModificacions(event) {
     }
 
     try {
-        // Actualizar en el servidor
+        
         await updateId(url, "Shelf", id, { id, name, storage_id, steet_id });
 
-        // Actualizar en el localStorage
         const estanteries = JSON.parse(localStorage.getItem("shelfs")) || [];
         const index = estanteries.findIndex(
             (estanteria) => String(estanteria.id).padStart(2, '0') === String(id).padStart(2, '0')
