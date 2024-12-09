@@ -22,7 +22,8 @@ async function replenarMagatzems() {
 }
 
 function convertirAFecha(fecha) {
-    const [dia, mes, anio] = fecha.split("/").map(Number);
+    const [fechaPart, horaPart] = fecha.split(", "); 
+    const [dia, mes, anio] = fechaPart.split("/").map(Number); 
     return new Date(anio, mes - 1, dia); 
 }
 
@@ -40,7 +41,7 @@ async function filtrar() {
 
     if (magatzem) {
         inventaisFiltrats = inventaisFiltrats.filter(
-            inventory => inventory.storage_id === magatzem
+            inventory => inventory.storage_id.toString() === magatzem
         );
     }
 
