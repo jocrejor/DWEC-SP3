@@ -83,14 +83,20 @@ async function altaIncidencia(){
             description: descripcio,
             supplier: ordreRecepcioSeleccionada.supplier_id,
             orderReception_id:  ordreRecepcioSeleccionada.id,
-            product: orderLineReception.product_id,
+            product: String(orderLineReception.product_id),
             operator: usuarioActual.id,
             status: "Pendent",
             quantity_ordered: orderLineReception.quantity_ordered,
             quantity_received: unitats
         };
 
-        await postData(url,"Incident",incidencia);
+        let nouIncident = await postData(url,"Incident",incidencia);
+        //EIXIDA
+        let quantitatNegativa = - incidencia.quantity_received;
+        newMoviment ("01", "01", "01", "01", incidencia.product,quantitatNegativa , usuarioActual.id, "Incident",nouIncident.id )
+        
+        //ENTRADA
+        newMoviment ("04", "01", "01", "01", incidencia.product, incidencia.quantity_received, usuarioActual.id, "Incident",nouIncident.id )
         window.location.href = "../incidencies.html";
     }
 }
