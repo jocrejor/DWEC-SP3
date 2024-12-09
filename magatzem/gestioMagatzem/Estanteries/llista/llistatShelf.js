@@ -1,26 +1,27 @@
 window.onload = iniciar;
-let shelfs;
+let shelfs = [];
 
 function iniciar() {
     document.getElementById("nouShelf").addEventListener("click", nouShelf);
+    document.getElementById("toggleFilters").addEventListener("click", toggleFilters);
+    document.getElementById("applyFilters").addEventListener("click", aplicarFiltres);
     carregarInformacio();
 }
 
 async function carregarInformacio() {
-
-    shelfs = await getData(url, "Shelf"); 
-    obtindreShelf();
+    shelfs = await getData(url, "Shelf");
+    obtindreShelf(shelfs);
 }
 
 function nouShelf() {
     window.location.assign("../alta/altaShelf.html");
 }
 
-function obtindreShelf() {
-    let tbody = document.getElementById("files");
+function obtindreShelf(filteredShelfs) {
+    const tbody = document.getElementById("files");
     tbody.innerHTML = ""; 
 
-    shelfs.forEach((shelf) => {
+    filteredShelfs.forEach((shelf) => {
         agregarFila(shelf);
     });
 }
@@ -28,7 +29,6 @@ function obtindreShelf() {
 function agregarFila(shelf) {
     const tbody = document.getElementById("files");
 
-   
     const row = document.createElement("tr");
     row.id = `shelf-${shelf.id}`;
 
@@ -44,11 +44,10 @@ function agregarFila(shelf) {
 
     tbody.appendChild(row); 
 }
+
 async function esborrar(id) {
     try {
-       
         const formattedId = String(id).padStart(2, '0');
-        
         await deleteData(url, "Shelf", formattedId);
 
         const element = document.getElementById(`shelf-${id}`);
@@ -64,36 +63,45 @@ async function esborrar(id) {
     }
 }
 
+function modificar(storageId) {
+    const formattedId = String(storageId).padStart(2, '0');
+    const selectedShelf = shelfs.find(shelf => shelf.id === formattedId);
 
-
-
-async function modificar(storageId) {
-    try {
-        
-        const formattedId = String(storageId).padStart(2, '0');
-
-        
-        const estanteries = await getData(url, "Shelf");
-
-       
-        const estanteriaSeleccionada = estanteries.find(estanteria => estanteria.id === formattedId);
-
-        if (estanteriaSeleccionada) {
-            
-            window.localStorage.setItem('Estanteria', JSON.stringify(formattedId));
-            window.location.assign("../modificar/modificarShelf.html");
-        } else {
-            
-            alert(`No s'ha trobat cap estanteria amb l'ID: ${formattedId}`);
-        }
-    } catch (error) {
-        console.error("Error obtenint les dades de l'estanteria:", error);
-        alert("Hi ha hagut un problema accedint a les dades. Torna-ho a intentar més tard.");
+    if (selectedShelf) {
+        localStorage.setItem('Estanteria', JSON.stringify(selectedShelf));
+        window.location.assign("../modificar/modificarShelf.html");
+    } else {
+        alert(`No s'ha trobat cap estanteria amb l'ID: ${formattedId}`);
     }
 }
 
-
 function espai() {
     window.location.assign("../../Espais/llista/llistatSpace.html");
-   
+}
+
+function toggleFilters() {
+    const filterSection = document.getElementById("filter-section");
+    const filterIcon = document.getElementById("filter-icon");
+    const isHidden = filterSection.style.display === "none";
+
+    filterSection.style.display = isHidden ? "block" : "none";
+    filterIcon.src = isHidden ? "ocultarFiltres.png" : "mostrarFiltres.png";
+    filterIcon.alt = isHidden ? "Ocultar Filtres" : "Mostrar Filtres";
+}
+
+
+function aplicarFiltres() {
+    const filterName = document.getElementById("filter-name").value.toLowerCase();
+    const filterStorage = document.getElementById("filter-storage").value;
+    const filterStreet = document.getElementById("filter-street").value;
+
+    const filteredShelfs = shelfs.filter(shelf => {
+        return (
+            (!filterName || shelf.name.toLowerCase().includes(filterName)) &&
+            (!filterStorage || shelf.storage_id === filterStorage) &&
+            (!filterStreet || shelf.steet_id === filterStreet)
+        );
+    });
+
+    obtindreShelf(filteredShelfs);
 }

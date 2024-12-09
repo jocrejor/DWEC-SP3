@@ -6,17 +6,42 @@
     <title>Estanteries</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script type="text/javascript" src="../../../../apiAccess/crud.js"></script> <!-- Manteniendo la ruta -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="../../../../apiAccess/crud.js"></script>
     <script type="text/javascript" src="llistatShelf.js"></script>
     <style>
         .error {
             border: solid 2px #FF0000;
+        }
+        #filter-section {
+            display: none;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Estanteries</h1>
+        <button style="background: none; border: none; padding: 0; outline: none; cursor: pointer;" id="toggleFilters">
+            <i class="bi bi-funnel"></i>
+        </button>
+        <div id="filter-section" class="border p-3">
+            <h4>Filtres</h4>
+            <div class="form-group">
+                <label for="filter-name">Nom:</label>
+                <input type="text" id="filter-name" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="filter-storage">ID Magatzem:</label>
+                <input type="text" id="filter-storage" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="filter-street">ID Carrer:</label>
+                <input type="text" id="filter-street" class="form-control">
+            </div>
+            <button class="btn btn-success" id="applyFilters">Aplicar Filtres</button>
+        </div>
         <button class="btn btn-primary my-3" id="nouShelf">Nou estanteria</button>
         <table class="table">
             <thead class="thead-light">

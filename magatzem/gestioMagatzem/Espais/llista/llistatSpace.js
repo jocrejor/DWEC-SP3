@@ -1,9 +1,10 @@
-
 window.onload = iniciar;
 let spaces;
 
 function iniciar() {
     document.getElementById("nouSpace").addEventListener("click", nouSpace);
+    document.getElementById("toggleFilters").addEventListener("click", toggleFilters);
+    document.getElementById("applyFilters").addEventListener("click", aplicarFiltres);
     carregarInformacioSpaces();
 }
 
@@ -16,11 +17,11 @@ function nouSpace() {
     window.location.assign("../alta/altaSpace.html");
 }
 
-function obtindreSpaces() {
+function obtindreSpaces(filteredSpaces = spaces) {
     let tbody = document.getElementById("files");
     tbody.innerHTML = ""; 
 
-    spaces.forEach((space) => {
+    filteredSpaces.forEach((space) => {
         agregarFilaSpace(space);
     });
 }
@@ -42,7 +43,7 @@ function agregarFilaSpace(space) {
         <td>${space.maxWeight}</td>
         <td>${space.storage_id}</td>
         <td>${space.street_id}</td>
-        <td>${space.selft_id}</td>
+        <td>${space.shelf_id}</td> <!-- Corrige si es shelf_id o selft_id -->
     `;
 
     tbody.appendChild(row); 
@@ -69,7 +70,6 @@ async function esborrarSpace(id) {
 async function modificarSpace(spaceId) {
     try {
         const formattedId = String(spaceId).padStart(2, '0');
-
         const espais = await getData(url, "Space");
 
         const espaiSeleccionat = espais.find(espai => espai.id === formattedId);
@@ -84,4 +84,40 @@ async function modificarSpace(spaceId) {
         console.error("Error obtenint les dades de l'espai:", error);
         alert("Hi ha hagut un problema accedint a les dades. Torna-ho a intentar més tard.");
     }
+}
+
+
+function toggleFilters() {
+    const filterSection = document.getElementById("filter-section");
+    const isHidden = filterSection.style.display === "none";
+
+    filterSection.style.display = isHidden ? "block" : "none";
+}
+
+function aplicarFiltres() {
+    const filterName = document.getElementById("filter-name").value.toLowerCase();
+    const filterStorage = document.getElementById("filter-storage").value.toLowerCase();
+    const filterStreet = document.getElementById("filter-street").value.toLowerCase();
+    const filterShelf = document.getElementById("filter-shelf").value.toLowerCase();
+    
+    const filterProduct = document.getElementById("filter-product").value.toLowerCase();
+    const filterQuantity = parseInt(document.getElementById("filter-quantity").value) || undefined; 
+    const filterVolume = parseFloat(document.getElementById("filter-volume").value) || undefined; 
+    const filterWeight = parseFloat(document.getElementById("filter-weight").value) || undefined; 
+
+    const filteredSpaces = spaces.filter(space => {
+        return (
+            (!filterName || space.name.toLowerCase().includes(filterName)) &&
+            (!filterStorage || space.storage_id.toLowerCase().includes(filterStorage)) &&
+            (!filterStreet || space.street_id.toLowerCase().includes(filterStreet)) &&
+            (!filterShelf || space.shelf_id.toLowerCase().includes(filterShelf)) &&
+            (!filterProduct || space.product_id.toLowerCase().includes(filterProduct)) &&
+            (filterQuantity === undefined || parseInt(space.quantity) === filterQuantity) &&
+            (filterVolume === undefined || parseFloat(space.maxVol) === filterVolume) &&
+            (filterWeight === undefined || parseFloat(space.maxWeight) === filterWeight)
+        );
+    });
+    
+
+    obtindreSpaces(filteredSpaces);
 }

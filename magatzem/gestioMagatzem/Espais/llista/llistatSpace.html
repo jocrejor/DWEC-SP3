@@ -6,17 +6,63 @@
     <title>Espais</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script type="text/javascript" src="../../../../apiAccess/crud.js"></script> <!-- Manteniendo la ruta -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <script type="text/javascript" src="../../../../apiAccess/crud.js"></script>
     <script type="text/javascript" src="llistatSpace.js"></script>
     <style>
         .error {
             border: solid 2px #FF0000;
+        }
+        #filter-section {
+            display: none;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Espais</h1>
+        <button style="background: none; border: none; padding: 0; outline: none; cursor: pointer;" id="toggleFilters">
+            <i class="bi bi-funnel"></i> 
+        </button>
+        
+     
+        <div id="filter-section" class="border p-3">
+            <h4>Filtres</h4>
+            <div class="form-group">
+                <label for="filter-name">Nom:</label>
+                <input type="text" id="filter-name" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="filter-storage">Magatzem:</label>
+                <input type="text" id="filter-storage" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="filter-street">Carrer:</label>
+                <input type="text" id="filter-street" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="filter-shelf">Estanteria:</label>
+                <input type="text" id="filter-shelf" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="filter-product">Producte:</label>
+                <input type="text" id="filter-product" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="filter-quantity">Quantitat:</label>
+                <input type="text" id="filter-quantity" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="filter-volume">Volum:</label>
+                <input type="text" id="filter-volume" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="filter-weight">Pes:</label>
+                <input type="text" id="filter-weight" class="form-control">
+            </div>
+            <button class="btn btn-success" id="applyFilters">Aplicar Filtros</button>
+        </div>
         <button class="btn btn-primary my-3" id="nouSpace">Nou espai</button>
         <table class="table">
             <thead class="thead-light">
