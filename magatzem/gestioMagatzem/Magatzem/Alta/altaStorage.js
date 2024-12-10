@@ -66,13 +66,13 @@ function validarTipus() {
 }
 
 function validarAdress() {
-    var addressValidar = document.getElementById("address");
-    if (!addressValidar.checkValidity()) {
-        if (addressValidar.validity.valueMissing) {
-            error(addressValidar, "Deus d'introduïr una adreça.");
+    var adrecaValidar = document.getElementById("address");
+    if (!adrecaValidar.checkValidity()) {
+        if (adrecaValidar.validity.valueMissing) {
+            error(adrecaValidar, "Deus d'introduïr una adreça.");
         }
-        if (addressValidar.validity.patternMismatch) {
-            error(addressValidar, "L'adreça ha de tindre entre 2 i 40 caracters.");
+        if (adrecaValidar.validity.patternMismatch) {
+            error(adrecaValidar, "L'adreça ha de tindre entre 2 i 40 caracters.");
         }
         return false;
     }
@@ -92,9 +92,9 @@ async function enviarFormulari() {
     const id = document.getElementById("id").value;
     const name = document.getElementById("name").value;
     const type = document.getElementById("type").value;
-    const address = document.getElementById("address").value;
+    const adress = document.getElementById("address").value;
 
-    const nouMagatzem = { id, name, type, address };
+    const nouMagatzem = { id, name, type, adress };
 
     let arrShelfs = JSON.parse(localStorage.getItem("storages")) || [];
     arrShelfs.push(nouMagatzem);
@@ -103,7 +103,7 @@ async function enviarFormulari() {
     await postData(url, 'Storage', nouMagatzem);
 
     alert("Estanteria gravada correctament.");
-    document.getElementById("formulariMagatzem").reset(); 
+    document.getElementById("formulariMagatzem").reset();
     window.location.assign("../Llistar/LlistaMagatzem.html");
 }
 
