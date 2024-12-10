@@ -10,14 +10,14 @@ function validar(e) {
     e.preventDefault();
     esborrarError();
     if (validarId() && validarNom() &&  confirm("Confirma si vols enviar el formulari")) {
-        gravarCarrer();
+        gravarMagatzem();
     } else {
         return false;
     }
 }
 
 function validarId() {
-    var idValidar = document.getElementById("id");
+    var idValidar = document.getElementById("id_pasillo");
     if (!idValidar.checkValidity()) {
         if (idValidar.validity.valueMissing) {
             error(idValidar, "Deus d'introduïr dos números.");
@@ -31,7 +31,7 @@ function validarId() {
 }
 
 function validarNom() {
-    var element = document.getElementById("name");
+    var element = document.getElementById("name_");
     if (!element.checkValidity()) {
         if (element.validity.valueMissing) {
             error(element, "Deus d'introduïr un nom.");
@@ -57,18 +57,30 @@ function esborrarError() {
     document.getElementById("missatgeError").replaceChildren();
 }
 
-function gravarCarrer() {
-        let carrers = JSON.parse(localStorage.getItem("carrers")) || [];
-    
-        let nouCarrers = {
-            id: document.getElementById("id").value,
-            name: document.getElementById("name").value
+function gravarMagatzem() {
+    let magatzems = JSON.parse(localStorage.getItem("magatzems")) || [];
+
+    let idMagatzem = document.getElementById("id").value;
+
+    let existingMagatzem = magatzems.find(m => m.id === idMagatzem);
+
+    if (existingMagatzem) {
+        existingMagatzem.id_pasillo = document.getElementById("id_pasillo").value;
+        existingMagatzem.name_ = document.getElementById("name_").value;
+    } else {
+        let nouMagatzem = {
+            id: idMagatzem,
+            name: null,         
+            tipus: null,
+            adress: null,
+            id_pasillo: document.getElementById("id_pasillo").value,
+            name_: document.getElementById("name_").value
         };
-    
-        carrers.push(nouCarrers);
-        localStorage.setItem("carrers", JSON.stringify(carrers));
-    
-    
+        magatzems.push(nouMagatzem);
+    }
+
+    localStorage.setItem("magatzems", JSON.stringify(magatzems));
+
     alert("Informació emmagatzemada correctament!");
     neteja();
     window.location.assign("../Llistar/LlistatCarrer.html");
