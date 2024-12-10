@@ -70,7 +70,7 @@ async function cargarProveidor() {
 }
 
 function llistarOrden() {
-  window.location.assign("../llistar/llistatOrden.html");
+  window.location.assign("../llistar/llistar.html");
 }
 
 async function afegirProducte() {
@@ -80,7 +80,7 @@ async function afegirProducte() {
   const productName = productes.find(product => product.id === producto).name
 
   let productoObj = {
-    id: Number(producto),
+    id: producto,
     product: productName,
     quantity_ordered: Number(cantidadPedida),
     quantity_received: 0

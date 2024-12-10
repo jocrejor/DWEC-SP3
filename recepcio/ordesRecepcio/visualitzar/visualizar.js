@@ -4,7 +4,7 @@ const orderLineReceptionEP = "OrderLineReception";
 $(document).ready(function inicio() {
   document.getElementById("btnRegresar").addEventListener("click", () => {
     localStorage.removeItem("ordenVisualizar");
-    location.assign("../llistar/llistatOrden.html");
+    location.assign("../llistar/llistar.html");
   });
   const orden = JSON.parse(localStorage.getItem("ordenVisualizar"));
   if (orden) {
@@ -41,7 +41,7 @@ async function mostrarProductos(ordenId) {
     fila.setAttribute("id", producto.id);
 
     const productName = products.find(
-      (product) => Number(product.id) === producto.product_id
+      (product) => product.id === producto.product_id
     ).name;
     const productTD = document.createElement("td");
     const textProducto = document.createTextNode(productName);

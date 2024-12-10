@@ -32,7 +32,7 @@ $(document).ready(async function () {
     .getElementById("btnGuardar")
     .addEventListener("click", guardarModificacion, false);
   document.getElementById("btnCancelar").addEventListener("click", () => {
-    window.location.assign("../llistar/llistatOrden.html");
+    window.location.assign("../llistar/llistar.html");
   });
 });
 
@@ -234,7 +234,7 @@ async function guardarCambios() {
     localStorage.removeItem("modOrden");
 
     alert("Cambios guardados correctamente");
-    window.location.assign("../llistar/llistatOrden.html");
+    window.location.assign("../llistar/llistar.html");
   }
 }
 
