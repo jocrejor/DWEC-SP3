@@ -16,7 +16,7 @@ async function obtindreOrdens() {
   try {
     const data = await getData(url, orderReceptionEP);
     $("#files").empty();
-    data.forEach((order) => crearLinea(order));
+    data.forEach(async function (order) {await crearLinea(order)});
   } catch (error) {
     console.log("Error:", error);
   }
@@ -115,17 +115,19 @@ function activarFiltros() {
 function filtraProveidor() {
   const filtro = $("#search").val().toLowerCase();
   $("#files tr").filter(function () {
-    $(this).toggle($(this).find("td:nth-child(3)").text().toLowerCase().indexOf(filtro) > -1);
+    $(this).toggle(
+      $(this).find("td:nth-child(3)").text().toLowerCase().indexOf(filtro) > -1
+    );
   });
 }
 
 function filtraFromDate() {
   const filtro = new Date($("#fromDate").val());
 
-  if(!isNaN(filtro)){
-    $("#files tr").each(function() {
+  if (!isNaN(filtro)) {
+    $("#files tr").each(function () {
       const fecha = new Date($(this).find("td:nth-child(4)").text());
-      if(fecha < filtro) {
+      if (fecha < filtro) {
         $(this).hide();
       }
     });
@@ -135,10 +137,10 @@ function filtraFromDate() {
 function filtraToDate() {
   const filtro = new Date($("#toDate").val());
 
-  if(!isNaN(filtro)){
-    $("#files tr").each(function() {
+  if (!isNaN(filtro)) {
+    $("#files tr").each(function () {
       const fecha = new Date($(this).find("td:nth-child(4)").text());
-      if(fecha > filtro) {
+      if (fecha > filtro) {
         $(this).hide();
       }
     });

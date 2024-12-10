@@ -28,7 +28,7 @@ $(document).ready(function () {
     .getElementById("btnGuardar")
     .addEventListener("click", guardarModificacion, false);
   document
-    .getElementById("llistatOrden")
+    .getElementById("volver")
     .addEventListener("click", llistarOrden, false);
 });
 
@@ -109,15 +109,13 @@ function afegirLinea(productObj) {
   );
   cantidadOrdenadaTD.appendChild(textCantidadOrdenada);
 
-  var esborrarTD = document.createElement("td");
+  var accionsTD = document.createElement("td");
+  accionsTD.setAttribute("data-no-colon", "true");
   var checkbox = document.createElement("input");
   checkbox.type = "checkbox";
-  esborrarTD.appendChild(checkbox);
+  accionsTD.appendChild(checkbox);
 
-  var modificarTD = document.createElement("td");
-  var buttonModificar = document.createElement("button");
-  buttonModificar.textContent = "Modificar";
-  buttonModificar.className = "btn btn-primary btn-lg";
+  const buttonModificar = document.createElement("a");
   buttonModificar.addEventListener("click", () =>
     modificarLineReception(
       productObj.id,
@@ -125,13 +123,15 @@ function afegirLinea(productObj) {
       productObj.quantity_ordered
     )
   );
-  modificarTD.appendChild(buttonModificar);
+  const modIcon = document.createElement("i");
+  modIcon.className = "fa-regular fa-pen-to-square";
+  buttonModificar.appendChild(modIcon);
+
+  accionsTD.appendChild(buttonModificar);
 
   linea.appendChild(productoTD);
   linea.appendChild(cantidadOrdenadaTD);
-  linea.appendChild(esborrarTD);
-  productID;
-  linea.appendChild(modificarTD);
+  linea.appendChild(accionsTD);
 
   files.appendChild(linea);
 }
