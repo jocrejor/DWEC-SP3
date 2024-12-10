@@ -1,37 +1,30 @@
-window.onload = iniciar;
+document.addEventListener("DOMContentLoaded", () => {
+    const storageSeleccionat = JSON.parse(localStorage.getItem("modificaMagatzem"));
 
-function iniciar() {
-    const shelf = JSON.parse(localStorage.getItem("modShelf")) || {};
-    carregarDades(shelf);
-
-    document.getElementById("btnGuardar").addEventListener("click", guardarModificacions, false);
-    document.getElementById("btnCancelar").addEventListener("click", () => window.location.assign("../llista/llistatShelf.html"));
-}
-
-function carregarDades(shelf) {
-    document.getElementById("id").value = shelf.id;
-    document.getElementById("nom").value = shelf.nom;
-    document.getElementById("id_carrer").value = shelf.id_carrer;
-    document.getElementById("adreça").value = shelf.adreça;
-    document.getElementById("tipus").value = shelf.tipus;
-}
-
-function guardarModificacions(e) {
-    e.preventDefault();
-
-    const id = document.getElementById("id").value;
-    const nom = document.getElementById("nom").value;
-    const id_carrer = document.getElementById("id_carrer").value;
-    const adreça = document.getElementById("adreça").value;
-    const tipus = document.getElementById("tipus").value;
-
-    const estanteries = JSON.parse(localStorage.getItem("shelfs")) || [];
-    const index = estanteries.findIndex((e) => e.id === id);
-
-    if (index !== -1) {
-        estanteries[index] = { id, nom, id_carrer, adreça, tipus };
-        localStorage.setItem("shelfs", JSON.stringify(estanteries));
-        alert("Estanteria modificada correctament.");
-        window.location.assign("../llista/llistatShelf.html");
+    if (!storageSeleccionat) {
+        alert("No s'ha seleccionat cap magatzem per modificar.");
+        window.location.assign("../Llistar/llistaMagatzem.html");
+        return;
     }
-}
+
+    console.log("Información del almacén recuperada:", storageSeleccionat);
+
+    if (storageSeleccionat.id === undefined || storageSeleccionat.name === undefined || storageSeleccionat.type === undefined || storageSeleccionat.address === undefined) {
+        alert("La información del magatzem no es completa o está mal formateada.");
+        return;
+    }
+
+    document.getElementById("id").value = storageSeleccionat.id; 
+    document.getElementById("nom").value = storageSeleccionat.name;
+    document.getElementById("type").value = storageSeleccionat.type;
+    document.getElementById("address").value = storageSeleccionat.address;
+
+    document.querySelector("form").addEventListener("submit", (event) => {
+        event.preventDefault();
+        guardarModificacions(storageSeleccionat.id);
+    });
+
+    document.getElementById("btnCancelar").addEventListener("click", () => {
+        window.location.assign("../Llistar/LlistaMagatzem.html");
+    });
+});
