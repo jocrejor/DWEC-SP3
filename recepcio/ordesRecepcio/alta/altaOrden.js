@@ -194,6 +194,7 @@ async function gravarOrden(e) {
   }
 
   try { 
+    const estats = await getData(url, "OrderReception_Status");
     var supplier = Number(document.getElementById("supplier").value);
     var dataEstimada = document.getElementById(
       "estimated_reception_date"
@@ -203,7 +204,7 @@ async function gravarOrden(e) {
       supplier_id: supplier,
       estimated_reception_date: dataEstimada,
       created_by: 1,
-      orderreception_status_id: 1,
+      orderreception_status_id: estats[0].id,
     };
 
     let newOrderId = await postData(url, orderReceptionEP, order);
