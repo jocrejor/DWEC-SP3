@@ -1,40 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ca">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Llistat Magatzem</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script type="text/javascript" src="LlistaMagatzem.js"></script>
+    <title>Llistat d'Estanteries</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous">
+    <script src="./llistatShelf.js" defer></script>
     <script type="text/javascript" src="../../../../apiAccess/crud.js"></script>
-    <style>
-        .error {
-            border: solid 2px #FF0000;
-        }
-    </style>
+
 </head>
 
 <body>
     <div class="container">
-     <h1>Llistat magatzem</h1>
- 
-        <button class=" btn btn-primary my-3" id="producte">Nou magatzem</button>
-
+        <h1>Estanteries</h1>
+        <h3>Magatzem: <b id="magatzem"></b></h3>
+        <h3>Carrer: <b id="carrer"></b></h3>
+        <button type="button" class="btn btn-primary my-3" id="nouShelf">Nova Estanteria</button>
         <table class="table">
             <thead class="thead-light">
                 <tr>
                     <th scope="col">Esborrar</th>
                     <th scope="col">Modificar</th>
-                    <th scope="col">Carrers</th>
-                    <th scope="col">Id Magatzem</th>
-                    <th scope="col">Nom </th>
-                    <th scope="col">Tipus </th>
-                    <th scope="col">Adreça </th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">ID Carrer</th>
+                    <th scope="col">Adreça</th>
+                    <th scope="col">Tipus</th>
                 </tr>
             </thead>
             <tbody id="files">
-              
             </tbody>
         </table>
     </div>
