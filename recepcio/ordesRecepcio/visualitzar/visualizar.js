@@ -15,28 +15,17 @@ $(document).ready(function inicio() {
 
 async function mostrarOrden(orden) {
   const proveidors = await getData(url, "Supplier");
+  const provInput = document.getElementById("supplier");
+  const dateInput = document.getElementById("estimated_reception_date");
 
-  const ordenBody = document.getElementById("ordenBody");
-
-  const fila = document.createElement("tr");
-
-  const idTD = document.createElement("td");
-
-  idTD.textContent = orden.id;
-  fila.appendChild(idTD);
-
-  const supplierID = document.createElement("td");
   const proveidor = proveidors.find(
     (proveidor) => proveidor.id === orden.supplier_id.toString()
   ).name;
-  supplierID.textContent = proveidor;
-  fila.appendChild(supplierID);
 
-  const fechaTD = document.createElement("td");
-  fechaTD.textContent = orden.estimated_reception_date;
-  fila.appendChild(fechaTD);
+  provInput.value = proveidor;
+  dateInput.value = orden.estimated_reception_date;
 
-  ordenBody.appendChild(fila);
+
 }
 
 async function mostrarProductos(ordenId) {
