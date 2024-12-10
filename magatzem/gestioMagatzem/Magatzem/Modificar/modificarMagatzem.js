@@ -1,98 +1,37 @@
-window.onload = main;
+window.onload = iniciar;
 
-function main() {
-    var modifica = JSON.parse(localStorage.getItem("modificaFormulari"));
-    console.log("Dades cargades per a modificar:", modifica); 
-    if (modifica) {
-        document.getElementById("id").value = modifica.id || "";
-        document.getElementById("name").value = modifica.name || "";
-        document.getElementById("type").value = modifica.type || "";
-        document.getElementById("adress").value = modifica.adress || "";
-    } else {
-        alert("No s'ha trobat el registre a modificar.");
-        window.location.assign("LlistaMagatzem.html");
-    }
-    document.getElementById("btnGuardar").addEventListener("click", btnGuardar, false);
-}
-function validarId() {
-    var idValidar = document.getElementById("id");
-    if (!idValidar.checkValidity()) {
-        if (idValidar.validity.valueMissing) {
-            error(idValidar, "Deus d'introduïr dos numeros.");
-        }
-        if (idValidar.validity.patternMismatch) {
-            error(idValidar, "El id ha de tindre entre 2 numeros");
-        }
-        return false;
-    }
-    return true;
+function iniciar() {
+    const shelf = JSON.parse(localStorage.getItem("modShelf")) || {};
+    carregarDades(shelf);
+
+    document.getElementById("btnGuardar").addEventListener("click", guardarModificacions, false);
+    document.getElementById("btnCancelar").addEventListener("click", () => window.location.assign("../llista/llistatShelf.html"));
 }
 
-function validarNom() {
-    var element = document.getElementById("name");
-    if (!element.checkValidity()) {
-        if (element.validity.valueMissing) {
-            error(element, "Deus d'introduïr un nom.");
-        }
-        if (element.validity.patternMismatch) {
-            error(element, "El nom ha de tindre entre 2 i 40 caracters.");
-        }
-        return false;
-    }
-    return true;
-
+function carregarDades(shelf) {
+    document.getElementById("id").value = shelf.id;
+    document.getElementById("nom").value = shelf.nom;
+    document.getElementById("id_carrer").value = shelf.id_carrer;
+    document.getElementById("adreça").value = shelf.adreça;
+    document.getElementById("tipus").value = shelf.tipus;
 }
 
-function validarTipus() {
-    var typeValidar = document.getElementById("type");
-    if (!typeValidar.checkValidity()) {
-        if (typeValidar.validity.valueMissing) {
-            error(typeValidar, "Deus de selecionar una opció");
-        }
-        return false;
-    }
-    return true;
-
-}
-
-function validarAdress() {
-    var adressValidar = document.getElementById("adress");
-    if (!adressValidar.checkValidity()) {
-        if (adressValidar.validity.valueMissing) {
-            error(adressValidar, "Deus d'introduïr una adreça.");
-        }
-        if (adressValidar.validity.patternMismatch) {
-            error(adressValidar, "L'adreça ha de tindre entre 2 i 40 caracters.");
-        }
-        return false;
-    }
-    return true;
-
-}
-
-function btnGuardar(e) {
+function guardarModificacions(e) {
     e.preventDefault();
-    var modifica = {
-        id: document.getElementById("id").value,
-        name: document.getElementById("name").value,
-        type: document.getElementById("type").value,
-        adress: document.getElementById("adress").value
-    };
 
-    var magatzems = JSON.parse(localStorage.getItem("magatzems")) || [];
-    if (modifica.id) {
-        var index = magatzems.findIndex(m => m.id === modifica.id);
-        if (index !== -1) {
-            magatzems[index] = modifica; 
-            localStorage.setItem("magatzems", JSON.stringify(magatzems));
-            alert("Informació guardada correctament!");
-        } else {
-            alert("El registre no s'ha trobat.");
-        }
-    } else {
-        alert("L'ID no és buit.");
+    const id = document.getElementById("id").value;
+    const nom = document.getElementById("nom").value;
+    const id_carrer = document.getElementById("id_carrer").value;
+    const adreça = document.getElementById("adreça").value;
+    const tipus = document.getElementById("tipus").value;
+
+    const estanteries = JSON.parse(localStorage.getItem("shelfs")) || [];
+    const index = estanteries.findIndex((e) => e.id === id);
+
+    if (index !== -1) {
+        estanteries[index] = { id, nom, id_carrer, adreça, tipus };
+        localStorage.setItem("shelfs", JSON.stringify(estanteries));
+        alert("Estanteria modificada correctament.");
+        window.location.assign("../llista/llistatShelf.html");
     }
-
-    window.location.assign("../Llistar/LlistaMagatzem.html"); 
 }
-
