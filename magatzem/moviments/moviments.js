@@ -11,16 +11,16 @@ window.onload = async function () {
     $("#filtre").on("click", function () {
       $("#divFiltres").fadeToggle(300);
     });
-    document.getElementById("crearMovProva").addEventListener("click", async () => {
+    document.getElementById("crearMovProva").addEventListener("click", async () => { //fd23 //fd7f //4c99
       const prova = {
-        product_id: "2",
-        storage_id: "01",
-        street_id: "04",
-        shelf_id: "02",
-        space_id: "01",
-        quantity: 9,
-        operator_id: "2",
-        origin: "OrderReception",
+        product_id: "2ce8", 
+        storage_id: "02",
+        street_id: "03",
+        shelf_id: "01",
+        space_id: "02",
+        quantity: -9,
+        operator_id: "1",
+        origin: "Inventory",
         document: "1"
       };
 
