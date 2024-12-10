@@ -68,20 +68,29 @@ function esborrarError() {
 
 // enviar dades
 async function enviarFormulari() {
-  
   const nom = document.getElementById("nom").value;
 
-  const newProfile = new Profile( await  getNewId(url,"UserProfile"), nom);
+  const newProfile = {"name": nom};
 
-   const resultat = await  postData(url,"UserProfile",newProfile);
+  try {
+    const resultat = await postData(url, "UserProfile", newProfile);
 
+    if (resultat) {
+      console.log('Perfil creat correctament:', resultat);
 
-  setTimeout(function () {
-    let formulari = document.forms[0].elements;
-    for (let ele of formulari) {
-      ele.value = "";
+      setTimeout(function () {
+        let formulari = document.forms[0].elements;
+        for (let ele of formulari) {
+          ele.value = "";
+        }
+      }, 1000);
+
+      // Redirigir a la llista de perfils
+      location.assign("../llistat/llistatUserProfile.html");
+    } else {
+      console.error('No s\'ha pogut crear el perfil. Resposta incorrecta de l\'API.');
     }
-  }, 1000);
-
-  location.assign("../llistat/llistatUserProfile.html");
+  } catch (error) {
+    console.error('Error en crear el perfil:', error);
+  }
 }

@@ -127,23 +127,38 @@ async function enviarFormulari() {
   const nom = document.getElementById("nom").value;
   const email = document.getElementById("email").value;
   const pw = document.getElementById("pw").value;
-  const select = document.getElementById("role");
-  const role = select.options[select.selectedIndex] ? select.options[select.selectedIndex].id : "0";
+  const select = document.getElementById("rol");
+  const rol = select.options[select.selectedIndex] ? select.options[select.selectedIndex].id : "0";
 
-  // Obtenir un nou ID de forma asíncrona
-  const newId = await getNewId(url, "users");
+  // Crear un nou objecte de l'usuari
+  const newUser = {
+    name: nom,
+    email: email,
+    password: pw,
+    role: rol
+  };
 
-  const newUser = new User(newId, nom, email, pw, role);
+  try {
+    // Enviar les dades al servidor amb postData
+    const resultat = await postData(url, "users", newUser);
 
-  const resultat = await postData(url, "users", newUser);
+    if (resultat) {
+      console.log('Usuari creat correctament:', resultat);
 
-  // Reset del formulari després de guardar
-  setTimeout(function () {
-    let formulari = document.forms[0].elements;
-    for (let ele of formulari) {
-      ele.value = "";
+      // Netejar el formulari després de guardar les dades
+      setTimeout(function () {
+        let formulari = document.forms[0].elements;
+        for (let ele of formulari) {
+          ele.value = "";
+        }
+      }, 1000);
+
+      // Redirigir a la pàgina de llistat d'usuaris
+      location.assign("../llistat/llistatUsuaris.html");
+    } else {
+      console.error('No s\'ha pogut crear l\'usuari. Resposta incorrecta de l\'API.');
     }
-  }, 1000);
-
-  location.assign("../llistat/llistatUsuaris.html");
+  } catch (error) {
+    console.error('Error en crear l\'usuari:', error);
+  }
 }

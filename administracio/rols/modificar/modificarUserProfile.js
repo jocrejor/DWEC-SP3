@@ -68,17 +68,13 @@ function esborrarError() {
 // enviar dades
 async function enviarFormulari() {
   const modProfile = JSON.parse(localStorage.getItem("modProfile"));
-
   const nom = document.getElementById("nom").value;
   modProfile.name = nom;
 
-
-
   await updateId(url, "UserProfile", modProfile.id, modProfile)
-
 
   localStorage.removeItem("modProfile");
 
   // tornar al llistat
-  window.location.assign("../listat/llistatUserProfile.html");
+  window.location.assign("../llistat/llistatUserProfile.html");
 }
