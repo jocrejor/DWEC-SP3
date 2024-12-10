@@ -1,54 +1,42 @@
-window.onload = main;
-let storages;
+window.onload = iniciar;
 
-function main() {
-    document.getElementById("producte").addEventListener("click", nou);
-    carregarInformacio();
+function iniciar() {
+    document.getElementById("nouShelf").addEventListener("click", () => window.location.assign("../alta/altaShelf.html"));
+    carregarEstanteries();
 }
 
-async function carregarInformacio() {
-    storages = await getData(url, "Storage");
-    obtindreMagatzem();
-}
+function carregarEstanteries() {
+    const estanteries = JSON.parse(localStorage.getItem("shelfs")) || [];
+    const tbody = document.getElementById("files");
 
-function nou() {
-    window.location.assign("../Alta/altaStorage.html");
-}
-
-function obtindreMagatzem() {
-    let tbody = document.getElementById("files");
-    tbody.innerHTML = "";
-
-    storages.forEach((storage) => {
-        let row = `
-        <tr id="${storage.id}">
-            <td><button class="btn btn-danger" onclick="esborrar(${storage.id})">Esborrar</button></td>
-            <td><button class="btn btn-primary" onclick="modificar(${storage.id})">Modificar</button></td>
-            <td><button class="btn btn-primary" onclick="carrers(${storage.id})">Carrer</button></td>
-   
-            <td>${storage.id || ""}</td>
-            <td>${storage.name || ""}</td>
-            <td>${storage.type || ""}</td>
-            <td>${storage.address || ""}</td>
-        </tr>
-   `;
-        tbody.innerHTML += row;
+    estanteries.forEach((estanteria) => {
+        const fila = document.createElement("tr");
+        fila.innerHTML = `
+            <td><button class="btn btn-danger" onclick="esborrar('${estanteria.id}')">Esborrar</button></td>
+            <td><button class="btn btn-warning" onclick="modificar('${estanteria.id}')">Modificar</button></td>
+            <td>${estanteria.id}</td>
+            <td>${estanteria.nom}</td>
+            <td>${estanteria.id_carrer}</td>
+            <td>${estanteria.adreça}</td>
+            <td>${estanteria.tipus}</td>
+        `;
+        tbody.appendChild(fila);
     });
-
 }
 
-async function esborrar(id) {
-    await deleteData(url, "Storage", id);
-    document.getElementById{id}.remove();   
+function esborrar(id) {
+    let estanteries = JSON.parse(localStorage.getItem("shelfs")) || [];
+    estanteries = estanteries.filter((e) => e.id !== id);
+    localStorage.setItem("shelfs", JSON.stringify(estanteries));
+    document.location.reload();
 }
 
+function modificar(id) {
+    const estanteries = JSON.parse(localStorage.getItem("shelfs")) || [];
+    const estanteria = estanteries.find((e) => e.id === id);
 
-function modificar(storageId) {
-    localStorage.setItem("modificaMagatzem", JSON.stringify(storageId));
-    window.location.assign("../Modificar/modificarMagatzem.html");
-}
-
-function carrers(storageId) {
-    localStorage.setItem("magatzemId", storageId);
-    window.location.assign(`../../Carrer/Llistar/LlistatCarrer.html`);
+    if (estanteria) {
+        localStorage.setItem("modShelf", JSON.stringify(estanteria));
+        window.location.assign("../modificar/modificarShelf.html");
+    }
 }
