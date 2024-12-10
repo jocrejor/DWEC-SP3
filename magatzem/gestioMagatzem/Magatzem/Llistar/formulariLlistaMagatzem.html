@@ -3,42 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Llistat Magatzem</title>
+    <title>Llistat Carrer</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script type="text/javascript" src="formulariLlistaMagatzem.js"></script>
+    <script type="text/javascript" src="LlistaCarrer.js"></script>
+    <script type="text/javascript" src="../../../../apiAccess/crud.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
+
     <style>
         .error {
             border: solid 2px #FF0000;
+        }
+        #filter-section {
+            display: none; 
+            margin-top: 10px;
+        }
+
+        #toggleFiltersBtn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 24px;
+            padding: 0;
+        }
+
+        .filter-input {
+            margin-bottom: 10px;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-     <h1>Llistat magatzem</h1>
- 
-        <button class=" btn btn-primary my-3" id="producte">Nou magatzem</button>
+        <h1>Llistat Carrer</h1>
+        <h3>Magatzem: <b id="magatzem"></b></h3>
 
-            <button id="carrer" class="btn btn-primary">
-                <a href="/magatzem/gestioMagatzem/Carrer/Llistar/formulariLlistatCarrer.html" style="color:inherit ">Carrer</a></button>
+        <button class=" btn btn-primary my-3" id="producte">Nou Carrer</button>
+        
+        <button class="btn" id="toggleFiltersBtn">
+            <i class="bi bi-funnel-fill"></i>
+        </button>
 
+        <div id="filter-section">
+            <div class="form-group filter-input">
+                <label for="filterId">Filtrar per Id Carrer</label>
+                <input type="text" id="filterId" class="form-control" placeholder="Id del carrer">
+            </div>
+        
+            <div class="form-group filter-input">
+                <label for="filterName">Filtrar per Nom</label>
+                <input type="text" id="filterName" class="form-control" placeholder="Nom del carrer">
+            </div>
+            <button class="btn btn-primary" id="applyFiltersBtn">Aplicar Filtres</button>
+        </div>
+        <br>
         <table class="table">
             <thead class="thead-light">
                 <tr>
                     <th scope="col">Esborrar</th>
                     <th scope="col">Modificar</th>
+                    <th scope="col">Estanteria</th>
+                    <th scope="col">Id Carrer</th>
+                    <th scope="col">Nom</th>
                     <th scope="col">Id Magatzem</th>
-                    <th scope="col">Nom </th>
-                    <th scope="col">Tipus </th>
-                    <th scope="col">Adreça </th>
                 </tr>
             </thead>
             <tbody id="files">
-              
             </tbody>
         </table>
     </div>
 </body>
-
 </html>
