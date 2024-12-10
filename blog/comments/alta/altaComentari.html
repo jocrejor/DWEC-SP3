@@ -22,7 +22,7 @@
             <div class="form-group row">
                 <label for="descripcio" class="col-sm-2 col-form-label">Text del Comentari:</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" id="descripcio" rows="4" pattern="^[A-ZÁÉÍÓÚÑÇ][a-zñçáéíóú\s]{1,99}$" required></textarea>
+                    <textarea class="form-control" id="descripcio" rows="4" pattern="^([A-ZÁÉÍÓÚÑÇ][a-zñçáéíóú]*)+(?:\s[A-ZÁÉÍÓÚÑÇ][a-zñçáéíóú]*)*$" maxlength="150" required></textarea>
                 </div>
             </div>
             <h5 id="missatgeError" class="text-danger"></h5>
