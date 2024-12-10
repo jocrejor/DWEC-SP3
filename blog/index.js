@@ -233,7 +233,7 @@ async function mostrarComentariosPorPost(postID, comentariosDiv) {
 
         const usuario = document.createElement("p");
         usuario.style.fontWeight = "bold";
-        usuario.appendChild(document.createTextNode(`Usuario: ${comentario.user || user.name}`));
+        usuario.appendChild(document.createTextNode(`Usuario: ${comentario.creator_id}`));
 
         const descripcio = document.createElement("p");
         descripcio.appendChild(document.createTextNode(comentario.description));

@@ -64,9 +64,13 @@ async function enviarFormulari() {
     const descripcio = document.getElementById("descripcio").value.trim();
     const postID = sessionStorage.getItem("currentPostID");
     const postTitle = sessionStorage.getItem("currentPostTitle");
+    const currentUserData = localStorage.getItem("currentUser");
+
+    const currentUser = JSON.parse(currentUserData); 
+    const creatorId = currentUser.name; 
 
     // Validar la longitud de la descripción
-    if (descripcio.length < 2 || descripcio.length > 100) {
+    if (descripcio.length < 2 || descripcio.length > 200) {
         const missatgeError = document.getElementById("missatgeError");
 
         // Limpiar cualquier mensaje de error previo
@@ -75,7 +79,7 @@ async function enviarFormulari() {
         }
 
         // Crear un nodo de texto y añadirlo al contenedor de error
-        const textNode = document.createTextNode("El comentario debe tener entre 2 y 100 caracteres.");
+        const textNode = document.createTextNode("El comentario debe tener entre 2 y 200 caracteres.");
         missatgeError.appendChild(textNode);
         return;
     }
@@ -84,7 +88,8 @@ async function enviarFormulari() {
     const comentari = {
         description: descripcio,
         post_id: postID,
-        post_title: postTitle
+        post_title: postTitle,
+        creator_id: creatorId
     };
 
     const resultat = await postData(url, "Comment", comentari);
