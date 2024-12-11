@@ -12,7 +12,6 @@ $(document).ready(function () {
 });
 
 function validar(){
-    esborrarError();
     if(validarUnitats() && validarDescripcio()){
         return true;
     }
@@ -22,12 +21,13 @@ function validar(){
 }
 
 function validarUnitats(){
-    esborrarError();
     const unitats = document.getElementById("quantity");
-
+    var missatgeError = document.getElementById("missatgeError");
+    missatgeError.textContent = "";
     if(!unitats.checkValidity()){
         if(unitats.validity.valueMissing){
-            error(unitats,"Has d'indicar les unitats");
+            const textNode = document.createTextNode("Insereix una quantitat d'unitats rebudes");
+            missatgeError.appendChild(textNode);
             return false;
         }
     }
@@ -35,16 +35,18 @@ function validarUnitats(){
 }
 
 function validarDescripcio(){
-    esborrarError();
     const textDescripcio = document.getElementById("description");
-
+    var missatgeError = document.getElementById("missatgeError");
+    missatgeError.textContent = "";
     if(!textDescripcio.checkValidity()){
         if(textDescripcio.validity.valueMissing){
-            error(textDescripcio,"Has d'escriure una descripcio");
+            const textNode = document.createTextNode("Insereix una descripcio");
+            missatgeError.appendChild(textNode);
             return false;
         }
         else if(textDescripcio.validity.patternMismatch){
-            error(quantitat,"Introdueix una descripció valida");
+            const textNode = document.createTextNode("Insereix una descripcio valida, entre 7 i 20 caracters");
+            missatgeError.appendChild(textNode);
             return false;
         }
     }
@@ -107,14 +109,4 @@ function getProveidor(id){
         return proveidorExistent.name;         
     }
     
-}
-
-/** esborrarError: funcio que borra el mensatge de error
- */
-function esborrarError() {   
-    let formulari = document.forms[0].elements;
-        for (let ele of formulari) {
-            ele.classList.remove("error")
-        }    
-    document.getElementById("missatgeError").replaceChildren(); 
 }
