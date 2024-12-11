@@ -12,7 +12,11 @@ function main() {
   document.getElementById("nom").setAttribute("value", modUser.name);
   document.getElementById("email").setAttribute("value", modUser.email);
   document.getElementById("pw").setAttribute("value", modUser.password);
+
+  // Carregar els rols i seleccionar el rol actual
+  carregarRols();
 }
+
 
 function home() {
   history.back();
@@ -36,6 +40,40 @@ function validarNom() {
 
   return false;
 }
+
+async function carregarRols() {
+  try {
+    // Obtenir els rols des del servidor utilitzant getData
+    const roles = await getData(url, "UserProfile");
+
+    if (!roles || !Array.isArray(roles)) {
+      throw new Error("Error en obtenir els rols de la base de dades");
+    }
+
+    // Recuperar l'usuari a modificar des del localStorage
+    const modUser = JSON.parse(localStorage.getItem("modUser"));
+
+    const select = document.getElementById("role");
+    select.innerHTML = ""; // Netejar el select abans d'afegir noves opcions
+
+    // Afegir opcions al select i marcar el rol actual com a seleccionat
+    roles.forEach((rol) => {
+      const newOption = document.createElement("option");
+      newOption.setAttribute("id", rol.id);
+      newOption.textContent = rol.name;
+
+      // Marcar el rol actual com a seleccionat
+      if (modUser.user_profile_id === rol.id) {
+        newOption.selected = true;
+      }
+
+      select.appendChild(newOption);
+    });
+  } catch (error) {
+    console.error("Error en carregar els rols:", error);
+  }
+}
+
 
 // Funció de validació principal
 function validar(e) {

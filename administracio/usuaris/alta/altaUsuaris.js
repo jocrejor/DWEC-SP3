@@ -51,7 +51,6 @@ async function listTipus() {
   }
 }
 
-
 // Funció per validar el nom
 function validarNom() {
   const pattern = RegExp(/^[A-Za-záéíóúÁÉÍÓÚñÑ\s]{2,25}$/);
