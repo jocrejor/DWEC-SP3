@@ -120,6 +120,15 @@ function filtrar() {
          });
          divAccions.appendChild(accioRevisar);
 
+        let accioVisualitza = document.createElement("a");
+        let iVisualitza = document.createElement("i");
+        iVisualitza.className = "fa-regular fa-eye";
+        accioVisualitza.appendChild(iVisualitza);
+        $(accioVisualitza).click(function(){
+            visualitzaIncidencia(ordre.id);
+        });
+        divAccions.appendChild(accioVisualitza);
+
         let accioResoldre = document.createElement("a");
         let iResoldre = document.createElement("i");
         iResoldre.className = "fas fa-check";
