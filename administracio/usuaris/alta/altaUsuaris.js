@@ -126,15 +126,15 @@ async function enviarFormulari() {
   const nom = document.getElementById("nom").value;
   const email = document.getElementById("email").value;
   const pw = document.getElementById("pw").value;
-  const select = document.getElementById("rol");
-  const rol = select.options[select.selectedIndex] ? select.options[select.selectedIndex].id : "0";
+  const select = document.getElementById("role");
+  const role = select.options[select.selectedIndex] ? select.options[select.selectedIndex].id : "0";
 
   // Crear un nou objecte de l'usuari
   const newUser = {
     name: nom,
     email: email,
     password: pw,
-    role: rol
+    role: role
   };
 
   try {
