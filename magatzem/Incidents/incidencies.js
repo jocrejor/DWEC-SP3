@@ -70,7 +70,7 @@ function filtrar() {
         const producteSeleccionat = productes.find(p => p.name === producto);
         if (producteSeleccionat) {
             incidenciesFiltrades = incidenciesFiltrades.filter(
-                incident => Number(incident.product) === Number(producteSeleccionat.id)
+                incident => incident.product === producteSeleccionat.id
             );
         } else {
             incidenciesFiltrades = []; 
